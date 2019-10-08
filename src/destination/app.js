@@ -5,6 +5,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var logger = require('morgan');
+var cors = require('cors');
 var swaggerUi = require('swagger-ui-express');
 var YAML = require('yamljs');
 var swaggerDocument = YAML.load('swagger.yaml');
@@ -16,6 +17,8 @@ var destinationRouter = require('./routes/destination');
 
 var app = express();
 var api = "/api/v1";
+
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
