@@ -15,5 +15,9 @@
     "morgan": "~1.9.0",
     "swagger-ui-express": "^4.1.1",
     "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "constantinople": ">=3.1.1",
+    "clean-css": ">=4.1.11"
   }
 }
