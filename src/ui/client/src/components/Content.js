@@ -1,12 +1,13 @@
 import React from "react";
-import {Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Navbar, NavbarBrand} from 'reactstrap';
-import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import {Container, Row, Col, Navbar, NavbarBrand} from 'reactstrap';
+import ReactMapboxGl from 'react-mapbox-gl';
+import Autosuggest from 'react-autosuggest';
 
 const API_BASE_URL = "http://localhost:4000"; //process.env.API_URL;
 
 const Map = ReactMapboxGl({
     accessToken:
-      'pk.eyJ1IjoibWFnaWNtYXgzMiIsImEiOiJjanR0MGxubXcweHVzNDVwaWV2MGQ1ZWp3In0.8YiTJ8uuaq831eLcsjc03w'
+      'pk.eyJ1IjoibWFnaWNtYXgzMiIsImEiOiJjanR0MGxubXcweHVzNDVwaWV2MGQ1ZWp3In0.8YiTJ8uuaq831eLcsjc03w' //process.env.Mapbox_Access_Token;
   });
 
 class Content extends React.Component {
@@ -15,62 +16,62 @@ class Content extends React.Component {
 		super(props);
 
 		this.state = {
-            destinationList: [],
-            dropdownOpen: false,
             currentDestination: {
-                "city": "New York",
-                "lat": "40.6943",
-                "lng": "-73.9249",
-                "country": "United States",
-                "population": "19354922",
-                "description": "The City of New York, usually called either New York City (NYC) or simply New York (NY), is the most populous city in the United States. With an estimated 2018 population of 8,398,748 distributed over a land area of about 302.6 square miles (784 km2), New York is also the most densely populated major city in the United States. Located at the southern tip of the state of New York, the city is the center of the New York metropolitan area, the largest metropolitan area in the world by urban landmass and one of the world's most populous megacities, with an estimated 19,979,477 people in its 2018 Metropolitan Statistical Area and 22,679,948 residents in its Combined Statistical Area. A global power city, New York City has been described as the cultural, financial, and media capital of the world, and exerts a significant impact upon commerce, entertainment, research, technology, education, politics, tourism, art, fashion, and sports. The city's fast pace has inspired the term New York minute. Home to the headquarters of the United Nations, New York is an important center for international diplomacy."
+                "city": "",
+                "lat": "",
+                "lng": "",
+                "country": "",
+                "population": "",
+                "description": ""
             }
         }
-        
-        this.getDestinations();
 
-        this.toggle = this.toggle.bind(this);
+        this.loadDestinationData();
     }
 
-    getDestinations = async (e) => {
-	    if(e) e.preventDefault();
-
-        const response = await fetch(API_BASE_URL+'/api/v1/destinations');
-
-        var data = await response.json();
-
-        this.setState({destinationList: data["cities"]});
-    }
-
-    getDestinationData = (city, country) => async (e) => {
+    loadDestinationData = async (e) => {
         if(e) e.preventDefault();
 
-        const response = await fetch(API_BASE_URL+'/api/v1/destinations/'+city+"/"+country);
+        const response = await fetch(API_BASE_URL+'/api/v1/destinations/'+this.props.state.suggestion.city+"/"+this.props.state.suggestion.country);
 
         var data = await response.json();
 
         this.setState({currentDestination: data});
     }
 
-    toggle() {
-        this.setState(prevState => ({
-            dropdownOpen: !prevState.dropdownOpen
-        }));
+    getDestinationData = async (e, { suggestion }) => {
+        if(e) e.preventDefault();
+
+        const response = await fetch(API_BASE_URL+'/api/v1/destinations/'+suggestion.city+"/"+suggestion.country);
+
+        var data = await response.json();
+
+        this.setState({currentDestination: data});
     }
 
 	render() {
-        var dropdownList = [];
 
-        for (var tempDestination = 0; tempDestination < this.state.destinationList.length; tempDestination++) {
-            dropdownList.push(<DropdownItem key={tempDestination} onClick={this.getDestinationData(this.state.destinationList[tempDestination].city,this.state.destinationList[tempDestination].country)}>{this.state.destinationList[tempDestination].city}, {this.state.destinationList[tempDestination].country}</DropdownItem>);
-        }
+        const inputProps = {
+            placeholder: 'Where will you bee traveling?',
+            value: this.props.state.scrollbarValue,
+            onChange: this.props.onChange
+          };
 
 		return (
 			<Container fluid={true}>
                 <Row>
                     <Col>
                         <Navbar color="dark">
-                            <NavbarBrand style={{color:"white"}}><img src="ibm bee.png"></img>Bee Travels</NavbarBrand>
+                            <NavbarBrand href="/" style={{color:"white"}}><img style={{padding: "0px 10px 0px 0px"}} src="ibm bee.png"></img>Bee Travels</NavbarBrand>
+                            <Autosuggest
+                                suggestions={this.props.state.suggestions}
+                                onSuggestionsFetchRequested={this.props.onSuggestionsFetchRequested}
+                                onSuggestionsClearRequested={this.props.onSuggestionsClearRequested}
+                                getSuggestionValue={this.props.getSuggestionValue}
+                                renderSuggestion={this.props.renderSuggestion}
+                                inputProps={inputProps}
+                                onSuggestionSelected={this.getDestinationData}
+                            />
                         </Navbar>
                     </Col>
                 </Row>
@@ -78,30 +79,25 @@ class Content extends React.Component {
 					<Col md={{ size: 6, offset: 4 }}>
                         <Row>
                             <h2>{this.state.currentDestination.city}, {this.state.currentDestination.country}</h2>
-                            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                                <DropdownToggle caret color="white"></DropdownToggle>
-                                <DropdownMenu style={{height: "200px", overflow: "auto"}}>{dropdownList}</DropdownMenu>
-                            </Dropdown>
                         </Row>
 					</Col>
 				</Row>
                 <Row>
                     <Col md={{ size: 6, offset: 2 }}>
-                        <p>{this.state.currentDestination.description}</p>
-                    </Col>
-                    <Col>
+                        <div style={{height: "525px"}}><p>{this.state.currentDestination.description}</p></div>
                         <Map
                         style="mapbox://styles/mapbox/streets-v9"
                         zoom={[7]}
                         containerStyle={{
-                            height: '350px',
-                            width: '350px'
+                            height: '250px',
+                            width: '800px'
                         }}
                         center={{lng: this.state.currentDestination.lng, lat: this.state.currentDestination.lat}}
                         >
                         </Map>
-                        <br></br>
-                        <img src={"city_images/"+this.state.currentDestination.city+", "+this.state.currentDestination.country+".jpg"} height="350px" width="350px" />
+                    </Col>
+                    <Col>
+                        <img src={"city_images/"+this.state.currentDestination.city+", "+this.state.currentDestination.country+".jpg"} height="500px" width="500px" />
                     </Col>
                 </Row>
 			</Container>
