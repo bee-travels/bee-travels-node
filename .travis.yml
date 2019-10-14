@@ -12,4 +12,4 @@ install:
 
 script:
   - cd src/destination && ./node_modules/.bin/eslint src/ && cd ../..
-  - cd src/ui/client && ./node_modules/.bin/eslint src/ && cd ../../..
+  - cd src/ui/client && ../../../src/destination/node_modules/.bin/eslint src/ && cd ../../..
