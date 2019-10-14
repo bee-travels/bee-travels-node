@@ -1,6 +1,6 @@
-import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-import { createBrowserHistory as createHistory } from 'history'
+import React from "react";
+import { Router, Route, Switch } from "react-router-dom";
+import { createBrowserHistory as createHistory } from "history";
 
 import Content from "./components/Content";
 import Home from "./components/Home";
@@ -39,7 +39,7 @@ class App extends React.Component {
   getDestinations = async (e) => {
     if (e) e.preventDefault();
 
-    const response = await fetch(API_BASE_URL + '/api/v1/destinations');
+    const response = await fetch(API_BASE_URL + "/api/v1/destinations");
 
     var data = await response.json();
 
@@ -102,6 +102,6 @@ class App extends React.Component {
       </Router>
     );
   }
-};
+}
 
 export default App;

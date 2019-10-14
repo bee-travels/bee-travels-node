@@ -1,9 +1,14 @@
 env:
+  node: true
   browser: true
   es6: true
+  commonjs: true
 parser: "babel-eslint"
-extends: 'eslint:recommended'
+extends: 
+  - "eslint:recommended"
+  - "plugin:react/recommended"
 parserOptions:
+  ecmaVersion: 2015
   ecmaFeatures:
     experimentalObjectRestSpread: true
     jsx: true
