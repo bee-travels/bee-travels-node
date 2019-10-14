@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router, Route, Switch} from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory as createHistory } from 'history'
 
 import Content from "./components/Content";
@@ -37,51 +37,51 @@ class App extends React.Component {
   }
 
   getDestinations = async (e) => {
-    if(e) e.preventDefault();
+    if (e) e.preventDefault();
 
-      const response = await fetch(API_BASE_URL+'/api/v1/destinations');
+    const response = await fetch(API_BASE_URL + '/api/v1/destinations');
 
-      var data = await response.json();
+    var data = await response.json();
 
-      this.setState({destinationList: data["cities"]});
+    this.setState({ destinationList: data["cities"] });
   }
 
   onChange = (event, { newValue }) => {
-      this.setState({
-          scrollbarValue: newValue
-      });
-    };
+    this.setState({
+      scrollbarValue: newValue
+    });
+  };
 
   getSuggestions = value => {
-      const inputValue = value.trim().toLowerCase();
-      const inputLength = inputValue.length;
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
 
-      return inputLength === 0 ? [] : this.state.destinationList.filter(destination =>
-          destination.city.toLowerCase().slice(0, inputLength) === inputValue
-          || destination.country.toLowerCase().slice(0, inputLength) === inputValue
-        );
+    return inputLength === 0 ? [] : this.state.destinationList.filter(destination =>
+      destination.city.toLowerCase().slice(0, inputLength) === inputValue
+      || destination.country.toLowerCase().slice(0, inputLength) === inputValue
+    );
   };
 
   getSuggestionValue(suggestion) {
-      return suggestion.city + ", " + suggestion.country;
-    }
+    return suggestion.city + ", " + suggestion.country;
+  }
 
   onSuggestionsFetchRequested = ({ value }) => {
-      this.setState({
-          suggestions: this.getSuggestions(value)
-        });
+    this.setState({
+      suggestions: this.getSuggestions(value)
+    });
   };
 
   onSuggestionsClearRequested = () => {
-      this.setState({
-        suggestions: []
-      });
-    };
+    this.setState({
+      suggestions: []
+    });
+  };
 
   renderSuggestion(suggestion) {
-      return (
-          <span>{suggestion.city}, {suggestion.country}</span>
-      );
+    return (
+      <span>{suggestion.city}, {suggestion.country}</span>
+    );
   }
 
   loadDestination(e, { suggestion }) {
@@ -93,14 +93,14 @@ class App extends React.Component {
 
   render() {
     return (
-        <Router history={this.history}>
-          <Switch>
-            <Route exact path="/" render={(props) => <Home {...props} onChange={this.onChange} getSuggestions={this.getSuggestions} getSuggestionValue={this.getSuggestionValue} onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} onSuggestionsClearRequested={this.onSuggestionsClearRequested} renderSuggestion={this.renderSuggestion} loadDestination={this.loadDestination} state={this.state} />} />
-            <Route path="/destination" render={(props) => <Content {...props} onChange={this.onChange} getSuggestions={this.getSuggestions} getSuggestionValue={this.getSuggestionValue} onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} onSuggestionsClearRequested={this.onSuggestionsClearRequested} renderSuggestion={this.renderSuggestion} state={this.state} />} />
-            <Route component={Error} />
-          </Switch>
-        </Router>
-      );
+      <Router history={this.history}>
+        <Switch>
+          <Route exact path="/" render={(props) => <Home {...props} onChange={this.onChange} getSuggestions={this.getSuggestions} getSuggestionValue={this.getSuggestionValue} onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} onSuggestionsClearRequested={this.onSuggestionsClearRequested} renderSuggestion={this.renderSuggestion} loadDestination={this.loadDestination} state={this.state} />} />
+          <Route path="/destination" render={(props) => <Content {...props} onChange={this.onChange} getSuggestions={this.getSuggestions} getSuggestionValue={this.getSuggestionValue} onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} onSuggestionsClearRequested={this.onSuggestionsClearRequested} renderSuggestion={this.renderSuggestion} state={this.state} />} />
+          <Route component={Error} />
+        </Switch>
+      </Router>
+    );
   }
 };
 
