@@ -11,4 +11,4 @@ install:
 
 
 script:
-  - cd src/destination && ./node_modules/.bin/eslint **/*.js
+  - cd src/destination && ./node_modules/.bin/eslint src/
