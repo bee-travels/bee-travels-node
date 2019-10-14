@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
+import PropTypes from "prop-types";
 import Autosuggest from "react-autosuggest";
 
 class Home extends React.Component {
@@ -30,5 +31,15 @@ class Home extends React.Component {
     );
   }
 }
+
+Home.propTypes = {
+  state: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSuggestionsFetchRequested: PropTypes.func.isRequired,
+  onSuggestionsClearRequested: PropTypes.func.isRequired,
+  getSuggestionValue: PropTypes.func.isRequired,
+  renderSuggestion: PropTypes.func.isRequired,
+  loadDestination: PropTypes.func.isRequired,
+};
 
 export default Home;
