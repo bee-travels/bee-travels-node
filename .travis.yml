@@ -8,8 +8,9 @@ node_js:
 install:
   - cd src/destination && npm install && cd ../..
   - cd src/ui && npm install && cd ../..
+  - cd src/ui/client && npm install && cd ../../..
 
 
 script:
   - cd src/destination && ./node_modules/.bin/eslint src/ && cd ../..
-  - cd src/ui/client && ../../../src/destination/node_modules/.bin/eslint src/ && cd ../../..
+  - cd src/ui/client && ./node_modules/.bin/eslint src/ && cd ../../..
