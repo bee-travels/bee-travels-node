@@ -7,36 +7,36 @@ node_js:
   - 10
 
 stages:
-  - "lint"
-  - "test"
+  - "linting"
+  - "testing"
 
 jobs:
   include:
-    - stage: "lint"
+    - stage: "linting"
       node_js: 9
       name: "Destination ES Linting"
       script: cd src/destination && npm install && ./node_modules/.bin/eslint src/
-    - stage: "lint"
+    - stage: "linting"
       node_js: 9
       name: "UI client ES Linting"
       script:
         - cd src/ui && npm install && cd ../..
         - cd src/ui/client && npm install && ./node_modules/.bin/eslint src/
-    - stage: "test"
+    - stage: "testing"
       node_js: 9
       name: "NPM testing"
       script: cd src/destination && npm install && npm test
-    - stage: "lint"
+    - stage: "linting"
       node_js: 10
       name: "Destination ES Linting"
       script: cd src/destination && npm install && ./node_modules/.bin/eslint src/
-    - stage: "lint"
+    - stage: "linting"
       node_js: 10
       name: "UI client ES Linting"
       script:
         - cd src/ui && npm install && cd ../..
         - cd src/ui/client && npm install && ./node_modules/.bin/eslint src/
-    - stage: "test"
+    - stage: "testing"
       node_js: 10
       name: "NPM testing"
       script: cd src/destination && npm install && npm test
