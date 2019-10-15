@@ -5,13 +5,20 @@ sudo: false
 node_js:
   - 10
 
-install:
-  - cd src/destination && npm install && cd ../..
-  - cd src/ui && npm install && cd ../..
-  - cd src/ui/client && npm install && cd ../../..
-
-
-script:
-  - cd src/destination && ./node_modules/.bin/eslint src/ && cd ../..
-  - cd src/destination && npm test && cd ../..
-  - cd src/ui/client && ./node_modules/.bin/eslint src/ && cd ../../..
+jobs:
+  include:
+    - stage: "Installation"
+      name: "Pre installation"
+      script:
+        - cd src/destination && npm install && cd ../..
+        - cd src/ui && npm install && cd ../..
+        - cd src/ui/client && npm install && cd ../../..
+    - stage: "Linting"
+      name: "ES Linting"
+      script:
+        - cd src/destination && ./node_modules/.bin/eslint src/ && cd ../..
+        - cd src/ui/client && ./node_modules/.bin/eslint src/ && cd ../../..
+    - stage: "Testing"
+      name: "NPM testing"
+      script:
+        - cd src/destination && npm test && cd ../..
