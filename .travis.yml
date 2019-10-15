@@ -8,14 +8,14 @@ node_js:
 
 jobs:
   include:
-    - stage: "linting"
+    - stage: test
       name: "Destination ES Linting"
       script: cd src/destination && npm install && ./node_modules/.bin/eslint src/
-    - stage: "linting"
+    - stage: test
       name: "UI client ES Linting"
       script:
         - cd src/ui && npm install && cd ../..
         - cd src/ui/client && npm install && ./node_modules/.bin/eslint src/
-    - stage: "Testing"
+    - stage: test
       name: "NPM testing"
       script: cd src/destination && npm install && npm test
