@@ -43,9 +43,9 @@ jobs:
 
     - stage: test
       node_js: 10
-      name: "npm test disabled"
-      script: echo "npm test disabled"
+      name: "make test disabled"
+      script: echo "make test disabled"
     - stage: test
       node_js: 9
-      name: "npm test disabled"
-      script: echo "npm test disabled"
+      name: "make test disabled"
+      script: echo "make test disabled"
