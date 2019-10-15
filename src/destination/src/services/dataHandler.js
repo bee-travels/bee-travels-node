@@ -52,5 +52,4 @@ function getDestinationData(city, country) {
   });
 }
 
-const _getDestinationData = getDestinationData;
-export { _getDestinationData as getDestinationData };
+export { getDestinationData };

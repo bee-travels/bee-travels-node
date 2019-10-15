@@ -8,6 +8,8 @@
     "server:prod": "node ./dist/bin/www",
     "dev": "NODE_ENV=development npm-run-all server",
     "clean": "rimraf dist",
+    "test-suite": "babel-node test/run",
+    "test": "npm-run-all test-suite",
     "build": "babel ./src --out-dir dist",
     "prod": "NODE_ENV=production npm-run-all clean build server:prod"
   },
@@ -30,9 +32,12 @@
     "@babel/node": "^7.6.3",
     "@babel/preset-env": "^7.6.3",
     "babel-eslint": "^10.0.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "clean-css": ">=4.1.11",
     "constantinople": ">=3.1.1",
     "eslint": "^6.5.1",
+    "mocha": "^6.2.1",
     "uglify-js": ">=2.6.0"
   }
 }
