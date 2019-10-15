@@ -12,5 +12,6 @@ install:
 
 
 script:
-  - cd src/destination && ./node_modules/.bin/eslint src/ && npm test && cd ../..
+  - cd src/destination && ./node_modules/.bin/eslint src/ && cd ../..
+  - cd src/destination && npm test && cd ../..
   - cd src/ui/client && ./node_modules/.bin/eslint src/ && cd ../../..
