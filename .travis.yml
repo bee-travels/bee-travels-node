@@ -3,49 +3,18 @@ language: node_js
 sudo: false
 
 node_js:
-  - 9
   - 10
-
-stages:
-  - "linting"
-  - "testing"
 
 jobs:
   include:
     - stage: "linting"
-      node_js: 9
       name: "Destination ES Linting"
       script: cd src/destination && npm install && ./node_modules/.bin/eslint src/
     - stage: "linting"
-      node_js: 9
       name: "UI client ES Linting"
       script:
         - cd src/ui && npm install && cd ../..
         - cd src/ui/client && npm install && ./node_modules/.bin/eslint src/
     - stage: "testing"
-      node_js: 9
       name: "NPM testing"
       script: cd src/destination && npm install && npm test
-    - stage: "linting"
-      node_js: 10
-      name: "Destination ES Linting"
-      script: cd src/destination && npm install && ./node_modules/.bin/eslint src/
-    - stage: "linting"
-      node_js: 10
-      name: "UI client ES Linting"
-      script:
-        - cd src/ui && npm install && cd ../..
-        - cd src/ui/client && npm install && ./node_modules/.bin/eslint src/
-    - stage: "testing"
-      node_js: 10
-      name: "NPM testing"
-      script: cd src/destination && npm install && npm test
-
-    - stage: test
-      node_js: 10
-      name: "make test disabled"
-      script: echo "make test disabled"
-    - stage: test
-      node_js: 9
-      name: "make test disabled"
-      script: echo "make test disabled"
