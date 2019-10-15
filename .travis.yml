@@ -40,3 +40,12 @@ jobs:
       node_js: 10
       name: "NPM testing"
       script: cd src/destination && npm install && npm test
+
+    - stage: test
+      node_js: 10
+      name: "npm test disabled"
+      script: echo "npm test disabled"
+    - stage: test
+      node_js: 9
+      name: "npm test disabled"
+      script: echo "npm test disabled"
