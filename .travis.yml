@@ -7,18 +7,14 @@ node_js:
 
 jobs:
   include:
-    - stage: "Linting"
-      name: "ES Linting"
+    - stage: "linting"
+      name: "Destination ES Linting"
+      script: cd src/destination && npm install && ./node_modules/.bin/eslint src/
+    - stage: "linting"
+      name: "UI client ES Linting"
       script:
-        - cd src/destination && npm install && cd ../..
         - cd src/ui && npm install && cd ../..
-        - cd src/ui/client && npm install && cd ../../..
-        - cd src/destination && ./node_modules/.bin/eslint src/ && cd ../..
-        - cd src/ui/client && ./node_modules/.bin/eslint src/ && cd ../../..
+        - cd src/ui/client && npm install ./node_modules/.bin/eslint src/
     - stage: "Testing"
       name: "NPM testing"
-      script:
-        - cd src/destination && npm install && cd ../..
-        - cd src/ui && npm install && cd ../..
-        - cd src/ui/client && npm install && cd ../../..
-        - cd src/destination && npm test && cd ../..
+      script: cd src/destination && npm install && npm test
