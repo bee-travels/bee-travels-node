@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import ReactMapboxGl from "react-mapbox-gl";
 import Autosuggest from "react-autosuggest";
 
-const API_BASE_URL = "http://localhost:4000"; //process.env.API_URL;
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:4000";
+const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN;
 
 const Map = ReactMapboxGl({
-  accessToken:
-    "pk.eyJ1IjoibWFnaWNtYXgzMiIsImEiOiJjanR0MGxubXcweHVzNDVwaWV2MGQ1ZWp3In0.8YiTJ8uuaq831eLcsjc03w" //process.env.Mapbox_Access_Token;
+  accessToken: "pk.eyJ1IjoibWFnaWNtYXgzMiIsImEiOiJjanR0MGxubXcweHVzNDVwaWV2MGQ1ZWp3In0.8YiTJ8uuaq831eLcsjc03w"
 });
 
 class Content extends React.Component {
@@ -76,11 +76,46 @@ class Content extends React.Component {
           <Col>
             <Navbar color="dark">
               <NavbarBrand href="/" style={{ color: "white" }}>
-                <img
-                  style={{ padding: "0px 10px 0px 0px" }}
-                  src="ibm bee.png"
-                  alt="ibm bee logo"
-                ></img>
+              <svg width="64px" height="64px" viewBox="0 0 1320 930" style={{ padding: "0px 10px 0px 0px" }}>
+                {/* Body */}
+                <path
+                  transform="translate(450 200)"
+                  fill-rule="evenodd"
+                  fill="rgb(238, 181, 13)"
+                  d="M0.000,420.000 L420.000,420.000 L420.000,520.000 L0.000,520.000 L0.000,420.000 ZM0.000,220.000 L420.000,220.000 L420.000,310.000 L0.000,310.000 L0.000,220.000 ZM210.000,0.000 C289.776,0.000 359.161,44.484 394.706,110.000 L25.294,110.000 C60.839,44.484 130.224,0.000 210.000,0.000 ZM388.906,630.000 C351.938,689.998 285.645,730.000 210.000,730.000 C134.355,730.000 68.062,689.998 31.094,630.000 L388.906,630.000 Z"
+                />
+
+                {/* Left Wing */}
+                <path
+                  transform="translate(0 280)"
+                  fill-rule="evenodd"
+                  fill="rgb(38, 146, 60)"
+                  d="M460.000,-0.000 L331.000,386.000 L330.532,386.045 C307.370,452.394 244.249,500.000 170.000,500.000 C76.112,500.000 0.000,423.888 0.000,330.000 C0.000,262.255 39.629,203.772 96.967,176.451 L97.000,176.000 L460.000,-0.000 Z"
+                />
+
+                {/* Left Wing */}
+                <path
+                  transform="translate(860 280)"
+                  fill-rule="evenodd"
+                  fill="rgb(38, 146, 60)"
+                  d="M460.000,330.000 C460.000,423.888 383.888,500.000 290.000,500.000 C215.751,500.000 152.630,452.394 129.468,386.045 L129.000,386.000 L0.000,-0.000 L363.000,176.000 L363.033,176.451 C420.371,203.772 460.000,262.255 460.000,330.000 Z"
+                />
+
+                {/* Left Eye */}
+                <path
+                  transform="translate(460 0)"
+                  fill-rule="evenodd"
+                  fill="rgb(247, 175, 187)"
+                  d="M95.000,0.000 C147.467,0.000 190.000,42.533 190.000,95.000 C190.000,147.467 147.467,190.000 95.000,190.000 C42.533,190.000 0.000,147.467 0.000,95.000 C0.000,42.533 42.533,0.000 95.000,0.000 Z"
+                />
+
+                <path
+                  transform="translate(670 0)"
+                  fill-rule="evenodd"
+                  fill="rgb(247, 175, 187)"
+                  d="M95.000,0.000 C147.467,0.000 190.000,42.533 190.000,95.000 C190.000,147.467 147.467,190.000 95.000,190.000 C42.533,190.000 0.000,147.467 0.000,95.000 C0.000,42.533 42.533,0.000 95.000,0.000 Z"
+                />
+              </svg>
                 Bee Travels
               </NavbarBrand>
               <Autosuggest
