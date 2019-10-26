@@ -6,7 +6,11 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY ./ ./
+COPY public ./public
+
+COPY .babelrc cities.csv swagger.yaml ./
+
+COPY src ./src
 
 EXPOSE 4000
 
