@@ -4,11 +4,7 @@ import PropTypes from "prop-types";
 import ReactMapboxGl from "react-mapbox-gl";
 import Autosuggest from "react-autosuggest";
 
-const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN;
-
-const Map = ReactMapboxGl({
-  accessToken: MAPBOX_ACCESS_TOKEN
-});
+var Map;
 
 class Content extends React.Component {
   constructor(props) {
@@ -26,22 +22,38 @@ class Content extends React.Component {
     };
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
+    await this.loadApiKey();
     this.loadDestinationData();
+  }
+
+  loadApiKey = async e => {
+    if (e) e.preventDefault();
+
+    console.log("loading api key");
+    const response = await fetch("/mapbox/key");
+
+    var data = await response.json();
+
+    console.log("loadapikey - ", data);
+    
+    if (!(data["key"] === undefined || data["key"] === "")) {
+      Map = ReactMapboxGl(
+        {accessToken: data["key"]}
+      );
+    }
   }
 
   loadDestinationData = async e => {
     if (e) e.preventDefault();
 
     const response = await fetch(
-      API_BASE_URL +
-        "/api/v1/destinations/" +
-        this.props.state.suggestion.city +
-        "/" +
-        this.props.state.suggestion.country
+      "/api/v1/destinations/" + this.props.state.suggestion.city + "/" + this.props.state.suggestion.country
     );
 
     var data = await response.json();
+
+    console.log(data);
 
     this.setState({ currentDestination: data });
   };
@@ -50,13 +62,14 @@ class Content extends React.Component {
     if (e) e.preventDefault();
 
     const response = await fetch(
-        "/api/v1/destinations/" +
-        suggestion.city +
-        "/" +
-        suggestion.country
+      "/api/v1/destinations/" + suggestion.city + "/" + suggestion.country
     );
 
+    console.log()
+
     var data = await response.json();
+
+    console.log(data);
 
     this.setState({ currentDestination: data });
   };
@@ -163,11 +176,8 @@ class Content extends React.Component {
           <Col>
             <img
               src={
-                "/images/" +
-                this.state.currentDestination.city +
-                ", " +
-                this.state.currentDestination.country +
-                ".jpg"
+                "/images/" + this.state.currentDestination.city +
+                ", " + this.state.currentDestination.country + ".jpg"
               }
               height="500px"
               width="500px"
