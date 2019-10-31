@@ -93,8 +93,27 @@ class App extends React.Component {
     return (
       <Router history={this.history}>
         <Switch>
-          <Route exact path="/" render={(props) => <Home {...props} onChange={this.onChange} getSuggestions={this.getSuggestions} getSuggestionValue={this.getSuggestionValue} onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} onSuggestionsClearRequested={this.onSuggestionsClearRequested} renderSuggestion={this.renderSuggestion} loadDestination={this.loadDestination} state={this.state} />} />
-          <Route path="/destination" render={(props) => <Content {...props} onChange={this.onChange} getSuggestions={this.getSuggestions} getSuggestionValue={this.getSuggestionValue} onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} onSuggestionsClearRequested={this.onSuggestionsClearRequested} renderSuggestion={this.renderSuggestion} state={this.state} />} />
+          <Route exact path="/"
+            render={(props) => <Home {...props}
+              onChange={this.onChange}
+              getSuggestions={this.getSuggestions}
+              getSuggestionValue={this.getSuggestionValue}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              renderSuggestion={this.renderSuggestion}
+              loadDestination={this.loadDestination}
+              state={this.state} />}
+          />
+          <Route path="/destination"
+            render={(props) => <Content {...props}
+              onChange={this.onChange}
+              getSuggestions={this.getSuggestions}
+              getSuggestionValue={this.getSuggestionValue}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              renderSuggestion={this.renderSuggestion}
+              state={this.state} />}
+          />
           <Route component={Error} />
         </Switch>
       </Router>

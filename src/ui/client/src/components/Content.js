@@ -4,8 +4,9 @@ import PropTypes from "prop-types";
 import ReactMapboxGl from "react-mapbox-gl";
 import Autosuggest from "react-autosuggest";
 
-var Map;
-
+var Map = ReactMapboxGl(
+  { "accessToken": "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg"}
+)
 class Content extends React.Component {
   constructor(props) {
     super(props);
@@ -23,25 +24,7 @@ class Content extends React.Component {
   }
 
   async componentDidMount() {
-    await this.loadApiKey();
     this.loadDestinationData();
-  }
-
-  loadApiKey = async e => {
-    if (e) e.preventDefault();
-
-    console.log("loading api key");
-    const response = await fetch("/mapbox/key");
-
-    var data = await response.json();
-
-    console.log("loadapikey - ", data);
-    
-    if (!(data["key"] === undefined || data["key"] === "")) {
-      Map = ReactMapboxGl(
-        {accessToken: data["key"]}
-      );
-    }
   }
 
   loadDestinationData = async e => {
