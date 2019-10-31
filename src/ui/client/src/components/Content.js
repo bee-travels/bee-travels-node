@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import ReactMapboxGl from "react-mapbox-gl";
 import Autosuggest from "react-autosuggest";
 
-const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:4000";
 const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN;
 
 const Map = ReactMapboxGl({
@@ -51,7 +50,6 @@ class Content extends React.Component {
     if (e) e.preventDefault();
 
     const response = await fetch(
-      API_BASE_URL +
         "/api/v1/destinations/" +
         suggestion.city +
         "/" +
@@ -165,7 +163,7 @@ class Content extends React.Component {
           <Col>
             <img
               src={
-                "http://localhost:4000/images/" +
+                "/images/" +
                 this.state.currentDestination.city +
                 ", " +
                 this.state.currentDestination.country +
