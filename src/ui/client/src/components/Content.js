@@ -6,7 +6,8 @@ import Autosuggest from "react-autosuggest";
 
 var Map = ReactMapboxGl(
   { "accessToken": "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg"}
-)
+);
+
 class Content extends React.Component {
   constructor(props) {
     super(props);
@@ -47,8 +48,6 @@ class Content extends React.Component {
     const response = await fetch(
       "/api/v1/destinations/" + suggestion.city + "/" + suggestion.country
     );
-
-    console.log()
 
     var data = await response.json();
 
