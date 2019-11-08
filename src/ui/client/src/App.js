@@ -6,8 +6,6 @@ import Content from "./components/Content";
 import Home from "./components/Home";
 import Error from "./components/Error";
 
-const API_BASE_URL = "http://localhost:4000"; //process.env.API_URL;
-
 class App extends React.Component {
 
   constructor(props) {
@@ -39,7 +37,7 @@ class App extends React.Component {
   getDestinations = async (e) => {
     if (e) e.preventDefault();
 
-    const response = await fetch(API_BASE_URL + "/api/v1/destinations");
+    const response = await fetch("/api/v1/destinations");
 
     var data = await response.json();
 
@@ -95,8 +93,27 @@ class App extends React.Component {
     return (
       <Router history={this.history}>
         <Switch>
-          <Route exact path="/" render={(props) => <Home {...props} onChange={this.onChange} getSuggestions={this.getSuggestions} getSuggestionValue={this.getSuggestionValue} onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} onSuggestionsClearRequested={this.onSuggestionsClearRequested} renderSuggestion={this.renderSuggestion} loadDestination={this.loadDestination} state={this.state} />} />
-          <Route path="/destination" render={(props) => <Content {...props} onChange={this.onChange} getSuggestions={this.getSuggestions} getSuggestionValue={this.getSuggestionValue} onSuggestionsFetchRequested={this.onSuggestionsFetchRequested} onSuggestionsClearRequested={this.onSuggestionsClearRequested} renderSuggestion={this.renderSuggestion} state={this.state} />} />
+          <Route exact path="/"
+            render={(props) => <Home {...props}
+              onChange={this.onChange}
+              getSuggestions={this.getSuggestions}
+              getSuggestionValue={this.getSuggestionValue}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              renderSuggestion={this.renderSuggestion}
+              loadDestination={this.loadDestination}
+              state={this.state} />}
+          />
+          <Route path="/destination"
+            render={(props) => <Content {...props}
+              onChange={this.onChange}
+              getSuggestions={this.getSuggestions}
+              getSuggestionValue={this.getSuggestionValue}
+              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              renderSuggestion={this.renderSuggestion}
+              state={this.state} />}
+          />
           <Route component={Error} />
         </Switch>
       </Router>

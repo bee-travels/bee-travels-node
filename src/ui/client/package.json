@@ -2,6 +2,7 @@
   "name": "front-end",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "history": "^4.10.1",
@@ -39,5 +40,6 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^6.5.1",
     "eslint-plugin-react": "^7.16.0"
-  }
+  },
+  "proxy": "http://localhost:9000"
 }

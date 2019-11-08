@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd client && npm install && npm run build && cd .. && node index.js"
+    "build": "cd client && npm install && npm run build && cd ..",
+    "start": "concurrently --kill-others-on-fail 'npm run server' 'npm run client'",
+    "server": "nodemon index.js",
+    "client": "cd client && npm start"
+
   },
   "keywords": [
     "react",
@@ -15,6 +19,11 @@
   "author": "moficodes@gmail.com, maxshapiro32@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0"
   }
 }
