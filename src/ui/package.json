@@ -9,7 +9,6 @@
     "start": "concurrently --kill-others-on-fail 'npm run server' 'npm run client'",
     "server": "nodemon index.js",
     "client": "cd client && npm start"
-
   },
   "keywords": [
     "react",
@@ -24,6 +23,7 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
-    "concurrently": "^5.0.0"
+    "concurrently": "^5.0.0",
+    "nodemon": "^1.19.4"
   }
 }
