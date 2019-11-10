@@ -1,0 +1,50 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is a microservice that handles currency exchange rate data for Bee Travel
+  version: 1.0.0
+  title: Bee Travel Currency Data Service
+  contact:
+    email: grant.steinfeld@ibm.com
+  license:
+    name: Apache 2.0
+    url: 'https://github.com/IBM/example-health-analytics/blob/master/LICENSE'
+host: 'localhost:3000'
+basePath: /api/v1
+tags:
+  - name: Currency
+    description: Operations associated with destination data
+schemes:
+  - http
+paths:
+  /currency:
+    get:
+      tags:
+        - Currency
+      summary: Gets list of all currency exchange rates from external API
+      description: 'calls the exchangeratesapi.io'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successfully got list of currency exchange rates
+        '500':
+          description: Internal Server Error
+  /currency/{currencycode}:
+    get:
+      tags:
+        - Currency
+      summary: lookup currency code ( char(3) ) return specific float represnting rate compared to Euros
+      description: ''
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: currencycode
+          description: 3 character code for country
+          required: true
+      responses:
+        '200':
+          description: Successfully got currency exchange rate data
+        '500':
+          description: Internal Server Error
