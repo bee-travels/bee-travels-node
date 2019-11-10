@@ -1,10 +1,8 @@
 /**
  * Service for retreiving exchange data from an external API
- *  
+ *  https://api.exchangeratesapi.io/latest
  */
 
-import { parse } from "fast-csv";
-import { createReadStream } from "fs";
 
 function getCurrencyExchangeRate(countryCode) {
   
