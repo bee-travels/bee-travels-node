@@ -11,8 +11,12 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# VSCode
+*.code-workspace
+
 node_modules/
 dist/
 build/
 
 .DS_Store
+
