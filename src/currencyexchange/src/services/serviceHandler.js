@@ -3,7 +3,7 @@
  *  https://api.exchangeratesapi.io/latest
  */
 
-
+import { axios } from "axios";
 function getCurrencyExchangeRate(countryCode) {
   
 
