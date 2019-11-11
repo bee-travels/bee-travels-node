@@ -20,11 +20,12 @@ router.get("/", function (req, res, next) {
 
 /* GET exchange rate for currency code */
 router.get("/:code", function (req, res, next) {
-
+  console.log(req.params.code)
   var currencyData = getCurrencyExchangeRate(req.params.code);
 
   currencyData.then(function (data) {
-    res.send(data);
+    console.log(data)
+    res.send({result: data})
   }).catch(function (err) {
     res.sendStatus(500);
     next(err);

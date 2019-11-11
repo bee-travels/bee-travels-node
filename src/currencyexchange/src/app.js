@@ -12,7 +12,7 @@ import currencyRouter from "./routes/currency";
 import yaml from "yamljs";
 
 var swaggerDocument = yaml.load("swagger.yaml");
-swaggerDocument.host = process.env.HOST_IP || "localhost:3001";
+swaggerDocument.host = process.env.HOST_IP || "localhost:4001";
 var scheme = process.env.SCHEME || "http";
 swaggerDocument.schemes = [scheme];
 
