@@ -2,18 +2,18 @@ import { getCurrencyExchangeRate } from "../../src/services/serviceHandler";
 import { describe, it } from "mocha";
 import { assert } from "chai";
 
-describe("Get all currency exchange rates", () => {
-  it("should return all 3 letter country codes with currency for the day", done => {
-    var currencyRateByCountryData = getCurrencyExchangeRate(null);
-    currencyRateByCountryData.then(data => {
-      assert(data.rates !== null, "Data should have a List called 'rates'");
-      assert(data.base === "EUR", "base rate should be EUR");
-      done();
-    }).catch(err => {
-      done(err);
-    });
-  });
-});
+// describe("Get all currency exchange rates", () => {
+//   it("should return all 3 letter country codes with currency for the day", done => {
+//     var currencyRateByCountryData = getCurrencyExchangeRate(null);
+//     currencyRateByCountryData.then(data => {
+//       assert(data.rates !== null, "Data should have a List called 'rates'");
+//       assert(data.base === "EUR", "base rate should be EUR");
+//       done();
+//     }).catch(err => {
+//       done(err);
+//     });
+//   });
+// });
 
 describe("Get a specific rate for a specific country code", () => {
   it("should return a rate for a specific country code", done => {

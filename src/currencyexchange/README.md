@@ -13,6 +13,19 @@ $>  npm -v
 6.9.0
 ```
 
+### install node dependancies from package.json
 
 
+```sh
+$> npm install
+
+#if developing, install devDependacies
+$> npm install --save-dev
+```
+
+
+### run tests
+
+```sh
+$> npm run test
 ```

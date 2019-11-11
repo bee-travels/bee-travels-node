@@ -7,11 +7,12 @@
 function getCurrencyExchangeRate(countryCode) {
   
 
-  return new Promise(function (resolve) {
-    if (countryCode) {
-        return 0;
-    }
-  });
+  return new Promise(
+    function (resolve) {
+        if (countryCode) {
+            resolve ({"rate": 0});
+        }   
+    });
 }
 
 export { getCurrencyExchangeRate };
