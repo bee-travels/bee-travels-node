@@ -1,12 +1,12 @@
 /**
  * Service for retreiving exchange data from an external API
- *  https://api.exchangeratesapi.io/latest
+ *  
  */
+import axios from "axios";
 
-import { axios } from "axios";
+export const URL_ENDPOINT = 'https://api.exchangeratesapi.io/latest';
+
 function getCurrencyExchangeRate(countryCode) {
-  
-
   return new Promise(
     function (resolve) {
         if (countryCode) {
@@ -15,4 +15,16 @@ function getCurrencyExchangeRate(countryCode) {
     });
 }
 
-export { getCurrencyExchangeRate };
+function getCurrencyExchangeRates() {
+    return new Promise(
+      function (resolve) {
+          axios.get(URL_ENDPOINT)
+            .then(function (response){
+                resolve(response.data);
+            })
+            .catch(function (error){
+                console.log(error);
+            });
+      });
+  }
+export { getCurrencyExchangeRate, getCurrencyExchangeRates };
