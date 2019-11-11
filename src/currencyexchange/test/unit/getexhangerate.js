@@ -1,7 +1,7 @@
 import { getCurrencyExchangeRate, getCurrencyExchangeRates } from "../../src/services/serviceHandler";
 
 import { describe, it } from "mocha";
-import { assert } from "chai";
+import { assert, expect } from "chai";
 
 describe("Get all currency exchange rates", () => {
   it("should return all 3 letter country codes with currency for the day", done => {
@@ -17,13 +17,29 @@ describe("Get all currency exchange rates", () => {
   });
 });
 
-describe("Get a specific rate for a specific country code", () => {
-  it("should return a rate for a specific country code", done => {
-    var currencyRateByCountryData = getCurrencyExchangeRate("USA");
+// describe("Get a specific rate for a specific country code that does not exist, i.e. USA", () => {
+//   it("should return a rate for a specific country code", (done) => {
+//     var currencyRateByCountryData = getCurrencyExchangeRate("USA");
+//     currencyRateByCountryData.then(err => {
+//       assert.throws(
+//         () => { throw new Error("Error thrown"); }, err, "No country code USA");
+//         done();
+      
+//     }).catch(err => {
+//       assert()
+//       done(err);
+//     });
+//   });
+// });
+
+describe("Get a specific rate for a specific country code that does exist, i.e. USD", () => {
+  it("should return a numeric rate for a specific country code", (done) => {
+    var currencyRateByCountryData = getCurrencyExchangeRate("USD");
     currencyRateByCountryData.then(data => {
-      assert(data.rate === 1.1034, "rate for a specific country code should be 1.1034");  // AS this changes daily -> mocks NB!!
+      assert(isNaN(data) === false, "expect daily rate as a number");
       done();
     }).catch(err => {
+      assert()
       done(err);
     });
   });

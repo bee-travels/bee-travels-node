@@ -6,12 +6,23 @@ import axios from "axios";
 
 export const URL_ENDPOINT = 'https://api.exchangeratesapi.io/latest';
 
-function getCurrencyExchangeRate(countryCode) {
+function getCurrencyExchangeRate(countryCurrencyCode) {
   return new Promise(
     function (resolve) {
-        if (countryCode) {
-            resolve ({"rate": 0});
-        }   
+        if(countryCurrencyCode) {
+        axios.get(URL_ENDPOINT)
+            .then(function (response){
+                if(response.data.rates.hasOwnProperty(countryCurrencyCode) === true){
+                    resolve(response.data.rates[countryCurrencyCode]);
+                } else {
+                    throw new Error(`no key found for currency code ${countryCurrencyCode}`);
+                    
+                }
+            })
+            .catch(function (error){
+                console.log(error);
+            }); 
+        }
     });
 }
 
