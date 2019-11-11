@@ -28,4 +28,7 @@ $> npm install --save-dev
 
 ```sh
 $> npm run test
+ npm run build
+npm run start
+ npm run dev
 ```
