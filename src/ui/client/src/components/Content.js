@@ -174,7 +174,8 @@ Content.propTypes = {
   onSuggestionsFetchRequested: PropTypes.func.isRequired,
   onSuggestionsClearRequested: PropTypes.func.isRequired,
   getSuggestionValue: PropTypes.func.isRequired,
-  renderSuggestion: PropTypes.func.isRequired
+  renderSuggestion: PropTypes.func.isRequired,
+  loadDestination: PropTypes.func.isRequired
 };
 
 export default Content;
