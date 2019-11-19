@@ -28,32 +28,24 @@ class Content extends React.Component {
     this.loadDestinationData();
   }
 
+  async componentDidUpdate() {
+    if (this.state.currentDestination.city !== this.props.state.suggestion.city || this.state.currentDestination.country !== this.props.state.suggestion.country) {
+      this.loadDestinationData();
+    }
+  }
+
   loadDestinationData = async e => {
     if (e) e.preventDefault();
 
-    const response = await fetch(
-      "/api/v1/destinations/" + this.props.state.suggestion.city + "/" + this.props.state.suggestion.country
-    );
+    if (this.props.state.suggestion.city && this.props.state.suggestion.country) {
+      const response = await fetch(
+        "/api/v1/destinations/" + this.props.state.suggestion.city + "/" + this.props.state.suggestion.country
+      );
 
-    var data = await response.json();
+      var data = await response.json();
 
-    console.log(data);
-
-    this.setState({ currentDestination: data });
-  };
-
-  getDestinationData = async (e, { suggestion }) => {
-    if (e) e.preventDefault();
-
-    const response = await fetch(
-      "/api/v1/destinations/" + suggestion.city + "/" + suggestion.country
-    );
-
-    var data = await response.json();
-
-    console.log(data);
-
-    this.setState({ currentDestination: data });
+      this.setState({ currentDestination: data });
+    }
   };
 
   render() {
@@ -122,7 +114,7 @@ class Content extends React.Component {
                 getSuggestionValue={this.props.getSuggestionValue}
                 renderSuggestion={this.props.renderSuggestion}
                 inputProps={inputProps}
-                onSuggestionSelected={this.getDestinationData}
+                onSuggestionSelected={this.props.loadDestination}
               />
             </Navbar>
           </Col>

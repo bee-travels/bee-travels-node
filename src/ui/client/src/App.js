@@ -13,13 +13,23 @@ class App extends React.Component {
 
     this.history = createHistory();
 
+    var url = this.history.location.pathname.split("/");
+    var location = url[url.length - 1].split("_");
+    var city = "";
+    var country = "";
+
+    if (url[url.length - 1].indexOf("_") !== -1) {
+      city = location[0];
+      country = location[1];
+    } 
+
     this.state = {
       destinationList: [],
       scrollbarValue: "",
       suggestions: [],
       suggestion: {
-        state: "",
-        country: ""
+        city: city,
+        country: country
       }
     };
 
@@ -86,7 +96,7 @@ class App extends React.Component {
     this.setState({
       suggestion: suggestion
     });
-    this.history.push("/destination");
+    this.history.push("/destination/" + suggestion.city + "_" + suggestion.country);
   }
 
   render() {
@@ -112,6 +122,7 @@ class App extends React.Component {
               onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
               onSuggestionsClearRequested={this.onSuggestionsClearRequested}
               renderSuggestion={this.renderSuggestion}
+              loadDestination={this.loadDestination}
               state={this.state} />}
           />
           <Route component={Error} />
