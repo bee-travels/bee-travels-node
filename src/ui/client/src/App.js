@@ -49,7 +49,7 @@ class App extends React.Component {
 
     const response = await fetch("/api/v1/destinations");
 
-    var data = await response.json();
+    const data = await response.json();
 
     this.setState({ destinationList: data["cities"] });
   }

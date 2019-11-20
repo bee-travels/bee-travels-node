@@ -42,7 +42,7 @@ class Content extends React.Component {
         "/api/v1/destinations/" + this.props.state.suggestion.city + "/" + this.props.state.suggestion.country
       );
 
-      var data = await response.json();
+      const data = await response.json();
 
       this.setState({ currentDestination: data });
     }
