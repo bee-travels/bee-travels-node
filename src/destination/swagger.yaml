@@ -8,8 +8,8 @@ info:
     email: maxshapiro32@ibm.com
   license:
     name: Apache 2.0
-    url: 'https://github.com/IBM/example-health-analytics/blob/master/LICENSE'
-host: 'localhost:3000'
+    url: 'https://github.com/bee-travels/bee-travels/blob/master/LICENSE'
+host: 'localhost:4000'
 basePath: /api/v1
 tags:
   - name: Destinations
