@@ -14,11 +14,13 @@
     "prod": "NODE_ENV=production npm-run-all clean build server:prod"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "sendgrid": "^5.2.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
