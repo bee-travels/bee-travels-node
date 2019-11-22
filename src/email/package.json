@@ -1,5 +1,5 @@
 {
-  "name": "exampletravel",
+  "name": "email",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -14,16 +14,11 @@
     "prod": "NODE_ENV=production npm-run-all clean build server:prod"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.3",
-    "cors": "^2.8.5",
+    "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "express": "~4.16.0",
-    "fast-csv": "^3.4.0",
-    "http-errors": "~1.6.2",
-    "morgan": "~1.9.0",
-    "npm-run-all": "^4.1.5",
-    "swagger-ui-express": "^4.1.1",
-    "yamljs": "^0.3.0"
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
@@ -37,6 +32,7 @@
     "constantinople": ">=3.1.1",
     "eslint": "^6.5.1",
     "mocha": "^6.2.1",
+    "npm-run-all": "^4.1.5",
     "uglify-js": ">=2.6.0"
   }
 }
