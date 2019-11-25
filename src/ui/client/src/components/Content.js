@@ -37,10 +37,10 @@ class Content extends React.Component {
   loadDestinationData = async e => {
     if (e) e.preventDefault();
 
-    if (this.props.state.suggestion.city && this.props.state.suggestion.country) {
-      const response = await fetch(
-        "/api/v1/destinations/" + this.props.state.suggestion.city + "/" + this.props.state.suggestion.country
-      );
+    const { city, country } = this.props.state.suggestion;
+
+    if (city && country) {
+      const response = await fetch(`/api/v1/destinations/${city}/${country}`);
 
       const data = await response.json();
 
