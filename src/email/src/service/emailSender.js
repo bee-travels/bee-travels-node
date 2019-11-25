@@ -11,7 +11,7 @@ function sendEmail(email, subject, body){
     from: from,
     subject: subject,
     text: body
-  }
+  };
 
   sgMail.send(msg);
 
