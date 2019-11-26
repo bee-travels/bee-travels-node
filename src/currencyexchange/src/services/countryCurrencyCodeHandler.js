@@ -28,6 +28,7 @@ async function getCurrencyNameAndCode(countryName) {
     throw new NotFoundError(`no country found for country name ${countryName}`);
   }
 
+
   return countryRow;
 }
 
@@ -44,6 +45,8 @@ async function getCountryAndCurrencyCode(currencyCode) {
   if (!countryRow) {
     throw new NotFoundError(`currency code ${currencyCode} not found`);
   }
+
+  countryRow.country = [countryRow.country]
 
   return countryRow;
 }

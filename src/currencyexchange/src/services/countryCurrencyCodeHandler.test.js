@@ -25,13 +25,13 @@ describe('Get Currency Name and Code given a well known country that does exist,
   });
 });
 
-describe('Get Currency Name and Country nane given a well known country code that does exist, i.e. ZAR', () => {
+describe('Get Currency Name and Country name(s) in a list given a well known country code that does exist for 1 country, i.e. ZAR', () => {
   it('should return metadata for a specific country code, i.e. ZAR', async () => {
     const data = await getCountryAndCurrencyCode('ZAR');
     expect(data).toEqual({
       currencyCode: 'ZAR',
       currencyName: 'South African rand',
-      country: 'South Africa',
+      country: ['South Africa'],
     });
   });
 });
