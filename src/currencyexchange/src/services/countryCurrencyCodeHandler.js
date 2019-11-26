@@ -44,7 +44,7 @@ async function getCountryAndCurrencyCode(currencyCode) {
 
   for (var row in data) {
     var row_ = data[row];
-    if (row_.currencyCode === currencyCode) {
+    if (row_.currencyCode.toLowerCase() === currencyCode.toLowerCase()) {
       counter++;
       if (counter === 1) {            //create output dict.
         outputDict = row_;
