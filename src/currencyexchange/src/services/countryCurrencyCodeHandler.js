@@ -28,7 +28,6 @@ async function getCurrencyNameAndCode(countryName) {
     throw new NotFoundError(`no country found for country name ${countryName}`);
   }
 
-
   return countryRow;
 }
 
@@ -38,17 +37,29 @@ async function getCountryAndCurrencyCode(currencyCode) {
   }
 
   const data = await readData();
-  const countryRow = data.find(
-    row => row.currencyCode.toUpperCase() === currencyCode.toUpperCase()
-  );
 
-  if (!countryRow) {
+  let outputDict = null;
+  let outputRows = [];
+  let counter = 0;
+
+  for (var row in data) {
+    var row_ = data[row];
+    if (row_.currencyCode === currencyCode) {
+      counter++;
+      if (counter === 1) {            //create output dict.
+        outputDict = row_;
+      }
+      outputRows.push(row_.country);
+    }
+  }
+
+  if (row_.length === 0 && outputDict === null) {
     throw new NotFoundError(`currency code ${currencyCode} not found`);
   }
 
-  countryRow.country = [countryRow.country]
+  outputDict.country = outputRows;
 
-  return countryRow;
+  return outputDict;
 }
 
 export { getCurrencyNameAndCode, getCountryAndCurrencyCode };

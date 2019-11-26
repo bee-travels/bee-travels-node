@@ -35,3 +35,39 @@ describe('Get Currency Name and Country name(s) in a list given a well known cou
     });
   });
 });
+
+describe('Get Currency Name and Country name(s) in a list given a well known country code that does exist for  MORE than one country, i.e. USD', () => {
+  it('should return metadata for a specific country code, i.e. USD', async () => {
+    const data = await getCountryAndCurrencyCode('USD');
+    const expectedCountries = [
+      'American Samoa',
+      'Bonaire',
+      'British Indian Ocean Territory',
+      'British Virgin Islands',
+      'Caribbean Netherlands',
+      'Ecuador',
+      'El Salvador',
+      'Guam',
+      'Marshall Islands',
+      'Micronesia',
+      'Northern Mariana Islands',
+      'Palau',
+      'Panama',
+      'Puerto Rico',
+      'Saba',
+      'Sint Eustatius',
+      'Timor-Leste',
+      'Turks and Caicos Islands',
+      'United States of America',
+      'US Virgin Islands',
+      'Wake Island',
+      'Zimbabwe',
+    ];
+
+    expect(data).toEqual({
+      currencyCode: 'USD',
+      currencyName: 'United States dollar',
+      country: expectedCountries,
+    });
+  });
+});
