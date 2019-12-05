@@ -2,25 +2,19 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Container, Row, Col, Navbar, NavbarBrand } from "reactstrap";
 import PropTypes from "prop-types";
 import ReactMapboxGl from "react-mapbox-gl";
-import Autosuggest from "react-autosuggest";
 import BeeLogo from "./BeeLogo";
+import UncontrolledSearch from "./UncontrolledSearch";
+import queryString from "query-string";
+import globalHistory from "./../globalHistory";
 
 var Map = ReactMapboxGl({
   accessToken:
     "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg"
 });
 
-const Content = ({
-  scrollbarValue,
-  suggestion,
-  suggestions,
-  onChange,
-  onSuggestionsFetchRequested,
-  onSuggestionsClearRequested,
-  getSuggestionValue,
-  renderSuggestion,
-  loadDestination
-}) => {
+const Content = ({ location }) => {
+  // const { city, country } = queryString.parse(location.search);
+
   const [city, setCity] = useState("");
   const [lat, setLat] = useState("");
   const [lng, setLng] = useState("");
@@ -40,15 +34,10 @@ const Content = ({
   }, []);
 
   useEffect(() => {
-    const { city, country } = suggestion;
+    // const { city, country } = suggestion;
+    const { city, country } = queryString.parse(globalHistory.location.search);
     loadDestinationData(city, country);
-  }, [loadDestinationData, suggestion]);
-
-  const inputProps = {
-    placeholder: "Where will you bee traveling?",
-    value: scrollbarValue,
-    onChange: onChange
-  };
+  }, [loadDestinationData]);
 
   return (
     <Container fluid={true}>
@@ -65,15 +54,7 @@ const Content = ({
               />
               Bee Travels
             </NavbarBrand>
-            <Autosuggest
-              suggestions={suggestions}
-              onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={onSuggestionsClearRequested}
-              getSuggestionValue={getSuggestionValue}
-              renderSuggestion={renderSuggestion}
-              inputProps={inputProps}
-              onSuggestionSelected={loadDestination}
-            />
+            {/* <UncontrolledSearch /> */}
           </Navbar>
         </Col>
       </Row>
