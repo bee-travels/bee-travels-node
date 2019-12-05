@@ -10,49 +10,37 @@ const renderSuggestion = suggestion => (
   <span>{getSuggestionValue(suggestion)}</span>
 );
 
-const UncontrolledSearch = ({ city, country }) => {
-  const [cities, setCities] = useState([]);
-  const [searchBarValue, setSearchBarValue] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
+const filterSuggestions = (destinations, value) => {
+  const inputValue = value.trim().toLowerCase();
+  const inputLength = inputValue.length;
 
-  const getDestinations = useCallback(async () => {
-    const response = await fetch("/api/v1/destinations");
-    const data = await response.json();
-    setCities(data.cities);
-  }, []);
+  if (inputLength === 0) {
+    return [];
+  }
+
+  return destinations.filter(
+    destination =>
+      destination.city.toLowerCase().slice(0, inputLength) === inputValue ||
+      destination.country.toLowerCase().slice(0, inputLength) === inputValue
+  );
+};
+
+const UncontrolledSearch = () => {
+  const [destinations, setDestinations] = useState([]);
+  const [searchBarValue, setSearchBarValue] = useState("");
+  const [currentSuggestion, setCurrentSuggestion] = useState("");
 
   // Autosuggest passes back an event and the new value.
   const handleChange = useCallback((_, { newValue }) => {
     setSearchBarValue(newValue);
   }, []);
 
-  const getSuggestions = useCallback(
-    value => {
-      const inputValue = value.trim().toLowerCase();
-      const inputLength = inputValue.length;
-
-      return inputLength === 0
-        ? []
-        : cities.filter(
-            destination =>
-              destination.city.toLowerCase().slice(0, inputLength) ===
-                inputValue ||
-              destination.country.toLowerCase().slice(0, inputLength) ===
-                inputValue
-          );
-    },
-    [cities]
-  );
-
-  const handleSuggestionsFetchRequested = useCallback(
-    ({ value }) => {
-      setSuggestions(getSuggestions(value));
-    },
-    [getSuggestions]
-  );
+  const handleSuggestionsFetchRequested = useCallback(({ value }) => {
+    setCurrentSuggestion(value);
+  }, []);
 
   const handleSuggestionsClearRequested = useCallback(() => {
-    setSuggestions([]);
+    setCurrentSuggestion("");
   }, []);
 
   const handleSuggestionSelected = useCallback((_, { suggestion }) => {
@@ -60,12 +48,17 @@ const UncontrolledSearch = ({ city, country }) => {
   }, []);
 
   useEffect(() => {
-    getDestinations();
-  }, [getDestinations]);
+    const loadDestinations = async () => {
+      const res = await fetch("/api/v1/destinations");
+      const { cities } = await res.json();
+      setDestinations(cities);
+    };
+    loadDestinations();
+  }, []);
 
   return (
     <Autosuggest
-      suggestions={suggestions}
+      suggestions={filterSuggestions(destinations, currentSuggestion)}
       onSuggestionsFetchRequested={handleSuggestionsFetchRequested}
       onSuggestionsClearRequested={handleSuggestionsClearRequested}
       getSuggestionValue={getSuggestionValue}
