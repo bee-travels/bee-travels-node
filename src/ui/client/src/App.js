@@ -8,7 +8,6 @@ import Home from "./components/Home";
 import Error from "./components/Error";
 
 class App extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -29,15 +28,19 @@ class App extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.getSuggestions = this.getSuggestions.bind(this);
     this.getSuggestionValue = this.getSuggestionValue.bind(this);
-    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
-    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
+    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(
+      this
+    );
+    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(
+      this
+    );
     this.renderSuggestion = this.renderSuggestion.bind(this);
     this.loadDestination = this.loadDestination.bind(this);
 
     this.getDestinations();
   }
 
-  getDestinations = async (e) => {
+  getDestinations = async e => {
     if (e) e.preventDefault();
 
     const response = await fetch("/api/v1/destinations");
@@ -45,7 +48,7 @@ class App extends React.Component {
     const data = await response.json();
 
     this.setState({ destinationList: data.cities });
-  }
+  };
 
   onChange = (event, { newValue }) => {
     this.setState({
@@ -57,10 +60,15 @@ class App extends React.Component {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    return inputLength === 0 ? [] : this.state.destinationList.filter(destination =>
-      destination.city.toLowerCase().slice(0, inputLength) === inputValue
-      || destination.country.toLowerCase().slice(0, inputLength) === inputValue
-    );
+    return inputLength === 0
+      ? []
+      : this.state.destinationList.filter(
+          destination =>
+            destination.city.toLowerCase().slice(0, inputLength) ===
+              inputValue ||
+            destination.country.toLowerCase().slice(0, inputLength) ===
+              inputValue
+        );
   };
 
   getSuggestionValue(suggestion) {
@@ -81,7 +89,9 @@ class App extends React.Component {
 
   renderSuggestion(suggestion) {
     return (
-      <span>{suggestion.city}, {suggestion.country}</span>
+      <span>
+        {suggestion.city}, {suggestion.country}
+      </span>
     );
   }
 
@@ -96,27 +106,38 @@ class App extends React.Component {
     return (
       <Router history={this.history}>
         <Switch>
-          <Route exact path="/"
-            render={(props) => <Home {...props}
-              onChange={this.onChange}
-              getSuggestions={this.getSuggestions}
-              getSuggestionValue={this.getSuggestionValue}
-              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-              renderSuggestion={this.renderSuggestion}
-              loadDestination={this.loadDestination}
-              state={this.state} />}
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <Home
+                {...props}
+                onChange={this.onChange}
+                getSuggestions={this.getSuggestions}
+                getSuggestionValue={this.getSuggestionValue}
+                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                renderSuggestion={this.renderSuggestion}
+                loadDestination={this.loadDestination}
+                state={this.state}
+              />
+            )}
           />
-          <Route path="/destination"
-            render={(props) => <Content {...props}
-              onChange={this.onChange}
-              getSuggestions={this.getSuggestions}
-              getSuggestionValue={this.getSuggestionValue}
-              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-              renderSuggestion={this.renderSuggestion}
-              loadDestination={this.loadDestination}
-              state={this.state} />}
+          <Route
+            path="/destination"
+            render={props => (
+              <Content
+                {...props}
+                onChange={this.onChange}
+                getSuggestions={this.getSuggestions}
+                getSuggestionValue={this.getSuggestionValue}
+                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                renderSuggestion={this.renderSuggestion}
+                loadDestination={this.loadDestination}
+                state={this.state}
+              />
+            )}
           />
           <Route component={Error} />
         </Switch>
