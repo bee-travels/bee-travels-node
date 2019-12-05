@@ -29,7 +29,11 @@ class Content extends React.Component {
   }
 
   async componentDidUpdate() {
-    if (this.state.currentDestination.city !== this.props.state.suggestion.city || this.state.currentDestination.country !== this.props.state.suggestion.country) {
+    const currentCity = this.state.currentDestination.city;
+    const currentCountry = this.state.currentDestination.country;
+    const { city, country } = this.props.state.suggestion;
+
+    if (currentCity !== city || currentCountry !== country) {
       this.loadDestinationData();
     }
   }

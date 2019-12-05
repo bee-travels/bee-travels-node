@@ -1,6 +1,7 @@
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory as createHistory } from "history";
+import queryString from "query-string";
 
 import Content from "./components/Content";
 import Home from "./components/Home";
@@ -13,23 +14,15 @@ class App extends React.Component {
 
     this.history = createHistory();
 
-    var url = this.history.location.pathname.split("/");
-    var location = url[url.length - 1].split("_");
-    var city = "";
-    var country = "";
-
-    if (url[url.length - 1].indexOf("_") !== -1) {
-      city = location[0];
-      country = location[1];
-    } 
+    const queryParsed = queryString.parse(this.history.location.search);
 
     this.state = {
       destinationList: [],
       scrollbarValue: "",
       suggestions: [],
       suggestion: {
-        city: city,
-        country: country
+        city: queryParsed.city || "",
+        country: queryParsed.country || ""
       }
     };
 
@@ -51,7 +44,7 @@ class App extends React.Component {
 
     const data = await response.json();
 
-    this.setState({ destinationList: data["cities"] });
+    this.setState({ destinationList: data.cities });
   }
 
   onChange = (event, { newValue }) => {
@@ -96,7 +89,7 @@ class App extends React.Component {
     this.setState({
       suggestion: suggestion
     });
-    this.history.push("/destination/" + suggestion.city + "_" + suggestion.country);
+    this.history.push("/destination?" + queryString.stringify(suggestion));
   }
 
   render() {
