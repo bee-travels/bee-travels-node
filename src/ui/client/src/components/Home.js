@@ -5,7 +5,8 @@ import Autosuggest from "react-autosuggest";
 import BeeLogo from "./BeeLogo";
 
 const Home = ({
-  state,
+  scrollbarValue,
+  suggestions,
   onChange,
   onSuggestionsFetchRequested,
   onSuggestionsClearRequested,
@@ -15,7 +16,7 @@ const Home = ({
 }) => {
   const inputProps = {
     placeholder: "Where will you bee traveling?",
-    value: state.scrollbarValue,
+    value: scrollbarValue,
     onChange: onChange
   };
 
@@ -34,7 +35,7 @@ const Home = ({
             Bee Travels
           </div>
           <Autosuggest
-            suggestions={state.suggestions}
+            suggestions={suggestions}
             onSuggestionsFetchRequested={onSuggestionsFetchRequested}
             onSuggestionsClearRequested={onSuggestionsClearRequested}
             getSuggestionValue={getSuggestionValue}
@@ -49,7 +50,8 @@ const Home = ({
 };
 
 Home.propTypes = {
-  state: PropTypes.object.isRequired,
+  scrollbarValue: PropTypes.string.isRequired,
+  suggestions: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSuggestionsFetchRequested: PropTypes.func.isRequired,
   onSuggestionsClearRequested: PropTypes.func.isRequired,

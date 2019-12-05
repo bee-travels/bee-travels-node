@@ -1,149 +1,122 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Router, Route, Switch } from "react-router-dom";
-import { createBrowserHistory as createHistory } from "history";
+import { createBrowserHistory } from "history";
 import queryString from "query-string";
 
 import Content from "./components/Content";
 import Home from "./components/Home";
 import Error from "./components/Error";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+const history = createBrowserHistory();
 
-    this.history = createHistory();
+const getSuggestionValue = ({ city, country }) => `${city}, ${country}`;
 
-    const queryParsed = queryString.parse(this.history.location.search);
+const renderSuggestion = suggestion => (
+  <span>{getSuggestionValue(suggestion)}</span>
+);
 
-    this.state = {
-      destinationList: [],
-      scrollbarValue: "",
-      suggestions: [],
-      suggestion: {
-        city: queryParsed.city || "",
-        country: queryParsed.country || ""
-      }
-    };
+const App = () => {
+  const { city, country } = queryString.parse(history.location.search);
 
-    this.onChange = this.onChange.bind(this);
-    this.getSuggestions = this.getSuggestions.bind(this);
-    this.getSuggestionValue = this.getSuggestionValue.bind(this);
-    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(
-      this
-    );
-    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(
-      this
-    );
-    this.renderSuggestion = this.renderSuggestion.bind(this);
-    this.loadDestination = this.loadDestination.bind(this);
+  const [cities, setCities] = useState([]);
+  const [scrollbarValue, setScrollbarValue] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [suggestedCity, setSuggestedCity] = useState(city || "");
+  const [suggestedCountry, setSuggestedCountry] = useState(country || "");
 
-    this.getDestinations();
-  }
-
-  getDestinations = async e => {
-    if (e) e.preventDefault();
-
+  const getDestinations = useCallback(async () => {
     const response = await fetch("/api/v1/destinations");
-
     const data = await response.json();
+    setCities(data.cities);
+  }, []);
 
-    this.setState({ destinationList: data.cities });
-  };
+  // Autosuggest passes back an event and the new value.
+  const handleChange = useCallback((_, { newValue }) => {
+    setScrollbarValue(newValue);
+  }, []);
 
-  onChange = (event, { newValue }) => {
-    this.setState({
-      scrollbarValue: newValue
-    });
-  };
+  const getSuggestions = useCallback(
+    value => {
+      const inputValue = value.trim().toLowerCase();
+      const inputLength = inputValue.length;
 
-  getSuggestions = value => {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
+      return inputLength === 0
+        ? []
+        : cities.filter(
+            destination =>
+              destination.city.toLowerCase().slice(0, inputLength) ===
+                inputValue ||
+              destination.country.toLowerCase().slice(0, inputLength) ===
+                inputValue
+          );
+    },
+    [cities]
+  );
 
-    return inputLength === 0
-      ? []
-      : this.state.destinationList.filter(
-          destination =>
-            destination.city.toLowerCase().slice(0, inputLength) ===
-              inputValue ||
-            destination.country.toLowerCase().slice(0, inputLength) ===
-              inputValue
-        );
-  };
+  const onSuggestionsFetchRequested = useCallback(
+    ({ value }) => {
+      setSuggestions(getSuggestions(value));
+    },
+    [getSuggestions]
+  );
 
-  getSuggestionValue(suggestion) {
-    return suggestion.city + ", " + suggestion.country;
-  }
+  const onSuggestionsClearRequested = useCallback(() => {
+    setSuggestions([]);
+  }, []);
 
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: this.getSuggestions(value)
-    });
-  };
+  const loadDestination = useCallback((_, { suggestion }) => {
+    setSuggestedCity(suggestion.city);
+    setSuggestedCountry(suggestion.country);
+    history.push("/destination?" + queryString.stringify(suggestion));
+  }, []);
 
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
-  };
+  useEffect(() => {
+    getDestinations();
+  }, [getDestinations]);
 
-  renderSuggestion(suggestion) {
-    return (
-      <span>
-        {suggestion.city}, {suggestion.country}
-      </span>
-    );
-  }
-
-  loadDestination(e, { suggestion }) {
-    this.setState({
-      suggestion: suggestion
-    });
-    this.history.push("/destination?" + queryString.stringify(suggestion));
-  }
-
-  render() {
-    return (
-      <Router history={this.history}>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <Home
-                {...props}
-                onChange={this.onChange}
-                getSuggestions={this.getSuggestions}
-                getSuggestionValue={this.getSuggestionValue}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                renderSuggestion={this.renderSuggestion}
-                loadDestination={this.loadDestination}
-                state={this.state}
-              />
-            )}
-          />
-          <Route
-            path="/destination"
-            render={props => (
-              <Content
-                {...props}
-                onChange={this.onChange}
-                getSuggestions={this.getSuggestions}
-                getSuggestionValue={this.getSuggestionValue}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                renderSuggestion={this.renderSuggestion}
-                loadDestination={this.loadDestination}
-                state={this.state}
-              />
-            )}
-          />
-          <Route component={Error} />
-        </Switch>
-      </Router>
-    );
-  }
-}
+  return (
+    <Router history={history}>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <Home
+              {...props}
+              onChange={handleChange}
+              getSuggestions={getSuggestions}
+              getSuggestionValue={getSuggestionValue}
+              onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={onSuggestionsClearRequested}
+              renderSuggestion={renderSuggestion}
+              loadDestination={loadDestination}
+              scrollbarValue={scrollbarValue}
+              suggestions={suggestions}
+            />
+          )}
+        />
+        <Route
+          path="/destination"
+          render={props => (
+            <Content
+              {...props}
+              onChange={handleChange}
+              getSuggestions={getSuggestions}
+              getSuggestionValue={getSuggestionValue}
+              onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={onSuggestionsClearRequested}
+              renderSuggestion={renderSuggestion}
+              loadDestination={loadDestination}
+              scrollbarValue={scrollbarValue}
+              suggestion={{ city: suggestedCity, country: suggestedCountry }}
+              suggestions={suggestions}
+            />
+          )}
+        />
+        <Route component={Error} />
+      </Switch>
+    </Router>
+  );
+};
 
 export default App;

@@ -11,7 +11,9 @@ var Map = ReactMapboxGl({
 });
 
 const Content = ({
-  state,
+  scrollbarValue,
+  suggestion,
+  suggestions,
   onChange,
   onSuggestionsFetchRequested,
   onSuggestionsClearRequested,
@@ -38,13 +40,13 @@ const Content = ({
   }, []);
 
   useEffect(() => {
-    const { city, country } = state.suggestion;
+    const { city, country } = suggestion;
     loadDestinationData(city, country);
-  }, [loadDestinationData, state.suggestion]);
+  }, [loadDestinationData, suggestion]);
 
   const inputProps = {
     placeholder: "Where will you bee traveling?",
-    value: state.scrollbarValue,
+    value: scrollbarValue,
     onChange: onChange
   };
 
@@ -64,7 +66,7 @@ const Content = ({
               Bee Travels
             </NavbarBrand>
             <Autosuggest
-              suggestions={state.suggestions}
+              suggestions={suggestions}
               onSuggestionsFetchRequested={onSuggestionsFetchRequested}
               onSuggestionsClearRequested={onSuggestionsClearRequested}
               getSuggestionValue={getSuggestionValue}
@@ -116,7 +118,7 @@ const Content = ({
 };
 
 Content.propTypes = {
-  state: PropTypes.object.isRequired,
+  // TODO: update props
   onChange: PropTypes.func.isRequired,
   onSuggestionsFetchRequested: PropTypes.func.isRequired,
   onSuggestionsClearRequested: PropTypes.func.isRequired,
