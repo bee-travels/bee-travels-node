@@ -1,6 +1,7 @@
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory as createHistory } from "history";
+import queryString from "query-string";
 
 import Content from "./components/Content";
 import Home from "./components/Home";
@@ -13,13 +14,15 @@ class App extends React.Component {
 
     this.history = createHistory();
 
+    const queryParsed = queryString.parse(this.history.location.search);
+
     this.state = {
       destinationList: [],
       scrollbarValue: "",
       suggestions: [],
       suggestion: {
-        state: "",
-        country: ""
+        city: queryParsed.city || "",
+        country: queryParsed.country || ""
       }
     };
 
@@ -39,9 +42,9 @@ class App extends React.Component {
 
     const response = await fetch("/api/v1/destinations");
 
-    var data = await response.json();
+    const data = await response.json();
 
-    this.setState({ destinationList: data["cities"] });
+    this.setState({ destinationList: data.cities });
   }
 
   onChange = (event, { newValue }) => {
@@ -86,7 +89,7 @@ class App extends React.Component {
     this.setState({
       suggestion: suggestion
     });
-    this.history.push("/destination");
+    this.history.push("/destination?" + queryString.stringify(suggestion));
   }
 
   render() {
@@ -112,6 +115,7 @@ class App extends React.Component {
               onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
               onSuggestionsClearRequested={this.onSuggestionsClearRequested}
               renderSuggestion={this.renderSuggestion}
+              loadDestination={this.loadDestination}
               state={this.state} />}
           />
           <Route component={Error} />

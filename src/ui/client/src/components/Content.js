@@ -28,32 +28,28 @@ class Content extends React.Component {
     this.loadDestinationData();
   }
 
+  async componentDidUpdate() {
+    const currentCity = this.state.currentDestination.city;
+    const currentCountry = this.state.currentDestination.country;
+    const { city, country } = this.props.state.suggestion;
+
+    if (currentCity !== city || currentCountry !== country) {
+      this.loadDestinationData();
+    }
+  }
+
   loadDestinationData = async e => {
     if (e) e.preventDefault();
 
-    const response = await fetch(
-      "/api/v1/destinations/" + this.props.state.suggestion.city + "/" + this.props.state.suggestion.country
-    );
+    const { city, country } = this.props.state.suggestion;
 
-    var data = await response.json();
+    if (city && country) {
+      const response = await fetch(`/api/v1/destinations/${city}/${country}`);
 
-    console.log(data);
+      const data = await response.json();
 
-    this.setState({ currentDestination: data });
-  };
-
-  getDestinationData = async (e, { suggestion }) => {
-    if (e) e.preventDefault();
-
-    const response = await fetch(
-      "/api/v1/destinations/" + suggestion.city + "/" + suggestion.country
-    );
-
-    var data = await response.json();
-
-    console.log(data);
-
-    this.setState({ currentDestination: data });
+      this.setState({ currentDestination: data });
+    }
   };
 
   render() {
@@ -122,7 +118,7 @@ class Content extends React.Component {
                 getSuggestionValue={this.props.getSuggestionValue}
                 renderSuggestion={this.props.renderSuggestion}
                 inputProps={inputProps}
-                onSuggestionSelected={this.getDestinationData}
+                onSuggestionSelected={this.props.loadDestination}
               />
             </Navbar>
           </Col>
@@ -182,7 +178,8 @@ Content.propTypes = {
   onSuggestionsFetchRequested: PropTypes.func.isRequired,
   onSuggestionsClearRequested: PropTypes.func.isRequired,
   getSuggestionValue: PropTypes.func.isRequired,
-  renderSuggestion: PropTypes.func.isRequired
+  renderSuggestion: PropTypes.func.isRequired,
+  loadDestination: PropTypes.func.isRequired
 };
 
 export default Content;
