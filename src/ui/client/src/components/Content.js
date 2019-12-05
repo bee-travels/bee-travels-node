@@ -24,17 +24,16 @@ const Content = ({ location }) => {
 
   const [destination, setDestination] = useState(defaultDestination);
 
-  const loadDestinationData = useCallback(async (city, country) => {
-    if (city && country) {
-      const response = await fetch(`/api/v1/destinations/${city}/${country}`);
-      const destination = await response.json();
-      setDestination(destination);
-    }
-  }, []);
-
   useEffect(() => {
-    loadDestinationData(city, country);
-  }, [city, country, loadDestinationData, location.search]);
+    const loadDestinationData = async () => {
+      if (city && country) {
+        const response = await fetch(`/api/v1/destinations/${city}/${country}`);
+        const destination = await response.json();
+        setDestination(destination);
+      }
+    };
+    loadDestinationData();
+  }, [city, country, location.search]);
 
   return (
     <Container fluid={true}>
