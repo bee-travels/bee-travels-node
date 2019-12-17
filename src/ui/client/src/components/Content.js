@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Navbar, NavbarBrand } from "reactstrap";
 import ReactMapboxGl from "react-mapbox-gl";
 import BeeLogo from "./BeeLogo";

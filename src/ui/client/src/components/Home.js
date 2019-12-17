@@ -1,26 +1,57 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
 import BeeLogo from "./BeeLogo";
 import UncontrolledSearch from "./UncontrolledSearch";
 
+import styles from "./Home.module.css";
+
 const Home = () => (
-  <Container fluid={true}>
-    <Row>
-      <Col md={{ size: 6, offset: 3 }}>
-        <div style={{ fontSize: "50px", padding: "150px 0px 0px 0px" }}>
-          <BeeLogo
-            style={{
-              width: "256px",
-              height: "256px",
-              padding: "0px 25px 0px 0px"
-            }}
-          />
-          Bee Travels
-        </div>
-        <UncontrolledSearch />
-      </Col>
-    </Row>
-  </Container>
+  <div
+    style={{
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column"
+    }}
+  >
+    <div
+      style={{
+        margin: "156px 42px 23px 42px",
+        justifyContent: "center",
+        width: "584px",
+        fontSize: "40px",
+        fontWeight: "500",
+        lineHeight: "40px",
+        display: "flex"
+      }}
+    >
+      <BeeLogo
+        style={{
+          position: "relative",
+          top: "-11px",
+          left: "-19px",
+          width: "110px",
+          transform: "rotate(-45deg)"
+        }}
+      />
+      <div
+        style={{
+          position: "relative",
+          top: "-7px",
+          left: "-8px"
+        }}
+      >
+        <div>Bee</div>
+        <div>Travels</div>
+        <div
+          style={{
+            background: "#0f62fe",
+            height: "10px",
+            marginTop: "5px"
+          }}
+        />
+      </div>
+    </div>
+    <UncontrolledSearch theme={styles} />
+  </div>
 );
 
 export default Home;

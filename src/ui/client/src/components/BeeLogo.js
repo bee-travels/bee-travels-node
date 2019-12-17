@@ -1,7 +1,7 @@
 import React from "react";
 
 const BeeLogo = ({ style }) => (
-  <svg viewBox="0 0 1320 930" style={style}>
+  <svg width="1320px" width="930px" viewBox="0 0 1320 930" style={style}>
     {/* Body */}
     <path
       transform="translate(450 200)"
