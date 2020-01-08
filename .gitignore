@@ -18,3 +18,4 @@ dist/
 build/
 
 .DS_Store
+config.json
