@@ -1,20 +1,35 @@
-var sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRIP_API_KEY);
+import { response } from "express";
 
-function sendEmail(email, subject, body){
+var sgMail = require("@sendgrid/mail");
+
+var config = require("../../config.json");
+sgMail.setApiKey(config.SENDGRIP_API_KEY);
+
+function sendEmail(to, from, subject, body){
   // send an email
   // send ok or fail
-  var from = process.env.EMAIL_ADDRESS;
 
   const msg = {
-    to: email,
+    to: to,
     from: from,
     subject: subject,
     text: body
   };
 
-  sgMail.send(msg);
-
+  // return new Promise((resolve, reject) => {
+  // return sgMail.send(msg, (err) => {
+  //   if (err) {
+  //     // reject(err);
+  //     return 500;
+  //   } 
+  //   return 201;
+  // });
+  // });
+  return sgMail.send(msg).then(() => {
+    return 201;
+  }).catch(() => {
+    return 500;
+  });
 }
 
 export default sendEmail;
