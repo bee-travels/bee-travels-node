@@ -12,20 +12,20 @@ function getHotels(city, country, f) {
     .toLowerCase()
     .replace("%20", " ")
     .replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
-  if(!f){
-    return hotels[country][city];
-  }
-
   var data = hotels[country][city];
-
-  data = data.filter((hotel) => {
-    var matchSuperchain = f.superchain.length === 0 || f.superchain.includes(hotel.superchain);
-    var matchHotel = f.hotel.length === 0 || f.hotel.includes(hotel.name);
-    var matchType = f.type.length === 0 || f.type.includes(hotel.type);
-    var costHigherThan = hotel["cost"] > f.minCost;
-    var costLowerThan = hotel["cost"] < f.maxCost;
-    return matchSuperchain && matchHotel && matchType && costHigherThan && costLowerThan;
-  });
+  if(!f && data){
+    return data;
+  }
+  else if(data){
+    data = data.filter((hotel) => {
+      var matchSuperchain = f.superchain.length === 0 || f.superchain.includes(hotel.superchain);
+      var matchHotel = f.hotel.length === 0 || f.hotel.includes(hotel.name);
+      var matchType = f.type.length === 0 || f.type.includes(hotel.type);
+      var costHigherThan = hotel["cost"] > f.minCost;
+      var costLowerThan = hotel["cost"] < f.maxCost;
+      return matchSuperchain && matchHotel && matchType && costHigherThan && costLowerThan;
+    });
+  }
 
   return data;
 }

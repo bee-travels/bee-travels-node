@@ -36,9 +36,36 @@ paths:
           type: string
           description: Country name for destination location
           required: true
+        - in: query
+          name: superchain
+          type: string
+          description: Filter by superchain name
+          required: false
+        - in: query
+          name: hotel
+          type: string
+          description: Filter by superchain name
+          required: false
+        - in: query
+          name: type
+          type: string
+          description: Filter by superchain name
+          required: false
+        - in: query
+          name: mincost
+          type: integer
+          description: Filter by superchain name
+          required: false
+        - in: query
+          name: maxcost
+          type: integer
+          description: Filter by superchain name
+          required: false
       responses:
         '200':
           description: Successfully got destination location data
+        '404':
+          description: Data not found
         '500':
           description: Internal Server Error
   /info/{topic}:
