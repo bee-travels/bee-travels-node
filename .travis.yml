@@ -11,6 +11,9 @@ jobs:
       name: "Destination ES Linting"
       script: cd src/destination && npm install && ./node_modules/.bin/eslint src/
     - stage: "linting"
+      name: "Hotel Service ES Linting"
+      script: cd src/hotel && npm install && ./node_modules/.bin/eslint src/
+    - stage: "linting"
       name: "UI client ES Linting"
       script:
         - cd src/ui && npm install && cd ../..
