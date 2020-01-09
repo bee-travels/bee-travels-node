@@ -1,0 +1,65 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is a microservice that handles hotel data for Bee Travel
+  version: 1.0.0
+  title: Bee Travel Hotel Data Service
+  contact:
+    email: moficodes@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'https://github.com/bee-travels/bee-travels/blob/master/LICENSE'
+host: 'localhost:9002'
+basePath: /api/v1
+tags:
+  - name: Hotels
+    description: Operations associated with hotel data
+schemes:
+  - http
+paths:
+  /hotels/{city}/{country}:
+    get:
+      tags:
+        - Hotels
+      summary: Gets data associated with specific city
+      description: ''
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: city
+          type: string
+          description: City name for destination location
+          required: true
+        - in: path
+          name: country
+          type: string
+          description: Country name for destination location
+          required: true
+      responses:
+        '200':
+          description: Successfully got destination location data
+        '500':
+          description: Internal Server Error
+  /info/{topic}:
+    get:
+      tags:
+        - Hotels
+      summary: Gets info data for Hotels
+      description: ''
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          type: string
+          name:  topic
+          description: Topic to find info on superchains|hotels|hotel-info
+          required: true
+      responses:
+        '200':
+          description: Successfully go the info
+        '404':
+          description: Info not found
+        '500':
+          description: Internal server error
+      
