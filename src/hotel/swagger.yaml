@@ -8,9 +8,9 @@ info:
     email: moficodes@gmail.com
   license:
     name: Apache 2.0
-    url: 'https://github.com/bee-travels/bee-travels/blob/master/LICENSE'
+    url: 'https://github.com/bee-travels/bee-travels-node/blob/master/LICENSE'
 host: 'localhost:9002'
-basePath: /api/v1
+basePath: /api/v1/hotels
 tags:
   - name: Hotels
     description: Operations associated with hotel data
@@ -44,7 +44,7 @@ paths:
         - in: query
           name: hotel
           type: string
-          description: Filter by superchain name
+          description: Filter by hotel name
           required: false
         - in: query
           name: type
@@ -54,12 +54,12 @@ paths:
         - in: query
           name: mincost
           type: integer
-          description: Filter by superchain name
+          description: Filter by mincost value
           required: false
         - in: query
           name: maxcost
           type: integer
-          description: Filter by superchain name
+          description: Filter by maxcost value
           required: false
       responses:
         '200':
@@ -78,9 +78,14 @@ paths:
         - application/json
       parameters:
         - in: path
-          type: string
+          schema:
+            type: string
+            enum:
+              - superchains
+              - hotels
+              - hotel-type
           name:  topic
-          description: Topic to find info on superchains|hotels|hotel-info
+          description: Topic to get list of superchains/hotels/hotel-type
           required: true
       responses:
         '200':

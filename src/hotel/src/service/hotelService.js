@@ -30,14 +30,8 @@ function getHotels(city, country, f) {
   return data;
 }
 
-
-
-function getHotelWithFilter() {
-
-}
-
 function getInfo(topic){
   return hotelInfo[topic];
 }
 
-export { getHotels, getHotelWithFilter, getInfo };
+export { getHotels, getInfo };
