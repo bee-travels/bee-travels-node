@@ -1,0 +1,44 @@
+Arguments: 
+  /Users/niko/.nvm/versions/node/v12.11.0/bin/node /usr/local/Cellar/yarn/1.19.1/libexec/bin/yarn.js install
+
+PATH: 
+  /Users/niko/.gem/ruby/2.6.0/bin:/usr/local/opt/ruby/bin:/usr/local/sbin:/Users/niko/.nvm/versions/node/v12.11.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Apple/bin:/usr/local/go/bin:/opt/X11/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/niko/.gem/ruby/2.6.0/bin:/usr/local/opt/ruby/bin:/usr/local/sbin:/Users/niko/.nvm/versions/node/v12.11.0/bin:/Users/niko/go/bin:/Users/niko/go/bin
+
+Yarn version: 
+  1.19.1
+
+Node version: 
+  12.11.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/niko/Documents/bee-travels/package.json: Unexpected token } in JSON at position 369
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.19.1/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.19.1/libexec/lib/cli.js:304:30)
+      at /usr/local/Cellar/yarn/1.19.1/libexec/lib/cli.js:315:13
+
+npm manifest: 
+  {
+    "name": "all",
+    "version": "1.0.0",
+    "description": "master",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "concurrently --kill-others-on-fail 'npm run destination' 'npm run ui'",
+      "destination": "cd destination && npm start",
+      "ui": "cd ui && npm start"
+    },
+    "devDependencies": {
+      "concurrently": "^5.0.0",
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

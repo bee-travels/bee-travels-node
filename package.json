@@ -1,0 +1,14 @@
+{
+  "name": "all",
+  "version": "1.0.0",
+  "description": "master",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently --kill-others-on-fail 'npm run destination' 'npm run ui'",
+    "destination": "cd src/destination && npm start",
+    "ui": "cd src/ui && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0"
+  }
+}
