@@ -17,7 +17,7 @@ tags:
 schemes:
   - http
 paths:
-  /hotels/{city}/{country}:
+  /{city}/{country}:
     get:
       tags:
         - Hotels

@@ -1,4 +1,4 @@
-# Bee Travels Destination Service
+# Bee Travels Hotel Service
 
 The hotel service is a microservice designed to provide information about various hotel locations for the Bee Travels travel application.
 
@@ -8,7 +8,7 @@ Follow these steps to setup and run the hotel service
 
 1. [Prerequisites](#1-prerequisites)
 2. [Clone the repo](#2-clone-the-repo)
-3. [Run the service](#4-run-the-service)
+3. [Run the service](#3-run-the-service)
 
 ## 1. Prerequisites
 
