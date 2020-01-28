@@ -1,0 +1,38 @@
+{
+  "superchains": [
+    "Urban Lifestyle",
+    "Elegant Enigma Alliance",
+    "Nimbus Elites"
+  ],
+  "hotels": [
+    "Pleasant Court Hotel",
+    "Secret Quest Hotel",
+    "Crown Pastures Hotel",
+    "Echo Hotel",
+    "Cozy Hotel",
+    "Epitome Hotel",
+    "Sanctum Hotel",
+    "Silver Treasure Hotel",
+    "Western Tide Hotel",
+    "Ocean Hotel",
+    "Mellow Plaza Hotel",
+    "Obsidian Loch Hotel",
+    "Revelation Hotel",
+    "Atlantic Shroud Hotel",
+    "Grandiose Baron Hotel",
+    "Starlight Hotel",
+    "Bronze Estate Hotel",
+    "Ivory Spring Hotel",
+    "Seashore Hotel",
+    "Pacific Garden Hotel",
+    "Silver Mill Hotel",
+    "Scarlet Chasm Hotel",
+    "Moss Hotel",
+    "Northern Ridge Hotel"
+  ],
+  "hotel-type": [
+    "budget",
+    "comfort",
+    "luxury"
+  ]
+}
