@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ReactMapboxGl from "react-mapbox-gl";
 import BeeLogo from "./BeeLogo";
 import UncontrolledSearch from "./UncontrolledSearch";
@@ -29,7 +29,8 @@ const SplitPaneLayout = ({ children, panelWidth }) => {
           top: 0,
           bottom: 0,
           right: 0,
-          background: "var(--ui-01)"
+          background: "var(--ui-01)",
+          overflow: "auto"
         }}
       >
         {right}
@@ -43,7 +44,7 @@ const Map = ReactMapboxGl({
     "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg"
 });
 
-const tuncateText = text => {
+const truncateText = text => {
   const firstSentenceRegex = /^(.*?)\. (?=[A-Z])/;
   const lastSentenceRegex = /(.*\.)(?: .*)$/;
   let trimmedDescription = text
@@ -89,7 +90,7 @@ const DestinationFragment = ({ destination }) => {
 
         {/* {destination.country} */}
 
-        <p>{tuncateText(destination.description)}</p>
+        <p>{truncateText(destination.description)}</p>
 
         <button>Learn more</button>
 
@@ -132,8 +133,41 @@ const DestinationFragment = ({ destination }) => {
   );
 };
 
-const BookingFragment = () => {
-  return <>hello world</>;
+const BookingFragment = ({destination, currencyExchange}) => {
+  const [currentCurrencyExchange, setCurrentCurrencyExchange] = useState("USD");
+
+  const handleCurrencyChange = useCallback((e) => {
+    //
+    setCurrentCurrencyExchange(e.target.value);
+  }, [])
+
+  if (destination.hotels.length <= 0) {
+    return (<></>);
+  }
+
+  return (
+    <>
+      <select onChange={handleCurrencyChange}>
+        {Object.keys(currencyExchange.rates).map((currencyCode) =>
+          <option value={currencyCode} selected={currencyCode==="USD"}>{currencyCode}</option>
+        )}
+      </select>
+      {destination.hotels.map(({superchain, name, type, cost, images}) => 
+           (
+            <div>
+              <img
+                height="100" 
+                width="100"
+                src={images[0]}
+                alt={destination.city + ", " + destination.country}
+              />
+              <div>{superchain + " " + name + ": " + (cost/currencyExchange.rates.USD*currencyExchange.rates[currentCurrencyExchange]).toFixed(2) + " " + currentCurrencyExchange}</div>
+            </div>
+          )
+        )}
+    </>
+  );
+  
 };
 
 const Content = ({ location }) => {
@@ -145,24 +179,39 @@ const Content = ({ location }) => {
     lng: "",
     country: "",
     population: "",
-    description: ""
+    description: "",
+    hotels: []
   });
 
+  const [currencyExchange, setCurrencyExchange] = useState({
+    rates: {}
+  })
+  
   useEffect(() => {
     const loadDestinationData = async () => {
       if (city && country) {
-        const response = await fetch(`/api/v1/destinations/${city}/${country}`);
-        const destination = await response.json();
+        const destinationResponse = await fetch(`/api/v1/destinations/${city}/${country}`);
+        const destination = await destinationResponse.json();
+        const hotelResponse = await fetch(`/api/v1/hotels/${city}/${country}`);
+        destination.hotels = await hotelResponse.json();
         setDestination(destination);
       }
     };
+
+    const loadCurrencyExchangeRates = async () => {
+      const currencyExchangeResponse = await fetch('/api/v1/currency');
+      const currencyExchange = await currencyExchangeResponse.json();
+      setCurrencyExchange(currencyExchange);
+    }
+
     loadDestinationData();
+    loadCurrencyExchangeRates();
   }, [city, country, location.search]);
 
   return (
     <SplitPaneLayout panelWidth="464px">
       <DestinationFragment destination={destination} />
-      <BookingFragment />
+      <BookingFragment destination={destination} currencyExchange={currencyExchange} />
     </SplitPaneLayout>
   );
 };
