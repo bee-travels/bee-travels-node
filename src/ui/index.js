@@ -26,7 +26,13 @@ app.get("/api/v1/destinations/:city/:country", (req, res) => {
 });
 
 app.get("/api/v1/hotels/:city/:country", (req, res) => {
-  const url = HOTEL_URL + "/api/v1/hotels/" + req.params.city + "/" + req.params.country;
+  const superchain = req.query.superchain || "";
+  const hotel = req.query.hotel || "";
+  const type = req.query.type || "";
+  const mincost = req.query.mincost || "";
+  const maxcost = req.query.maxcost || "";
+  const queryString = `?superchain=${superchain}&hotel=${hotel}&type=${type}&mincost=${mincost}&maxcost=${maxcost}`;
+  const url = HOTEL_URL + "/api/v1/hotels/" + req.params.city + "/" + req.params.country + queryString;
   request.get(url).pipe(res);
 });
 
