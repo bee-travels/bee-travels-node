@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ReactMapboxGl from "react-mapbox-gl";
 import BeeLogo from "./BeeLogo";
-import UncontrolledSearch from "./UncontrolledSearch";
 import queryString from "query-string";
 
 import destinationStyles from "./Destination.module.css";
@@ -133,100 +132,178 @@ const DestinationFragment = ({ destination }) => {
   );
 };
 
-const BookingFragment = ({destination, hotels, currencyExchange, filters}) => {
-  const [currentCurrencyExchange, setCurrentCurrencyExchange] = useState("USD");
+const BookingFragment = ({ destination }) => {
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+
+  const [exchangeRates, setExchangeRates] = useState({});
+
+  const [selectedSuperchain, setSelectedSuperchain] = useState(undefined);
+
+  const [superchainList, setSuperchainList] = useState([]);
+  const [hotelList, setHotelList] = useState([]);
+  const [typeList, setTypeList] = useState([]);
 
   const [hotels, setHotels] = useState([]);
 
+  const { city, country } = destination;
+
   useEffect(() => {
     const loadHotels = async () => {
-      const hotelResponse = await fetch(`/api/v1/hotels/${city}/${country}`);
+      const hotelResponse = await fetch(
+        `/api/v1/hotels/${city}/${country}?superchain=${selectedSuperchain ||
+          ""}`
+      );
       const hotelList = await hotelResponse.json();
-      setHotels(hotelList)
-    }
+      setHotels(hotelList);
+    };
 
     if (city && country) {
-      loadHotels()
+      loadHotels();
     }
-    
-  }, [city, country])
+  }, [city, country, selectedSuperchain]);
 
-  const handleCurrencyChange = useCallback((e) => {
-    setCurrentCurrencyExchange(e.target.value);
-  }, [])
+  useEffect(() => {
+    const loadFilters = async () => {
+      const superchainResponse = await fetch("/api/v1/hotels/info/superchains");
+      const superchainList = await superchainResponse.json();
+      setSuperchainList(superchainList);
+    };
+
+    loadFilters();
+  }, []);
+
+  useEffect(() => {
+    const loadFilters = async () => {
+      const currencyResponse = await fetch("/api/v1/currency");
+      const exchangeRates = await currencyResponse.json();
+      setExchangeRates({ ...exchangeRates.rates, EUR: 1 });
+    };
+
+    loadFilters();
+  }, []);
+
+  useEffect(() => {
+    const loadFilters = async () => {
+      const hotelResponse = await fetch("/api/v1/hotels/info/hotels");
+      const hotelList = await hotelResponse.json();
+      setHotelList(hotelList);
+    };
+
+    loadFilters();
+  }, []);
+
+  useEffect(() => {
+    const loadFilters = async () => {
+      const typeResponse = await fetch("/api/v1/hotels/info/hotel-type");
+      const typeList = await typeResponse.json();
+      setTypeList(typeList);
+    };
+
+    loadFilters();
+  }, []);
+
+  const handleOnSuperchainSelectionChange = useCallback(superchain => {
+    console.log(superchain);
+    setSelectedSuperchain(superchain);
+  }, []);
+
+  const handleCurrencyChange = useCallback(e => {
+    setSelectedCurrency(e.target.value);
+  }, []);
 
   if (hotels.length <= 0) {
-    return (<></>);
+    return <></>;
   }
 
   return (
     <>
-      <Filters destination={destination} filters={filters} />
+      <Filters
+        destination={destination}
+        superchainList={superchainList}
+        typeList={typeList}
+        hotelList={hotelList}
+        onSuperchainSelectionChange={handleOnSuperchainSelectionChange}
+      />
       <select onChange={handleCurrencyChange}>
-        {Object.keys(currencyExchange.rates).map((currencyCode) =>
-          <option value={currencyCode} selected={currencyCode==="USD"}>{currencyCode}</option>
-        )}
+        {Object.keys(exchangeRates).map(currencyCode => (
+          <option value={currencyCode} selected={currencyCode === "USD"}>
+            {currencyCode}
+          </option>
+        ))}
       </select>
-      {hotels.map(({superchain, name, type, cost, images}) => 
-           (
-            <div>
-              <img
-                height="100" 
-                width="100"
-                src={images[0]}
-                alt={destination.city + ", " + destination.country}
-              />
-              <div>{superchain + " " + name + ": " + (cost/currencyExchange.rates.USD*currencyExchange.rates[currentCurrencyExchange]).toFixed(2) + " " + currentCurrencyExchange}</div>
-            </div>
-          )
-        )}
+      {hotels.map(({ superchain, name, type, cost, images }) => (
+        <div>
+          <img
+            height="100"
+            width="100"
+            src={images[0]}
+            alt={destination.city + ", " + destination.country}
+          />
+          <div>
+            {superchain +
+              " " +
+              name +
+              ": " +
+              (
+                (cost / exchangeRates.USD) *
+                exchangeRates[selectedCurrency]
+              ).toFixed(2) +
+              " " +
+              selectedCurrency}
+          </div>
+        </div>
+      ))}
     </>
   );
-  
 };
 
-const Filters = ({destination, filters}) => {
+const Filters = ({
+  destination,
+  typeList,
+  hotelList,
+  superchainList,
+  onSuperchainSelectionChange
+}) => {
+  const handleSuperchainChange = useCallback(e => {
+    onSuperchainSelectionChange(e.target.value);
+  }, []);
 
-  const handleSuperchainChange = useCallback((e) => {
-    const loadUpdatedHotelData = async () => {
-      const hotelResponse = await fetch(`/api/v1/hotels/${destination.city}/${destination.country}?superchain=${e.target.value}`);
-      const hotels = await hotelResponse.json();
-      console.log(hotels)
-    };
-
-    loadUpdatedHotelData();
-  }, [])
-
-  const handleHotelChange = useCallback((e) => {
+  const handleHotelChange = useCallback(e => {
     console.log(e.target.value);
-  }, [])
+  }, []);
 
-  const handleTypeChange = useCallback((e) => {
+  const handleTypeChange = useCallback(e => {
     console.log(e.target.value);
-  }, [])
+  }, []);
 
   return (
     <>
       <select onChange={handleSuperchainChange}>
-        <option selected hidden>Superchain</option>
-        {filters.superchain.map((superchain) =>
+        <option selected hidden>
+          Superchain
+        </option>
+        {superchainList.map(superchain => (
           <option value={superchain}>{superchain}</option>
-        )}
+        ))}
       </select>
       <select onChange={handleHotelChange}>
-        <option selected hidden>Hotels</option>
-        {filters.hotel.map((hotel) =>
+        <option selected hidden>
+          Hotels
+        </option>
+        {hotelList.map(hotel => (
           <option value={hotel}>{hotel}</option>
-        )}
+        ))}
       </select>
       <select onChange={handleTypeChange}>
-        <option selected hidden>Types</option>
-        {filters.type.map((type) =>
+        <option selected hidden>
+          Types
+        </option>
+        {typeList.map(type => (
           <option value={type}>{type}</option>
-        )}
+        ))}
       </select>
     </>
-  )
+  );
 };
 
 const Content = ({ location }) => {
@@ -241,36 +318,24 @@ const Content = ({ location }) => {
     description: ""
   });
 
-  const [currencyExchange, setCurrencyExchange] = useState({
-    rates: {}
-  });
-
-  const [filters, setFilters] = useState({
-    superchain: [],
-    hotel: [],
-    type: []
-  });
-
   useEffect(() => {
     const loadDestination = async () => {
-      const destinationResponse = await fetch(`/api/v1/destinations/${city}/${country}`);
+      const destinationResponse = await fetch(
+        `/api/v1/destinations/${city}/${country}`
+      );
       const destination = await destinationResponse.json();
-      setDestination(destination)
-    }
+      setDestination(destination);
+    };
 
     if (city && country) {
-      loadDestination()
+      loadDestination();
     }
-    
-  }, [city, country])
-
-
-  
+  }, [city, country]);
 
   return (
     <SplitPaneLayout panelWidth="464px">
       <DestinationFragment destination={destination} />
-      <BookingFragment destination={destination} hotels={hotels} currencyExchange={currencyExchange} filters={filters} />
+      <BookingFragment destination={destination} />
     </SplitPaneLayout>
   );
 };
