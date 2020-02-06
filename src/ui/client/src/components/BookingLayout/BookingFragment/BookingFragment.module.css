@@ -1,0 +1,37 @@
+.listItem {
+  display: flex;
+  height: 100px;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.listItemImage {
+  width: 90.6666666px;
+}
+
+.listItemContent {
+  display: flex;
+  flex-direction: column;
+  margin-left: 24px;
+}
+
+.listItemTitle {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.listItemSub {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.listItemCost {
+  margin-top: auto;
+  color: #34a853;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.filters {
+  display: flex;
+}

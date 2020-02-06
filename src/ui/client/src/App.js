@@ -1,17 +1,17 @@
 import React from "react";
 import { Router, Route, Switch } from "react-router-dom";
-import globalHistory from "./globalHistory";
+import globalHistory from "globalHistory";
 
-import Content from "./components/Content";
-import Home from "./components/Home";
-import Error from "./components/Error";
+import BookingLayout from "components/BookingLayout/BookingLayout";
+import HomeLayout from "components/HomeLayout/HomeLayout";
+import ErrorLayout from "components/ErrorLayout/ErrorLayout";
 
 const App = () => (
   <Router history={globalHistory}>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/destination" component={Content} />
-      <Route component={Error} />
+      <Route exact path="/" component={HomeLayout} />
+      <Route path="/destination" component={BookingLayout} />
+      <Route component={ErrorLayout} />
     </Switch>
   </Router>
 );

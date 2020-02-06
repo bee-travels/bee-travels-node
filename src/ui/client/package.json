@@ -5,6 +5,9 @@
   "homepage": ".",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "carbon-components": "^10.9.3",
+    "carbon-components-react": "^7.9.3",
+    "carbon-icons": "^7.0.7",
     "history": "^4.10.1",
     "mapbox-gl": "^1.4.0",
     "react": "^16.10.1",
@@ -13,7 +16,8 @@
     "react-mapbox-gl": "^4.6.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.2",
-    "reactstrap": "^8.0.1"
+    "reactstrap": "^8.0.1",
+    "typescript": "^3.7.5"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import queryString from "query-string";
 
-import globalHistory from "./../globalHistory";
+import globalHistory from "globalHistory";
 
 const getSuggestionValue = ({ city, country }) => `${city}, ${country}`;
 

@@ -1,8 +1,8 @@
 import React from "react";
-import BeeLogo from "./BeeLogo";
-import UncontrolledSearch from "./UncontrolledSearch";
+import BeeLogo from "components/common/BeeLogo";
+import UncontrolledSearch from "components/common/UncontrolledSearch";
 
-import styles from "./Home.module.css";
+import styles from "./HomeLayout.module.css";
 import searchBarStyles from "./SearchBar.module.css";
 
 const Home = () => (
