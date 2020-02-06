@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ReactMapboxGl from "react-mapbox-gl";
+import mapboxgl from "mapbox-gl";
 
 import BeeLogo from "components/common/BeeLogo";
 
 import styles from "./DestinationFragment.module.css";
+
+const DEFAULT_ZOOM = 7;
+
+mapboxgl.accessToken =
+  "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg";
 
 const truncateText = text => {
   const firstSentenceRegex = /^(.*?)\. (?=[A-Z])/;
@@ -30,13 +35,34 @@ const truncateText = text => {
   return trimmedDescription;
 };
 
-const Map = ReactMapboxGl({
-  accessToken:
-    "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg"
-});
-
 const DestinationFragment = ({ destination }) => {
+  const [mapbox, setMapbox] = useState(undefined);
+  const [mapElement, setMapElement] = useState(undefined);
+
+  useEffect(() => {
+    if (mapElement !== undefined) {
+      setMapbox(
+        new mapboxgl.Map({
+          container: mapElement,
+          style: "mapbox://styles/mapbox/streets-v11",
+          center: [0, 0],
+          zoom: DEFAULT_ZOOM
+        })
+      );
+    }
+  }, [mapElement]);
+
+  useEffect(() => {
+    if (mapbox !== undefined && destination.lng && destination.lat) {
+      mapbox.jumpTo({
+        center: [destination.lng, destination.lat],
+        zoom: DEFAULT_ZOOM
+      });
+    }
+  }, [destination.lat, destination.lng, mapbox]);
+
   const imageSrc = `/images/${destination.city}, ${destination.country}.jpg`;
+
   return (
     <>
       <div className={styles.titlebar}>
@@ -76,21 +102,7 @@ const DestinationFragment = ({ destination }) => {
             alt={destination.city + ", " + destination.country}
           />
         </div>
-        <Map
-          style="mapbox://styles/mapbox/streets-v9"
-          zoom={[7]}
-          containerStyle={{
-            height: "261px",
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0
-          }}
-          center={{
-            lng: destination.lng,
-            lat: destination.lat
-          }}
-        ></Map>
+        <div className={styles.map} ref={setMapElement} />
       </div>
     </>
   );

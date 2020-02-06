@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
+import queryString from "query-string";
 
-import { MultiSelect } from "carbon-components-react";
+import { MultiSelect, Select, SelectItem } from "carbon-components-react";
 
 import styles from "./BookingFragment.module.css";
 
-const ListItem = ({ destination, superchain, name, cost, images }) => {
-  console.log(images);
+const ListItem = ({ superchain, name, cost, images }) => {
   return (
     <div className={styles.listItem}>
       <div
@@ -27,125 +27,107 @@ const Filters = ({
   typeList,
   hotelList,
   superchainList,
+  exchangeRates,
   onSuperchainSelectionChange,
   onHotelSelectionChange,
   onTypeSelectionChange,
   onMinSelectionChange,
-  onMaxSelectionChange
+  onMaxSelectionChange,
+  onCurrencyChange
 }) => {
   const handleSuperchainChange = useCallback(
-    e => {
-      onSuperchainSelectionChange(e.target.value);
+    ({ selectedItems }) => {
+      onSuperchainSelectionChange(selectedItems);
     },
     [onSuperchainSelectionChange]
   );
 
   const handleHotelChange = useCallback(
-    e => {
-      onHotelSelectionChange(e.target.value);
+    ({ selectedItems }) => {
+      onHotelSelectionChange(selectedItems);
     },
     [onHotelSelectionChange]
   );
 
   const handleTypeChange = useCallback(
-    e => {
-      onTypeSelectionChange(e.target.value);
+    ({ selectedItems }) => {
+      onTypeSelectionChange(selectedItems);
     },
     [onTypeSelectionChange]
   );
 
-  const handleMinChange = useCallback(
-    e => {
-      onMinSelectionChange(e.target.value);
-    },
-    [onMinSelectionChange]
-  );
+  // const handleMinChange = useCallback(
+  //   e => {
+  //     onMinSelectionChange(e.target.value);
+  //   },
+  //   [onMinSelectionChange]
+  // );
 
-  const handleMaxChange = useCallback(
+  // const handleMaxChange = useCallback(
+  //   e => {
+  //     onMaxSelectionChange(e.target.value);
+  //   },
+  //   [onMaxSelectionChange]
+  // );
+
+  const handleCurrencyChange = useCallback(
     e => {
-      onMaxSelectionChange(e.target.value);
+      onCurrencyChange(e.target.value);
     },
-    [onMaxSelectionChange]
+    [onCurrencyChange]
   );
 
   return (
     <div className={styles.filters}>
-      <MultiSelect
-        useTitleInItem={false}
-        label="Superchains"
-        invalid={false}
-        invalidText="Invalid Selection"
-        // onChange={onChange}
-        items={superchainList}
-        itemToString={item => item}
-        initialSelectedItems={
-          [
-            // { id: "item-1", text: "Item 1" },
-            // { id: "item-2", text: "Item 2" }
-          ]
-        }
-        // translateWithId={translateWithId}
-      />
-      <MultiSelect
-        useTitleInItem={false}
-        label="Hotels"
-        invalid={false}
-        invalidText="Invalid Selection"
-        items={hotelList}
-        itemToString={item => item}
-        initialSelectedItems={[]}
-      />
-      <MultiSelect
-        useTitleInItem={false}
-        label="Types"
-        invalid={false}
-        invalidText="Invalid Selection"
-        items={typeList}
-        itemToString={item => item}
-        initialSelectedItems={[]}
-      />
-      {/* <select onChange={handleSuperchainChange}>
-        <option selected>All Superchains</option>
-        {superchainList.map(superchain => (
-          <option value={superchain}>{superchain}</option>
-        ))}
-      </select>
-      <select onChange={handleHotelChange}>
-        <option selected>All Hotels</option>
-        {hotelList.map(hotel => (
-          <option value={hotel}>{hotel}</option>
-        ))}
-      </select>
-      <select onChange={handleTypeChange}>
-        <option selected>All Types</option>
-        {typeList.map(type => (
-          <option value={type}>{type}</option>
-        ))}
-      </select> */}
-      {/* <input
-        type="number"
-        min="0"
-        placeholder="Min"
-        onChange={handleMinChange}
-      />
-      <input
-        type="number"
-        min="0"
-        placeholder="Max"
-        onChange={handleMaxChange}
-      /> */}
+      <div className={styles.filterWide}>
+        <MultiSelect
+          label="Superchains"
+          onChange={handleSuperchainChange}
+          items={superchainList}
+          itemToString={item => item}
+        />
+      </div>
+      <div className={styles.filterNarrow}>
+        <MultiSelect
+          label="Hotels"
+          onChange={handleHotelChange}
+          items={hotelList}
+          itemToString={item => item}
+        />
+      </div>
+      <div className={styles.filterNarrow}>
+        <MultiSelect
+          label="Types"
+          onChange={handleTypeChange}
+          items={typeList}
+          itemToString={item => item}
+        />
+      </div>
+      <div className={styles.filterNarrow}>
+        <Select hideLabel onChange={handleCurrencyChange}>
+          {Object.keys(exchangeRates).map(currencyCode => (
+            <SelectItem
+              text={currencyCode}
+              value={currencyCode}
+              selected={currencyCode === "USD"}
+            />
+          ))}
+        </Select>
+      </div>
     </div>
   );
 };
+
+const priceConversion = (x, { from, to }) => (x / from) * to;
 
 const BookingFragment = ({ destination }) => {
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
 
   const [exchangeRates, setExchangeRates] = useState({});
 
-  const [selectedSuperchain, setSelectedSuperchain] = useState(undefined);
-  const [selectedHotel, setSelectedHotel] = useState(undefined);
-  const [selectedType, setSelectedType] = useState(undefined);
+  const [selectedSuperchains, setSelectedSuperchains] = useState([]);
+  const [selectedHotels, setSelectedHotels] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedMin, setSelectedMin] = useState(0);
   const [selectedMax, setSelectedMax] = useState(Number.MAX_SAFE_INTEGER);
 
@@ -159,13 +141,22 @@ const BookingFragment = ({ destination }) => {
 
   useEffect(() => {
     const loadHotels = async () => {
+      const params = {
+        superchain: selectedSuperchains.join(","),
+        hotel: selectedHotels.join(","),
+        type: selectedTypes.join(","),
+        mincost: priceConversion(selectedMin, {
+          from: exchangeRates[selectedCurrency],
+          to: exchangeRates.USD
+        }),
+        maxcost: priceConversion(selectedMax, {
+          from: exchangeRates[selectedCurrency],
+          to: exchangeRates.USD
+        })
+      };
+
       const hotelResponse = await fetch(
-        `/api/v1/hotels/${city}/${country}?superchain=${selectedSuperchain ||
-          ""}&hotel=${selectedHotel || ""}&type=${selectedType ||
-          ""}&mincost=${(selectedMin / exchangeRates[selectedCurrency]) *
-          exchangeRates.USD}
-          &maxcost=${(selectedMax / exchangeRates[selectedCurrency]) *
-            exchangeRates.USD}`
+        `/api/v1/hotels/${city}/${country}?${queryString.stringify(params)}`
       );
       const hotelList = await hotelResponse.json();
       setHotels(hotelList);
@@ -177,9 +168,9 @@ const BookingFragment = ({ destination }) => {
   }, [
     city,
     country,
-    selectedSuperchain,
-    selectedHotel,
-    selectedType,
+    selectedSuperchains,
+    selectedHotels,
+    selectedTypes,
     selectedMin,
     selectedMax,
     selectedCurrency,
@@ -226,31 +217,19 @@ const BookingFragment = ({ destination }) => {
     loadFilters();
   }, []);
 
-  const handleOnSuperchainSelectionChange = useCallback(superchain => {
-    if (superchain === "All Superchains") {
-      setSelectedSuperchain(undefined);
-    } else {
-      setSelectedSuperchain(superchain);
-    }
+  const handleSuperchainSelectionChange = useCallback(superchains => {
+    setSelectedSuperchains(superchains);
   }, []);
 
-  const handleOnHotelSelectionChange = useCallback(hotel => {
-    if (hotel === "All Hotels") {
-      setSelectedHotel(undefined);
-    } else {
-      setSelectedHotel(hotel);
-    }
+  const handleHotelSelectionChange = useCallback(hotels => {
+    setSelectedHotels(hotels);
   }, []);
 
-  const handleOnTypeSelectionChange = useCallback(type => {
-    if (type === "All Types") {
-      setSelectedType(undefined);
-    } else {
-      setSelectedType(type);
-    }
+  const handleTypeSelectionChange = useCallback(types => {
+    setSelectedTypes(types);
   }, []);
 
-  const handleOnMinSelectionChange = useCallback(min => {
+  const handleMinSelectionChange = useCallback(min => {
     if (min) {
       setSelectedMin(min);
     } else {
@@ -258,7 +237,7 @@ const BookingFragment = ({ destination }) => {
     }
   }, []);
 
-  const handleOnMaxSelectionChange = useCallback(max => {
+  const handleMaxSelectionChange = useCallback(max => {
     if (max) {
       setSelectedMax(max);
     } else {
@@ -266,8 +245,8 @@ const BookingFragment = ({ destination }) => {
     }
   }, []);
 
-  const handleCurrencyChange = useCallback(e => {
-    setSelectedCurrency(e.target.value);
+  const handleCurrencyChange = useCallback(currency => {
+    setSelectedCurrency(currency);
   }, []);
 
   return (
@@ -276,25 +255,20 @@ const BookingFragment = ({ destination }) => {
         superchainList={superchainList}
         typeList={typeList}
         hotelList={hotelList}
-        onSuperchainSelectionChange={handleOnSuperchainSelectionChange}
-        onHotelSelectionChange={handleOnHotelSelectionChange}
-        onTypeSelectionChange={handleOnTypeSelectionChange}
-        onMinSelectionChange={handleOnMinSelectionChange}
-        onMaxSelectionChange={handleOnMaxSelectionChange}
+        exchangeRates={exchangeRates}
+        onSuperchainSelectionChange={handleSuperchainSelectionChange}
+        onHotelSelectionChange={handleHotelSelectionChange}
+        onTypeSelectionChange={handleTypeSelectionChange}
+        onMinSelectionChange={handleMinSelectionChange}
+        onMaxSelectionChange={handleMaxSelectionChange}
+        onCurrencyChange={handleCurrencyChange}
       />
-      <select onChange={handleCurrencyChange}>
-        {Object.keys(exchangeRates).map(currencyCode => (
-          <option value={currencyCode} selected={currencyCode === "USD"}>
-            {currencyCode}
-          </option>
-        ))}
-      </select>
       {hotels.map(({ superchain, name, cost, images }) => {
         const priceString =
-          (
-            (cost / exchangeRates.USD) *
-            exchangeRates[selectedCurrency]
-          ).toFixed(2) +
+          priceConversion(cost, {
+            from: exchangeRates.USD,
+            to: exchangeRates[selectedCurrency]
+          }).toFixed(2) +
           " " +
           selectedCurrency;
         return (

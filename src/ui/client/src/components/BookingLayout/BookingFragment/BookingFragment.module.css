@@ -33,5 +33,14 @@
 }
 
 .filters {
+  background-color: #e0e0e0;
   display: flex;
+}
+
+.filterWide {
+  flex: 2;
+}
+
+.filterNarrow {
+  flex: 1;
 }

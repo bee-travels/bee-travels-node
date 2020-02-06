@@ -25,6 +25,16 @@ body.light {
   --text-05: #6f6f6f;
 }
 
+.bx--list-box__menu {
+  max-height: 23.75rem;
+}
+
+.bx--select-input,
+.bx--list-box {
+  background-color: transparent;
+  border-bottom: transparent;
+}
+
 * {
   box-sizing: border-box;
 }
