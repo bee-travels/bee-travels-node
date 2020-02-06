@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import ReactMapboxGl from "react-mapbox-gl";
 
 import BeeLogo from "components/common/BeeLogo";
@@ -39,8 +40,10 @@ const DestinationFragment = ({ destination }) => {
   return (
     <>
       <div className={styles.titlebar}>
-        <BeeLogo className={styles.logoImage} />
-        <div className={styles.logoText}>Bee Travels</div>
+        <Link to="/" className={styles.homeLink}>
+          <BeeLogo className={styles.logoImage} />
+          <div className={styles.logoText}>Bee Travels</div>
+        </Link>
         <svg
           className={styles.searchIcon}
           focusable="false"

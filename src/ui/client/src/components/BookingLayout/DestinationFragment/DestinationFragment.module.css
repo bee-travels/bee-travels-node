@@ -46,6 +46,13 @@
   color: #1b68fa;
 }
 
+.homeLink {
+  display: flex;
+  align-items: center;
+  color: #161616;
+  text-decoration: none;
+}
+
 .logoImage {
   width: 2rem;
   margin-right: 16px;
