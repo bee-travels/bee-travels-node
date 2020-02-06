@@ -1,0 +1,31 @@
+---
+version: '3.3'
+
+services:
+  ui:
+    build: src/ui
+    ports:
+      - "3000:9000"
+    depends_on:
+      - destination
+      - hotel
+      - currencyexchange
+    environment:
+      - DESTINATION_URL=http://destination:4000
+      - HOTEL_URL=http://hotel:9002
+      - CURRENCY_EXCHANGE_URL=http://currencyexchange:4001
+
+  destination:
+    build: src/destination
+    ports:
+      - "4000:4000"
+
+  hotel:
+      build: src/hotel
+      ports:
+        - "9002:9002"
+
+  currencyexchange:
+    build: src/currencyexchange
+    ports:
+      - "4001:4001"
