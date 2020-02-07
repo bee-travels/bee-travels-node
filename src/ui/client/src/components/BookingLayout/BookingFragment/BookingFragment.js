@@ -70,14 +70,14 @@ const Filters = ({
 
   // Called while sliding.
   const handleUpdate = useCallback(values => {
-    setSlideValues(values.map(x => Number.parseInt(x)));
+    setSlideValues(values.map(x => Math.round(x)));
   }, []);
 
   // Called while sliding is finished.
   const handleSet = useCallback(
     values => {
-      setSlideValues(values.map(x => Number.parseInt(x)));
-      onMinMaxSelectionChange(values.map(x => Number.parseInt(x)));
+      setSlideValues(values.map(x => Math.round(x)));
+      onMinMaxSelectionChange(values.map(x => Math.round(x)));
     },
     [onMinMaxSelectionChange]
   );
@@ -163,15 +163,13 @@ const BookingFragment = ({ destination }) => {
 
   const { city, country } = destination;
 
-  // TODO
-  // const scaledMax = Number.parseInt(
-  //   priceConversion(DEFAULT_MAX, {
-  //     from: exchangeRates.USD,
-  //     to: exchangeRates[selectedCurrency]
-  //   }) || DEFAULT_MAX
-  // );
-
-  const scaledMax = DEFAULT_MAX;
+  const scaledMax =
+    Math.round(
+      priceConversion(DEFAULT_MAX, {
+        from: exchangeRates.USD,
+        to: exchangeRates[selectedCurrency]
+      }) / 100
+    ) * 100 || DEFAULT_MAX;
 
   useEffect(() => {
     const loadHotels = async () => {

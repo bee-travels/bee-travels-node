@@ -83,6 +83,13 @@ const DoubleSlider = props => {
     sliderHTML.noUiSlider.updateOptions({ range });
   };
 
+  useEffect(() => {
+    if (slider) {
+      slider.on("update", props.onUpdate);
+      slider.on("set", props.onSet);
+    }
+  }, [props.onSet, props.onUpdate, slider]);
+
   const createSlider = () => {
     const { onUpdate, onChange, onSlide, onStart, onEnd, onSet } = props;
     const sliderComponent = nouislider.create(sliderContainer.current, {
