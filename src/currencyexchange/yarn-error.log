@@ -1,0 +1,84 @@
+Arguments: 
+  /Users/mofizur.rahman@ibm.com/.nvm/versions/node/v12.14.1/bin/node /Users/mofizur.rahman@ibm.com/.nvm/versions/node/v12.14.1/bin/yarn
+
+PATH: 
+  /Users/mofizur.rahman@ibm.com/.nvm/versions/node/v12.14.1/bin:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre:/Users/mofizur.rahman@ibm.com/Desktop/_tools/maven/bin:/Users/mofizur.rahman@ibm.com/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/go/bin:/usr/local/share/dotnet:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/Contents/MacOS:/Users/mofizur.rahman@ibm.com/.nvm/versions/node/v12.14.1/bin:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre:/Users/mofizur.rahman@ibm.com/Desktop/_tools/maven/bin:/Users/mofizur.rahman@ibm.com/.cargo/bin:/Users/mofizur.rahman@ibm.com/Library/Android/sdk/tools:/Users/mofizur.rahman@ibm.com/Library/Android/sdk/platform-tools:/Users/mofizur.rahman@ibm.com/Documents/go/bin:/Users/mofizur.rahman@ibm.com/Library/Android/sdk/tools:/Users/mofizur.rahman@ibm.com/Library/Android/sdk/platform-tools:/Users/mofizur.rahman@ibm.com/.cargo/bin:/Users/mofizur.rahman@ibm.com/Documents/go/bin
+
+Yarn version: 
+  1.21.1
+
+Node version: 
+  12.14.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: ENOTEMPTY: directory not empty, rmdir '/Users/mofizur.rahman@ibm.com/Library/Caches/Yarn/v6/npm-lodash-4.17.15-b447f6670a0455bbfeedd11392eff330ea097548-integrity/node_modules/lodash'
+
+npm manifest: 
+  {
+    "name": "currencyexchange",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+      "start": "NODE_ENV=production npm-run-all clean build server:prod",
+      "dev": "./node_modules/.bin/babel-watch ./src/bin/www",
+      "clean": "./node_modules/.bin/rimraf dist",
+      "build": "./node_modules/.bin/babel ./src --out-dir dist",
+      "server:prod": "node ./dist/bin/www",
+      "test": "jest",
+      "test:watch": "jest --watch",
+      "lint": "./node_modules/.bin/eslint --ext .js ./src",
+      "format": "./node_modules/.bin/prettier --write 'src/**/*.+(js|json)'"
+    },
+    "dependencies": {
+      "acorn": "^7.1.0",
+      "axios": "^0.19.0",
+      "cookie-parser": "~1.4.3",
+      "cors": "^2.8.5",
+      "csvtojson": "^2.0.10",
+      "debug": "~2.6.9",
+      "express": "~4.16.0",
+      "express-pino-logger": "^4.0.0",
+      "http-errors": "~1.6.2",
+      "jade": "~1.11.0",
+      "npm-run-all": "^4.1.5",
+      "pino": "^5.16.0",
+      "swagger-ui-express": "^4.1.1",
+      "yamljs": "^0.3.0"
+    },
+    "devDependencies": {
+      "@babel/cli": "^7.6.4",
+      "@babel/core": "^7.6.4",
+      "@babel/node": "^7.6.3",
+      "@babel/plugin-transform-runtime": "^7.6.2",
+      "@babel/preset-env": "^7.6.3",
+      "@babel/runtime": "^7.7.2",
+      "babel-eslint": "^10.0.3",
+      "babel-watch": "^7.0.0",
+      "clean-css": ">=4.1.11",
+      "constantinople": ">=3.1.1",
+      "eslint": "^6.5.1",
+      "husky": "^4.2.1",
+      "jest": "^24.9.0",
+      "lint-staged": "^10.0.2",
+      "prettier": "^1.19.1",
+      "uglify-js": ">=2.6.0"
+    },
+    "husky": {
+      "hooks": {
+        "pre-commit": "lint-staged"
+      }
+    },
+    "lint-staged": {
+      "*.js": "eslint --cache --fix",
+      "*.+(js|json)": "prettier --write"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

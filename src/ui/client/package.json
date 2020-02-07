@@ -14,7 +14,7 @@
     "react-autosuggest": "^9.4.3",
     "react-dom": "^16.10.1",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.1.2",
+    "react-scripts": "^3.3.1",
     "typescript": "^3.7.5"
   },
   "scripts": {
