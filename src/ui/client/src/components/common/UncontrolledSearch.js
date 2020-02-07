@@ -59,7 +59,6 @@ const UncontrolledSearch = ({ theme }) => {
   return (
     <div
       style={{
-        margin: " 23px 42px",
         width: "584px",
         position: "relative"
       }}

@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 
 import BeeLogo from "components/common/BeeLogo";
+import UncontrolledSearch from "components/common/UncontrolledSearch";
 
 import styles from "./DestinationFragment.module.css";
+import searchBarStyles from "./SearchBar.module.css";
 
 const DEFAULT_ZOOM = 7;
 
@@ -70,15 +72,7 @@ const DestinationFragment = ({ destination }) => {
           <BeeLogo className={styles.logoImage} />
           <div className={styles.logoText}>Bee Travels</div>
         </Link>
-        <svg
-          className={styles.searchIcon}
-          focusable="false"
-          width="32"
-          height="32"
-          viewBox="0 0 32 32"
-        >
-          <path d="M30,28.59,22.45,21A11,11,0,1,0,21,22.45L28.59,30ZM5,14a9,9,0,1,1,9,9A9,9,0,0,1,5,14Z"></path>
-        </svg>
+        <UncontrolledSearch theme={searchBarStyles} />
       </div>
       <div className={styles.content}>
         <h1>{destination.city}</h1>
