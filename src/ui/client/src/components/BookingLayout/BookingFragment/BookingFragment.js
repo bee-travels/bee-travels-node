@@ -6,7 +6,7 @@ import { MultiSelect, Select, SelectItem } from "carbon-components-react";
 import styles from "./BookingFragment.module.css";
 import DoubleSlider from "components/common/DoubleSlider";
 
-const DEFAULT_MAX = 500;
+const DEFAULT_MAX = 700;
 
 const ListItem = ({ superchain, name, cost, images }) => {
   return (
