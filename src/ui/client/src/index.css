@@ -1,63 +1,45 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "ibm-plex-sans", Helvetica Neue, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+body.light {
+  --ui-background: #ffffff;
+  --interactive-01: #0f62fe;
+  --interactive-02: #393939;
+  --interactive-03: #0f62fe;
+  --interactive-04: #0f62fe;
+  --danger: #da1e28;
+  --ui-01: #f4f4f4;
+  --ui-02: #ffffff;
+  --ui-03: #e0e0e0;
+  --ui-04: #8d8d8d;
+  --ui-05: #161616;
+  --text-01: #161616;
+  --text-02: #393939;
+  --text-03: #a8a8a8;
+  --text-04: #ffffff;
+  --text-05: #6f6f6f;
 }
 
-.col .react-autosuggest__input {
-  width: 240px;
+.bx--list-box__menu {
+  max-height: 23.75rem;
 }
 
-.col .react-autosuggest__suggestions-container--open {
-  display: block;
-  position: absolute;
-  width: 240px;
-  border: 1px solid #aaa;
-  background-color: #fff;
-  font-size: 14px;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 2;
+.bx--select-input,
+.bx--list-box {
+  background-color: transparent;
+  border-bottom: transparent;
 }
 
-.col-md-6 .react-autosuggest__input {
-  width: 750px;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  font-size: 24px;
+.bx--select-input {
+  width: auto;
+  min-width: auto;
 }
 
-.col-md-6 .react-autosuggest__suggestions-container--open {
-  display: block;
-  position: absolute;
-  width: 750px;
-  border: 1px solid #aaa;
-  background-color: #fff;
-  font-size: 14px;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 2;
-}
-
-.react-autosuggest__suggestions-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-
-.react-autosuggest__suggestion {
-  cursor: pointer;
-  padding: 10px 14px;
-}
-
-.react-autosuggest__suggestion--highlighted {
-  background-color: #ddd;
+* {
+  box-sizing: border-box;
 }

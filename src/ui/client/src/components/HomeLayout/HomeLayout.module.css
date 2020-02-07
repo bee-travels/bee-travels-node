@@ -1,0 +1,35 @@
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  margin: 156px 42px 23px 42px;
+  justify-content: center;
+  width: 584px;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 40px;
+  display: flex;
+}
+
+.logoImage {
+  position: relative;
+  top: -11px;
+  left: -19px;
+  width: 110px;
+  transform: rotate(-45deg);
+}
+
+.logoText {
+  position: relative;
+  top: -7px;
+  left: -8px;
+}
+
+.logoUnderline {
+  background: #0f62fe;
+  height: 10px;
+  margin-top: 5px;
+}
