@@ -5,7 +5,7 @@ services:
   ui:
     build: src/ui
     ports:
-      - "3000:9000"
+      - "9000:9000"
     depends_on:
       - destination
       - hotel
