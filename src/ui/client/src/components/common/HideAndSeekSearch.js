@@ -1,8 +1,13 @@
 import React, { useState, useCallback, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import queryString from "query-string";
+import { Link } from "react-router-dom";
+
+import BeeLogo from "components/common/BeeLogo";
 
 import globalHistory from "globalHistory";
+
+import styles from "./DestinationFragment.module.css";
 
 const getSuggestionValue = ({ city, country }) => `${city}, ${country}`;
 
@@ -29,6 +34,7 @@ const UncontrolledSearch = ({ theme }) => {
   const [destinations, setDestinations] = useState([]);
   const [searchBarValue, setSearchBarValue] = useState("");
   const [currentSuggestion, setCurrentSuggestion] = useState("");
+  const [active, setActive] = useState(false);
 
   // Autosuggest passes back an event and the new value.
   const handleChange = useCallback((_, { newValue }) => {
@@ -56,49 +62,56 @@ const UncontrolledSearch = ({ theme }) => {
     loadDestinations();
   }, []);
 
+  const handleActivate = useCallback(() => {
+    setActive(true);
+    setTimeout(() => {
+      document.getElementsByTagName("input")[0].focus();
+    }, 300);
+  }, []);
+
+  const handleDeactivate = useCallback(() => {
+    setActive(false);
+  }, []);
+
   return (
-    <div
-      style={{
-        margin: " 23px 42px",
-        width: "584px",
-        position: "relative"
-      }}
-    >
-      <svg
-        focusable="false"
-        preserveAspectRatio="xMidYMid meet"
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        aria-hidden="true"
-        style={{
-          color: "rgb(22, 22, 22)",
-          position: "absolute",
-          left: "24px",
-          top: "24px",
-          height: "20px",
-          width: "20px",
-          transform: "translate(-50%, -50%)"
-        }}
-        // class="bx--search-magnifier"
-        // style="will-change: transform;"
+    <div className={styles.titlebar}>
+      <Link to="/" className={active ? styles.homeLinkActive : styles.homeLink}>
+        <BeeLogo className={styles.logoImage} />
+        <div className={styles.logoText}>Bee Travels</div>
+      </Link>
+      <div
+        className={
+          active ? styles.searchIconWrapperActive : styles.searchIconWrapper
+        }
       >
-        <path d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5	C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"></path>
-      </svg>
-      <Autosuggest
-        suggestions={filterSuggestions(destinations, currentSuggestion)}
-        onSuggestionsFetchRequested={handleSuggestionsFetchRequested}
-        onSuggestionsClearRequested={handleSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
-        theme={theme}
-        inputProps={{
-          placeholder: "Where will you bee traveling?",
-          value: searchBarValue,
-          onChange: handleChange
-        }}
-        onSuggestionSelected={handleSuggestionSelected}
-      />
+        <svg
+          onClick={handleActivate}
+          className={styles.searchIcon}
+          focusable="false"
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+        >
+          <path d="M30,28.59,22.45,21A11,11,0,1,0,21,22.45L28.59,30ZM5,14a9,9,0,1,1,9,9A9,9,0,0,1,5,14Z"></path>
+        </svg>
+      </div>
+      {active && (
+        <Autosuggest
+          suggestions={filterSuggestions(destinations, currentSuggestion)}
+          onSuggestionsFetchRequested={handleSuggestionsFetchRequested}
+          onSuggestionsClearRequested={handleSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          theme={theme}
+          inputProps={{
+            placeholder: "Where will you bee traveling?",
+            value: searchBarValue,
+            onChange: handleChange,
+            onBlur: handleDeactivate
+          }}
+          onSuggestionSelected={handleSuggestionSelected}
+        />
+      )}
     </div>
   );
 };

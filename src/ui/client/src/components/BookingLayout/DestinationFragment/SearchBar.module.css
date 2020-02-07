@@ -1,6 +1,6 @@
-/* .container {
-  background: red; 
-} */
+.container {
+  flex: 1;
+}
 
 .input {
   font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
@@ -12,14 +12,14 @@
   color: rgb(22, 22, 22);
   font-size: 16px;
   font-weight: 400;
-  height: 48px;
+  /* height: 48px; */
+  height: 4rem;
   line-height: 22px;
   margin: 0;
   outline: 2px solid rgba(0, 0, 0, 0);
   outline-offset: -2px;
-  padding: 0 64px 0 40px;
+  padding: 0 64px 0 64px;
   width: 100%;
-
   transition-duration: 0.11s, 0.11s;
   transition-property: outline;
   transition-timing-function: cubic-bezier(0.2, 0, 0.38, 0.9),
@@ -45,7 +45,8 @@
   max-height: 200px;
   overflow-y: auto;
   position: absolute;
-  width: 313px;
+  width: 100%;
+  /* width: 313px; */
 }
 
 .suggestionsList {

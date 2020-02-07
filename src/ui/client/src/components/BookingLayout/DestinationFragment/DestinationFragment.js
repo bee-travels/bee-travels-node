@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 
 import BeeLogo from "components/common/BeeLogo";
-import UncontrolledSearch from "components/common/UncontrolledSearch";
+import HideAndSeekSearch from "components/common/HideAndSeekSearch";
 
 import styles from "./DestinationFragment.module.css";
 import searchBarStyles from "./SearchBar.module.css";
@@ -67,13 +67,13 @@ const DestinationFragment = ({ destination }) => {
 
   return (
     <>
-      <div className={styles.titlebar}>
+      <HideAndSeekSearch theme={searchBarStyles} />
+      {/* <div className={styles.titlebar}>
         <Link to="/" className={styles.homeLink}>
           <BeeLogo className={styles.logoImage} />
           <div className={styles.logoText}>Bee Travels</div>
-        </Link>
-        <UncontrolledSearch theme={searchBarStyles} />
-      </div>
+        </Link> 
+       </div> */}
       <div className={styles.content}>
         <h1>{destination.city}</h1>
 
