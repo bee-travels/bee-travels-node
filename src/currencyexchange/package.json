@@ -4,14 +4,14 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV=production npm-run-all clean build server:prod",
-    "dev": "babel-watch ./src/bin/www",
-    "clean": "rimraf dist",
-    "build": "babel ./src --out-dir dist",
+    "dev": "./node_modules/.bin/babel-watch ./src/bin/www",
+    "clean": "./node_modules/.bin/rimraf dist",
+    "build": "./node_modules/.bin/babel ./src --out-dir dist",
     "server:prod": "node ./dist/bin/www",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint --ext .js ./src",
-    "format": "prettier --write 'src/**/*.+(js|json)'"
+    "lint": "./node_modules/.bin/eslint --ext .js ./src",
+    "format": "./node_modules/.bin/prettier --write 'src/**/*.+(js|json)'"
   },
   "dependencies": {
     "acorn": "^7.1.0",

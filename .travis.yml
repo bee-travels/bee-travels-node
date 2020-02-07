@@ -21,3 +21,6 @@ jobs:
     - stage: "testing"
       name: "NPM testing"
       script: cd src/destination && npm install && npm test
+    - stage: "testing"
+      name: "NPM testing"
+      script: cd src/currencyexchange && npm install && npm test

@@ -1,4 +1,4 @@
-cd src/currencyexchange && yarn start &
-cd src/destination && yarn start &
-cd src/hotel && yarn start &
-cd src/ui && yarn start
+cd src/currencyexchange && npm ci && npm start &
+cd src/destination && npm ci && npm start &
+cd src/hotel && npm ci && npm start &
+cd src/ui && npm ci && npm start

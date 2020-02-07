@@ -15,10 +15,10 @@ node_modules/
 dist/
 build/
 
+*.log
+
 .DS_Store
 
 config.json
 
 .vscode
-
-.DS_Store

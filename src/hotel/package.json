@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "start": "npm run prod",
-    "server": "babel-node ./src/bin/www",
+    "server": "./node_modules/.bin/babel-node ./src/bin/www",
     "server:prod": "node ./dist/bin/www",
     "dev": "NODE_ENV=development npm-run-all server",
-    "clean": "rimraf dist",
+    "clean": "./node_modules/.bin/rimraf dist",
     "test-suite": "babel-node test/run",
-    "test": "npm-run-all test-suite",
-    "build": "babel ./src --out-dir dist",
+    "test": "./node_modules/.bin/npm-run-all test-suite",
+    "build": "./node_modules/.bin/babel ./src --out-dir dist",
     "prod": "NODE_ENV=production npm-run-all clean build server:prod"
   },
   "dependencies": {

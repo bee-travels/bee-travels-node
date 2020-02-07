@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd client && npm install && npm run build && cd ..",
-    "start": "concurrently --kill-others-on-fail 'npm run server' 'npm run client'",
-    "server": "nodemon index.js",
-    "client": "cd client && npm start"
+    "dev": "./node_modules/.bin/concurrently --kill-others-on-fail 'npm run build' 'npm run client'",
+    "start": "npm run build && node index.js",
+    "client": "cd client && npm install && npm start"
   },
   "keywords": [
     "react",
