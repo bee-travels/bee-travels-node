@@ -35,6 +35,11 @@ body.light {
   border-bottom: transparent;
 }
 
+.bx--select-input {
+  width: auto;
+  min-width: auto;
+}
+
 * {
   box-sizing: border-box;
 }

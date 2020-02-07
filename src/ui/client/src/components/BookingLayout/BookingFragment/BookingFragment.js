@@ -4,6 +4,9 @@ import queryString from "query-string";
 import { MultiSelect, Select, SelectItem } from "carbon-components-react";
 
 import styles from "./BookingFragment.module.css";
+import DoubleSlider from "components/common/DoubleSlider";
+
+const DEFAULT_MAX = 500;
 
 const ListItem = ({ superchain, name, cost, images }) => {
   return (
@@ -31,9 +34,9 @@ const Filters = ({
   onSuperchainSelectionChange,
   onHotelSelectionChange,
   onTypeSelectionChange,
-  onMinSelectionChange,
-  onMaxSelectionChange,
-  onCurrencyChange
+  onMinMaxSelectionChange,
+  onCurrencyChange,
+  defaultMax
 }) => {
   const handleSuperchainChange = useCallback(
     ({ selectedItems }) => {
@@ -56,26 +59,30 @@ const Filters = ({
     [onTypeSelectionChange]
   );
 
-  // const handleMinChange = useCallback(
-  //   e => {
-  //     onMinSelectionChange(e.target.value);
-  //   },
-  //   [onMinSelectionChange]
-  // );
-
-  // const handleMaxChange = useCallback(
-  //   e => {
-  //     onMaxSelectionChange(e.target.value);
-  //   },
-  //   [onMaxSelectionChange]
-  // );
-
   const handleCurrencyChange = useCallback(
     e => {
       onCurrencyChange(e.target.value);
     },
     [onCurrencyChange]
   );
+
+  const [slideValues, setSlideValues] = useState([0, defaultMax]);
+
+  // Called while sliding.
+  const handleUpdate = useCallback(values => {
+    setSlideValues(values.map(x => Number.parseInt(x)));
+  }, []);
+
+  // Called while sliding is finished.
+  const handleSet = useCallback(
+    values => {
+      setSlideValues(values.map(x => Number.parseInt(x)));
+      onMinMaxSelectionChange(values.map(x => Number.parseInt(x)));
+    },
+    [onMinMaxSelectionChange]
+  );
+
+  const [min, max] = slideValues;
 
   return (
     <div className={styles.filters}>
@@ -87,7 +94,7 @@ const Filters = ({
           itemToString={item => item}
         />
       </div>
-      <div className={styles.filterNarrow}>
+      <div className={styles.filterWide}>
         <MultiSelect
           label="Hotels"
           onChange={handleHotelChange}
@@ -103,7 +110,7 @@ const Filters = ({
           itemToString={item => item}
         />
       </div>
-      <div className={styles.filterNarrow}>
+      <div className={styles.filterSuperNarrow}>
         <Select hideLabel onChange={handleCurrencyChange}>
           {Object.keys(exchangeRates).map(currencyCode => (
             <SelectItem
@@ -113,6 +120,23 @@ const Filters = ({
             />
           ))}
         </Select>
+      </div>
+      <div className={styles.filterWide}>
+        <div className={styles.wrapWrap}>
+          <div className={styles.numberLeft}>{min}</div>
+          <div className={styles.sliderWrap}>
+            <DoubleSlider
+              range={{ min: 0, max: defaultMax }}
+              start={[0, defaultMax]}
+              connect
+              onUpdate={handleUpdate}
+              onSet={handleSet}
+            />
+          </div>
+          <div className={styles.numberRight}>
+            {max === defaultMax ? `${defaultMax}+` : max}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -128,8 +152,8 @@ const BookingFragment = ({ destination }) => {
   const [selectedSuperchains, setSelectedSuperchains] = useState([]);
   const [selectedHotels, setSelectedHotels] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
-  const [selectedMin, setSelectedMin] = useState(0);
-  const [selectedMax, setSelectedMax] = useState(Number.MAX_SAFE_INTEGER);
+
+  const [selectedMinMax, setSelectedMinMax] = useState([undefined, undefined]);
 
   const [superchainList, setSuperchainList] = useState([]);
   const [hotelList, setHotelList] = useState([]);
@@ -139,17 +163,28 @@ const BookingFragment = ({ destination }) => {
 
   const { city, country } = destination;
 
+  // TODO
+  // const scaledMax = Number.parseInt(
+  //   priceConversion(DEFAULT_MAX, {
+  //     from: exchangeRates.USD,
+  //     to: exchangeRates[selectedCurrency]
+  //   }) || DEFAULT_MAX
+  // );
+
+  const scaledMax = DEFAULT_MAX;
+
   useEffect(() => {
     const loadHotels = async () => {
+      const [minCost, maxCost] = selectedMinMax;
       const params = {
         superchain: selectedSuperchains.join(","),
         hotel: selectedHotels.join(","),
         type: selectedTypes.join(","),
-        mincost: priceConversion(selectedMin, {
+        mincost: priceConversion(minCost, {
           from: exchangeRates[selectedCurrency],
           to: exchangeRates.USD
         }),
-        maxcost: priceConversion(selectedMax, {
+        maxcost: priceConversion(maxCost, {
           from: exchangeRates[selectedCurrency],
           to: exchangeRates.USD
         })
@@ -171,10 +206,9 @@ const BookingFragment = ({ destination }) => {
     selectedSuperchains,
     selectedHotels,
     selectedTypes,
-    selectedMin,
-    selectedMax,
     selectedCurrency,
-    exchangeRates
+    exchangeRates,
+    selectedMinMax
   ]);
 
   useEffect(() => {
@@ -229,21 +263,12 @@ const BookingFragment = ({ destination }) => {
     setSelectedTypes(types);
   }, []);
 
-  const handleMinSelectionChange = useCallback(min => {
-    if (min) {
-      setSelectedMin(min);
-    } else {
-      setSelectedMin(0);
-    }
-  }, []);
-
-  const handleMaxSelectionChange = useCallback(max => {
-    if (max) {
-      setSelectedMax(max);
-    } else {
-      setSelectedMax(Number.MAX_SAFE_INTEGER);
-    }
-  }, []);
+  const handleMinMaxSelectionChange = useCallback(
+    ([minCost, maxCost]) => {
+      setSelectedMinMax([minCost, maxCost === scaledMax ? undefined : maxCost]);
+    },
+    [scaledMax]
+  );
 
   const handleCurrencyChange = useCallback(currency => {
     setSelectedCurrency(currency);
@@ -259,9 +284,9 @@ const BookingFragment = ({ destination }) => {
         onSuperchainSelectionChange={handleSuperchainSelectionChange}
         onHotelSelectionChange={handleHotelSelectionChange}
         onTypeSelectionChange={handleTypeSelectionChange}
-        onMinSelectionChange={handleMinSelectionChange}
-        onMaxSelectionChange={handleMaxSelectionChange}
+        onMinMaxSelectionChange={handleMinMaxSelectionChange}
         onCurrencyChange={handleCurrencyChange}
+        defaultMax={scaledMax}
       />
       {hotels.map(({ superchain, name, cost, images }) => {
         const priceString =

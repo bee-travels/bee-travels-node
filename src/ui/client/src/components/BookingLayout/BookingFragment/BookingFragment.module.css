@@ -44,3 +44,33 @@
 .filterNarrow {
   flex: 1;
 }
+
+.filterSupperNarrow {
+  flex: 0 1;
+}
+
+.wrapWrap {
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  height: 100%;
+}
+
+.numberLeft {
+  text-align: right;
+  flex-shrink: 0;
+  min-width: 25px;
+  margin-left: 16px;
+}
+.numberRight {
+  text-align: left;
+  flex-shrink: 0;
+  min-width: 35px;
+  margin-right: 16px;
+}
+
+.sliderWrap {
+  width: 100%;
+  margin-left: 16px;
+  margin-right: 16px;
+}
