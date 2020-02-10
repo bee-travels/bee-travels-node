@@ -6,7 +6,7 @@ import { parse } from "fast-csv";
 import { createReadStream } from "fs";
 
 function getDestinationData(city, country) {
-  const fileStream = createReadStream(process.env.INIT_CWD + "/cities.csv");
+  const fileStream = createReadStream("./cities.csv");
   const parser = parse({ headers: true });
 
   return new Promise(function (resolve) {

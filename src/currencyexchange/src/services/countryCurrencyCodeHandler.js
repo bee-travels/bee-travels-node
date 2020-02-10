@@ -12,7 +12,7 @@ import NotFoundError from '../errors/NotFoundError';
 async function readData() {
   const jsonArray = await csv({
     delimiter: ',',
-  }).fromFile('./data/countryCurrencyMetadata.csv');
+  }).fromFile('./countryCurrencyMetadata.csv');
   return jsonArray;
 }
 
@@ -46,7 +46,8 @@ async function getCountryAndCurrencyCode(currencyCode) {
     var row_ = data[row];
     if (row_.currencyCode.toLowerCase() === currencyCode.toLowerCase()) {
       counter++;
-      if (counter === 1) {            //create output dict.
+      if (counter === 1) {
+        //create output dict.
         outputDict = row_;
       }
       outputRows.push(row_.country);

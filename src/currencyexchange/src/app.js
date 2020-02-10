@@ -6,7 +6,6 @@ import createError from 'http-errors';
 import express from 'express';
 import pino from 'pino';
 import expressPino from 'express-pino-logger';
-import cors from 'cors';
 import { serve, setup } from 'swagger-ui-express';
 import yaml from 'yamljs';
 import currencyRouter from './routes/currency';
@@ -19,8 +18,6 @@ swaggerDocument.schemes = [scheme];
 
 var app = express();
 var api = '/api/v1';
-
-app.use(cors());
 
 app.use(express.json());
 app.use(

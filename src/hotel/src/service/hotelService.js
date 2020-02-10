@@ -1,5 +1,5 @@
-var hotels = require(process.env.INIT_CWD +"/hotel-data.json");
-var hotelInfo = require(process.env.INIT_CWD +"/hotel-info.json");
+var hotels = require("../../hotel-data.json");
+var hotelInfo = require("../../hotel-info.json");
 
 function getHotels(city, country, f) {
   country = country
