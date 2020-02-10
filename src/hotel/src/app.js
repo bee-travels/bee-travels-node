@@ -1,6 +1,5 @@
 import createError from "http-errors";
 import express from "express";
-import logger from "morgan";
 import yaml from "yamljs";
 import { serve, setup } from "swagger-ui-express";
 
@@ -12,7 +11,6 @@ var scheme = process.env.SCHEME || "http";
 swaggerDocument.schemes = [scheme];
 
 var app = express();
-app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false

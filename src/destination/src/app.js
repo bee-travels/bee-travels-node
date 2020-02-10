@@ -4,7 +4,6 @@
 
 import createError from "http-errors";
 import express from "express";
-import logger from "morgan";
 import { serve, setup } from "swagger-ui-express";
 import { join } from "path";
 import destinationRouter from "./routes/destination";
@@ -19,7 +18,6 @@ swaggerDocument.schemes = [scheme];
 var app = express();
 var api = "/api/v1";
 
-app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({
   extended: false
