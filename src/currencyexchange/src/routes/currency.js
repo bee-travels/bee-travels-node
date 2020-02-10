@@ -45,7 +45,9 @@ router.get(
   '/:currencyFromAmount/:currencyFromCode/:currencyToCode',
   asyncMiddleware(async (req, res) => {
     const { currencyFromAmount, currencyFromCode, currencyToCode } = req.params;
-
+    if (isNaN(parseFloat(currencyFromAmount))) {
+      return res.status(400).json({ error: 'currency from amount should be numeric' });
+    }
     const data = await convertCurrency(
       parseFloat(currencyFromAmount.trim()),
       currencyFromCode.trim(),
