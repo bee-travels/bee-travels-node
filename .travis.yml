@@ -30,16 +30,16 @@ jobs:
       script: cd src/currencyexchange && npm install && npm test
     - stage: "build-image"
       name: "destination image build"
-      script: "docker build -t beetravels/destination:$TRAVIS_COMMIT"
+      script: "docker build -t beetravels/destination:$TRAVIS_COMMIT src/destination"
     - stage: "build-image"
       name: "hotel image build"
-      script: "docker build -t beetravels/hotel:$TRAVIS_COMMIT"
+      script: "docker build -t beetravels/hotel:$TRAVIS_COMMIT src/hotel"
     - stage: "build-image"
       name: "currency exchange image build"
-      script: "docker build -t beetravels/currencyexchange:$TRAVIS_COMMIT"
+      script: "docker build -t beetravels/currencyexchange:$TRAVIS_COMMIT src/currencyexchange"
     - stage: "build-image"
       name: "ui image build"
-      script: "docker build -t beetravels/ui:$TRAVIS_COMMIT"
+      script: "docker build -t beetravels/ui:$TRAVIS_COMMIT src/ui"
 
 after_success:
   - docker images
