@@ -1,6 +1,4 @@
-# Bee Travels - Node.js
-
-[![Build Status](https://travis-ci.org/bee-travels/bee-travels-node.svg?branch=development)](https://travis-ci.org/bee-travels/bee-travels-node)
+# Bee Travels - Node.js [![Build Status](https://travis-ci.org/bee-travels/bee-travels-node.svg?branch=development)](https://travis-ci.org/bee-travels/bee-travels-node)
 
 > ***NOTE:*** Bee Travels is a work in progress and this README will update as progress is made
 
