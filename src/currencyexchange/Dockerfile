@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --only=prod
 
-COPY .babelrc ./data/countryCurrencyMetadata.csv swagger.yaml ./
+COPY ./data/countryCurrencyMetadata.csv swagger.yaml ./
 
 COPY src ./src
 
