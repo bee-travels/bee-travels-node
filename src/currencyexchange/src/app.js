@@ -6,7 +6,6 @@ import createError from 'http-errors';
 import express from 'express';
 import logger from './lib/logger';
 import expressPino from 'express-pino-logger';
-import cors from 'cors';
 import { serve, setup } from 'swagger-ui-express';
 import yaml from 'yamljs';
 import currencyRouter from './routes/currency';
@@ -22,8 +21,6 @@ var api = '/api/v1';
 
 const expressLogger = expressPino({ logger });
 app.use(expressLogger);
-
-app.use(cors());
 
 app.use(express.json());
 app.use(

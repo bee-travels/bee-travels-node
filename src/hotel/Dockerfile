@@ -1,12 +1,14 @@
 FROM node:10.16.1-alpine
 
+LABEL maintainer="moficodes@gmail.com"
+
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --only=prod
 
-COPY .babelrc hotel-data.json hotel-info.json swagger.yaml ./
+COPY hotel-data.json hotel-info.json swagger.yaml ./
 
 COPY src ./src
 
