@@ -6,8 +6,11 @@ node_js:
 services:
   - docker
 
-before_install:
-  - docker version
+stages:
+  - linting
+  - testing
+  - name: "build-image"
+    if: branch = "docker-build"
 
 jobs:
   include:
@@ -29,17 +32,16 @@ jobs:
       name: "currency exchange unit test"
       script: cd src/currencyexchange && npm install && npm test
     - stage: "build-image"
-      name: "destination image build"
-      script: "docker build -t beetravels/destination:$TRAVIS_COMMIT src/destination"
-    - stage: "build-image"
-      name: "hotel image build"
-      script: "docker build -t beetravels/hotel:$TRAVIS_COMMIT src/hotel"
-    - stage: "build-image"
-      name: "currency exchange image build"
-      script: "docker build -t beetravels/currencyexchange:$TRAVIS_COMMIT src/currencyexchange"
-    - stage: "build-image"
-      name: "ui image build"
-      script: "docker build -t beetravels/ui:$TRAVIS_COMMIT src/ui"
-
+      name: "docker image build"
+      script: 
+        - docker build -t beetravels/destination:$TRAVIS_COMMIT src/destination
+        - docker build -t beetravels/hotel:$TRAVIS_COMMIT src/hotel
+        - docker build -t beetravels/currencyexchange:$TRAVIS_COMMIT src/currencyexchange
+        - docker build -t beetravels/ui:$TRAVIS_COMMIT src/ui
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push beetravels/destination:$TRAVIS_COMMIT
+        - docker push beetravels/hotel:$TRAVIS_COMMIT
+        - docker push beetravels/currencyexchange:$TRAVIS_COMMIT
+        - docker push beetravels/ui:$TRAVIS_COMMIT
 after_success:
   - docker images
