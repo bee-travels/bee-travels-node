@@ -1,6 +1,7 @@
 {
-  "name": "exampletravel",
+  "name": "destination",
   "version": "0.0.0",
+  "description": "destination service for bee-travels",
   "private": true,
   "scripts": {
     "test-suite": "babel-node test/run",
