@@ -1,7 +1,5 @@
 language: node_js
 
-sudo: false
-
 node_js:
   - 10
 
@@ -25,8 +23,23 @@ jobs:
         - cd src/ui && npm install && cd ../..
         - cd src/ui/client && npm install && ./node_modules/.bin/eslint src/
     - stage: "testing"
-      name: "NPM testing"
+      name: "destination unit test"
       script: cd src/destination && npm install && npm test
     - stage: "testing"
-      name: "NPM testing"
+      name: "currency exchange unit test"
       script: cd src/currencyexchange && npm install && npm test
+    - stage: "build-image"
+      name: "destination image build"
+      script: "docker build -t beetravels/destination:$TRAVIS_COMMIT"
+    - stage: "build-image"
+      name: "hotel image build"
+      script: "docker build -t beetravels/hotel:$TRAVIS_COMMIT"
+    - stage: "build-image"
+      name: "currency exchange image build"
+      script: "docker build -t beetravels/currencyexchange:$TRAVIS_COMMIT"
+    - stage: "build-image"
+      name: "ui image build"
+      script: "docker build -t beetravels/ui:$TRAVIS_COMMIT"
+
+after_success:
+  - docker images
