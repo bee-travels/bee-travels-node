@@ -9,8 +9,7 @@ services:
 stages:
   - linting
   - testing
-  - name: "build-and-push"
-    if: branch = "development"
+  - build-and-push
 
 jobs:
   include:
@@ -30,13 +29,4 @@ jobs:
       script: cd src/currencyexchange && npm install && npm test
     - stage: "build-and-push"
       name: "Docker image build"
-      script: 
-        - docker build -t beetravels/destination:$TRAVIS_COMMIT src/destination
-        - docker build -t beetravels/hotel:$TRAVIS_COMMIT src/hotel
-        - docker build -t beetravels/currencyexchange:$TRAVIS_COMMIT src/currencyexchange
-        - docker build -t beetravels/ui:$TRAVIS_COMMIT src/ui
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push beetravels/destination:$TRAVIS_COMMIT
-        - docker push beetravels/hotel:$TRAVIS_COMMIT
-        - docker push beetravels/currencyexchange:$TRAVIS_COMMIT
-        - docker push beetravels/ui:$TRAVIS_COMMIT
+      script: .travis/build-and-push.sh
