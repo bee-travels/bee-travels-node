@@ -1,8 +1,12 @@
 #!/bin/bash
 if [ ${TRAVIS_BRANCH} == development ]; then
   prefix=dev
-elif [ ${TRAVIS_BRANCH} == docker-build ]; then
-  prefix=docker
+elif [ ${TRAVIS_BRANCH} == v1 ]; then
+  prefix="v1"
+elif [ ${TRAVIS_BRANCH} == v2 ]; then
+  prefix="v2"
+elif [ ${TRAVIS_BRANCH} == v3 ]; then
+  prefix="v3"
 else
   prefix="v0"
 fi
