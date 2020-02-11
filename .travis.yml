@@ -10,7 +10,7 @@ stages:
   - linting
   - testing
   - name: "build-and-push"
-    if: branch =~ /development|v1|v2|v3/
+    if: branch =~ /development|v1|v2|v3/ AND (NOT (type IN (pull_request)))
 
 jobs:
   include:
