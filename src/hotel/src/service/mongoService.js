@@ -9,9 +9,9 @@ async function getHotelFromMongo(city, country) {
     }
 
     try {
-        const db = client.db("beetravels");
-        let collection = db.collection("hotels");
-        let query = { city: city, country: country }
+        const db = client.db('beetravels');
+        let collection = db.collection('hotels');
+        let query = { city: city, country: country };
         let res = await collection.findOne(query);
         return res;
     } catch (err) {
@@ -30,9 +30,9 @@ async function getHotelInfoFromMongo() {
     }
 
     try {
-        const db = client.db("beetravels");
-        let collection = db.collection("hotelinfo");
-        let query = {}
+        const db = client.db('beetravels');
+        let collection = db.collection('hotelinfo');
+        let query = {};
         let res = await collection.findOne(query);
         return res;
     } catch (err) {
