@@ -1,7 +1,20 @@
-var hotels = require(process.env.INIT_CWD + '/hotel-data.json');
-var hotelInfo = require(process.env.INIT_CWD + '/hotel-info.json');
+import { getHotelFromMongo, getHotelInfoFromMongo } from './mongoService';
 
-function getHotels(city, country, f) {
+async function getHotelData(city, country) {
+  if (process.env.DATABASE) {
+    if (process.env.DATABASE.indexOf("mongodb") > -1) {
+      var hotel = await getHotelFromMongo(city, country);
+      return hotel.hotels;
+    } else if (process.env.DATABASE.indexOf("postgres") > -1) {
+
+    }
+  } else {
+    var hotels = require(process.env.INIT_CWD + '/hotel-data.json');
+    return hotels[country][city];
+  }
+}
+
+async function getHotels(city, country, f) {
   country = country
     .trim()
     .toLowerCase()
@@ -12,7 +25,7 @@ function getHotels(city, country, f) {
     .toLowerCase()
     .replace('%20', ' ')
     .replace(/\w\S*/g, w => w.replace(/^\w/, c => c.toUpperCase()));
-  var data = hotels[country][city];
+  var data = await getHotelData(city, country);
   if (!f && data) {
     return data;
   } else if (data) {
@@ -29,7 +42,17 @@ function getHotels(city, country, f) {
   return data;
 }
 
-function getInfo(topic) {
+async function getInfo(topic) {
+  var hotelInfo;
+  if (process.env.DATABASE) {
+    if (process.env.DATABASE.indexOf("mongodb") > -1) {
+      hotelInfo = await getHotelInfoFromMongo();
+    } else if (process.env.DATABASE.indexOf("postgres") > -1) {
+
+    }
+  } else {
+    hotelInfo = require(process.env.INIT_CWD + '/hotel-info.json');
+  }
   return hotelInfo[topic];
 }
 

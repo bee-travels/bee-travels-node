@@ -9,14 +9,15 @@ var router = Router();
 /* GET list of destination locations */
 
 router.get('/info/:topic', function(req, res) {
-  var data = getInfo(req.params.topic);
-  res.contentType('application/json');
-  if (!data) {
-    res.status(404).send('{"error": "not found"}');
-    return;
-  }
+  getInfo(req.params.topic).then(function(data) {
+    res.contentType('application/json');
+    if (!data) {
+      res.status(404).send('{"error": "not found"}');
+      return;
+    }
 
-  res.send(data);
+    res.send(data);
+  });
 });
 
 router.get('/:city/:country', function(req, res) {
@@ -36,14 +37,14 @@ router.get('/:city/:country', function(req, res) {
     filter.maxCost = parseInt(maxCost) || Number.MAX_SAFE_INTEGER;
   }
 
-  var data = getHotels(req.params.city, req.params.country, filter);
-  res.contentType('application/json');
-  if (!data) {
-    res.status(404).send('{"error": "not found"}');
-    return;
-  }
-
-  res.send(data);
+  getHotels(req.params.city, req.params.country, filter).then(function(data) {
+    res.contentType('application/json');
+    if (!data) {
+      res.status(404).send('{"error": "not found"}');
+      return;
+    }
+    res.send(data);
+  });
 });
 
 export default router;
