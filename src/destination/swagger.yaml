@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
   description: >-
-    This is a microservice that handles destination location data for Bee Travel
+    This is a microservice that handles destination location data for Bee Travels
   version: 1.0.0
-  title: Bee Travel Destinations Data Service
+  title: Bee Travels Destinations Data Service
   contact:
     email: maxshapiro32@ibm.com
   license:
