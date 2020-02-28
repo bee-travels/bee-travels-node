@@ -22,6 +22,6 @@ RUN npm install
 
 COPY index.js ./
 
-EXPOSE 3000
+EXPOSE 9000
 
 CMD ["node", "index.js"]

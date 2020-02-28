@@ -54,7 +54,7 @@ app.post("/api/v1/currency/search", (req, res) => {
   request.post(CURRENCY_EXCHANGE_URL + "/api/v1/currency/search").pipe(res);
 })
 
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
