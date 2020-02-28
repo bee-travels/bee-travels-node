@@ -10,7 +10,7 @@ COPY client/. ./
 
 RUN npm run build
 
-FROM node:10.16.1-alpine as release
+FROM node:12.16.1-alpine as release
 
 WORKDIR /app
 
