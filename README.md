@@ -104,6 +104,7 @@ Bee Travels currently supports deploying to the Cloud using the following config
 * Helm
 * K8s
 * Knative
+* OpenShift
 
 For instructions on how to deploy Bee Travels to the Cloud, check out the [config](https://github.com/bee-travels/config) repo for the Bee Travels project.
 
