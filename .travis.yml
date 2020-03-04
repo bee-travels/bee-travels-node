@@ -1,26 +1,33 @@
 language: node_js
 
-sudo: false
-
 node_js:
   - 10
+
+services:
+  - docker
+
+stages:
+  - linting
+  - testing
+  - name: "build-and-push"
+    if: branch =~ /development|v1|v2|v3/ AND (NOT (type IN (pull_request)))
 
 jobs:
   include:
     - stage: "linting"
       name: "Destination ES Linting"
       script: cd src/destination && npm install && ./node_modules/.bin/eslint src/
-    - stage: "linting"
-      name: "Hotel Service ES Linting"
+    - name: "Hotel Service ES Linting"
       script: cd src/hotel && npm install && ./node_modules/.bin/eslint src/
-    - stage: "linting"
-      name: "UI client ES Linting"
+    - name: "UI client ES Linting"
       script:
         - cd src/ui && npm install && cd ../..
         - cd src/ui/client && npm install && ./node_modules/.bin/eslint src/
     - stage: "testing"
-      name: "NPM testing"
+      name: "Destination Unit Test"
       script: cd src/destination && npm install && npm test
-    - stage: "testing"
-      name: "NPM testing"
+    - name: "Currencyexchange Unit Test"
       script: cd src/currencyexchange && npm install && npm test
+    - stage: "build-and-push"
+      name: "Docker image build"
+      script: .travis/build-and-push.sh
