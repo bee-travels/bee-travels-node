@@ -10,7 +10,7 @@ COPY client/. ./
 
 RUN npm run build
 
-FROM node:10.16.1-alpine as release
+FROM node:12.16.1-alpine3.11 as release
 
 WORKDIR /app
 
@@ -22,6 +22,6 @@ RUN npm install
 
 COPY index.js ./
 
-EXPOSE 3000
+EXPOSE 9000
 
 CMD ["node", "index.js"]
