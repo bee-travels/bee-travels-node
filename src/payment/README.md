@@ -27,4 +27,8 @@ Node.js
 
 Strategy Pattern for plugins for db/comm
 
+### Notes
+uuid postgres as super user:
+https://www.postgresqltutorial.com/postgresql-uuid/
 
+https://www.pgcli.com/docs
