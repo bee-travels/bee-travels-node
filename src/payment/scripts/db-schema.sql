@@ -27,7 +27,9 @@ CREATE TABLE tCar (
 	pickupDateTime TIMESTAMP NOT NULL,
 	dropoffDateTime TIMESTAMP NOT NULL,
 	costUSD decimal NOT NULL,
-	created_on TIMESTAMP NOT NULL
+	CONSTRAINT car_reservation_conf_fkey FOREIGN KEY(ReservationUUID) 
+		REFERENCES tReservation (ReservationUUID) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION
 
 );
 
@@ -39,7 +41,9 @@ CREATE TABLE tHotel (
 	checkinDateTime TIMESTAMP NOT NULL,
 	checkoutDateTime TIMESTAMP NOT NULL,
 	costUSD decimal NOT NULL,
-	created_on TIMESTAMP NOT NULL
+	CONSTRAINT car_reservation_conf_fkey FOREIGN KEY(ReservationUUID) 
+		REFERENCES tReservation (ReservationUUID) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
 CREATE TABLE tFlight (
@@ -51,5 +55,7 @@ CREATE TABLE tFlight (
 	departureDateTime TIMESTAMP NOT NULL,
 	arrivalDateTime TIMESTAMP NOT NULL,
 	costUSD decimal NOT NULL,
-	created_on TIMESTAMP NOT NULL
+	CONSTRAINT car_reservation_conf_fkey FOREIGN KEY(ReservationUUID) 
+		REFERENCES tReservation (ReservationUUID) MATCH SIMPLE
+		ON UPDATE NO ACTION ON DELETE NO ACTION
 );
