@@ -85,11 +85,11 @@ paths:
               - hotels
               - hotel-type
           name:  topic
-          description: Topic to get list of superchains/hotels/hotel-type
+          description: Topic to get list of superchains (topic=superchain) OR hotels (topic=name) OR hotel type (topic=type)
           required: true
       responses:
         '200':
-          description: Successfully go the info
+          description: Successfully got the info
         '404':
           description: Info not found
         '500':

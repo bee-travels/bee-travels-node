@@ -12,8 +12,14 @@ async function getHotelFromMongo(city, country) {
         const db = client.db('beetravels');
         let collection = db.collection('hotels');
         let query = { city: city, country: country };
-        let res = await collection.findOne(query);
-        return res;
+        let res = await collection.find(query);
+        var hotels = [];
+        var hotel;
+        while (hotel = await res.next()) {
+            delete hotel["_id"];
+            hotels.push(hotel);
+        }
+        return hotels;
     } catch (err) {
         console.log(err);
     } finally {
@@ -31,10 +37,10 @@ async function getHotelInfoFromMongo() {
 
     try {
         const db = client.db('beetravels');
-        let collection = db.collection('hotelinfo');
-        let query = {};
+        let collection = db.collection('hotels');
+        let query = { info: { $exists: true } };
         let res = await collection.findOne(query);
-        return res;
+        return res.info;
     } catch (err) {
         console.log(err);
     } finally {
