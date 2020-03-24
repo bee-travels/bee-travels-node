@@ -15,6 +15,7 @@
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "mongodb": "^3.5.3",
+    "pg": "^7.18.2",
     "swagger-ui-express": "^4.1.1",
     "yamljs": "^0.3.0"
   },

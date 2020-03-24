@@ -1,12 +1,15 @@
 import { getHotelFromMongo, getHotelInfoFromMongo } from './mongoService';
+import { getHotelFromPostgres, getHotelInfoFromPostgres } from './postgresService';
 
 async function getHotelData(city, country) {
   if (process.env.DATABASE) {
+    var hotel;
     if (process.env.DATABASE.indexOf('mongodb') > -1) {
-      var hotel = await getHotelFromMongo(city, country);
+      hotel = await getHotelFromMongo(city, country);
       return hotel;
     } else if (process.env.DATABASE.indexOf('postgres') > -1) {
-      return {};
+      hotel = await getHotelFromPostgres(city, country);
+      return hotel;
     }
   } else {
     var locationHotels = [];
@@ -55,7 +58,7 @@ async function getInfo(topic) {
     if (process.env.DATABASE.indexOf('mongodb') > -1) {
       hotelInfo = await getHotelInfoFromMongo();
     } else if (process.env.DATABASE.indexOf('postgres') > -1) {
-      return {};
+      hotelInfo = await getHotelInfoFromPostgres();
     }
   } else {
     hotelInfo = require(process.env.INIT_CWD + '/hotel-info.json');
