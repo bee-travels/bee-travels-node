@@ -1,6 +1,7 @@
 {
-  "name": "exampletravel",
+  "name": "destination",
   "version": "0.0.0",
+  "description": "destination service for bee-travels",
   "private": true,
   "scripts": {
     "test-suite": "babel-node test/run",
@@ -23,7 +24,7 @@
     "@babel/core": "^7.6.4",
     "@babel/node": "^7.6.3",
     "@babel/preset-env": "^7.6.3",
-    "acorn": "^7.1.0",
+    "acorn": "^7.1.1",
     "chai": "^4.2.0",
     "eslint": "^6.5.1",
     "husky": "^4.2.1",

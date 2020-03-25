@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
   description: >-
-    This is a microservice that handles hotel data for Bee Travel
+    This is a microservice that handles hotel data for Bee Travels
   version: 1.0.0
-  title: Bee Travel Hotel Data Service
+  title: Bee Travels Hotel Data Service
   contact:
     email: moficodes@gmail.com
   license:

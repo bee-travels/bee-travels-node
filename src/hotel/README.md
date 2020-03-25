@@ -1,36 +1,69 @@
-# Bee Travels Hotel Service
+# Bee Travels Hotel Service - Node.js
 
 The hotel service is a microservice designed to provide information about various hotel locations for the Bee Travels travel application.
 
-# How to Run
+## Data
+> ***NOTE:*** All data being used is made up and used for the purpose of this demo application
 
-Follow these steps to setup and run the hotel service
+The hotels used consists of the following data for various destination locations around the world:
 
-1. [Prerequisites](#1-prerequisites)
-2. [Clone the repo](#2-clone-the-repo)
-3. [Run the service](#3-run-the-service)
+* Superchain
+* Name
+* Type (luxury, comfort, budget)
+* Cost
+* Images of the hotel ([Hosted on IBM Cloud Cloud Object Storage](https://www.ibm.com/cloud/object-storage))
 
-## 1. Prerequisites
+## APIs
 
-* [NodeJS](https://nodejs.org/en/download/)
+![](readme-images/apis.jpg)
+
+## How to Run
+
+* [Local with no containers](#local-with-no-containers)
+* [Local with containers](#local-with-containers)
+* [Deploy to the Cloud](#deploy-to-the-cloud)
+
+### Local with no containers
+
+#### Prerequisites
+
+* [NodeJS v10+](https://nodejs.org/en/download/)
 * [NPM](https://www.npmjs.com/get-npm)
 
-## 2. Clone the repo
-
-Clone the `bee-travels-node` repo locally. In a terminal, run:
+#### Steps
 
 ```bash
 git clone https://github.com/bee-travels/bee-travels-node
 cd src/hotel
+npm install
+npm start
 ```
 
-## 3. Run the service
+In a browser, go to `localhost:9002` to interact with the hotel service APIs in the swagger.
 
-### Local
+### Local with containers
 
-Run `npm install` and `npm start` from the `/src/hotel` directory. In a browser, go to `localhost:9002` to interact with the hotel service APIs in the swagger.
+#### Prerequisites
 
-# Data
+* [Docker for Desktop](https://www.docker.com/products/docker-desktop)
 
-The hotel data consists of the following data for various hotels locations around the world.
+#### Steps
 
+```bash
+git clone https://github.com/bee-travels/bee-travels-node
+cd src/hotel
+docker build -t beetravels-node-hotel .
+docker run -it beetravels-node-hotel
+```
+
+In a browser, go to `localhost:9002` to interact with the hotel service APIs in the swagger.
+
+### Deploy to the Cloud
+
+Bee Travels currently supports deploying to the Cloud using the following configurations:
+
+* Helm
+* K8s
+* Knative
+
+For instructions on how to deploy the hotel service to the Cloud, check out the [config](https://github.com/bee-travels/config) repo for the Bee Travels project.
