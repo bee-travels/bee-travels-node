@@ -6,8 +6,8 @@ async function getHotelDataFromCloudant(city, country) {
 
     const res = await db.find({ selector: { city: city, country: country }});
     for (var hotel = 0; hotel < res.docs.length; hotel++) {
-        delete res.docs[hotel]["_id"];
-        delete res.docs[hotel]["_rev"];
+        delete res.docs[hotel]['_id'];
+        delete res.docs[hotel]['_rev'];
     }
     return res.docs;
 }
@@ -18,8 +18,8 @@ async function getHotelInfoFromCloudant() {
 
     const res = await db.find({ selector: {}});
     for (var info = 0; info < res.docs.length; info++) {
-        delete res.docs[info]["_id"];
-        delete res.docs[info]["_rev"];
+        delete res.docs[info]['_id'];
+        delete res.docs[info]['_rev'];
     }
     return res.docs;
 }

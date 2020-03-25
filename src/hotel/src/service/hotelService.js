@@ -3,19 +3,19 @@ import { getHotelDataFromPostgres, getHotelInfoFromPostgres } from './postgresSe
 import { getHotelDataFromCloudant, getHotelInfoFromCloudant } from './cloudantService';
 
 async function getHotelData(city, country) {
+  var hotels;
   if (process.env.DATABASE) {
-    var hotel;
     if (process.env.DATABASE.indexOf('mongodb') > -1) {
-      hotel = await getHotelDataFromMongo(city, country);
+      hotels = await getHotelDataFromMongo(city, country);
     } else if (process.env.DATABASE.indexOf('postgres') > -1) {
-      hotel = await getHotelDataFromPostgres(city, country);
+      hotels = await getHotelDataFromPostgres(city, country);
     } else {
-      hotel = await getHotelDataFromCloudant(city, country);
+      hotels = await getHotelDataFromCloudant(city, country);
     }
-    return hotel;
+    return hotels;
   } else {
     var locationHotels = [];
-    var hotels = require(process.env.INIT_CWD + '/hotel-data.json');
+    hotels = require(process.env.INIT_CWD + '/hotel-data.json');
     for (var hotel = 0; hotel < hotels.length; hotel++) {
       if (hotels[hotel].country == country && hotels[hotel].city == city){
         locationHotels.push(hotels[hotel]);

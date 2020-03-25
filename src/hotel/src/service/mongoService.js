@@ -15,8 +15,9 @@ async function getHotelDataFromMongo(city, country) {
         let res = await collection.find(query);
         var hotels = [];
         var hotel;
-        while (hotel = await res.next()) {
-            delete hotel["_id"];
+        while (res.hasNext()) {
+            hotel = await res.next();
+            delete hotel['_id'];
             hotels.push(hotel);
         }
         return hotels;
