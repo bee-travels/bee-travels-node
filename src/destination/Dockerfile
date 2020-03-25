@@ -12,7 +12,7 @@ COPY cities.csv swagger.yaml ./
 
 COPY src ./src
 
-EXPOSE 4000
+EXPOSE 9001
 
 CMD ["npm", "start"]
 

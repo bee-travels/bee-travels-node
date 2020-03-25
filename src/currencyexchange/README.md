@@ -63,7 +63,7 @@ npm run format
 npm run start
 ```
 Then simply navigate to
-http://localhost:4001 and test out this microservice API endpoints using
+http://localhost:9201 and test out this microservice API endpoints using
 the Swagger test harness page.
 
 ### Local with containers
@@ -82,7 +82,7 @@ docker run -it beetravels-node-currencyexchange
 ```
 
 Then simply navigate to
-http://localhost:4001 and test out this microservice API endpoints using
+http://localhost:9201 and test out this microservice API endpoints using
 the Swagger test harness page.
 
 ### Deploy to the Cloud

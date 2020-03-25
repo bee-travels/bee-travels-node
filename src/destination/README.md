@@ -40,7 +40,7 @@ npm install
 npm start
 ```
 
-In a browser, go to `localhost:4000` to interact with the destination service APIs in the swagger.
+In a browser, go to `localhost:9001` to interact with the destination service APIs in the swagger.
 
 ### Local with containers
 
@@ -57,7 +57,7 @@ docker build -t beetravels-node-destination .
 docker run -it beetravels-node-destination
 ```
 
-In a browser, go to `localhost:4000` to interact with the destination service APIs in the swagger.
+In a browser, go to `localhost:9001` to interact with the destination service APIs in the swagger.
 
 ### Deploy to the Cloud
 
