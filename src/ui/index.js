@@ -4,9 +4,9 @@ const app = express();
 const cors = require("cors");
 const request = require("request");
 
-const DESTINATION_URL = process.env.DESTINATION_URL || "http://localhost:4000";
-const HOTEL_URL = process.env.HOTEL_URL || "http://localhost:9002";
-const CURRENCY_EXCHANGE_URL = process.env.CURRENCY_EXCHANGE_URL || "http://localhost:4001";
+const DESTINATION_URL = process.env.DESTINATION_URL || "http://localhost:9001";
+const HOTEL_URL = process.env.HOTEL_URL || "http://localhost:9101";
+const CURRENCY_EXCHANGE_URL = process.env.CURRENCY_EXCHANGE_URL || "http://localhost:9201";
 
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(cors());
