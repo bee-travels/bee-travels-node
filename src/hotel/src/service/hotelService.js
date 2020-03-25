@@ -1,16 +1,18 @@
-import { getHotelFromMongo, getHotelInfoFromMongo } from './mongoService';
-import { getHotelFromPostgres, getHotelInfoFromPostgres } from './postgresService';
+import { getHotelDataFromMongo, getHotelInfoFromMongo } from './mongoService';
+import { getHotelDataFromPostgres, getHotelInfoFromPostgres } from './postgresService';
+import { getHotelDataFromCloudant, getHotelInfoFromCloudant } from './cloudantService';
 
 async function getHotelData(city, country) {
   if (process.env.DATABASE) {
     var hotel;
     if (process.env.DATABASE.indexOf('mongodb') > -1) {
-      hotel = await getHotelFromMongo(city, country);
-      return hotel;
+      hotel = await getHotelDataFromMongo(city, country);
     } else if (process.env.DATABASE.indexOf('postgres') > -1) {
-      hotel = await getHotelFromPostgres(city, country);
-      return hotel;
+      hotel = await getHotelDataFromPostgres(city, country);
+    } else {
+      hotel = await getHotelDataFromCloudant(city, country);
     }
+    return hotel;
   } else {
     var locationHotels = [];
     var hotels = require(process.env.INIT_CWD + '/hotel-data.json');
@@ -59,6 +61,8 @@ async function getInfo(topic) {
       hotelInfo = await getHotelInfoFromMongo();
     } else if (process.env.DATABASE.indexOf('postgres') > -1) {
       hotelInfo = await getHotelInfoFromPostgres();
+    } else {
+      hotelInfo = await getHotelInfoFromCloudant();
     }
   } else {
     hotelInfo = require(process.env.INIT_CWD + '/hotel-info.json');

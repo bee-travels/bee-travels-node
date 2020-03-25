@@ -5,7 +5,7 @@ types.setTypeParser(1700, function(val) {
     return parseFloat(val);
 })
 
-async function getHotelFromPostgres(city, country) {
+async function getHotelDataFromPostgres(city, country) {
     const client = new Client({
         connectionString: process.env.DATABASE,
     })
@@ -39,4 +39,4 @@ async function getHotelInfoFromPostgres() {
     }
 }
 
-export { getHotelFromPostgres, getHotelInfoFromPostgres };
+export { getHotelDataFromPostgres, getHotelInfoFromPostgres };

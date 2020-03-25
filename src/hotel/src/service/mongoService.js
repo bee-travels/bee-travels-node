@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 
-async function getHotelFromMongo(city, country) {
+async function getHotelDataFromMongo(city, country) {
     const client = await MongoClient.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true })
         .catch(err => { console.log(err); });
 
@@ -48,4 +48,4 @@ async function getHotelInfoFromMongo() {
     }
 }
 
-export { getHotelFromMongo, getHotelInfoFromMongo };
+export { getHotelDataFromMongo, getHotelInfoFromMongo };

@@ -11,6 +11,7 @@
     "format": "prettier --write 'src/**/*.+(js|json)'"
   },
   "dependencies": {
+    "@cloudant/cloudant": "^4.2.4",
     "esm": "^3.2.25",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
