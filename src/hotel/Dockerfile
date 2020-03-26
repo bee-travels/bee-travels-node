@@ -12,6 +12,6 @@ COPY hotel-data.json hotel-info.json swagger.yaml ./
 
 COPY src ./src
 
-EXPOSE 9002
+EXPOSE 9101
 
 CMD ["npm", "start"]

@@ -1,7 +1,31 @@
-var hotels = require(process.env.INIT_CWD + '/hotel-data.json');
-var hotelInfo = require(process.env.INIT_CWD + '/hotel-info.json');
+import { getHotelDataFromMongo, getHotelInfoFromMongo } from './mongoService';
+import { getHotelDataFromPostgres, getHotelInfoFromPostgres } from './postgresService';
+import { getHotelDataFromCloudant, getHotelInfoFromCloudant } from './cloudantService';
 
-function getHotels(city, country, f) {
+async function getHotelData(city, country) {
+  var hotels;
+  if (process.env.DATABASE) {
+    if (process.env.DATABASE.indexOf('mongodb') > -1) {
+      hotels = await getHotelDataFromMongo(city, country);
+    } else if (process.env.DATABASE.indexOf('postgres') > -1) {
+      hotels = await getHotelDataFromPostgres(city, country);
+    } else {
+      hotels = await getHotelDataFromCloudant(city, country);
+    }
+    return hotels;
+  } else {
+    var locationHotels = [];
+    hotels = require(process.env.INIT_CWD + '/hotel-data.json');
+    for (var hotel = 0; hotel < hotels.length; hotel++) {
+      if (hotels[hotel].country == country && hotels[hotel].city == city){
+        locationHotels.push(hotels[hotel]);
+      }
+    }
+    return locationHotels;
+  }
+}
+
+async function getHotels(city, country, f) {
   country = country
     .trim()
     .toLowerCase()
@@ -12,7 +36,7 @@ function getHotels(city, country, f) {
     .toLowerCase()
     .replace('%20', ' ')
     .replace(/\w\S*/g, w => w.replace(/^\w/, c => c.toUpperCase()));
-  var data = hotels[country][city];
+  var data = await getHotelData(city, country);
   if (!f && data) {
     return data;
   } else if (data) {
@@ -29,8 +53,26 @@ function getHotels(city, country, f) {
   return data;
 }
 
-function getInfo(topic) {
-  return hotelInfo[topic];
+async function getInfo(topic) {
+  var hotelInfo;
+  var topicArray = [];
+  if (process.env.DATABASE) {
+    if (process.env.DATABASE.indexOf('mongodb') > -1) {
+      hotelInfo = await getHotelInfoFromMongo();
+    } else if (process.env.DATABASE.indexOf('postgres') > -1) {
+      hotelInfo = await getHotelInfoFromPostgres();
+    } else {
+      hotelInfo = await getHotelInfoFromCloudant();
+    }
+  } else {
+    hotelInfo = require(process.env.INIT_CWD + '/hotel-info.json');
+  }
+  for (var hotel = 0; hotel < hotelInfo.length; hotel++) {
+    if (!topicArray.includes(hotelInfo[hotel][topic])){
+      topicArray.push(hotelInfo[hotel][topic]);
+    }
+  }
+  return topicArray;
 }
 
 export { getHotels, getInfo };

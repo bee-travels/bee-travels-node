@@ -211,7 +211,7 @@ const BookingFragment = ({ destination }) => {
 
   useEffect(() => {
     const loadFilters = async () => {
-      const superchainResponse = await fetch("/api/v1/hotels/info/superchains");
+      const superchainResponse = await fetch("/api/v1/hotels/info/superchain");
       const superchainList = await superchainResponse.json();
       setSuperchainList(superchainList);
     };
@@ -231,7 +231,7 @@ const BookingFragment = ({ destination }) => {
 
   useEffect(() => {
     const loadFilters = async () => {
-      const hotelResponse = await fetch("/api/v1/hotels/info/hotels");
+      const hotelResponse = await fetch("/api/v1/hotels/info/name");
       const hotelList = await hotelResponse.json();
       setHotelList(hotelList);
     };
@@ -241,7 +241,7 @@ const BookingFragment = ({ destination }) => {
 
   useEffect(() => {
     const loadFilters = async () => {
-      const typeResponse = await fetch("/api/v1/hotels/info/hotel-type");
+      const typeResponse = await fetch("/api/v1/hotels/info/type");
       const typeList = await typeResponse.json();
       setTypeList(typeList);
     };

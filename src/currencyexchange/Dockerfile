@@ -10,6 +10,6 @@ COPY ./data/countryCurrencyMetadata.csv swagger.yaml ./
 
 COPY src ./src
 
-EXPOSE 4001
+EXPOSE 9201
 
 CMD ["npm", "start"]

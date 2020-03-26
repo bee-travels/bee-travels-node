@@ -9,7 +9,7 @@ info:
   license:
     name: Apache 2.0
     url: 'https://github.com/bee-travels/bee-travels-node/blob/master/LICENSE'
-host: 'localhost:9002'
+host: 'localhost:9101'
 basePath: /api/v1/hotels
 tags:
   - name: Hotels
@@ -85,11 +85,11 @@ paths:
               - hotels
               - hotel-type
           name:  topic
-          description: Topic to get list of superchains/hotels/hotel-type
+          description: Topic to get list of superchains (topic=superchain) OR hotels (topic=name) OR hotel type (topic=type)
           required: true
       responses:
         '200':
-          description: Successfully go the info
+          description: Successfully got the info
         '404':
           description: Info not found
         '500':

@@ -13,6 +13,8 @@ The hotels used consists of the following data for various destination locations
 * Cost
 * Images of the hotel ([Hosted on IBM Cloud Cloud Object Storage](https://www.ibm.com/cloud/object-storage))
 
+The source of the hotel service data can either be local or provided from a database. The following databases are currently supported: MongoDB, PostgreSQL, Cloudant, and CouchDB. Set the environment variable `DATABASE` to your database connection string to connect the service to your database. Check out [this](https://github.com/bee-travels/data-generator/tree/master/src/hotels) for more info on data generation and populating a database with hotel data.
+
 ## APIs
 
 ![](readme-images/apis.jpg)
@@ -39,7 +41,7 @@ npm install
 npm start
 ```
 
-In a browser, go to `localhost:9002` to interact with the hotel service APIs in the swagger.
+In a browser, go to `localhost:9101` to interact with the hotel service APIs in the swagger.
 
 ### Local with containers
 
@@ -56,7 +58,7 @@ docker build -t beetravels-node-hotel .
 docker run -it beetravels-node-hotel
 ```
 
-In a browser, go to `localhost:9002` to interact with the hotel service APIs in the swagger.
+In a browser, go to `localhost:9101` to interact with the hotel service APIs in the swagger.
 
 ### Deploy to the Cloud
 

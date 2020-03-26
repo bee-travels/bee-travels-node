@@ -1,38 +1,122 @@
-{
-  "superchains": [
-    "Urban Lifestyle",
-    "Elegant Enigma Alliance",
-    "Nimbus Elites"
-  ],
-  "hotels": [
-    "Pleasant Court Hotel",
-    "Secret Quest Hotel",
-    "Crown Pastures Hotel",
-    "Echo Hotel",
-    "Cozy Hotel",
-    "Epitome Hotel",
-    "Sanctum Hotel",
-    "Silver Treasure Hotel",
-    "Western Tide Hotel",
-    "Ocean Hotel",
-    "Mellow Plaza Hotel",
-    "Obsidian Loch Hotel",
-    "Revelation Hotel",
-    "Atlantic Shroud Hotel",
-    "Grandiose Baron Hotel",
-    "Starlight Hotel",
-    "Bronze Estate Hotel",
-    "Ivory Spring Hotel",
-    "Seashore Hotel",
-    "Pacific Garden Hotel",
-    "Silver Mill Hotel",
-    "Scarlet Chasm Hotel",
-    "Moss Hotel",
-    "Northern Ridge Hotel"
-  ],
-  "hotel-type": [
-    "budget",
-    "comfort",
-    "luxury"
-  ]
-}
+[
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "comfort", 
+    "name": "Ocean Hotel"
+  }, 
+  {
+    "superchain": "Elegant Enigma Alliance", 
+    "type": "comfort", 
+    "name": "Secret Quest Hotel"
+  }, 
+  {
+    "superchain": "Elegant Enigma Alliance", 
+    "type": "comfort", 
+    "name": "Silver Treasure Hotel"
+  }, 
+  {
+    "superchain": "Elegant Enigma Alliance", 
+    "type": "comfort", 
+    "name": "Obsidian Loch Hotel"
+  }, 
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "luxury", 
+    "name": "Western Tide Hotel"
+  }, 
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "luxury", 
+    "name": "Atlantic Shroud Hotel"
+  }, 
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "luxury", 
+    "name": "Starlight Hotel"
+  }, 
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "luxury", 
+    "name": "Silver Mill Hotel"
+  }, 
+  {
+    "superchain": "Elegant Enigma Alliance", 
+    "type": "luxury", 
+    "name": "Pleasant Court Hotel"
+  }, 
+  {
+    "superchain": "Elegant Enigma Alliance", 
+    "type": "luxury", 
+    "name": "Ivory Spring Hotel"
+  }, 
+  {
+    "superchain": "Elegant Enigma Alliance", 
+    "type": "luxury", 
+    "name": "Northern Ridge Hotel"
+  }, 
+  {
+    "superchain": "Nimbus Elites", 
+    "type": "budget", 
+    "name": "Revelation Hotel"
+  }, 
+  {
+    "superchain": "Nimbus Elites", 
+    "type": "budget", 
+    "name": "Moss Hotel"
+  }, 
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "budget", 
+    "name": "Cozy Hotel"
+  }, 
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "budget", 
+    "name": "Epitome Hotel"
+  }, 
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "budget", 
+    "name": "Sanctum Hotel"
+  }, 
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "budget", 
+    "name": "Grandiose Baron Hotel"
+  }, 
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "budget", 
+    "name": "Bronze Estate Hotel"
+  }, 
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "budget", 
+    "name": "Seashore Hotel"
+  }, 
+  {
+    "superchain": "Urban Lifestyle", 
+    "type": "budget", 
+    "name": "Pacific Garden Hotel"
+  }, 
+  {
+    "superchain": "Elegant Enigma Alliance", 
+    "type": "budget", 
+    "name": "Crown Pastures Hotel"
+  }, 
+  {
+    "superchain": "Elegant Enigma Alliance", 
+    "type": "budget", 
+    "name": "Echo Hotel"
+  }, 
+  {
+    "superchain": "Elegant Enigma Alliance", 
+    "type": "budget", 
+    "name": "Mellow Plaza Hotel"
+  }, 
+  {
+    "superchain": "Elegant Enigma Alliance", 
+    "type": "budget", 
+    "name": "Scarlet Chasm Hotel"
+  }
+]

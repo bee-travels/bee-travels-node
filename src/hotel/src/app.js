@@ -6,7 +6,7 @@ import { serve, setup } from 'swagger-ui-express';
 import hotelRouter from './routes/hotel';
 
 var swaggerDocument = yaml.load('swagger.yaml');
-swaggerDocument.host = process.env.HOST_IP || 'localhost:9002';
+swaggerDocument.host = process.env.HOST_IP || 'localhost:9101';
 var scheme = process.env.SCHEME || 'http';
 swaggerDocument.schemes = [scheme];
 
