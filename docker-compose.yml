@@ -11,21 +11,21 @@ services:
       - hotel
       - currencyexchange
     environment:
-      - DESTINATION_URL=http://destination:4000
-      - HOTEL_URL=http://hotel:9002
-      - CURRENCY_EXCHANGE_URL=http://currencyexchange:4001
+      - DESTINATION_URL=http://destination:9001
+      - HOTEL_URL=http://hotel:9101
+      - CURRENCY_EXCHANGE_URL=http://currencyexchange:9201
 
   destination:
     build: src/destination
     ports:
-      - "4000:4000"
+      - "9001:9001"
 
   hotel:
       build: src/hotel
       ports:
-        - "9002:9002"
+        - "9101:9101"
 
   currencyexchange:
     build: src/currencyexchange
     ports:
-      - "4001:4001"
+      - "9201:9201"

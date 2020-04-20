@@ -39,7 +39,7 @@ npm install
 npm start
 ```
 
-In a browser, go to `localhost:9002` to interact with the hotel service APIs in the swagger.
+In a browser, go to `localhost:9101` to interact with the hotel service APIs in the swagger.
 
 ### Local with containers
 
@@ -56,7 +56,7 @@ docker build -t beetravels-node-hotel .
 docker run -it beetravels-node-hotel
 ```
 
-In a browser, go to `localhost:9002` to interact with the hotel service APIs in the swagger.
+In a browser, go to `localhost:9101` to interact with the hotel service APIs in the swagger.
 
 ### Deploy to the Cloud
 
