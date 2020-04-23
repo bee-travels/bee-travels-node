@@ -5,12 +5,7 @@
     "services/*"
   ],
   "scripts": {
-    "ui-frontend": "yarn workspace ui-frontend run start",
-    "ui-backend": "yarn workspace ui-backend run start",
-    "hotel": "yarn workspace hotel run start",
-    "destination": "yarn workspace destination run start",
-    "currency-exchange": "yarn workspace currency-exchange run start",
-    "start": "concurrently --kill-others-on-fail \"yarn ui-backend\" \"yarn hotel\" \"yarn destination\" \"yarn currency-exchange\" \"yarn ui-frontend\"",
+    "start": "yarn workspaces foreach -pi -j 10 run start",
     "clean": ""
   },
   "devDependencies": {
