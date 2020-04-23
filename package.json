@@ -1,0 +1,12 @@
+{
+  "name": "bee-travels",
+  "private": true,
+  "workspaces": [
+    "services/*"
+  ],
+  "scripts": {
+    "fun": "yarn workspaces foreach -p run start",
+    "xx": "yarn workspace ui-backend run start",
+    "clean": ""
+  }
+}

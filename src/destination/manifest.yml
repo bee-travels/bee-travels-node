@@ -1,5 +1,0 @@
----
-applications:
- - name: bee-travels-destination
-   random-route: true
-   memory: 256M
