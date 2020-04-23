@@ -6,8 +6,5 @@
   ],
   "scripts": {
     "start": "yarn workspaces foreach -pi -j 10 \"$@\" run start"
-  },
-  "devDependencies": {
-    "concurrently": "^5.1.0"
   }
 }

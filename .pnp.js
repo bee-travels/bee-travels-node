@@ -54,10 +54,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["ui-frontend", ["workspace:services/ui-frontend"]]
     ],
     "fallbackPool": [
-      [
-        "concurrently",
-        "npm:5.1.0"
-      ]
     ],
     "locationBlacklistData": [
     ],
@@ -66,7 +62,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
-            ["concurrently", "npm:5.1.0"]
           ],
           "linkType": "SOFT",
         }]
@@ -3711,8 +3706,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         ["workspace:.", {
           "packageLocation": "./",
           "packageDependencies": [
-            ["bee-travels", "workspace:."],
-            ["concurrently", "npm:5.1.0"]
+            ["bee-travels", "workspace:."]
           ],
           "linkType": "SOFT",
         }]
@@ -4806,24 +4800,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["concurrently", [
-        ["npm:5.1.0", {
-          "packageLocation": "./.yarn/cache/concurrently-npm-5.1.0-8a6e72eb15-2.zip/node_modules/concurrently/",
-          "packageDependencies": [
-            ["concurrently", "npm:5.1.0"],
-            ["chalk", "npm:2.4.2"],
-            ["date-fns", "npm:2.12.0"],
-            ["lodash", "npm:4.17.15"],
-            ["read-pkg", "npm:4.0.1"],
-            ["rxjs", "npm:6.5.5"],
-            ["spawn-command", "npm:0.0.2"],
-            ["supports-color", "npm:6.1.0"],
-            ["tree-kill", "npm:1.2.2"],
-            ["yargs", "npm:13.3.2"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
       ["confusing-browser-globals", [
         ["npm:1.0.9", {
           "packageLocation": "./.yarn/cache/confusing-browser-globals-npm-1.0.9-c5c9ec32d2-2.zip/node_modules/confusing-browser-globals/",
@@ -5529,15 +5505,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["abab", "npm:2.0.3"],
             ["whatwg-mimetype", "npm:2.3.0"],
             ["whatwg-url", "npm:7.1.0"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["date-fns", [
-        ["npm:2.12.0", {
-          "packageLocation": "./.yarn/cache/date-fns-npm-2.12.0-c3ff0ea3cb-2.zip/node_modules/date-fns/",
-          "packageDependencies": [
-            ["date-fns", "npm:2.12.0"]
           ],
           "linkType": "HARD",
         }]
@@ -14032,16 +13999,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["path-type", "npm:3.0.0"]
           ],
           "linkType": "HARD",
-        }],
-        ["npm:4.0.1", {
-          "packageLocation": "./.yarn/cache/read-pkg-npm-4.0.1-d15bb8956e-2.zip/node_modules/read-pkg/",
-          "packageDependencies": [
-            ["read-pkg", "npm:4.0.1"],
-            ["normalize-package-data", "npm:2.5.0"],
-            ["parse-json", "npm:4.0.0"],
-            ["pify", "npm:3.0.0"]
-          ],
-          "linkType": "HARD",
         }]
       ]],
       ["read-pkg-up", [
@@ -15347,15 +15304,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["spawn-command", [
-        ["npm:0.0.2", {
-          "packageLocation": "./.yarn/cache/spawn-command-npm-0.0.2-014d4d5d9f-2.zip/node_modules/spawn-command/",
-          "packageDependencies": [
-            ["spawn-command", "npm:0.0.2"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
       ["spdx-correct", [
         ["npm:3.1.0", {
           "packageLocation": "./.yarn/cache/spdx-correct-npm-3.1.0-9ad640b3ef-2.zip/node_modules/spdx-correct/",
@@ -16294,15 +16242,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["tr46", "npm:1.0.1"],
             ["punycode", "npm:2.1.1"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["tree-kill", [
-        ["npm:1.2.2", {
-          "packageLocation": "./.yarn/cache/tree-kill-npm-1.2.2-3da0e5a759-2.zip/node_modules/tree-kill/",
-          "packageDependencies": [
-            ["tree-kill", "npm:1.2.2"]
           ],
           "linkType": "HARD",
         }]
