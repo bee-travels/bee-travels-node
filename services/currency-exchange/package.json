@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "test": "jest",
     "start": "NODE_ENV=production yarn node -r esm ./src/bin/www"
   },
   "dependencies": {

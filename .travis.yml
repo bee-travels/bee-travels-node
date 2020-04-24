@@ -8,23 +8,15 @@ services:
 
 jobs:
   include:
-    - stage: linting
-      name: Destination ES Linting
-      script: yarn workspace destination lint
+    - stage: lint
+      name: Lint
+      script: yarn lint
 
-    - name: Hotel Service ES Linting
-      script: yarn workspace hotel lint
-
-    - name: UI client ES Linting
-      script:
-        - yarn workspace ui-backend lint
-        - yarn workspace ui-frontend lint
-
-    - stage: testing
-      name: Destination Unit Test
+    - stage: test
+      name: Destination
       script: yarn workspace destination test
 
-    - name: Currencyexchange Unit Test
+    - name: Currency Exchange
       script: yarn workspace currency-exchange test
 
     - stage: deploy
