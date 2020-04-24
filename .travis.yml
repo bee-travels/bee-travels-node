@@ -27,9 +27,12 @@ jobs:
     - name: Currency Exchange
       script: yarn workspace currency-exchange test
 
-deploy:
-- provider: script
-  script: .travis/build-and-push.sh
-  on:
-    all_branches: true
-    condition: $TRAVIS_BRANCH =~ ^(development|v1|v2|v3)$
+    - stage: deploy
+      name: Docker image build
+      script: skip
+      deploy:
+      - provider: script
+        script: .travis/build-and-push.sh
+        on:
+          all_branches: true
+          condition: $TRAVIS_BRANCH =~ ^(development|v1|v2|v3)$
