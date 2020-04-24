@@ -2,30 +2,41 @@
 version: '3.3'
 
 services:
+  base:
+    image: bee-travels/node-base:v1
+    build: .
+
   ui:
-    build: service
+    build: services/ui
     ports:
       - "9000:9000"
     depends_on:
+      - base
       - destination
       - hotel
-      - currencyexchange
+      - currency-exchange
     environment:
       - DESTINATION_URL=http://destination:9001
       - HOTEL_URL=http://hotel:9101
       - CURRENCY_EXCHANGE_URL=http://currency-exchange:9201
 
   destination:
-    build: service/destination
+    build: services/destination
     ports:
       - "9001:9001"
+    depends_on:
+      - base
 
   hotel:
-      build: service/hotel
+      build: services/hotel
       ports:
         - "9101:9101"
+      depends_on:
+        - base
 
   currency-exchange:
-    build: service/currency-exchange
+    build: services/currency-exchange
     ports:
       - "9201:9201"
+    depends_on:
+      - base
