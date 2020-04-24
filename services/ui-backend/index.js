@@ -6,22 +6,28 @@ const request = require("request");
 
 const DESTINATION_URL = process.env.DESTINATION_URL || "http://localhost:9001";
 const HOTEL_URL = process.env.HOTEL_URL || "http://localhost:9101";
-const CURRENCY_EXCHANGE_URL = process.env.CURRENCY_EXCHANGE_URL || "http://localhost:9201";
+const CURRENCY_EXCHANGE_URL =
+  process.env.CURRENCY_EXCHANGE_URL || "http://localhost:9201";
 
 app.use(express.static(path.join(__dirname, "client/build")));
 app.use(cors());
 
 app.get("/images/:location", (req, res) => {
-  res.set('Content-Type', 'image/jpg');
-  request.get(DESTINATION_URL + '/images/'+req.params.location).pipe(res);
+  res.set("Content-Type", "image/jpg");
+  request.get(DESTINATION_URL + "/images/" + req.params.location).pipe(res);
 });
 
 app.get("/api/v1/destinations", (req, res) => {
-  request.get(DESTINATION_URL + '/api/v1/destinations').pipe(res);
-})
+  request.get(DESTINATION_URL + "/api/v1/destinations").pipe(res);
+});
 
 app.get("/api/v1/destinations/:city/:country", (req, res) => {
-  const url = DESTINATION_URL + "/api/v1/destinations/" + req.params.city + "/" + req.params.country;
+  const url =
+    DESTINATION_URL +
+    "/api/v1/destinations/" +
+    req.params.city +
+    "/" +
+    req.params.country;
   request.get(url).pipe(res);
 });
 
@@ -32,7 +38,13 @@ app.get("/api/v1/hotels/:city/:country", (req, res) => {
   const mincost = req.query.mincost || "";
   const maxcost = req.query.maxcost || "";
   const queryString = `?superchain=${superchain}&hotel=${hotel}&type=${type}&mincost=${mincost}&maxcost=${maxcost}`;
-  const url = HOTEL_URL + "/api/v1/hotels/" + req.params.city + "/" + req.params.country + queryString;
+  const url =
+    HOTEL_URL +
+    "/api/v1/hotels/" +
+    req.params.city +
+    "/" +
+    req.params.country +
+    queryString;
   request.get(url).pipe(res);
 });
 
@@ -43,19 +55,26 @@ app.get("/api/v1/hotels/info/:topic", (req, res) => {
 
 app.get("/api/v1/currency", (req, res) => {
   request.get(CURRENCY_EXCHANGE_URL + "/api/v1/currency").pipe(res);
-})
+});
 
 app.get("/api/v1/currency/:amount/:from/:to", (req, res) => {
-  const url = CURRENCY_EXCHANGE_URL + "/api/v1/currency/" + req.params.amount + "/" + req.params.from + "/" + req.params.to;
+  const url =
+    CURRENCY_EXCHANGE_URL +
+    "/api/v1/currency/" +
+    req.params.amount +
+    "/" +
+    req.params.from +
+    "/" +
+    req.params.to;
   request.get(url).pipe(res);
-})
+});
 
 app.post("/api/v1/currency/search", (req, res) => {
   request.post(CURRENCY_EXCHANGE_URL + "/api/v1/currency/search").pipe(res);
-})
+});
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
 const port = process.env.PORT || 9000;

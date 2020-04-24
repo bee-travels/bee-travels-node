@@ -16,7 +16,7 @@ const SplitPaneLayout = ({ children, panelWidth }) => {
           top: 0,
           bottom: 0,
           width: panelWidth,
-          background: "var(--ui-background)"
+          background: "var(--ui-background)",
         }}
       >
         {left}
@@ -30,7 +30,7 @@ const SplitPaneLayout = ({ children, panelWidth }) => {
           right: 0,
           background: "var(--ui-01)",
           overflow: "auto",
-          paddingLeft: "1px"
+          paddingLeft: "1px",
         }}
       >
         {right}
@@ -48,7 +48,7 @@ const Content = ({ location }) => {
     lng: "",
     country: "",
     population: "",
-    description: ""
+    description: "",
   });
 
   useEffect(() => {
