@@ -18,18 +18,18 @@
 		},
 		{
 			"name": "UI Backend",
-			"path": "services/ui-backend"
+			"path": "services/ui/backend"
 		},
 		{
 			"name": "UI Frontend",
-			"path": "services/ui-frontend"
+			"path": "services/ui/frontend"
 		}
 	],
 	"settings": {
     "prettier.requireConfig": true,
     "prettier.packageManager": "yarn",
-    "eslint.nodePath": "../../.vscode/pnpify",
-    "prettier.prettierPath": "../../.vscode/pnpify/prettier/index.js",
+    "eslint.nodePath": ".vscode/pnpify",
+    "prettier.prettierPath": ".vscode/pnpify/prettier/index.js",
     "[json]": {
 			"editor.formatOnSave": false,
 			"editor.defaultFormatter": "esbenp.prettier-vscode",

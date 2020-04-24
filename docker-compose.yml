@@ -3,7 +3,7 @@ version: '3.3'
 
 services:
   ui:
-    build: src/ui
+    build: service
     ports:
       - "9000:9000"
     depends_on:
@@ -13,19 +13,19 @@ services:
     environment:
       - DESTINATION_URL=http://destination:9001
       - HOTEL_URL=http://hotel:9101
-      - CURRENCY_EXCHANGE_URL=http://currencyexchange:9201
+      - CURRENCY_EXCHANGE_URL=http://currency-exchange:9201
 
   destination:
-    build: src/destination
+    build: service/destination
     ports:
       - "9001:9001"
 
   hotel:
-      build: src/hotel
+      build: service/hotel
       ports:
         - "9101:9101"
 
-  currencyexchange:
-    build: src/currencyexchange
+  currency-exchange:
+    build: service/currency-exchange
     ports:
       - "9201:9201"

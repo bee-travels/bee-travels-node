@@ -2,7 +2,11 @@
   "name": "bee-travels",
   "private": true,
   "workspaces": [
-    "services/*"
+    "services/currency-exchange",
+    "services/destination",
+    "services/hotel",
+    "services/ui/backend",
+    "services/ui/frontend"
   ],
   "scripts": {
     "kp": "process=$(lsof -i :\"$@\" -t); [ -z \"$process\" ] || echo killing port \"$@\"; echo $process | xargs kill",
