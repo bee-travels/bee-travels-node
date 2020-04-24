@@ -5,7 +5,7 @@
 import { getHotels, getInfo } from "../service/hotelService";
 import { Router } from "express";
 
-var router = Router();
+const router = Router();
 /* GET list of destination locations */
 
 router.get("/info/:topic", function (req, res) {
@@ -21,7 +21,7 @@ router.get("/info/:topic", function (req, res) {
 });
 
 router.get("/:city/:country", function (req, res) {
-  var filter;
+  let filter;
   let superchain = req.query.superchain;
   let hotel = req.query.hotel;
   let type = req.query.type;

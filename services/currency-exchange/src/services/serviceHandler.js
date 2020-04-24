@@ -2,19 +2,19 @@
  * Service for getting exchange data
  * from an external API
  */
-import axios from 'axios';
-import NotFoundError from '../errors/NotFoundError';
-export const BASE_URL_ENDPOINT = 'https://api.exchangeratesapi.io/';
+import axios from "axios";
+import NotFoundError from "../errors/NotFoundError";
+export const BASE_URL_ENDPOINT = "https://api.exchangeratesapi.io/";
 
 async function getCurrencyExchangeRate(
   countryCurrencyCode,
-  baseCode = 'EUR',
-  timeIndicator = 'latest'
+  baseCode = "EUR",
+  timeIndicator = "latest"
 ) {
   countryCurrencyCode = countryCurrencyCode.toUpperCase();
   baseCode = baseCode.toUpperCase();
   if (countryCurrencyCode) {
-    var currencyUrl = `${BASE_URL_ENDPOINT}${timeIndicator}?base=${baseCode}`;
+    const currencyUrl = `${BASE_URL_ENDPOINT}${timeIndicator}?base=${baseCode}`;
 
     try {
       const { data } = await axios.get(currencyUrl);
@@ -40,13 +40,18 @@ async function getCurrencyExchangeRate(
   throw new NotFoundError(`please provide a currency code`);
 }
 
-async function getCurrencyExchangeRates(timeIndicator = 'latest') {
+async function getCurrencyExchangeRates(timeIndicator = "latest") {
   const currencyUrl = `${BASE_URL_ENDPOINT}${timeIndicator}`;
   const { data } = await axios.get(currencyUrl);
   return data;
 }
 
-async function convertCurrency(fromValue, fromCurrencyCode, toCurrencyCode, historicalDate) {
+async function convertCurrency(
+  fromValue,
+  fromCurrencyCode,
+  toCurrencyCode,
+  historicalDate
+) {
   const exchangeRate = await getCurrencyExchangeRate(
     toCurrencyCode,
     fromCurrencyCode,

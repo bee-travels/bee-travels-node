@@ -5,12 +5,12 @@ import { serve, setup } from "swagger-ui-express";
 
 import hotelRouter from "./routes/hotel";
 
-var swaggerDocument = yaml.load("swagger.yaml");
+let swaggerDocument = yaml.load("swagger.yaml");
 swaggerDocument.host = process.env.HOST_IP || "localhost:9101";
-var scheme = process.env.SCHEME || "http";
+const scheme = process.env.SCHEME || "http";
 swaggerDocument.schemes = [scheme];
 
-var app = express();
+const app = express();
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -18,7 +18,7 @@ app.use(
   })
 );
 
-var api = "/api/v1";
+const api = "/api/v1";
 
 app.use(api + "/hotels", hotelRouter);
 

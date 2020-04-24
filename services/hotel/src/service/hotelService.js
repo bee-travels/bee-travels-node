@@ -9,7 +9,7 @@ import {
 } from "./cloudantService";
 
 async function getHotelData(city, country) {
-  var hotels;
+  let hotels;
   if (process.env.DATABASE) {
     if (process.env.DATABASE.indexOf("mongodb") > -1) {
       hotels = await getHotelDataFromMongo(city, country);
@@ -20,9 +20,9 @@ async function getHotelData(city, country) {
     }
     return hotels;
   } else {
-    var locationHotels = [];
+    let locationHotels = [];
     hotels = require(process.env.INIT_CWD + "/hotel-data.json");
-    for (var hotel = 0; hotel < hotels.length; hotel++) {
+    for (let hotel = 0; hotel < hotels.length; hotel++) {
       if (hotels[hotel].country === country && hotels[hotel].city === city) {
         locationHotels.push(hotels[hotel]);
       }
@@ -42,17 +42,17 @@ async function getHotels(city, country, f) {
     .toLowerCase()
     .replace("%20", " ")
     .replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
-  var data = await getHotelData(city, country);
+  let data = await getHotelData(city, country);
   if (!f && data) {
     return data;
   } else if (data) {
     data = data.filter((hotel) => {
-      var matchSuperchain =
+      const matchSuperchain =
         f.superchain.length === 0 || f.superchain.includes(hotel.superchain);
-      var matchHotel = f.hotel.length === 0 || f.hotel.includes(hotel.name);
-      var matchType = f.type.length === 0 || f.type.includes(hotel.type);
-      var costHigherThan = hotel["cost"] > f.minCost;
-      var costLowerThan = hotel["cost"] < f.maxCost;
+      const matchHotel = f.hotel.length === 0 || f.hotel.includes(hotel.name);
+      const matchType = f.type.length === 0 || f.type.includes(hotel.type);
+      const costHigherThan = hotel["cost"] > f.minCost;
+      const costLowerThan = hotel["cost"] < f.maxCost;
       return (
         matchSuperchain &&
         matchHotel &&
@@ -67,8 +67,8 @@ async function getHotels(city, country, f) {
 }
 
 async function getInfo(topic) {
-  var hotelInfo;
-  var topicArray = [];
+  let hotelInfo;
+  let topicArray = [];
   if (process.env.DATABASE) {
     if (process.env.DATABASE.indexOf("mongodb") > -1) {
       hotelInfo = await getHotelInfoFromMongo();
@@ -80,7 +80,7 @@ async function getInfo(topic) {
   } else {
     hotelInfo = require(process.env.INIT_CWD + "/hotel-info.json");
   }
-  for (var hotel = 0; hotel < hotelInfo.length; hotel++) {
+  for (let hotel = 0; hotel < hotelInfo.length; hotel++) {
     if (!topicArray.includes(hotelInfo[hotel][topic])) {
       topicArray.push(hotelInfo[hotel][topic]);
     }

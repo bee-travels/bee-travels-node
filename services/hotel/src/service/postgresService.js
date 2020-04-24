@@ -1,6 +1,6 @@
 const { Client } = require("pg");
+const types = require("pg").types;
 
-var types = require("pg").types;
 types.setTypeParser(1700, function (val) {
   return parseFloat(val);
 });

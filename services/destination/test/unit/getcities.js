@@ -4,7 +4,7 @@ import { assert } from "chai";
 
 describe("Get all destination", () => {
   it("should return all destinations", (done) => {
-    var destinationData = getDestinationData(null);
+    const destinationData = getDestinationData(null);
     destinationData
       .then((data) => {
         assert(
@@ -22,7 +22,7 @@ describe("Get all destination", () => {
 
 describe("Get a specific city", () => {
   it("should return a city", (done) => {
-    var destinationData = getDestinationData("New York", "United States");
+    const destinationData = getDestinationData("New York", "United States");
     destinationData
       .then((data) => {
         assert(data.city === "New York", "City should be New York");

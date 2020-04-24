@@ -9,13 +9,13 @@ import { join } from "path";
 import destinationRouter from "./routes/destination";
 import yaml from "yamljs";
 
-var swaggerDocument = yaml.load("swagger.yaml");
+let swaggerDocument = yaml.load("swagger.yaml");
 swaggerDocument.host = process.env.HOST_IP || "localhost:9001";
-var scheme = process.env.SCHEME || "http";
+const scheme = process.env.SCHEME || "http";
 swaggerDocument.schemes = [scheme];
 
-var app = express();
-var api = "/api/v1";
+const app = express();
+const api = "/api/v1";
 
 app.use(express.json());
 app.use(

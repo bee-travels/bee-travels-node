@@ -6,23 +6,25 @@
  * Country,CurrencyName,CurrencyCode
  *
  */
-import csv from 'csvtojson';
-import NotFoundError from '../errors/NotFoundError';
+import csv from "csvtojson";
+import NotFoundError from "../errors/NotFoundError";
 
 async function readData() {
   const jsonArray = await csv({
-    delimiter: ',',
-  }).fromFile('./data/countryCurrencyMetadata.csv');
+    delimiter: ",",
+  }).fromFile("./data/countryCurrencyMetadata.csv");
   return jsonArray;
 }
 
 async function getCurrencyNameAndCode(countryName) {
   if (!countryName) {
-    throw new Error('please pass in a country name');
+    throw new Error("please pass in a country name");
   }
 
   const data = await readData();
-  const countryRow = data.find(row => row.country.toLowerCase() === countryName.toLowerCase());
+  const countryRow = data.find(
+    (row) => row.country.toLowerCase() === countryName.toLowerCase()
+  );
 
   if (!countryRow) {
     throw new NotFoundError(`no country found for country name ${countryName}`);
@@ -33,7 +35,7 @@ async function getCurrencyNameAndCode(countryName) {
 
 async function getCountryAndCurrencyCode(currencyCode) {
   if (!currencyCode) {
-    throw new Error('please pass in a 3 character currency code');
+    throw new Error("please pass in a 3 character currency code");
   }
 
   const data = await readData();
@@ -41,9 +43,10 @@ async function getCountryAndCurrencyCode(currencyCode) {
   let outputDict = null;
   let outputRows = [];
   let counter = 0;
+  let row_;
 
-  for (var row in data) {
-    var row_ = data[row];
+  for (let row in data) {
+    row_ = data[row];
     if (row_.currencyCode.toLowerCase() === currencyCode.toLowerCase()) {
       counter++;
       if (counter === 1) {

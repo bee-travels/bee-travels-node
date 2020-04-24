@@ -1,4 +1,4 @@
-var MongoClient = require("mongodb").MongoClient;
+const MongoClient = require("mongodb").MongoClient;
 
 async function getHotelDataFromMongo(city, country) {
   const client = await MongoClient.connect(process.env.DATABASE, {
@@ -17,8 +17,8 @@ async function getHotelDataFromMongo(city, country) {
     let collection = db.collection("hotels");
     let query = { city: city, country: country };
     let res = await collection.find(query);
-    var hotels = [];
-    var hotel;
+    let hotels = [];
+    let hotel;
     while (res.hasNext()) {
       hotel = await res.next();
       delete hotel["_id"];
