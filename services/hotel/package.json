@@ -1,0 +1,33 @@
+{
+  "name": "hotel",
+  "version": "0.0.0",
+  "description": "hotel service for bee-travels",
+  "private": true,
+  "scripts": {
+    "start": "NODE_ENV=production yarn node -r esm ./src/bin/www",
+    "test": "jest $@"
+  },
+  "dependencies": {
+    "@cloudant/cloudant": "^4.2.4",
+    "esm": "^3.2.25",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "mongodb": "^3.5.3",
+    "pg": "^7.18.2",
+    "swagger-ui-express": "^4.1.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "2.x",
+    "@typescript-eslint/parser": "2.x",
+    "@yarnpkg/pnpify": "^2.0.0-rc.21",
+    "babel-eslint": "10.x",
+    "eslint": "6.x",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-plugin-flowtype": "4.x",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-jsx-a11y": "6.x",
+    "eslint-plugin-react": "7.x",
+    "eslint-plugin-react-hooks": "2.x"
+  }
+}

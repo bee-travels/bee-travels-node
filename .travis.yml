@@ -1,33 +1,35 @@
 language: node_js
+cache: false
 
 node_js:
-  - 10
+  - 12
 
 services:
   - docker
 
-stages:
-  - linting
-  - testing
-  - name: "build-and-push"
-    if: branch =~ /development|v1|v2|v3/ AND (NOT (type IN (pull_request)))
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.22.4
+  - export PATH="$HOME/.yarn/bin:$PATH"
+
+install:
+  - yarn install --immutable
 
 jobs:
   include:
-    - stage: "linting"
-      name: "Destination ES Linting"
-      script: cd src/destination && npm install && ./node_modules/.bin/eslint src/
-    - name: "Hotel Service ES Linting"
-      script: cd src/hotel && npm install && ./node_modules/.bin/eslint src/
-    - name: "UI client ES Linting"
-      script:
-        - cd src/ui && npm install && cd ../..
-        - cd src/ui/client && npm install && ./node_modules/.bin/eslint src/
-    - stage: "testing"
-      name: "Destination Unit Test"
-      script: cd src/destination && npm install && npm test
-    - name: "Currencyexchange Unit Test"
-      script: cd src/currencyexchange && npm install && npm test
-    - stage: "build-and-push"
-      name: "Docker image build"
-      script: .travis/build-and-push.sh
+    - stage: lint
+      name: Lint
+      script: yarn lint
+
+    - stage: test
+      name: Destination
+      script: yarn workspace destination test
+
+    - name: Currency Exchange
+      script: yarn workspace currency-exchange test
+
+deploy:
+- provider: script
+  script: .travis/build-and-push.sh
+  on:
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^(development|v1|v2|v3)$
