@@ -1,5 +1,4 @@
 language: node_js
-cache: false
 
 node_js:
   - 12
@@ -12,7 +11,7 @@ before_install:
   - export PATH="$HOME/.yarn/bin:$PATH"
 
 install:
-  - yarn install --immutable
+  - yarn install --immutable --immutable-cache --check-cache
 
 jobs:
   include:
@@ -32,6 +31,7 @@ jobs:
       script: skip
       deploy:
       - provider: script
+        skip_cleanup: true
         script: .travis/build-and-push.sh
         on:
           all_branches: true
