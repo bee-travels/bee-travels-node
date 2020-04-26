@@ -45,23 +45,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CustomizedSelects() {
+export default function CustomizedSelects({ list, selected, onSelected }) {
   const classes = useStyles();
-  const [age, setAge] = React.useState("");
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
   return (
     <div>
       <FormControl className={classes.margin}>
         <NativeSelect
-          value={age}
-          onChange={handleChange}
+          value={selected}
+          onChange={onSelected}
           input={<BootstrapInput />}
         >
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
+          {list.map((l) => (
+            <option value={l}>{l}</option>
+          ))}
         </NativeSelect>
       </FormControl>
     </div>

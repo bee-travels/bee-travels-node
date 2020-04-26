@@ -27,7 +27,10 @@ const ListItem = ({ superchain, name, cost, images }) => {
 };
 
 const Filters = ({
+  selectedTypes,
+  selectedHotels,
   selectedSuperchains,
+  selectedExchangeRate,
   typeList,
   hotelList,
   superchainList,
@@ -39,33 +42,21 @@ const Filters = ({
   onCurrencyChange,
   defaultMax,
 }) => {
-  const handleSuperchainChange = useCallback(
-    (e) => {
-      onSuperchainSelectionChange(e.target.value);
-    },
-    [onSuperchainSelectionChange]
-  );
+  const handleSuperchainChange = (e) => {
+    onSuperchainSelectionChange(e.target.value);
+  };
 
-  const handleHotelChange = useCallback(
-    ({ selectedItems }) => {
-      onHotelSelectionChange(selectedItems);
-    },
-    [onHotelSelectionChange]
-  );
+  const handleHotelChange = (e) => {
+    onHotelSelectionChange(e.target.value);
+  };
 
-  const handleTypeChange = useCallback(
-    ({ selectedItems }) => {
-      onTypeSelectionChange(selectedItems);
-    },
-    [onTypeSelectionChange]
-  );
+  const handleTypeChange = (e) => {
+    onTypeSelectionChange(e.target.value);
+  };
 
-  const handleCurrencyChange = useCallback(
-    (e) => {
-      onCurrencyChange(e.target.value);
-    },
-    [onCurrencyChange]
-  );
+  const handleCurrencyChange = (e) => {
+    onCurrencyChange(e.target.value);
+  };
 
   const [slideValues, setSlideValues] = useState([0, defaultMax]);
 
@@ -98,21 +89,25 @@ const Filters = ({
       <div className={styles.filterWide}>
         <MultiSelect
           label="Hotels"
-          list={superchainList}
-          selected={selectedSuperchains}
-          onSelected={handleSuperchainChange}
+          list={hotelList}
+          selected={selectedHotels}
+          onSelected={handleHotelChange}
         />
       </div>
       <div className={styles.filterNarrow}>
         <MultiSelect
           label="Types"
-          list={superchainList}
-          selected={selectedSuperchains}
-          onSelected={handleSuperchainChange}
+          list={typeList}
+          selected={selectedTypes}
+          onSelected={handleTypeChange}
         />
       </div>
       <div className={styles.filterSuperNarrow}>
-        <Select />
+        <Select
+          list={Object.keys(exchangeRates)}
+          selected={selectedExchangeRate}
+          onSelected={handleCurrencyChange}
+        />
       </div>
       <div className={styles.filterWide}>
         <div className={styles.wrapWrap}>
@@ -262,7 +257,10 @@ const BookingFragment = ({ destination }) => {
   return (
     <>
       <Filters
+        selectedTypes={selectedTypes}
+        selectedHotels={selectedHotels}
         selectedSuperchains={selectedSuperchains}
+        selectedExchangeRate={selectedCurrency}
         superchainList={superchainList}
         typeList={typeList}
         hotelList={hotelList}
