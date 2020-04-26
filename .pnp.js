@@ -19937,6 +19937,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["history", "npm:4.10.1"],
             ["mapbox-gl", "npm:1.9.1"],
             ["nouislider", "npm:14.2.0"],
+            ["prettier", "npm:2.0.5"],
             ["query-string", "npm:6.12.1"],
             ["react", "npm:16.13.1"],
             ["react-autosuggest", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:9.4.3"],
