@@ -30,6 +30,7 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "2.x",
-    "mocha": "^7.1.1"
+    "mocha": "^7.1.1",
+    "prettier": "^2.0.5"
   }
 }

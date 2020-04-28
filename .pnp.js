@@ -7311,6 +7311,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["http-errors", "npm:1.6.3"],
             ["jest", "npm:25.4.0"],
             ["pino", "npm:5.17.0"],
+            ["prettier", "npm:2.0.5"],
             ["swagger-ui-express", "virtual:c51ebfc42de42235e3dc1c44fc7bdd2c2fcf335bcfc8402730f546d5135fd17c2f2d409783e93b5eee54d831df4955676c7c2f3700037c1e7d22704b380f804b#npm:4.1.4"],
             ["yamljs", "npm:0.3.0"]
           ],
@@ -7666,6 +7667,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["fast-csv", "npm:3.7.0"],
             ["http-errors", "npm:1.6.3"],
             ["mocha", "npm:7.1.1"],
+            ["prettier", "npm:2.0.5"],
             ["swagger-ui-express", "virtual:c51ebfc42de42235e3dc1c44fc7bdd2c2fcf335bcfc8402730f546d5135fd17c2f2d409783e93b5eee54d831df4955676c7c2f3700037c1e7d22704b380f804b#npm:4.1.4"],
             ["yamljs", "npm:0.3.0"]
           ],
@@ -10352,6 +10354,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["http-errors", "npm:1.6.3"],
             ["mongodb", "npm:3.5.6"],
             ["pg", "npm:7.18.2"],
+            ["prettier", "npm:2.0.5"],
             ["swagger-ui-express", "virtual:c51ebfc42de42235e3dc1c44fc7bdd2c2fcf335bcfc8402730f546d5135fd17c2f2d409783e93b5eee54d831df4955676c7c2f3700037c1e7d22704b380f804b#npm:4.1.4"],
             ["yamljs", "npm:0.3.0"]
           ],
@@ -19912,6 +19915,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-react", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.19.0"],
             ["eslint-plugin-react-hooks", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.5.1"],
             ["express", "npm:4.17.1"],
+            ["prettier", "npm:2.0.5"],
             ["request", "npm:2.88.2"]
           ],
           "linkType": "SOFT",

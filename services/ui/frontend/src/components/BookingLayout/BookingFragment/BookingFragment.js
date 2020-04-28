@@ -42,16 +42,16 @@ const Filters = ({
   onCurrencyChange,
   defaultMax,
 }) => {
-  const handleSuperchainChange = (e) => {
-    onSuperchainSelectionChange(e.target.value);
+  const handleSuperchainChange = (values) => {
+    onSuperchainSelectionChange(values);
   };
 
-  const handleHotelChange = (e) => {
-    onHotelSelectionChange(e.target.value);
+  const handleHotelChange = (values) => {
+    onHotelSelectionChange(values);
   };
 
-  const handleTypeChange = (e) => {
-    onTypeSelectionChange(e.target.value);
+  const handleTypeChange = (values) => {
+    onTypeSelectionChange(values);
   };
 
   const handleCurrencyChange = (e) => {

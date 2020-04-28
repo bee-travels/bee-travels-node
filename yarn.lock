@@ -5602,6 +5602,7 @@ __metadata:
     http-errors: ~1.6.2
     jest: ^25.4.0
     pino: ^5.16.0
+    prettier: ^2.0.5
     swagger-ui-express: ^4.1.1
     yamljs: ^0.3.0
   languageName: unknown
@@ -5884,6 +5885,7 @@ __metadata:
     fast-csv: ^3.4.0
     http-errors: ~1.6.2
     mocha: ^7.1.1
+    prettier: ^2.0.5
     swagger-ui-express: ^4.1.1
     yamljs: ^0.3.0
   languageName: unknown
@@ -8192,6 +8194,7 @@ fsevents@^1.2.7:
     http-errors: ~1.6.2
     mongodb: ^3.5.3
     pg: ^7.18.2
+    prettier: ^2.0.5
     swagger-ui-express: ^4.1.1
     yamljs: ^0.3.0
   languageName: unknown
@@ -16972,6 +16975,7 @@ resolve@1.1.7:
     eslint-plugin-react: 7.x
     eslint-plugin-react-hooks: 2.x
     express: ^4.17.1
+    prettier: ^2.0.5
     request: ^2.88.2
   languageName: unknown
   linkType: soft
