@@ -1,10 +1,10 @@
-# Bee Travels - Node.js [![Build Status](https://travis-ci.org/bee-travels/bee-travels-node.svg?branch=development)](https://travis-ci.org/bee-travels/bee-travels-node)
-
-> **Note:** Bee Travels is a work in progress. This document will be updated to reflect any changes.
-
 <p align='center'>
 <img src='screenshots/logo.jpg' width='266' alt='Bee Travels logo'>
 </p>
+
+# Bee Travels - Node.js [![Build Status](https://travis-ci.org/bee-travels/bee-travels-node.svg?branch=development)](https://travis-ci.org/bee-travels/bee-travels-node)
+
+> **Note:** Bee Travels is a work in progress. This document will be updated to reflect any changes.
 
 ## About
 
