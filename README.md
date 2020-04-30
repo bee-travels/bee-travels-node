@@ -1,5 +1,5 @@
 <p align='center'>
-<img src='screenshots/logo.jpg' width='266' alt='Bee Travels logo'>
+<img src='screenshots/logo.png' width='512' alt='Bee Travels logo'>
 </p>
 
 # Bee Travels - Node.js [![Build Status](https://travis-ci.org/bee-travels/bee-travels-node.svg?branch=development)](https://travis-ci.org/bee-travels/bee-travels-node)
@@ -14,6 +14,38 @@ To see versions of Bee Travels for other languages, check out the [Bee Travels G
 
 This application is used to demonstrate key capabilities of Kubernetes, Openshift, Istio, Knative and many other cloud native applications.
 It also uses best practices in the software development lifecycle and wildly used open source technologies.
+
+## Setup
+
+* Local
+  * [Without containers](#local-without-containers)
+  * [With containers](#local-with-containers)
+* Cloud
+  * [Deploy to cloud](https://github.com/bee-travels/config)
+
+### Local — without containers
+
+#### Prerequisites
+
+* [Node.js v10+](https://nodejs.org/en/download/)
+
+This project uses Yarn 2, if you don't already have it installed, install it globally with:
+```
+npm install -g yarn
+```
+
+### Setup
+
+```bash
+git clone https://github.com/bee-travels/bee-travels-node.git
+cd bee-travels-node
+```
+
+### Usage
+
+```bash
+yarn start
+```
 
 ### Key Components/Technologies Used
 
