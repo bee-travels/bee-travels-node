@@ -1,5 +1,5 @@
 <p align='center'>
-<img src='screenshots/logo.png' width='512' alt='Bee Travels logo'>
+<img src='screenshots/logo.png' width='480' alt='Bee Travels logo'>
 </p>
 
 # Bee Travels — Node.js [![Build Status](https://travis-ci.org/bee-travels/bee-travels-node.svg?branch=development)](https://travis-ci.org/bee-travels/bee-travels-node)
