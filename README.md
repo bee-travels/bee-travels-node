@@ -6,7 +6,7 @@
 
 > **Note:** Bee Travels is a work in progress. This document will be updated to reflect any changes.
 
-![Bee Travels user interface](screenshots/ui.jpg)
+![Bee Travels user interface](screenshots/ui.png)
 
 ## About
 
