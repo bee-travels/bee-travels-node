@@ -1,112 +1,129 @@
 # Bee Travels - Node.js [![Build Status](https://travis-ci.org/bee-travels/bee-travels-node.svg?branch=development)](https://travis-ci.org/bee-travels/bee-travels-node)
 
-> ***NOTE:*** Bee Travels is a work in progress and this README will update as progress is made
+> **Note:** Bee Travels is a work in progress. This document will be updated to reflect any changes.
 
-![](readme-images/logo.jpg)
+<p align='center'>
+<img src='screenshots/logo.jpg' width='266' alt='Bee Travels logo'>
+</p>
 
 ## About
 
-Bee Travels in a polyglot demo microservice travel booking web application with this repo housing the Node.js Express version. To view the versions of Bee Travels written in other languages, check out the [Bee Travels project](https://github.com/bee-travels).
+Bee Travels is a polyglot microservice demo in the form of a travel agency web application.
+This repo is home to the Node.js version of bee travels.
+To see versions of Bee Travels for other languages, check out the [Bee Travels GitHub org](https://github.com/bee-travels).
 
-This application is used to demonstrate key capabilities of Kubernetes, Opneshift, Istio, Knative and many other cloud native applications. It also uses best practices in the software development lifecycle and widley used open source technologies.
+This application is used to demonstrate key capabilities of Kubernetes, Openshift, Istio, Knative and many other cloud native applications.
+It also uses best practices in the software development lifecycle and wildly used open source technologies.
 
 ### Key Components/Technologies Used
 
 The following are key components/technologies used with the Node.js version of Bee Travels:
 
+* Package Management
+  * [Yarn 2](https://yarnpkg.com/)
 * Web Framework
 	* [Express](https://expressjs.com/)
 * Front End
 	* [React](https://reactjs.org/)
+  * [Create React App](https://create-react-app.dev/)
 	* [Carbon Design System](https://www.carbondesignsystem.com/)
+  * [Material-UI](https://material-ui.com/)
 * API Definition
-	* [Swagger](https://github.com/scottie1984/swagger-ui-express)
+	* [Swagger](https://github.com/scottie1984/swagger-ui-express/)
 * Image Database
-	* [IBM Cloud Object Storage](https://www.ibm.com/cloud/object-storage)
+	* [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage/)
 * Testing
 	* Unit Testing
-		* [Jest](https://github.com/facebook/jest)
+		* [Jest](https://jestjs.io/)
 	* Integration Testing
 * Code Quality
 	* [ESLint](https://eslint.org/)
 	* [Prettier](https://prettier.io/)
-	* [Husky](https://github.com/typicode/husky)
-	* [ESM](https://github.com/standard-things/esm)
+* ECMA Support
+	* [ESM](https://github.com/standard-things/esm/)
 * CI/CD
 	* [Travis CI](https://travis-ci.com/)
 * Logging
-	* [Pino](https://github.com/pinojs/express-pino-logger)
+	* [Pino](https://github.com/pinojs/express-pino-logger/)
 * Containerization
 	* [Docker](https://www.docker.com/)
-		* [Bee Travels Repo](https://hub.docker.com/orgs/beetravels/repositories)
+		* [Bee Travels Repo](https://hub.docker.com/orgs/beetravels/repositories/)
 
 ### Architecture
 
-Bee Travels is a travel booking application that is composed of different mircoservices that can all run independently of one another or together to form Bee Travels. The application can be used to search and book hotels for various destinations across the world.
-> ***NOTE:*** All data being used is made up and used for the purpose of this demo application
+Bee Travels is a travel booking application that is composed of several mircoservices.
+Each mircoservice can be run independently, or together to form the full service.
+Bee Travels can be used to search and book hotels, flights and car rentals for various destinations across the world.
+> **Note:** All data is fake and only to be used for demonstration purposes.
 
 Bee Travels is comprised of the following microservices:
-* [Front End/UI](src/ui)
-* [Destinations](src/destination)
-* [Hotel](src/hotel)
-* [Currency Exchange](src/currencyexchange)
+* [UI Frontend](services/ui/frontend)
+* [UI Backend](services/ui/backend)
+* [Destination Service](services/destination)
+* [Hotel Service](services/hotel)
+* [Currency Exchange](services/currency-exchange)
 
 #### Architecture Diagram
 
-The following is a basic architecture diagram for the containerized version 1 (v1) of Bee Travels. Depending on how you run this application, the architecture diagram will look slightly different.
+The following is a basic architecture diagram for the containerized version 1 (v1) of Bee Travels.
+Depending on how you run this application, the architecture diagram will look slightly different.
 
-![](readme-images/architecturev1.jpg)
+![architecture diagram](screenshots/architecture-v1.jpg)
 
 #### Screenshot
 
-![](readme-images/screenshot.jpg)
+![Bee Travels user interface](screenshots/ui.jpg)
 
-## How to Run
+## Usage
 
-* [Local with no containers](#local-with-no-containers)
-* [Local with containers](#local-with-containers)
-* [Deploy to the Cloud](#deploy-to-the-cloud)
+* Local
+  * [Without containers](#local-without-containers)
+  * [With containers](#local-with-containers)
+* Cloud
+  * [Deploy to cloud](https://github.com/bee-travels/config)
 
-### Local with no containers
+### Local — without containers
 
 #### Prerequisites
 
-* [NPM](https://www.npmjs.com/get-npm)
 * [Node.js v10+](https://nodejs.org/en/download/)
 
-#### Steps
-> ***NOTE:*** For running microservices independently, read the instructions in each microservice's README in `/src`
-
-```sh
-git clone https://github.com/bee-travels/bee-travels-node.git
-cd bee-travels-node
-./run-all.sh
+This project uses Yarn 2, if you don't already have it installed, install it globally with:
+```
+npm install -g yarn
 ```
 
-### Local with containers
+#### Setup
+
+```bash
+git clone https://github.com/bee-travels/bee-travels-node.git
+cd bee-travels-node
+```
+
+#### Run
+
+```bash
+yarn start
+```
+
+### Local — with containers
 
 #### Prerequisites
 
 * [Docker for Desktop](https://www.docker.com/products/docker-desktop)
 
-#### Steps
+#### Setup
 
 ```bash
-git clone https://github.com/bee-travels/bee-travels-node
+git clone https://github.com/bee-travels/bee-travels-node.git
 cd bee-travels-node
-docker-compose up --build
 ```
 
-### Deploy to the Cloud
+#### Run
 
-Bee Travels currently supports deploying to the Cloud using the following configurations:
-
-* Helm
-* K8s
-* Knative
-* OpenShift
-
-For instructions on how to deploy Bee Travels to the Cloud, check out the [config](https://github.com/bee-travels/config) repo for the Bee Travels project.
+```bash
+docker-compose up --build
+```
 
 ## License
 

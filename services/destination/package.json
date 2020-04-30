@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "esm": "^3.2.25",
-    "express": "~4.16.0",
+    "express": "^4.17.1",
     "fast-csv": "^3.4.0",
     "http-errors": "~1.6.2",
     "swagger-ui-express": "^4.1.1",
