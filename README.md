@@ -113,7 +113,9 @@ Bee Travels is comprised of the following microservices:
 The following is a basic architecture diagram for the containerized version 1 (v1) of Bee Travels.
 Depending on how you run this application, the architecture diagram will look slightly different.
 
-![architecture diagram](screenshots/architecture-v1.jpg)
+<p align='center'>
+<img src='screenshots/architecture-v1.png' width='582' alt='architecture diagram'>
+</p>
 
 ## License
 
