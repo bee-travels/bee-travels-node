@@ -2,7 +2,7 @@
 <img src='screenshots/logo.png' width='512' alt='Bee Travels logo'>
 </p>
 
-# Bee Travels - Node.js [![Build Status](https://travis-ci.org/bee-travels/bee-travels-node.svg?branch=development)](https://travis-ci.org/bee-travels/bee-travels-node)
+# Bee Travels — Node.js [![Build Status](https://travis-ci.org/bee-travels/bee-travels-node.svg?branch=development)](https://travis-ci.org/bee-travels/bee-travels-node)
 
 > **Note:** Bee Travels is a work in progress. This document will be updated to reflect any changes.
 
@@ -16,38 +16,41 @@ This application is used to demonstrate key capabilities of Kubernetes, Openshif
 It also uses best practices in the software development lifecycle and wildly used open source technologies.
 
 ## Setup
-
-* Local
-  * [Without containers](#local-without-containers)
-  * [With containers](#local-with-containers)
-* Cloud
-  * [Deploy to cloud](https://github.com/bee-travels/config)
-
-### Local — without containers
-
-#### Prerequisites
-
-* [Node.js v10+](https://nodejs.org/en/download/)
-
-This project uses Yarn 2, if you don't already have it installed, install it globally with:
-```
-npm install -g yarn
-```
-
-### Setup
-
+`git clone` the repo and `cd` into it by running the following command:
 ```bash
 git clone https://github.com/bee-travels/bee-travels-node.git
 cd bee-travels-node
 ```
 
-### Usage
+This project uses `Yarn 2`, if you don't already have it installed, install it globally with:
+```
+npm install -g yarn
+```
+
+> **Note: You’ll need to have Node v10+ on your local development machine.** You can use [nvm](https://github.com/creationix/nvm#installation) (macOS/Linux) or [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) to easily switch Node versions between different projects.
+
+## Run `Bee Travels`
 
 ```bash
 yarn start
 ```
 
-### Key Components/Technologies Used
+> **Note:** This will start every microservice.
+> To exclude a microservice run `yarn start --exclude <service>`.
+> To run a single microservice `cd` into it's directory and run `yarn start` or simply run `yarn workspace <service> run start`.
+
+## (Optional) Run `Bee Travels` with `Docker Compose`
+#### Prerequisites
+* [Docker for Desktop](https://www.docker.com/products/docker-desktop)
+
+```bash
+docker-compose up --build
+```
+
+## (Optional) [Deploy to cloud](https://github.com/bee-travels/config)
+
+
+# Key Components/Technologies Used
 
 The following are key components/technologies used with the Node.js version of Bee Travels:
 
@@ -81,7 +84,7 @@ The following are key components/technologies used with the Node.js version of B
 	* [Docker](https://www.docker.com/)
 		* [Bee Travels Repo](https://hub.docker.com/orgs/beetravels/repositories/)
 
-### Architecture
+# Architecture
 
 Bee Travels is a travel booking application that is composed of several mircoservices.
 Each mircoservice can be run independently, or together to form the full service.
@@ -95,69 +98,18 @@ Bee Travels is comprised of the following microservices:
 * [Hotel Service](services/hotel)
 * [Currency Exchange](services/currency-exchange)
 
-#### Architecture Diagram
+## Architecture Diagram
 
 The following is a basic architecture diagram for the containerized version 1 (v1) of Bee Travels.
 Depending on how you run this application, the architecture diagram will look slightly different.
 
 ![architecture diagram](screenshots/architecture-v1.jpg)
 
-#### Screenshot
+## Screenshot
 
 ![Bee Travels user interface](screenshots/ui.jpg)
 
-## Usage
-
-* Local
-  * [Without containers](#local-without-containers)
-  * [With containers](#local-with-containers)
-* Cloud
-  * [Deploy to cloud](https://github.com/bee-travels/config)
-
-### Local — without containers
-
-#### Prerequisites
-
-* [Node.js v10+](https://nodejs.org/en/download/)
-
-This project uses Yarn 2, if you don't already have it installed, install it globally with:
-```
-npm install -g yarn
-```
-
-#### Setup
-
-```bash
-git clone https://github.com/bee-travels/bee-travels-node.git
-cd bee-travels-node
-```
-
-#### Run
-
-```bash
-yarn start
-```
-
-### Local — with containers
-
-#### Prerequisites
-
-* [Docker for Desktop](https://www.docker.com/products/docker-desktop)
-
-#### Setup
-
-```bash
-git clone https://github.com/bee-travels/bee-travels-node.git
-cd bee-travels-node
-```
-
-#### Run
-
-```bash
-docker-compose up --build
-```
-
-## License
+# License
 
 This application is licensed under the Apache License, Version 2. Separate third-party code objects invoked within this application are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1](https://developercertificate.org/) and the [Apache License, Version 2](https://www.apache.org/licenses/LICENSE-2.0.txt).
 
