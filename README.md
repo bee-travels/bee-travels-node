@@ -6,6 +6,8 @@
 
 > **Note:** Bee Travels is a work in progress. This document will be updated to reflect any changes.
 
+![Bee Travels user interface](screenshots/ui.jpg)
+
 ## About
 
 Bee Travels is a polyglot microservice demo in the form of a travel agency web application.
@@ -112,10 +114,6 @@ The following is a basic architecture diagram for the containerized version 1 (v
 Depending on how you run this application, the architecture diagram will look slightly different.
 
 ![architecture diagram](screenshots/architecture-v1.jpg)
-
-### Screenshot
-
-![Bee Travels user interface](screenshots/ui.jpg)
 
 ## License
 
