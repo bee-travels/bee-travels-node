@@ -83,7 +83,7 @@ After cloning the Bee Travels Node.js repository, you should see the following h
  ┗ 📜package.json
 ```
 
-> **Note:** See individual service READMEs to see a deeper overview of project structure.
+> **Note:** See individual service READMEs for a deeper overview of project structure.
 
 ## Collocated Tests
 We don't have a top-level directory for unit tests. Instead, we put them next to the files that they test.
