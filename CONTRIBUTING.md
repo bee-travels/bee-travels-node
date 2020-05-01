@@ -68,19 +68,17 @@ Its repository contains multiple separate packages so that their changes can be 
 After cloning the Bee Travels Node.js repository, you should see the following high-level structure:
 ```markdown
 🐝bee-travels-node
- ┣ 📂services
- ┣ 📂.yarn <!-- holds yarn stuff -->
- ┣ 📂services
- ┃ ┣ 📂ui
- ┃ ┃ ┣ 📂backend <!-- bloop -->
- ┃ ┃ ┗ 📂frontend
- ┃ ┣ 📂hotel
- ┃ ┣ 📂destination
- ┃ ┗ 📂currency-exchange
- ┣ 📜.gitignore
- ┣ 📜.pnp.js <!-- new thing. -->
- ┣ 📜yarn.lock
- ┗ 📜package.json
+ ┣ 📂.travis <!-- travis related scripts -->
+ ┣ 📂.vscode <!-- shouldn't need to touch -->
+ ┣ 📂.yarn <!-- shouldn't need to touch -->
+ ┣ 📂screenshots <!-- images for README -->
+ ┗ 📂services
+   ┣ 📂ui
+   ┃ ┣ 📂backend <!-- ui-backend -->
+   ┃ ┗ 📂frontend <!-- ui-frontend -->
+   ┣ 📂hotel <!-- hotel -->
+   ┣ 📂destination <!-- destination -->
+   ┗ 📂currency-exchange <!-- currency-exchange -->
 ```
 
 > **Note:** See individual service READMEs for a deeper overview of project structure.
