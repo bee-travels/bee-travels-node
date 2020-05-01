@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "jest",
-    "start": "NODE_ENV=production yarn node -r esm ./src/bin/www"
+    "test": "nyc --require esm --cache false mocha \"src/**/?(*.)test.js\"",
+    "start": "nodemon -r esm ./src/bin/www.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -18,13 +18,12 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/runtime": "^7.9.2",
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
     "@yarnpkg/pnpify": "^2.0.0-rc.21",
     "babel-eslint": "10.x",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "eslint": "6.x",
     "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-flowtype": "4.x",
@@ -32,7 +31,15 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "2.x",
-    "jest": "^25.4.0",
-    "prettier": "^2.0.5"
+    "mocha": "^7.1.2",
+    "nyc": "^15.0.0",
+    "prettier": "^2.0.5",
+    "sinon": "^9.0.2"
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "src/**/*.js"
+    ]
   }
 }

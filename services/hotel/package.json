@@ -4,16 +4,11 @@
   "description": "hotel service for bee-travels",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production yarn node -r esm ./src/bin/www",
-    "test": "jest $@"
+    "start": "nodemon -r esm ./src/bin/www.js"
   },
   "dependencies": {
-    "@cloudant/cloudant": "^4.2.4",
-    "esm": "^3.2.25",
     "express": "^4.17.1",
     "http-errors": "~1.6.2",
-    "mongodb": "^3.5.3",
-    "pg": "^7.18.2",
     "swagger-ui-express": "^4.1.1",
     "yamljs": "^0.3.0"
   },
@@ -29,6 +24,7 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "2.x",
+    "esm": "^3.2.25",
     "prettier": "^2.0.5"
   }
 }

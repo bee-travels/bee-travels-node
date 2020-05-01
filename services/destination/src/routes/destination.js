@@ -2,16 +2,22 @@
  * Router for destination locations
  */
 
-import path from "path";
-import express, { Router } from "express";
+import { Router } from "express";
 import { getDestinationData } from "../services/dataHandler";
+import request from "request";
 
 const router = Router();
 
-router.use(
-  "/images",
-  express.static(path.join(__dirname, "../../public/images"))
-);
+router.get("/images/*", (req, res) => {
+  request({
+    url: `http://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-destination/${req.params[0]}`,
+  })
+    .pipe(res)
+    .on("error", (e) => {
+      console.error(e);
+      res.sendStatus(500);
+    });
+});
 
 /* GET location data for a given city */
 router.get("/:city/:country", function (req, res, next) {

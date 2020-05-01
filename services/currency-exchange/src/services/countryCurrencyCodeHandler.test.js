@@ -2,10 +2,15 @@ import {
   getCurrencyNameAndCode,
   getCountryAndCurrencyCode,
 } from "./countryCurrencyCodeHandler";
+import { describe, it } from "mocha";
+import chai, { expect } from "chai";
+
+const chaiAsPromised = require("chai-as-promised");
+chai.use(chaiAsPromised);
 
 describe("Get Currency Name and Code without country parameter", () => {
   it("should return a error country is required", async () => {
-    await expect(getCurrencyNameAndCode()).rejects.toThrowError(
+    await expect(getCurrencyNameAndCode()).to.eventually.be.rejectedWith(
       "please pass in a country name"
     );
   });
@@ -13,7 +18,9 @@ describe("Get Currency Name and Code without country parameter", () => {
 
 describe("Get Currency Name and Code given a well known country that does not exist, i.e. Westeros", () => {
   it("should return a error for a non-existent country Westeros", async () => {
-    await expect(getCurrencyNameAndCode("Westeros")).rejects.toThrow(
+    await expect(
+      getCurrencyNameAndCode("Westeros")
+    ).to.eventually.be.rejectedWith(
       "no country found for country name Westeros"
     );
   });
@@ -22,7 +29,8 @@ describe("Get Currency Name and Code given a well known country that does not ex
 describe("Get Currency Name and Code given a well known country that does exist, i.e. South Africa", () => {
   it("should return metadata for a specific country, i.e.South Africa", async () => {
     const data = await getCurrencyNameAndCode("South Africa");
-    expect(data).toEqual({
+
+    expect(data).to.deep.equal({
       country: "South Africa",
       currencyName: "South African rand",
       currencyCode: "ZAR",
@@ -33,7 +41,7 @@ describe("Get Currency Name and Code given a well known country that does exist,
 describe("Get Currency Name and Country name(s) in a list given a well known country code that does exist for 1 country, i.e. ZAR", () => {
   it("should return metadata for a specific country code, i.e. ZAR", async () => {
     const data = await getCountryAndCurrencyCode("ZAR");
-    expect(data).toEqual({
+    expect(data).to.deep.equal({
       currencyCode: "ZAR",
       currencyName: "South African rand",
       country: ["South Africa"],
@@ -69,7 +77,7 @@ describe("Get Currency Name and Country name(s) in a list given a well known cou
       "Zimbabwe",
     ];
 
-    expect(data).toEqual({
+    expect(data).to.deep.equal({
       currencyCode: "USD",
       currencyName: "United States dollar",
       country: expectedCountries,

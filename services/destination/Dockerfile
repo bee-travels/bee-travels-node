@@ -8,4 +8,4 @@ COPY cities.csv package.json swagger.yaml ./
 
 EXPOSE 9001
 
-CMD ["yarn", "node", "-r", "esm", "./build/bin/www.js"]
+CMD ["yarn", "node", "-r", "esm", "./src/bin/www.js"]
