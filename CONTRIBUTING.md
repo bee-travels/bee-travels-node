@@ -78,8 +78,8 @@ Before submitting a pull request, please make sure the following is done:
 We will review your pull request and either merge it, request changes to it, or close it with an explanation.
 
 ## Contribution Prerequisites
-You have [Node](https://nodejs.org/) v10+ and [Yarn](https://yarnpkg.com/) installed.
-You are familiar with Git.
+* You have [Node](https://nodejs.org/) v10+ and [Yarn](https://yarnpkg.com/) installed.
+* You are familiar with Git.
 
 ## Style Guide
 We use an automatic code formatter called [Prettier](https://prettier.io/).
