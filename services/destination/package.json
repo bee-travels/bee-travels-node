@@ -4,11 +4,10 @@
   "description": "destination service for bee-travels",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production yarn node -r esm ./src/bin/www",
-    "test": "yarn babel-node test/run"
+    "start": "nodemon -r esm ./src/bin/www.js",
+    "test": "mocha -r esm \"build/**/*.test.js\""
   },
   "dependencies": {
-    "esm": "^3.2.25",
     "express": "^4.17.1",
     "fast-csv": "^3.4.0",
     "http-errors": "~1.6.2",
@@ -16,8 +15,6 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.9.5",
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
     "@yarnpkg/pnpify": "^2.0.0-rc.21",
@@ -30,7 +27,9 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "2.x",
+    "esm": "^3.2.25",
     "mocha": "^7.1.1",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2"
   }
 }

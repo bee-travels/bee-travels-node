@@ -13,7 +13,7 @@ const DEFAULT_ZOOM = 7;
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg";
 
-const truncateText = text => {
+const truncateText = (text) => {
   const firstSentenceRegex = /^(.*?)\. (?=[A-Z])/;
   const lastSentenceRegex = /(.*\.)(?: .*)$/;
   let trimmedDescription = text
@@ -48,7 +48,7 @@ const DestinationFragment = ({ destination }) => {
           container: mapElement,
           style: "mapbox://styles/mapbox/streets-v11",
           center: [0, 0],
-          zoom: DEFAULT_ZOOM
+          zoom: DEFAULT_ZOOM,
         })
       );
     }
@@ -58,12 +58,12 @@ const DestinationFragment = ({ destination }) => {
     if (mapbox !== undefined && destination.lng && destination.lat) {
       mapbox.jumpTo({
         center: [destination.lng, destination.lat],
-        zoom: DEFAULT_ZOOM
+        zoom: DEFAULT_ZOOM,
       });
     }
   }, [destination.lat, destination.lng, mapbox]);
 
-  const imageSrc = `/images/${destination.city}, ${destination.country}.jpg`;
+  const imageSrc = `api/v1/destinations/images/${destination.city}, ${destination.country}.jpg`;
 
   return (
     <>
@@ -72,7 +72,7 @@ const DestinationFragment = ({ destination }) => {
         <Link to="/" className={styles.homeLink}>
           <BeeLogo className={styles.logoImage} />
           <div className={styles.logoText}>Bee Travels</div>
-        </Link> 
+        </Link>
        </div> */}
       <div className={styles.content}>
         <h1>{destination.city}</h1>

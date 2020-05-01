@@ -1,4 +1,4 @@
-import { getDestinationData } from "../../src/services/dataHandler";
+import { getDestinationData } from "./dataHandler";
 import { describe, it } from "mocha";
 import { assert } from "chai";
 

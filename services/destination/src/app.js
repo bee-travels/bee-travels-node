@@ -5,7 +5,6 @@
 import createError from "http-errors";
 import express from "express";
 import { serve, setup } from "swagger-ui-express";
-import { join } from "path";
 import destinationRouter from "./routes/destination";
 import yaml from "yamljs";
 
@@ -25,8 +24,6 @@ app.use(
 );
 
 app.use(api + "/destinations", destinationRouter);
-
-app.use("/images", express.static(join(__dirname, "../public/images")));
 
 app.use("/", serve, setup(swaggerDocument));
 

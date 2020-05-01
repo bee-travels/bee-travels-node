@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "UI for bee-travels",
   "scripts": {
-    "start": "yarn node index.js"
+    "start": "yarn nodemon index.js"
   },
   "keywords": [
     "react",
@@ -13,7 +13,6 @@
   "author": "moficodes@gmail.com, magicmax33@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
     "express": "^4.17.1",
     "request": "^2.88.2"
   },
@@ -28,6 +27,7 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "2.x",
+    "nodemon": "^2.0.3",
     "prettier": "^2.0.5"
   }
 }
