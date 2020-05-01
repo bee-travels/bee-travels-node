@@ -5,7 +5,7 @@ You don't need to worry about what version of yarn you are using. Starting with 
 As long as you have yarn installed, it will be the right version.
 
 We are experimenting with Yarn 2's `Zero Install` theology;
-this means you shouldn't ever need to run `yarn install` (and **NEVER** run `npm install`).
+this means you shouldn't ever need to run `yarn install` (and **never** run `npm install`).
 
 We also take advantage of yarn workspaces and constaints.
 
