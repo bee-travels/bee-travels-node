@@ -66,19 +66,19 @@ Bee Travels is a monorepo.
 Its repository contains multiple separate packages so that their changes can be coordinated together, and issues live in one place.
 
 After cloning the Bee Travels Node.js repository, you should see the following high-level structure:
-```js
+```markdown
 🐝bee-travels-node
  ┣ 📂services
- ┣ 📂.yarn // holds yarn stuff
+ ┣ 📂.yarn <!-- holds yarn stuff -->
  ┣ 📂services
  ┃ ┣ 📂ui
- ┃ ┃ ┣ 📂backend // bloop
+ ┃ ┃ ┣ 📂backend <!-- bloop -->
  ┃ ┃ ┗ 📂frontend
  ┃ ┣ 📂hotel
  ┃ ┣ 📂destination
  ┃ ┗ 📂currency-exchange
  ┣ 📜.gitignore
- ┣ 📜.pnp.js // new thing.
+ ┣ 📜.pnp.js <!-- new thing. -->
  ┣ 📜yarn.lock
  ┗ 📜package.json
 ```
