@@ -14,11 +14,38 @@ We recommend using Visual Studio Code for development.
 We also recommend installing the ESLint and Prettier VSCode extensions.
 
 ## Branch Organization
-Submit all changes directly to the master branch.
-We don't use separate branches for development or for upcoming releases.
-We do our best to keep master in good shape, with all tests passing.
+> **Note:** Still being discussed.
 
-We should be able to release a new version from the tip of master at any time.
+#### Option 1
+Submit all changes directly to the [master branch](https://github.com/bee-travels/bee-travels-node/tree/master/).
+We don't use separate branches for development or for upcoming releases.
+We do our best to keep `master` in good shape, with all tests passing.
+
+We should be able to release a new version from the tip of `master` at any time.
+
+#### Option 2
+We have 3 "master branches":
+1. [v1](https://github.com/bee-travels/bee-travels-node/tree/v1/) (basic)
+1. [v2](https://github.com/bee-travels/bee-travels-node/tree/v2/) (with-database)
+1. [v3](https://github.com/bee-travels/bee-travels-node/tree/v3/) (with-mqtt)
+
+Submit all changes directly to one of these branches.
+We don't use separate branches for development or for upcoming releases.
+We do our best to keep `v1`, `v2` and `v3` in good shape, with all tests passing.
+
+We should be able to release a new version from the tip of `v1`, `v2` and `v3` at any time.
+
+#### Option 3
+We have 6 branches:
+1. [v1](https://github.com/bee-travels/bee-travels-node/tree/v1/) (basic)
+1. [v2](https://github.com/bee-travels/bee-travels-node/tree/v2/) (with-database)
+1. [v3](https://github.com/bee-travels/bee-travels-node/tree/v3/) (with-mqtt)
+1. [v1-dev](https://github.com/bee-travels/bee-travels-node/tree/v1-dev/) (basic-dev)
+1. [v2-dev](https://github.com/bee-travels/bee-travels-node/tree/v2-dev/) (with-database-dev)
+1. [v3-dev](https://github.com/bee-travels/bee-travels-node/tree/v3-dev/) (with-mqtt-dev)
+
+Submit all changes to the offiliated `dev` branch.
+Merges into `master` are treated as a release and only PRs from `dev` will be merged.
 
 ## Proposing a Change
 If you intend to make any non-trivial changes, we recommend filing an issue.
@@ -82,6 +109,25 @@ After cloning the Bee Travels Node.js repository, you should see the following h
 ```
 
 > **Note:** See individual service READMEs for a deeper overview of project structure.
+
+## Docker
+Their are 5 Dockerfiles affiliated with the project.
+
+### Base
+The base Dockerfile is located in the root directory and needs to be built before building any other image.
+The image includes the yarn cache and lock required for building all other services.
+
+### UI
+The UI Dockerfile is located in `services/ui` and encapsulates both the `ui-frontend` and `ui-backend` workspaces.
+
+### Hotel Service
+The Hotel Service Dockerfile is located in `services/hotel` and encapsulates the `hotel` workspace.
+
+### Destination Service
+The Destination Service Dockerfile is located in `services/destination` and encapsulates the `destination` workspace.
+
+### Currency Exchange
+The Currency Exchange Dockerfile is located in `services/currency-exchange` and encapsulates the `currency-exchange` workspace.
 
 ## Collocated Tests
 We don't have a top-level directory for unit tests. Instead, we put them next to the files that they test.
