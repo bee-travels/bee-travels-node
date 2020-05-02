@@ -47,6 +47,13 @@ We have 6 branches:
 Submit all changes to the offiliated `dev` branch.
 Merges into `master` are treated as a release and only PRs from `dev` will be merged.
 
+#### Option 4 (most likely)
+Mix of `Option 2` and `Option 3`
+1. [v1](https://github.com/bee-travels/bee-travels-node/tree/v1/) (basic)
+1. [v2](https://github.com/bee-travels/bee-travels-node/tree/v2/) (with-database)
+1. [v3](https://github.com/bee-travels/bee-travels-node/tree/v3/) (with-mqtt)
+1. [v3-dev](https://github.com/bee-travels/bee-travels-node/tree/v3-dev/) (with-mqtt-dev)
+
 ## Proposing a Change
 If you intend to make any non-trivial changes, we recommend filing an issue.
 This lets us reach an agreement on your proposal before you put significant effort into it.

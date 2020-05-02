@@ -78,9 +78,14 @@ The following are key components/technologies used with the Node.js version of B
 * Image Database
   * [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage/)
 * Testing
-  * Unit Testing
-    * [Jest](https://jestjs.io/)
-  * Integration Testing
+  * Test Runner
+    * [Mocha](https://mochajs.org/)
+  * Assertion Library
+    * [Chai](https://www.chaijs.com/)
+  * Spies & Mocks
+    * [Sinon](https://sinonjs.org/)
+  * Coverage
+    * [Istanbul/nyc](https://istanbul.js.org/)
 * Code Quality
   * [ESLint](https://eslint.org/)
   * [Prettier](https://prettier.io/)
