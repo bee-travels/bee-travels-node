@@ -78,14 +78,10 @@ The following are key components/technologies used with the Node.js version of B
 * Image Database
   * [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage/)
 * Testing
-  * Test Runner
-    * [Mocha](https://mochajs.org/)
-  * Assertion Library
-    * [Chai](https://www.chaijs.com/)
-  * Spies & Mocks
-    * [Sinon](https://sinonjs.org/)
-  * Coverage
-    * [Istanbul/nyc](https://istanbul.js.org/)
+  * [Mocha](https://mochajs.org/) (Test Runner)
+  * [Chai](https://www.chaijs.com/) (Assertion Library)
+  * [Sinon](https://sinonjs.org/) (Spies & Mocks)
+  * [Istanbul/nyc](https://istanbul.js.org/) (Coverage)
 * Code Quality
   * [ESLint](https://eslint.org/)
   * [Prettier](https://prettier.io/)
@@ -97,7 +93,6 @@ The following are key components/technologies used with the Node.js version of B
   * [Pino](https://github.com/pinojs/express-pino-logger/)
 * Containerization
   * [Docker](https://www.docker.com/)
-    * [Bee Travels Repo](https://hub.docker.com/orgs/beetravels/repositories/)
 
 ## Architecture
 
