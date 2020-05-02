@@ -2,14 +2,14 @@
  * Main app.js file for the currency exchange microservice
  */
 
-import createError from "http-errors";
-import express from "express";
-import logger from "./lib/logger";
-import expressPino from "express-pino-logger";
-import { serve, setup } from "swagger-ui-express";
-import yaml from "yamljs";
-import currencyRouter from "./routes/currency";
-import NotFoundError from "./errors/NotFoundError";
+const createError = require("http-errors");
+const express = require("express");
+const logger = require("./lib/logger");
+const expressPino = require("express-pino-logger");
+const { serve, setup } = require("swagger-ui-express");
+const yaml = require("yamljs");
+const currencyRouter = require("./routes/currency");
+const NotFoundError = require("./errors/NotFoundError");
 
 let swaggerDocument = yaml.load("swagger.yaml");
 swaggerDocument.host = process.env.HOST_IP || "localhost:9201";
@@ -58,4 +58,4 @@ process.on("unhandledRejection", (error) => {
   console.error("unhandledRejection", error.message);
 });
 
-export default app;
+module.exports = app;

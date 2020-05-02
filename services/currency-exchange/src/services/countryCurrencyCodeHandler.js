@@ -6,8 +6,8 @@
  * Country,CurrencyName,CurrencyCode
  *
  */
-import csv from "csvtojson";
-import NotFoundError from "../errors/NotFoundError";
+const csv = require("csvtojson");
+const NotFoundError = require("../errors/NotFoundError");
 
 async function readData() {
   const jsonArray = await csv({
@@ -40,30 +40,29 @@ async function getCountryAndCurrencyCode(currencyCode) {
 
   const data = await readData();
 
-  let outputDict = null;
-  let outputRows = [];
-  let counter = 0;
-  let row_;
-
-  for (let row in data) {
-    row_ = data[row];
-    if (row_.currencyCode.toLowerCase() === currencyCode.toLowerCase()) {
-      counter++;
-      if (counter === 1) {
-        //create output dict.
-        outputDict = row_;
+  const output = data
+    // Find all countries that use requested currency.
+    .filter(
+      (row) =>
+        row.currencyCode &&
+        row.currencyCode.toLowerCase() === currencyCode.toLowerCase()
+    )
+    // Merge the countries into an array.
+    .reduce((acc, item) => {
+      if (acc === undefined) {
+        // Embed countries in array.
+        return { ...item, country: [item.country] };
       }
-      outputRows.push(row_.country);
-    }
-  }
+      // Append to countries array.
+      return { ...acc, country: [...acc.country, item.country] };
+    }, undefined);
 
-  if (row_.length === 0 && outputDict === null) {
+  if (output === undefined) {
     throw new NotFoundError(`currency code ${currencyCode} not found`);
   }
 
-  outputDict.country = outputRows;
-
-  return outputDict;
+  return output;
 }
 
-export { getCurrencyNameAndCode, getCountryAndCurrencyCode };
+module.exports.getCurrencyNameAndCode = getCurrencyNameAndCode;
+module.exports.getCountryAndCurrencyCode = getCountryAndCurrencyCode;

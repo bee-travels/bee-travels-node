@@ -1,4 +1,4 @@
-export default class NotFoundError extends Error {
+module.exports = class NotFoundError extends Error {
   constructor(message) {
     super(message);
     // Ensure the name of this error is the same as the class name
@@ -7,4 +7,4 @@ export default class NotFoundError extends Error {
     // It's not absolutely essential, but it does make the stack trace a little nicer.
     Error.captureStackTrace(this, this.constructor);
   }
-}
+};

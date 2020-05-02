@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "nyc --require esm --cache false mocha \"src/**/?(*.)test.js\"",
-    "start": "nodemon -r esm ./src/bin/www.js"
+    "test": "nyc mocha \"src/**/?(*.)test.js\"",
+    "start": "nodemon ./src/bin/www.js"
   },
   "dependencies": {
     "axios": "^0.19.0",

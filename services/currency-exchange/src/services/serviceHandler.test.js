@@ -1,61 +1,75 @@
-// import axios from "axios";
-// import {
-//   getCurrencyExchangeRate,
-//   getCurrencyExchangeRates,
-//   convertCurrency,
-// } from "./serviceHandler";
-// import ratesMock from "./mocks/rates.json";
-// import { describe, it } from "mocha";
-// import sinon from "sinon";
+const {
+  getCurrencyExchangeRate,
+  getCurrencyExchangeRates,
+  convertCurrency,
+} = require("./serviceHandler");
+const ratesMock = require("./mocks/rates.json");
+const axios = require("axios");
+const { describe, it } = require("mocha");
+const sinon = require("sinon");
+const chai = require("chai");
+const expect = chai.expect;
 
-// describe("Get all currency exchange rates", () => {
-//   it("should return all 3 letter country codes with currency for the day", async () => {
-//     sinon.stub(axios, "get").mockResolvedValueOnce({
-//       data: {
-//         rates: {
-//           CAD: 1.4679,
-//         },
-//         base: "EUR",
-//         date: "2019-11-22",
-//       },
-//     });
-//     const data = await getCurrencyExchangeRates();
-//     expect(data.rates).toEqual({ CAD: 1.4679 });
-//     expect(data.base).toEqual("EUR");
-//   });
-// });
+const chaiAsPromised = require("chai-as-promised");
+chai.use(chaiAsPromised);
 
-// describe("Expect non empty list of 32 for all currency exchange rates", () => {
-//   it("should return all 3 letter country codes with currency for the day", async () => {
-//     sinon.stub(axios, "get").mockResolvedValueOnce(ratesMock);
-//     const data = await getCurrencyExchangeRates();
-//     expect(Object.keys(data.rates)).toHaveLength(32);
-//   });
-// });
+// TODO: Test axios failure cases.
 
-// describe("Get a specific rate for a specific country code that does not exist, i.e. USA", () => {
-//   it("should throw an error", async () => {
-//     sinon.stub(axios, "get").mockResolvedValueOnce(ratesMock);
-//     await expect(getCurrencyExchangeRate("XYZ")).rejects.toThrow(
-//       "The country code XYZ is invalid for the currency you want to convert TO."
-//     );
-//   });
-// });
+beforeEach(() => {
+  // restore if stubbed.
+  try {
+    axios.get.restore();
+  } catch {}
+});
 
-// describe("Get a specific rate for a specific country code that does exist, i.e. USD", () => {
-//   it("should return a numeric rate for a specific country code", async () => {
-//     sinon.stub(axios, "get").mockResolvedValueOnce(ratesMock);
-//     const value = await getCurrencyExchangeRate("USD");
-//     expect(value).toEqual(1.1058);
-//   });
-// });
+describe("getCurrencyExchangeRates", () => {
+  it("should work", async () => {
+    sinon.stub(axios, "get").returns(ratesMock);
+    const data = await getCurrencyExchangeRates();
+    expect(Object.keys(data.rates).length).to.equal(32);
+  });
+});
 
-// describe("convertCurrency", () => {
-//   it("should return a numeric rate", async () => {
-//     sinon.stub(axios, "get").mockResolvedValueOnce(ratesMock);
+describe("getCurrencyExchangeRate", () => {
+  it("should work", async () => {
+    sinon.stub(axios, "get").returns(ratesMock);
+    const data = await getCurrencyExchangeRate("USD");
+    expect(data).to.equal(1.1058);
+  });
 
-//     const result = await convertCurrency(10, "EUR", "USD", "latest");
+  it("should throw with fake code", async () => {
+    const fakeCode = "ABCD";
+    sinon.stub(axios, "get").returns(ratesMock);
+    await expect(
+      getCurrencyExchangeRate(fakeCode)
+    ).to.eventually.be.rejectedWith(
+      `The country code ${fakeCode} is invalid for the currency you want to convert TO.`
+    );
+  });
 
-//     expect(result).toEqual(11.058);
-//   });
-// });
+  it("should throw with fake base code", async () => {
+    const fakeCode = "ABCD";
+    sinon.stub(axios, "get").rejects({ response: { status: 400 } });
+
+    await expect(
+      getCurrencyExchangeRate("USD", fakeCode)
+    ).to.eventually.be.rejectedWith(
+      `The country code ${fakeCode} is invalid for the currency you want to convert FROM.`
+    );
+  });
+
+  it("should throw with no code specified", async () => {
+    sinon.stub(axios, "get").returns(ratesMock);
+    await expect(getCurrencyExchangeRate()).to.eventually.be.rejectedWith(
+      "please provide a currency code"
+    );
+  });
+});
+
+describe("convertCurrency", () => {
+  it("should return a numeric rate", async () => {
+    sinon.stub(axios, "get").returns(ratesMock);
+    const data = await convertCurrency(10, "EUR", "USD", "latest");
+    expect(data).to.equal(11.058);
+  });
+});
