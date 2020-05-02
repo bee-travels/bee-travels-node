@@ -15,7 +15,6 @@
     "express": "~4.16.0",
     "express-pino-logger": "^4.0.0",
     "http-errors": "~1.6.2",
-    "pg": "^7.18.2",
     "pino": "^5.16.0",
     "pino-pretty": "^3.6.1",
     "swagger-ui-express": "^4.1.1",
