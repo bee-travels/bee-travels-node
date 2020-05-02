@@ -3,17 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "nyc mocha \"src/**/?(*.)test.js\"",
-    "start": "nodemon ./src/bin/www.js"
+    "test": "nyc --require esm --cache false mocha \"src/**/?(*.)test.js\"",
+    "start": "nodemon -r esm ./src/bin/www.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "csvtojson": "^2.0.10",
-    "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-pino-logger": "^4.0.0",
     "http-errors": "~1.6.2",
-    "pino": "^5.16.0",
     "swagger-ui-express": "^4.1.1",
     "yamljs": "^0.3.0"
   },
@@ -31,10 +29,14 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "2.x",
+    "esm": "^3.2.25",
     "mocha": "^7.1.2",
     "nyc": "^15.0.0",
     "prettier": "^2.0.5",
     "sinon": "^9.0.2"
+  },
+  "esm": {
+    "cache": false
   },
   "nyc": {
     "all": true,

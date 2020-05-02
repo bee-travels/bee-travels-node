@@ -5275,7 +5275,6 @@ __metadata:
     http-errors: ~1.6.2
     mocha: ^7.1.2
     nyc: ^15.0.0
-    pino: ^5.16.0
     prettier: ^2.0.5
     sinon: ^9.0.2
     swagger-ui-express: ^4.1.1
@@ -12155,7 +12154,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"pino@npm:^5.0.0, pino@npm:^5.16.0":
+"pino@npm:^5.0.0":
   version: 5.17.0
   resolution: "pino@npm:5.17.0"
   dependencies:

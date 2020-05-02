@@ -6,8 +6,8 @@
  * Country,CurrencyName,CurrencyCode
  *
  */
-const csv = require("csvtojson");
-const NotFoundError = require("../errors/NotFoundError");
+import csv from "csvtojson";
+import NotFoundError from "../errors/NotFoundError";
 
 async function readData() {
   const jsonArray = await csv({
@@ -16,7 +16,7 @@ async function readData() {
   return jsonArray;
 }
 
-async function getCurrencyNameAndCode(countryName) {
+export async function getCurrencyNameAndCode(countryName) {
   if (!countryName) {
     throw new Error("please pass in a country name");
   }
@@ -33,7 +33,7 @@ async function getCurrencyNameAndCode(countryName) {
   return countryRow;
 }
 
-async function getCountryAndCurrencyCode(currencyCode) {
+export async function getCountryAndCurrencyCode(currencyCode) {
   if (!currencyCode) {
     throw new Error("please pass in a 3 character currency code");
   }
@@ -63,6 +63,3 @@ async function getCountryAndCurrencyCode(currencyCode) {
 
   return output;
 }
-
-module.exports.getCurrencyNameAndCode = getCurrencyNameAndCode;
-module.exports.getCountryAndCurrencyCode = getCountryAndCurrencyCode;

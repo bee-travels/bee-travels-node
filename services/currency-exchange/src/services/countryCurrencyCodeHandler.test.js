@@ -1,12 +1,13 @@
+import { describe, it } from "mocha";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+
+// Breaks code coverage if using import x from "x"
 const {
   getCurrencyNameAndCode,
   getCountryAndCurrencyCode,
 } = require("./countryCurrencyCodeHandler");
-const { describe, it } = require("mocha");
-const chai = require("chai");
-const expect = chai.expect;
 
-const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
 describe("getCurrencyNameAndCode", () => {

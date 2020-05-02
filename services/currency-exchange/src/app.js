@@ -2,14 +2,13 @@
  * Main app.js file for the currency exchange microservice
  */
 
-const createError = require("http-errors");
-const express = require("express");
-const logger = require("./lib/logger");
-const expressPino = require("express-pino-logger");
-const { serve, setup } = require("swagger-ui-express");
-const yaml = require("yamljs");
-const currencyRouter = require("./routes/currency");
-const NotFoundError = require("./errors/NotFoundError");
+import createError from "http-errors";
+import express from "express";
+import expressPino from "express-pino-logger";
+import { serve, setup } from "swagger-ui-express";
+import yaml from "yamljs";
+import currencyRouter from "./routes/currency";
+import NotFoundError from "./errors/NotFoundError";
 
 let swaggerDocument = yaml.load("swagger.yaml");
 swaggerDocument.host = process.env.HOST_IP || "localhost:9201";
@@ -19,7 +18,10 @@ swaggerDocument.schemes = [scheme];
 const app = express();
 const api = "/api/v1";
 
-const expressLogger = expressPino({ logger });
+const expressLogger = expressPino({
+  level: process.env.LOG_LEVEL || "warn",
+  // prettyPrint: process.env.NODE_ENV !== "production",
+});
 app.use(expressLogger);
 
 app.use(express.json());
@@ -40,7 +42,6 @@ app.use(function (req, res, next) {
 
 // error handler
 // it must have 4 parameters for Express to know that this is an error middleware
-// eslint-disable-next-line no-unused-vars
 app.use(function (err, req, res, next) {
   logger.error(err);
   if (err instanceof NotFoundError) {
@@ -58,4 +59,4 @@ process.on("unhandledRejection", (error) => {
   console.error("unhandledRejection", error.message);
 });
 
-module.exports = app;
+export default app;

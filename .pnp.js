@@ -6218,7 +6218,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["http-errors", "npm:1.6.3"],
             ["mocha", "npm:7.1.2"],
             ["nyc", "npm:15.0.1"],
-            ["pino", "npm:5.17.0"],
             ["prettier", "npm:2.0.5"],
             ["sinon", "npm:9.0.2"],
             ["swagger-ui-express", "virtual:c51ebfc42de42235e3dc1c44fc7bdd2c2fcf335bcfc8402730f546d5135fd17c2f2d409783e93b5eee54d831df4955676c7c2f3700037c1e7d22704b380f804b#npm:4.1.4"],

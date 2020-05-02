@@ -2,13 +2,12 @@
  * Service for getting exchange data
  * from an external API
  */
-const axios = require("axios");
-const NotFoundError = require("../errors/NotFoundError");
+import axios from "axios";
+import NotFoundError from "../errors/NotFoundError";
 
-const BASE_URL_ENDPOINT = "https://api.exchangeratesapi.io/";
-module.exports.BASE_URL_ENDPOINT = BASE_URL_ENDPOINT;
+export const BASE_URL_ENDPOINT = "https://api.exchangeratesapi.io/";
 
-async function getCurrencyExchangeRate(
+export async function getCurrencyExchangeRate(
   countryCurrencyCode,
   baseCode = "EUR",
   timeIndicator = "latest"
@@ -45,13 +44,13 @@ async function getCurrencyExchangeRate(
   throw new NotFoundError(`please provide a currency code`);
 }
 
-async function getCurrencyExchangeRates(timeIndicator = "latest") {
+export async function getCurrencyExchangeRates(timeIndicator = "latest") {
   const currencyUrl = `${BASE_URL_ENDPOINT}${timeIndicator}`;
   const { data } = await axios.get(currencyUrl);
   return data;
 }
 
-async function convertCurrency(
+export async function convertCurrency(
   fromValue,
   fromCurrencyCode,
   toCurrencyCode,
@@ -64,7 +63,3 @@ async function convertCurrency(
   );
   return fromValue * exchangeRate;
 }
-
-module.exports.getCurrencyExchangeRate = getCurrencyExchangeRate;
-module.exports.getCurrencyExchangeRates = getCurrencyExchangeRates;
-module.exports.convertCurrency = convertCurrency;

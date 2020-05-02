@@ -4,8 +4,8 @@
  * Module dependencies.
  */
 
-const app = require("../app");
-const { createServer } = require("http");
+import app from "../app";
+import { createServer } from "http";
 
 /**
  * Get port from environment and store in Express.

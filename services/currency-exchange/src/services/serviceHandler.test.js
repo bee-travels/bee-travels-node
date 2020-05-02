@@ -1,16 +1,17 @@
+import ratesMock from "./mocks/rates.json";
+import axios from "axios";
+import { describe, it } from "mocha";
+import sinon from "sinon";
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+
+// Breaks code coverage if using import x from "x"
 const {
   getCurrencyExchangeRate,
   getCurrencyExchangeRates,
   convertCurrency,
 } = require("./serviceHandler");
-const ratesMock = require("./mocks/rates.json");
-const axios = require("axios");
-const { describe, it } = require("mocha");
-const sinon = require("sinon");
-const chai = require("chai");
-const expect = chai.expect;
 
-const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
 // TODO: Test axios failure cases.

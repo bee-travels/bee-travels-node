@@ -2,13 +2,13 @@
  * Router for currency rate conversions
  */
 
-const { Router } = require("express");
-const asyncMiddleware = require("../middlewares/asyncMiddleware");
-const countryCurrencyCodeHandler = require("../services/countryCurrencyCodeHandler");
-const {
+import { Router } from "express";
+import asyncMiddleware from "../middlewares/asyncMiddleware";
+import * as countryCurrencyCodeHandler from "../services/countryCurrencyCodeHandler";
+import {
   getCurrencyExchangeRates,
   convertCurrency,
-} = require("../services/serviceHandler");
+} from "../services/serviceHandler";
 
 const router = Router();
 
@@ -70,4 +70,4 @@ router.get(
   })
 );
 
-module.exports = router;
+export default router;
