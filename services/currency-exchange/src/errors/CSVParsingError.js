@@ -1,4 +1,4 @@
-class NotFoundError extends Error {
+class CSVParsingError extends Error {
   constructor(message) {
     super(message);
     // Ensure the name of this error is the same as the class name
@@ -9,4 +9,4 @@ class NotFoundError extends Error {
   }
 }
 
-export default NotFoundError;
+export default CSVParsingError;

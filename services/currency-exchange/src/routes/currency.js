@@ -1,73 +1,60 @@
-/**
- * Router for currency rate conversions
- */
-
 import { Router } from "express";
-import asyncMiddleware from "../middlewares/asyncMiddleware";
-import * as countryCurrencyCodeHandler from "../services/countryCurrencyCodeHandler";
-import {
-  getCurrencyExchangeRates,
-  convertCurrency,
-} from "../services/serviceHandler";
+import { getCountry, getCurrency } from "../services/infoHandler";
+import { getExchangeRates, convert } from "../services/exchangeHandler";
+import CountryNotFoundError from "../errors/CountryNotFoundError";
+import CurrencyNotFoundError from "../errors/CurrencyNotFoundError";
 
 const router = Router();
 
-/* GET list of currency locations */
-router.get(
-  "/",
-  asyncMiddleware(async (req, res) => {
-    const data = await getCurrencyExchangeRates();
+router.get("/rates", async (_, res, next) => {
+  try {
+    const data = await getExchangeRates();
     res.json(data);
-  })
-);
+  } catch (e) {
+    next(e);
+  }
+});
 
-/* POST
-/search:
-post:
-*/
-router.post(
-  "/search",
-  asyncMiddleware(async (req, res) => {
-    const { Country, CurrencyCode } = req.body;
-    if (Country) {
-      const result = await countryCurrencyCodeHandler.getCurrencyNameAndCode(
-        Country
-      );
-      return res.json(result);
+router.get("/convert/:from/:to", async (req, res, next) => {
+  const { from, to } = req.params;
+  try {
+    const data = await convert(from, to);
+    res.json({ rate: data });
+  } catch (e) {
+    if (e instanceof CurrencyNotFoundError) {
+      return res.status(400).json({ error: e.message });
     }
-    if (CurrencyCode) {
-      const result = await countryCurrencyCodeHandler.getCountryAndCurrencyCode(
-        CurrencyCode
-      );
-      return res.json(result);
-    }
-    return res
-      .status(400)
-      .json({ error: "please pass in either Country or CurrencyCode" });
-  })
-);
+    next(e);
+  }
+});
 
-/* GET
-/currency/{currencyFromAmount}/{currencyFromCode}/{currencyToCode}:
-*/
-router.get(
-  "/:currencyFromAmount/:currencyFromCode/:currencyToCode",
-  asyncMiddleware(async (req, res) => {
-    const { currencyFromAmount, currencyFromCode, currencyToCode } = req.params;
-    if (isNaN(parseFloat(currencyFromAmount))) {
-      return res
-        .status(400)
-        .json({ error: "currency from amount should be numeric" });
+router.get("/:code", async (req, res, next) => {
+  const { code } = req.params;
+  try {
+    const result = await getCurrency(code);
+    return res.json(result);
+  } catch (e) {
+    if (e instanceof CurrencyNotFoundError) {
+      return res.status(400).json({ error: e.message });
     }
-    const data = await convertCurrency(
-      parseFloat(currencyFromAmount.trim()),
-      currencyFromCode.trim(),
-      currencyToCode.trim(),
-      "latest"
-    );
+    next(e);
+  }
+});
 
-    res.json({ result: data });
-  })
-);
+router.get("/", async (req, res, next) => {
+  const { country } = req.query;
+  if (country === undefined) {
+    next();
+  }
+  try {
+    const result = await getCountry(country);
+    return res.json(result);
+  } catch (e) {
+    if (e instanceof CountryNotFoundError) {
+      return res.status(400).json({ error: e.message });
+    }
+    next(e);
+  }
+});
 
 export default router;
