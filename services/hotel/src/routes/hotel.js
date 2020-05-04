@@ -1,9 +1,19 @@
 import { Router } from "express";
-import { getHotels } from "../service/dataHandler";
+import { getHotels, getFilterList } from "../service/dataHandler";
 
 const router = Router();
 
 const stringToArray = (s) => s && s.split(",");
+
+router.get("/info/:tag", async (req, res, next) => {
+  const { tag } = req.params;
+  try {
+    const data = await getFilterList(tag);
+    res.json(data);
+  } catch (e) {
+    next(e);
+  }
+});
 
 router.get("/:country/:city", async (req, res, next) => {
   const { country, city } = req.params;

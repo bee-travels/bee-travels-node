@@ -2,6 +2,7 @@ import path from "path";
 import { promises as fs } from "fs";
 
 const HOTELS_PATH = path.join(__dirname, "../../data/hotel-data.json");
+const HOTEL_INFO_PATH = path.join(__dirname, "../../data/hotel-info.json");
 
 const pillify = (s) => s.toLowerCase().replace(" ", "-");
 
@@ -33,4 +34,10 @@ export async function getHotels(country, city, filters) {
   });
 
   return hotelsData;
+}
+
+export async function getFilterList(filterType) {
+  const metadata = await parseMetadata(HOTEL_INFO_PATH);
+  const listOfFilterOptions = metadata.map((item) => item[filterType]);
+  return [...new Set(listOfFilterOptions)];
 }
