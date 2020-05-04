@@ -5,32 +5,30 @@
   "private": true,
   "scripts": {
     "start": "nodemon -r esm ./src/bin/www.js",
-    "test": "mocha -r esm \"src/**/*.test.js\""
+    "test": "nyc --require esm --cache false mocha \"src/**/?(*.)test.js\""
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "csv-parse": "^4.9.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
-    "fast-csv": "^3.4.0",
-    "http-errors": "~1.6.2",
-    "request": "^2.88.2",
+    "pino-http": "^5.1.0",
+    "pino-pretty": "^4.0.0",
     "swagger-ui-express": "^4.1.1",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "2.x",
-    "@typescript-eslint/parser": "2.x",
-    "@yarnpkg/pnpify": "^2.0.0-rc.21",
-    "babel-eslint": "10.x",
     "chai": "^4.2.0",
-    "eslint": "6.x",
-    "eslint-config-react-app": "^5.2.1",
-    "eslint-plugin-flowtype": "4.x",
-    "eslint-plugin-import": "2.x",
-    "eslint-plugin-jsx-a11y": "6.x",
-    "eslint-plugin-react": "7.x",
-    "eslint-plugin-react-hooks": "2.x",
-    "esm": "^3.2.25",
-    "mocha": "^7.1.1",
-    "prettier": "^2.0.5",
-    "rimraf": "^3.0.2"
+    "mocha": "^7.1.2",
+    "nyc": "^15.0.1"
+  },
+  "esm": {
+    "cache": false
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "src/**/*.js"
+    ]
   }
 }

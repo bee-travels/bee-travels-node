@@ -14,7 +14,6 @@ const scheme = process.env.SCHEME || "http";
 swaggerDocument.schemes = [scheme];
 
 const app = express();
-const api = "/api/v1";
 
 app.use(express.json());
 app.use(
@@ -23,7 +22,7 @@ app.use(
   })
 );
 
-app.use(api + "/destinations", destinationRouter);
+app.use("/api/v1/destinations", destinationRouter);
 
 app.use("/", serve, setup(swaggerDocument));
 

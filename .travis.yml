@@ -15,6 +15,10 @@ install:
 
 jobs:
   include:
+    - stage: dep-check
+      name: Dependencies Check
+      script: yarn constraints
+
     - stage: lint
       name: Lint
       script: yarn lint
