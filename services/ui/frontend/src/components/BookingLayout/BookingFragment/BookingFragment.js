@@ -5,7 +5,20 @@ import DoubleSlider from "./DoubleSlider";
 import MultiSelect from "./MultiSelect";
 import Select from "./Select";
 
+import globalHistory from "globalHistory";
+
+import {
+  SUPERCHAINS,
+  HOTEL_TYPE,
+  HOTELS,
+  MIN_HOTEL_PRICE,
+  MAX_HOTEL_PRICE,
+  CURRENCY,
+} from "components/common/query-constants";
+
 const DEFAULT_MAX = 700;
+
+const findValidItemsInList = (a, b) => a.filter((aa) => b.includes(aa));
 
 const ListItem = ({ superchain, name, cost, images }) => {
   return (
@@ -126,16 +139,20 @@ const Filters = ({
 
 const priceConversion = (x, { from, to }) => (x / from) * to;
 
-const BookingFragment = ({ city, country }) => {
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+const BookingFragment = ({
+  city,
+  country,
+  selectedSuperchains,
+  selectedHotels,
+  selectedTypes,
+  // minHotelPrice,
+  // maxHotelPrice,
+  selectedCurrency,
+}) => {
+  const [minHotelPrice, setMinHotelPrice] = useState(0);
+  const [maxHotelPrice, setMaxHotelPrice] = useState(undefined);
 
   const [exchangeRates, setExchangeRates] = useState({});
-
-  const [selectedSuperchains, setSelectedSuperchains] = useState([]);
-  const [selectedHotels, setSelectedHotels] = useState([]);
-  const [selectedTypes, setSelectedTypes] = useState([]);
-
-  const [selectedMinMax, setSelectedMinMax] = useState([undefined, undefined]);
 
   const [superchainList, setSuperchainList] = useState([]);
   const [hotelList, setHotelList] = useState([]);
@@ -151,39 +168,49 @@ const BookingFragment = ({ city, country }) => {
       }) / 100
     ) * 100 || DEFAULT_MAX;
 
+  const updateQuery = useCallback(
+    (params) => {
+      const query = queryString.stringify({
+        [SUPERCHAINS]: selectedSuperchains,
+        [HOTELS]: selectedHotels,
+        [HOTEL_TYPE]: selectedTypes,
+        [CURRENCY]: selectedCurrency !== "USD" ? selectedCurrency : undefined,
+        ...params,
+      });
+      globalHistory.push(`/destinations/${country}/${city}?${query}`);
+    },
+    [
+      city,
+      country,
+      selectedCurrency,
+      selectedHotels,
+      selectedSuperchains,
+      selectedTypes,
+    ]
+  );
+
+  // Load list of hotels.
   useEffect(() => {
     const loadHotels = async () => {
-      console.log("loading hotels");
-      const [minCost, maxCost] = selectedMinMax;
-      const params = {
-        superchain: selectedSuperchains.join(","),
-        hotel: selectedHotels.join(","),
-        type: selectedTypes.join(","),
-        mincost: priceConversion(minCost, {
-          from: exchangeRates[selectedCurrency],
-          to: exchangeRates.USD,
-        }),
-        maxcost: priceConversion(maxCost, {
-          from: exchangeRates[selectedCurrency],
-          to: exchangeRates.USD,
-        }),
-      };
+      const query = queryString.stringify({
+        superchain:
+          selectedSuperchains.length > 0
+            ? selectedSuperchains.join(",")
+            : undefined,
+        hotel: selectedHotels.length > 0 ? selectedHotels.join(",") : undefined,
+        type: selectedTypes.length > 0 ? selectedTypes.join(",") : undefined,
+      });
 
-      console.log("loading hotels");
       const hotelResponse = await fetch(
-        `/api/v1/hotels/${country}/${city}?${queryString.stringify({})}`
+        `/api/v1/hotels/${country}/${city}?${query}`
       );
-      console.log("done");
       const hotelList = await hotelResponse.json();
-      console.log(hotelList);
       setHotels(hotelList);
     };
 
     if (city && country) {
-      console.log("loading hotels");
       loadHotels();
     }
-    console.log("hotel", country, city);
   }, [
     city,
     country,
@@ -192,71 +219,97 @@ const BookingFragment = ({ city, country }) => {
     selectedTypes,
     selectedCurrency,
     exchangeRates,
-    selectedMinMax,
+    minHotelPrice,
+    maxHotelPrice,
   ]);
 
+  // Load list of superchains.
   useEffect(() => {
-    const loadFilters = async () => {
+    const loadSuperchains = async () => {
       const superchainResponse = await fetch("/api/v1/hotels/info/superchain");
       const superchainList = await superchainResponse.json();
       setSuperchainList(superchainList);
     };
 
-    loadFilters();
-  }, []);
+    loadSuperchains();
+  }, [selectedSuperchains, updateQuery]);
 
+  // Load exchange rates.
   useEffect(() => {
     const loadCurrency = async () => {
-      const currencyResponse = await fetch("/api/v1/currency/rates");
-      const exchangeRates = await currencyResponse.json();
-      setExchangeRates({ ...exchangeRates.rates, EUR: 1 });
+      try {
+        const currencyResponse = await fetch("/api/v1/currency/rates");
+        const exchangeRates = await currencyResponse.json();
+        setExchangeRates({ ...exchangeRates.rates, EUR: 1 }); // EUR isn't part of the list.
+      } catch (e) {
+        setExchangeRates({ USD: 1 });
+      }
     };
 
     loadCurrency();
   }, []);
 
+  // Load list of hotels chains.
   useEffect(() => {
-    const loadFilters = async () => {
+    const loadHotelChains = async () => {
       const hotelResponse = await fetch("/api/v1/hotels/info/name");
       const hotelList = await hotelResponse.json();
       setHotelList(hotelList);
     };
 
-    loadFilters();
+    loadHotelChains();
   }, []);
 
+  // Load list of hotel types.
   useEffect(() => {
-    const loadFilters = async () => {
+    const loadHotelTypes = async () => {
       const typeResponse = await fetch("/api/v1/hotels/info/type");
       const typeList = await typeResponse.json();
       setTypeList(typeList);
     };
 
-    loadFilters();
+    loadHotelTypes();
   }, []);
 
-  const handleSuperchainSelectionChange = useCallback((superchains) => {
-    setSelectedSuperchains(superchains);
-  }, []);
+  const handleSuperchainSelectionChange = useCallback(
+    (superchains) => {
+      updateQuery({ [SUPERCHAINS]: superchains });
+    },
+    [updateQuery]
+  );
 
-  const handleHotelSelectionChange = useCallback((hotels) => {
-    setSelectedHotels(hotels);
-  }, []);
+  const handleHotelSelectionChange = useCallback(
+    (hotels) => {
+      updateQuery({ [HOTELS]: hotels });
+    },
+    [updateQuery]
+  );
 
-  const handleTypeSelectionChange = useCallback((types) => {
-    setSelectedTypes(types);
-  }, []);
+  const handleTypeSelectionChange = useCallback(
+    (types) => {
+      updateQuery({ [HOTEL_TYPE]: types });
+    },
+    [updateQuery]
+  );
 
   const handleMinMaxSelectionChange = useCallback(
     ([minCost, maxCost]) => {
-      setSelectedMinMax([minCost, maxCost === scaledMax ? undefined : maxCost]);
+      setMinHotelPrice(minCost);
+      setMaxHotelPrice(maxCost === scaledMax ? undefined : maxCost);
+      // updateQuery({
+      //   [MIN_HOTEL_PRICE]: minCost,
+      //   [MAX_HOTEL_PRICE]: maxCost === scaledMax ? undefined : maxCost,
+      // });
     },
     [scaledMax]
   );
 
-  const handleCurrencyChange = useCallback((currency) => {
-    setSelectedCurrency(currency);
-  }, []);
+  const handleCurrencyChange = useCallback(
+    (currency) => {
+      updateQuery({ [CURRENCY]: currency });
+    },
+    [updateQuery]
+  );
 
   return (
     <>

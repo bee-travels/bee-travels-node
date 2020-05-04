@@ -42,7 +42,15 @@ const truncateText = (text) => {
   return trimmedDescription;
 };
 
-const DestinationFragment = ({ destination }) => {
+const DestinationFragment = ({
+  latitude,
+  longitude,
+  description,
+  city,
+  country,
+  cityName,
+  countryName,
+}) => {
   const [mapbox, setMapbox] = useState(undefined);
   const [mapElement, setMapElement] = useState(undefined);
 
@@ -60,47 +68,38 @@ const DestinationFragment = ({ destination }) => {
   }, [mapElement]);
 
   useEffect(() => {
-    if (mapbox !== undefined && destination.lng && destination.lat) {
+    if (mapbox !== undefined && longitude && latitude) {
       mapbox.jumpTo({
-        center: [destination.lng, destination.lat],
+        center: [longitude, latitude],
         zoom: DEFAULT_ZOOM,
       });
     }
-  }, [destination.lat, destination.lng, mapbox]);
+  }, [latitude, longitude, mapbox]);
 
   return (
     <>
       <HideAndSeekSearch theme={searchBarStyles} />
 
       <div className={styles.content}>
-        <h1>{destination.city}</h1>
+        <h1>{cityName}</h1>
 
-        <p>{truncateText(destination.description)}</p>
+        <p>{truncateText(description)}</p>
 
         <div className={styles.imageContainer}>
           <img
             className={styles.image}
-            src={`${imageBase}/destination-${normalizeDestinationName(
-              destination.country,
-              destination.city
-            )}-001.jpg`}
-            alt={destination.city + ", " + destination.country}
+            src={`${imageBase}/destination-${city}-${country}-001.jpg`}
+            alt={cityName + ", " + countryName}
           />
           <img
             className={styles.image}
-            src={`${imageBase}/destination-${normalizeDestinationName(
-              destination.country,
-              destination.city
-            )}-002.jpg`}
-            alt={destination.city + ", " + destination.country}
+            src={`${imageBase}/destination-${city}-${country}-002.jpg`}
+            alt={cityName + ", " + countryName}
           />
           <img
             className={styles.image}
-            src={`${imageBase}/destination-${normalizeDestinationName(
-              destination.country,
-              destination.city
-            )}-003.jpg`}
-            alt={destination.city + ", " + destination.country}
+            src={`${imageBase}/destination-${city}-${country}-003.jpg`}
+            alt={cityName + ", " + countryName}
           />
         </div>
         <div className={styles.map} ref={setMapElement} />

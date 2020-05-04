@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
-import queryString from "query-string";
 import { Link } from "react-router-dom";
 
 import BeeLogo from "components/common/BeeLogo";
@@ -11,7 +10,9 @@ import styles from "./DestinationFragment.module.css";
 
 const getSuggestionValue = ({ city, country }) => `${city}, ${country}`;
 
-const renderSuggestion = suggestion => (
+const pillify = (s) => s.toLowerCase().replace(" ", "-");
+
+const renderSuggestion = (suggestion) => (
   <span>{getSuggestionValue(suggestion)}</span>
 );
 
@@ -24,7 +25,7 @@ const filterSuggestions = (destinations, value) => {
   }
 
   return destinations.filter(
-    destination =>
+    (destination) =>
       destination.city.toLowerCase().slice(0, inputLength) === inputValue ||
       destination.country.toLowerCase().slice(0, inputLength) === inputValue
   );
@@ -50,14 +51,15 @@ const UncontrolledSearch = ({ theme }) => {
   }, []);
 
   const handleSuggestionSelected = useCallback((_, { suggestion }) => {
-    globalHistory.push(`/destination?${queryString.stringify(suggestion)}`);
+    const { country, city } = suggestion;
+    globalHistory.push(`/destinations/${pillify(country)}/${pillify(city)}`);
   }, []);
 
   useEffect(() => {
     const loadDestinations = async () => {
       const res = await fetch("/api/v1/destinations");
-      const { cities } = await res.json();
-      setDestinations(cities);
+      const data = await res.json();
+      setDestinations(data);
     };
     loadDestinations();
   }, []);
@@ -107,7 +109,7 @@ const UncontrolledSearch = ({ theme }) => {
             placeholder: "Where will you bee traveling?",
             value: searchBarValue,
             onChange: handleChange,
-            onBlur: handleDeactivate
+            onBlur: handleDeactivate,
           }}
           onSuggestionSelected={handleSuggestionSelected}
         />
