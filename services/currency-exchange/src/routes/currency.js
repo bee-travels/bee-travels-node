@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCountry, getCurrency } from "../services/infoHandler";
+import { getCountry, getCurrency } from "../services/dataHandler";
 import { getExchangeRates, convert } from "../services/exchangeHandler";
 import CountryNotFoundError from "../errors/CountryNotFoundError";
 import CurrencyNotFoundError from "../errors/CurrencyNotFoundError";
