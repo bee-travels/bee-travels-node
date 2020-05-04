@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 
-import HideAndSeekSearch from "components/common/HideAndSeekSearch";
+import HideAndSeekSearch from "./HideAndSeekSearch";
 
 import styles from "./DestinationFragment.module.css";
-import searchBarStyles from "./SearchBar.module.css";
 
 const DEFAULT_ZOOM = 7;
 
@@ -12,11 +11,6 @@ mapboxgl.accessToken =
   "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg";
 
 const imageBase = "/api/v1/destinations/images";
-const normalizeDestinationName = (country, city) => {
-  return `${city
-    .toLowerCase()
-    .replace(" ", "-")}-${country.toLowerCase().replace(" ", "-")}`;
-};
 
 const truncateText = (text) => {
   const firstSentenceRegex = /^(.*?)\. (?=[A-Z])/;
@@ -78,7 +72,7 @@ const DestinationFragment = ({
 
   return (
     <>
-      <HideAndSeekSearch theme={searchBarStyles} />
+      <HideAndSeekSearch />
 
       <div className={styles.content}>
         <h1>{cityName}</h1>
