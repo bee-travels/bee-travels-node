@@ -19,7 +19,7 @@ beforeEach(() => {
 });
 
 describe("getExchangeRates", () => {
-  it("should work", async () => {
+  it("returns a list of all exchange rates", async () => {
     sinon.stub(axios, "get").returns(ratesMock);
     const data = await getExchangeRates();
     expect(Object.keys(data.rates).length).to.equal(32);
@@ -27,13 +27,13 @@ describe("getExchangeRates", () => {
 });
 
 describe("convert", () => {
-  it("should work", async () => {
+  it("returns the exchange rate for converting one currency to another", async () => {
     sinon.stub(axios, "get").returns(ratesMock);
     const data = await convert("USD");
     expect(data).to.equal(1.1058);
   });
 
-  it("should throw with fake code", async () => {
+  it("throws with a fake `to` currency code", async () => {
     const fakeCode = "ABCD";
     sinon.stub(axios, "get").returns(ratesMock);
     await expect(convert(fakeCode)).to.eventually.be.rejectedWith(
@@ -41,7 +41,7 @@ describe("convert", () => {
     );
   });
 
-  it("should throw with fake base code", async () => {
+  it("throws with a fake `from` currency code", async () => {
     const fakeCode = "ABCD";
     sinon.stub(axios, "get").rejects({ response: { status: 400 } });
 
