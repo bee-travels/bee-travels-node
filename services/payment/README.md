@@ -6,15 +6,28 @@ It showcases a Modern JavaScript application that has a `plugin` architecture to
 
 We include a `plugin` for:
 1. **Bootstrap ping-pong payment processor**
-> Simple payment responder will validate and `fake` process a credit card payment
+> Simple payment responder will validate and `fake` a credit card payment
 
 1. **Future bridge to say Shopify, PayPal, Stripe etc**
-> REST [tbd and IBM MQ.]  
+ 
+ Plugins are set via an Enviroment Varialbe  called `PAYMENT_PROVIDER`
 
-STRIPE note the cc number is not passed to our microserive, rahter an iFrame passess it 
-directly! https://stripe.com/docs/payments/accept-a-payment
+ This is set by running a terminal window and typing:
 
-We also demonstrate and provide documentation on how to create your own `adapters` or `plugins`
+ ```sh
+# For the default simulator/responder ( no charges will be made )
+ export PAYMENT_PROVIDER=PINGPONG
+
+ # For the STRIPE strategy stub to be called
+ export PAYMENT_PROVIDER=STRIPE
+
+ ```
+
+ In this manner the strategy `plugin` will load and behave as the strategy algorithm is setup.
+
+ To extend the payment service to allow for other various services ( e.g. Shopify or PayPal )
+pleae follow the methodology as seen by the code in the paymentStrategyManager.js [here](https://github.com/bee-travels/bee-travels-node/blob/really-the-payment-service/services/payment/src/strategies/paymentStrategyManager.js#L5-L23)
+
 
 
 ## APIs
@@ -81,11 +94,6 @@ Then simply navigate to
 http://localhost:9403 and test out this microservice API endpoints using
 the Swagger test harness page.
 
-### Local with containers
-
-#### Prerequisites
-
-* [Docker for Desktop](https://www.docker.com/products/docker-desktop)
 
 #### Steps
 
@@ -120,3 +128,6 @@ moved tests out of test folder to be adjacent to files been tested - motivations
 * scale - each file should have a corresponding test file with pattern `test` or `spec`
 https://kentcdodds.com/blog/colocation
 
+Notes:
+STRIPE note the cc number is not passed to our microserive, rahter an iFrame passess it 
+directly! https://stripe.com/docs/payments/accept-a-payment
