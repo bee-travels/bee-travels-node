@@ -7,8 +7,8 @@ const app = require("./app").default;
 
 chai.use(chaiHttp);
 
-describe("bloop", () => {
-  it("blop", async () => {
+describe("GET /api/v1/currency/:code", () => {
+  it("returns a list of countries given a valid code", async () => {
     const expectedCountries = [
       "American Samoa",
       "Bonaire",
