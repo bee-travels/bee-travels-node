@@ -74,15 +74,15 @@ const Filters = ({
   const [slideValues, setSlideValues] = useState([0, defaultMax]);
 
   // Called while sliding.
-  const handleUpdate = useCallback((values) => {
-    setSlideValues(values.map((x) => Math.round(x)));
+  const handleUpdate = useCallback((event, newValue) => {
+    setSlideValues(newValue.map((x) => Math.round(x)));
   }, []);
 
   // Called while sliding is finished.
   const handleSet = useCallback(
-    (values) => {
-      setSlideValues(values.map((x) => Math.round(x)));
-      onMinMaxSelectionChange(values.map((x) => Math.round(x)));
+    (event, newValue) => {
+      setSlideValues(newValue.map((x) => Math.round(x)));
+      onMinMaxSelectionChange(newValue.map((x) => Math.round(x)));
     },
     [onMinMaxSelectionChange]
   );
@@ -126,7 +126,12 @@ const Filters = ({
         <div className={styles.wrapWrap}>
           <div className={styles.numberLeft}>{min}</div>
           <div className={styles.sliderWrap}>
-            <DoubleSlider />
+            <DoubleSlider
+              value={slideValues}
+              onChange={handleUpdate}
+              onChangeCommitted={handleSet}
+              max={defaultMax}
+            />
           </div>
           <div className={styles.numberRight}>
             {max === defaultMax ? `${defaultMax}+` : max}
@@ -199,6 +204,14 @@ const BookingFragment = ({
             : undefined,
         hotel: selectedHotels.length > 0 ? selectedHotels.join(",") : undefined,
         type: selectedTypes.length > 0 ? selectedTypes.join(",") : undefined,
+        mincost: priceConversion(minHotelPrice, {
+          from: exchangeRates[selectedCurrency],
+          to: exchangeRates.USD,
+        }),
+        maxcost: priceConversion(maxHotelPrice, {
+          from: exchangeRates[selectedCurrency],
+          to: exchangeRates.USD,
+        }),
       });
 
       const hotelResponse = await fetch(
