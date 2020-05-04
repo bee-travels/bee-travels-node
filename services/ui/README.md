@@ -10,11 +10,11 @@ The front end/UI is responsible for connecting and displaying data from the foll
 
 ### Home Page
 
-![](readme-images/home.jpg)
+![](screenshots/home.jpg)
 
 ### Booking Page
 
-![](readme-images/booking.jpg)
+![](screenshots/booking.jpg)
 
 ## How to Run
 
