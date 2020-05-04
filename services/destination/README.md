@@ -16,7 +16,7 @@ The destination cities used are a subset of cities with a population over 1 mill
 
 ## APIs
 
-![](readme-images/apis.jpg)
+![](screenshots/apis.jpg)
 
 ## How to Run
 

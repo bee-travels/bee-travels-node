@@ -27,7 +27,10 @@ const ListItem = ({ superchain, name, cost, images }) => {
 };
 
 const Filters = ({
+  selectedTypes,
+  selectedHotels,
   selectedSuperchains,
+  selectedExchangeRate,
   typeList,
   hotelList,
   superchainList,
@@ -39,33 +42,21 @@ const Filters = ({
   onCurrencyChange,
   defaultMax,
 }) => {
-  const handleSuperchainChange = useCallback(
-    (e) => {
-      onSuperchainSelectionChange(e.target.value);
-    },
-    [onSuperchainSelectionChange]
-  );
+  const handleSuperchainChange = (values) => {
+    onSuperchainSelectionChange(values);
+  };
 
-  const handleHotelChange = useCallback(
-    ({ selectedItems }) => {
-      onHotelSelectionChange(selectedItems);
-    },
-    [onHotelSelectionChange]
-  );
+  const handleHotelChange = (values) => {
+    onHotelSelectionChange(values);
+  };
 
-  const handleTypeChange = useCallback(
-    ({ selectedItems }) => {
-      onTypeSelectionChange(selectedItems);
-    },
-    [onTypeSelectionChange]
-  );
+  const handleTypeChange = (values) => {
+    onTypeSelectionChange(values);
+  };
 
-  const handleCurrencyChange = useCallback(
-    (e) => {
-      onCurrencyChange(e.target.value);
-    },
-    [onCurrencyChange]
-  );
+  const handleCurrencyChange = (e) => {
+    onCurrencyChange(e.target.value);
+  };
 
   const [slideValues, setSlideValues] = useState([0, defaultMax]);
 
@@ -98,21 +89,25 @@ const Filters = ({
       <div className={styles.filterWide}>
         <MultiSelect
           label="Hotels"
-          list={superchainList}
-          selected={selectedSuperchains}
-          onSelected={handleSuperchainChange}
+          list={hotelList}
+          selected={selectedHotels}
+          onSelected={handleHotelChange}
         />
       </div>
       <div className={styles.filterNarrow}>
         <MultiSelect
           label="Types"
-          list={superchainList}
-          selected={selectedSuperchains}
-          onSelected={handleSuperchainChange}
+          list={typeList}
+          selected={selectedTypes}
+          onSelected={handleTypeChange}
         />
       </div>
       <div className={styles.filterSuperNarrow}>
-        <Select />
+        <Select
+          list={Object.keys(exchangeRates)}
+          selected={selectedExchangeRate}
+          onSelected={handleCurrencyChange}
+        />
       </div>
       <div className={styles.filterWide}>
         <div className={styles.wrapWrap}>
@@ -131,7 +126,7 @@ const Filters = ({
 
 const priceConversion = (x, { from, to }) => (x / from) * to;
 
-const BookingFragment = ({ destination }) => {
+const BookingFragment = ({ city, country }) => {
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
 
   const [exchangeRates, setExchangeRates] = useState({});
@@ -148,8 +143,6 @@ const BookingFragment = ({ destination }) => {
 
   const [hotels, setHotels] = useState([]);
 
-  const { city, country } = destination;
-
   const scaledMax =
     Math.round(
       priceConversion(DEFAULT_MAX, {
@@ -160,6 +153,7 @@ const BookingFragment = ({ destination }) => {
 
   useEffect(() => {
     const loadHotels = async () => {
+      console.log("loading hotels");
       const [minCost, maxCost] = selectedMinMax;
       const params = {
         superchain: selectedSuperchains.join(","),
@@ -175,16 +169,21 @@ const BookingFragment = ({ destination }) => {
         }),
       };
 
+      console.log("loading hotels");
       const hotelResponse = await fetch(
-        `/api/v1/hotels/${city}/${country}?${queryString.stringify(params)}`
+        `/api/v1/hotels/${country}/${city}?${queryString.stringify({})}`
       );
+      console.log("done");
       const hotelList = await hotelResponse.json();
+      console.log(hotelList);
       setHotels(hotelList);
     };
 
     if (city && country) {
+      console.log("loading hotels");
       loadHotels();
     }
+    console.log("hotel", country, city);
   }, [
     city,
     country,
@@ -208,7 +207,7 @@ const BookingFragment = ({ destination }) => {
 
   useEffect(() => {
     const loadCurrency = async () => {
-      const currencyResponse = await fetch("/api/v1/currency");
+      const currencyResponse = await fetch("/api/v1/currency/rates");
       const exchangeRates = await currencyResponse.json();
       setExchangeRates({ ...exchangeRates.rates, EUR: 1 });
     };
@@ -262,7 +261,10 @@ const BookingFragment = ({ destination }) => {
   return (
     <>
       <Filters
+        selectedTypes={selectedTypes}
+        selectedHotels={selectedHotels}
         selectedSuperchains={selectedSuperchains}
+        selectedExchangeRate={selectedCurrency}
         superchainList={superchainList}
         typeList={typeList}
         hotelList={hotelList}
@@ -284,7 +286,6 @@ const BookingFragment = ({ destination }) => {
           selectedCurrency;
         return (
           <ListItem
-            destination={destination}
             superchain={superchain}
             name={name}
             cost={priceString}

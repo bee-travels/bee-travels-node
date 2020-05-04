@@ -1,42 +1,55 @@
-import createError from "http-errors";
 import express from "express";
-import yaml from "yamljs";
-import { serve, setup } from "swagger-ui-express";
+import logger from "pino-http";
+import pinoPretty from "pino-pretty";
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
 
-import hotelRouter from "./routes/hotel";
-
-let swaggerDocument = yaml.load("swagger.yaml");
-swaggerDocument.host = process.env.HOST_IP || "localhost:9101";
-const scheme = process.env.SCHEME || "http";
-swaggerDocument.schemes = [scheme];
+import destinationRouter from "./routes/hotel";
 
 const app = express();
-app.use(express.json());
+
+// Setup Pino.
 app.use(
-  express.urlencoded({
-    extended: false,
+  logger({
+    level: process.env.LOG_LEVEL || "warn",
+    prettyPrint: process.env.NODE_ENV !== "production",
+    // Yarn 2 doesn't like pino importing `pino-pretty` on it's own, so we need to
+    // provide it.
+    prettifier: pinoPretty,
   })
 );
 
-const api = "/api/v1";
+// Body parsing.
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use(api + "/hotels", hotelRouter);
+// Setup Swagger.
+// Don't use `/` for swagger, it will catch everything.
+const swaggerDocument = YAML.load("./swagger.yaml");
+swaggerDocument.host = process.env.HOST_IP || "localhost:9101";
+swaggerDocument.schemes = [process.env.SCHEME || "http"];
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use("/", serve, setup(swaggerDocument));
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
+// Destination api.
+app.use("/api/v1/hotels", destinationRouter);
+
+// Catch 404s.
+app.use((_, res) => {
+  res.sendStatus(404);
 });
 
-// error handler
-app.use(function (err, req, res) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+// Catch any other error.
+// If we don't have 4 arguments express will callback with (req, res, next)
+// Notice the lack of `err`
+app.use((err, req, res, _) => {
+  req.log.error(err);
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  // Return only the status in production.
+  if (process.env.NODE_ENV === "production") {
+    return res.sendStatus(err.status || 500);
+  }
+
+  return res.status(err.status || 500).json({ error: err.message });
 });
 
 export default app;

@@ -1,29 +1,34 @@
 {
 	"folders": [
 		{
-			"name": "Common",
+      "name": "All",
 			"path": "."
-		},
-		{
-			"name": "Currency Exchange",
-			"path": "services/currency-exchange"
-		},
-		{
-			"name": "Destination Service",
-			"path": "services/destination"
-		},
-		{
-			"name": "Hotel Service",
-			"path": "services/hotel"
-		},
-		{
-			"name": "UI Backend",
-			"path": "services/ui/backend"
-		},
-		{
-			"name": "UI Frontend",
-			"path": "services/ui/frontend"
-		}
+    },
+    // TODO: Adding more than one workspace folder breaks extension paths.
+		// {
+		// 	"name": "Currency Exchange",
+		// 	"path": "services/currency-exchange"
+		// },
+		// {
+		// 	"name": "Destination Service",
+		// 	"path": "services/destination"
+		// },
+		// {
+		// 	"name": "Hotel Service",
+		// 	"path": "services/hotel"
+    // },
+    // {
+		// 	"name": "UI",
+		// 	"path": "services/ui"
+		// },
+		// {
+		// 	"name": "UI Backend",
+		// 	"path": "services/ui/backend"
+		// },
+		// {
+		// 	"name": "UI Frontend",
+		// 	"path": "services/ui/frontend"
+		// }
 	],
 	"settings": {
     "prettier.requireConfig": true,

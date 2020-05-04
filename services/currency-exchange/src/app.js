@@ -1,61 +1,55 @@
-/**
- * Main app.js file for the currency exchange microservice
- */
-
-import createError from "http-errors";
 import express from "express";
-import logger from "./lib/logger";
-import expressPino from "express-pino-logger";
-import { serve, setup } from "swagger-ui-express";
-import yaml from "yamljs";
-import currencyRouter from "./routes/currency";
-import NotFoundError from "./errors/NotFoundError";
+import logger from "pino-http";
+import pinoPretty from "pino-pretty";
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
 
-let swaggerDocument = yaml.load("swagger.yaml");
-swaggerDocument.host = process.env.HOST_IP || "localhost:9201";
-const scheme = process.env.SCHEME || "http";
-swaggerDocument.schemes = [scheme];
+import currencyRouter from "./routes/currency";
 
 const app = express();
-const api = "/api/v1";
 
-const expressLogger = expressPino({ logger });
-app.use(expressLogger);
-
-app.use(express.json());
+// Setup Pino.
 app.use(
-  express.urlencoded({
-    extended: false,
+  logger({
+    level: process.env.LOG_LEVEL || "warn",
+    prettyPrint: process.env.NODE_ENV !== "production",
+    // Yarn 2 doesn't like pino importing `pino-pretty` on it's own, so we need to
+    // provide it.
+    prettifier: pinoPretty,
   })
 );
 
-app.use(api + "/currency", currencyRouter);
+// Body parsing.
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use("/", serve, setup(swaggerDocument));
+// Setup Swagger.
+// Don't use `/` for swagger, it will catch everything.
+const swaggerDocument = YAML.load("./swagger.yaml");
+swaggerDocument.host = process.env.HOST_IP || "localhost:9201";
+swaggerDocument.schemes = [process.env.SCHEME || "http"];
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
+// Currency api.
+app.use("/api/v1/currency", currencyRouter);
+
+// Catch 404s.
+app.use((_, res) => {
+  res.sendStatus(404);
 });
 
-// error handler
-// it must have 4 parameters for Express to know that this is an error middleware
-// eslint-disable-next-line no-unused-vars
-app.use(function (err, req, res, next) {
-  logger.error(err);
-  if (err instanceof NotFoundError) {
-    return res.status(404).json({ error: err.message });
+// Catch any other error.
+// If we don't have 4 arguments express will callback with (req, res, next)
+// Notice the lack of `err`
+app.use((err, req, res, _) => {
+  req.log.error(err);
+
+  // Return only the status in production.
+  if (process.env.NODE_ENV === "production") {
+    return res.sendStatus(err.status || 500);
   }
 
-  // we only return the reason in dev
-  if (req.app.get("env") === "development") {
-    return res.status(err.status || 500).json({ error: err.message });
-  }
-  return res.sendStatus(err.status || 500);
-});
-
-process.on("unhandledRejection", (error) => {
-  console.error("unhandledRejection", error.message);
+  return res.status(err.status || 500).json({ error: err.message });
 });
 
 export default app;

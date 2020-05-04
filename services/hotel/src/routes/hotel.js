@@ -1,50 +1,36 @@
-/**
- * Router for hotel
- */
-
-import { getHotels, getInfo } from "../service/hotelService";
 import { Router } from "express";
+import { getHotels, getFilterList } from "../service/dataHandler";
 
 const router = Router();
-/* GET list of destination locations */
 
-router.get("/info/:topic", function (req, res) {
-  getInfo(req.params.topic).then(function (data) {
-    res.contentType("application/json");
-    if (!data) {
-      res.status(404).send('{"error": "not found"}');
-      return;
-    }
+const stringToArray = (s) => s && s.split(",");
 
-    res.send(data);
-  });
+router.get("/info/:tag", async (req, res, next) => {
+  const { tag } = req.params;
+  try {
+    const data = await getFilterList(tag);
+    res.json(data);
+  } catch (e) {
+    next(e);
+  }
 });
 
-router.get("/:city/:country", function (req, res) {
-  let filter;
-  let superchain = req.query.superchain;
-  let hotel = req.query.hotel;
-  let type = req.query.type;
-  let minCost = req.query.mincost;
-  let maxCost = req.query.maxcost;
+router.get("/:country/:city", async (req, res, next) => {
+  const { country, city } = req.params;
+  const { superchain, hotel, type, mincost, maxcost } = req.query;
 
-  if (superchain || hotel || type || minCost || maxCost) {
-    filter = {};
-    filter.superchain = superchain ? superchain.split(",") : [];
-    filter.hotel = hotel ? hotel.split(",") : [];
-    filter.type = type ? type.split(",") : [];
-    filter.minCost = parseInt(minCost) || 0;
-    filter.maxCost = parseInt(maxCost) || Number.MAX_SAFE_INTEGER;
+  try {
+    const data = await getHotels(country, city, {
+      superchain: stringToArray(superchain),
+      hotel: stringToArray(hotel),
+      type: stringToArray(type),
+      minCost: parseInt(mincost, 10) || undefined,
+      maxCost: parseInt(maxcost, 10) || undefined,
+    });
+    res.json(data);
+  } catch (e) {
+    next(e);
   }
-
-  getHotels(req.params.city, req.params.country, filter).then(function (data) {
-    res.contentType("application/json");
-    if (!data) {
-      res.status(404).send('{"error": "not found"}');
-      return;
-    }
-    res.send(data);
-  });
 });
 
 export default router;

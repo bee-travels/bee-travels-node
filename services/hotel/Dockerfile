@@ -7,4 +7,4 @@ COPY hotel-data.json hotel-info.json package.json swagger.yaml ./
 
 EXPOSE 9101
 
-CMD ["yarn", "start"]
+CMD ["yarn", "node", "-r", "esm", "./src/bin/www.js"]

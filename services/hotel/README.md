@@ -17,7 +17,7 @@ The source of the hotel service data can either be local or provided from a data
 
 ## APIs
 
-![](readme-images/apis.jpg)
+![](screenshots/apis.jpg)
 
 ## How to Run
 

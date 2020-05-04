@@ -1,83 +1,58 @@
-const express = require("express");
 const path = require("path");
-const app = express();
-const cors = require("cors");
+
+const express = require("express");
 const request = require("request");
 
-const DESTINATION_URL = process.env.DESTINATION_URL || "http://localhost:9001";
-const HOTEL_URL = process.env.HOTEL_URL || "http://localhost:9101";
-const CURRENCY_EXCHANGE_URL =
-  process.env.CURRENCY_EXCHANGE_URL || "http://localhost:9201";
+const app = express();
 
-app.use(express.static(path.join(__dirname, "client/build")));
-app.use(cors());
+const PORT = process.env.PORT || 9000;
 
-app.get("/images/:location", (req, res) => {
-  res.set("Content-Type", "image/jpg");
-  request.get(DESTINATION_URL + "/images/" + req.params.location).pipe(res);
+const proxies = [
+  {
+    service: process.env.CURRENCY_EXCHANGE_URL || "http://localhost:9201",
+    path: "/api/v1/currency*",
+  },
+  {
+    service: process.env.HOTEL_URL || "http://localhost:9101",
+    path: "/api/v1/hotels*",
+  },
+  {
+    service: process.env.DESTINATION_URL || "http://localhost:9001",
+    path: "/api/v1/destinations*",
+  },
+];
+
+const proxyRequest = (req, res, url) => {
+  req
+    .pipe(request({ url: url }))
+    .on("error", (e) => {
+      console.error(e);
+      res.sendStatus(500);
+    })
+    .pipe(res)
+    .on("error", (e) => {
+      console.error(e);
+      res.sendStatus(500);
+    });
+};
+
+proxies.forEach(({ service, path }) => {
+  app.all(path, (req, res) => {
+    const url = `${service}${req.originalUrl}`;
+    console.log(url);
+    proxyRequest(req, res, url);
+  });
 });
 
-app.get("/api/v1/destinations", (req, res) => {
-  request.get(DESTINATION_URL + "/api/v1/destinations").pipe(res);
-});
+if (process.env.NODE_ENV === "production") {
+  console.log("production build");
 
-app.get("/api/v1/destinations/:city/:country", (req, res) => {
-  const url =
-    DESTINATION_URL +
-    "/api/v1/destinations/" +
-    req.params.city +
-    "/" +
-    req.params.country;
-  request.get(url).pipe(res);
-});
+  app.use(express.static(path.join(__dirname, "client", "build")));
 
-app.get("/api/v1/hotels/:city/:country", (req, res) => {
-  const superchain = req.query.superchain || "";
-  const hotel = req.query.hotel || "";
-  const type = req.query.type || "";
-  const mincost = req.query.mincost || "";
-  const maxcost = req.query.maxcost || "";
-  const queryString = `?superchain=${superchain}&hotel=${hotel}&type=${type}&mincost=${mincost}&maxcost=${maxcost}`;
-  const url =
-    HOTEL_URL +
-    "/api/v1/hotels/" +
-    req.params.city +
-    "/" +
-    req.params.country +
-    queryString;
-  request.get(url).pipe(res);
-});
+  // give all the routes to react
+  app.get("*", (_, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+}
 
-app.get("/api/v1/hotels/info/:topic", (req, res) => {
-  const url = HOTEL_URL + "/api/v1/hotels/info/" + req.params.topic;
-  request.get(url).pipe(res);
-});
-
-app.get("/api/v1/currency", (req, res) => {
-  request.get(CURRENCY_EXCHANGE_URL + "/api/v1/currency").pipe(res);
-});
-
-app.get("/api/v1/currency/:amount/:from/:to", (req, res) => {
-  const url =
-    CURRENCY_EXCHANGE_URL +
-    "/api/v1/currency/" +
-    req.params.amount +
-    "/" +
-    req.params.from +
-    "/" +
-    req.params.to;
-  request.get(url).pipe(res);
-});
-
-app.post("/api/v1/currency/search", (req, res) => {
-  request.post(CURRENCY_EXCHANGE_URL + "/api/v1/currency/search").pipe(res);
-});
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/build/index.html"));
-});
-
-const port = process.env.PORT || 9000;
-app.listen(port);
-
-console.log("listening on port " + port);
+app.listen(PORT, () => console.log("listening on port " + PORT));

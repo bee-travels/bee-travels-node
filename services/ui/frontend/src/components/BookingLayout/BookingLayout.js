@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-import queryString from "query-string";
+import { useParams } from "react-router-dom";
 
 import DestinationFragment from "./DestinationFragment/DestinationFragment";
 import BookingFragment from "./BookingFragment/BookingFragment";
@@ -39,8 +38,8 @@ const SplitPaneLayout = ({ children, panelWidth }) => {
   );
 };
 
-const Content = ({ location }) => {
-  const { city, country } = queryString.parse(location.search);
+const Content = () => {
+  const { country, city } = useParams();
 
   const [destination, setDestination] = useState({
     city: "",
@@ -54,7 +53,7 @@ const Content = ({ location }) => {
   useEffect(() => {
     const loadDestination = async () => {
       const destinationResponse = await fetch(
-        `/api/v1/destinations/${city}/${country}`
+        `/api/v1/destinations/${country}/${city}`
       );
       const destination = await destinationResponse.json();
       setDestination(destination);
@@ -68,7 +67,7 @@ const Content = ({ location }) => {
   return (
     <SplitPaneLayout panelWidth="464px">
       <DestinationFragment destination={destination} />
-      <BookingFragment destination={destination} />
+      <BookingFragment country={country} city={city} />
     </SplitPaneLayout>
   );
 };

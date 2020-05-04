@@ -4,7 +4,7 @@ The currency exchange service is a microservice designed to convert currency val
 
 ## APIs
 
-![](readme-images/apis.jpg)
+![](screenshots/apis.jpg)
 
 ## Prerequisites
 We recommended using Node Version Manager (NVM) to run various versions of Node.
@@ -43,7 +43,7 @@ npm install
 #if developing, install dev Dependacies
 npm install --save-dev
 
-#build 
+#build
 npm run build
 
 #run unittests

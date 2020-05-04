@@ -1,48 +1,55 @@
-/**
- * Main app.js file for the destinations microservice
- */
-
-import createError from "http-errors";
 import express from "express";
-import { serve, setup } from "swagger-ui-express";
-import { join } from "path";
-import destinationRouter from "./routes/destination";
-import yaml from "yamljs";
+import logger from "pino-http";
+import pinoPretty from "pino-pretty";
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
 
-let swaggerDocument = yaml.load("swagger.yaml");
-swaggerDocument.host = process.env.HOST_IP || "localhost:9001";
-const scheme = process.env.SCHEME || "http";
-swaggerDocument.schemes = [scheme];
+import destinationRouter from "./routes/destination";
 
 const app = express();
-const api = "/api/v1";
 
-app.use(express.json());
+// Setup Pino.
 app.use(
-  express.urlencoded({
-    extended: false,
+  logger({
+    level: process.env.LOG_LEVEL || "warn",
+    prettyPrint: process.env.NODE_ENV !== "production",
+    // Yarn 2 doesn't like pino importing `pino-pretty` on it's own, so we need to
+    // provide it.
+    prettifier: pinoPretty,
   })
 );
 
-app.use(api + "/destinations", destinationRouter);
+// Body parsing.
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use("/images", express.static(join(__dirname, "../public/images")));
+// Setup Swagger.
+// Don't use `/` for swagger, it will catch everything.
+const swaggerDocument = YAML.load("./swagger.yaml");
+swaggerDocument.host = process.env.HOST_IP || "localhost:9001";
+swaggerDocument.schemes = [process.env.SCHEME || "http"];
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use("/", serve, setup(swaggerDocument));
+// Destination api.
+app.use("/api/v1/destinations", destinationRouter);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
+// Catch 404s.
+app.use((_, res) => {
+  res.sendStatus(404);
 });
 
-// error handler
-app.use(function (err, req, res) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+// Catch any other error.
+// If we don't have 4 arguments express will callback with (req, res, next)
+// Notice the lack of `err`
+app.use((err, req, res, _) => {
+  req.log.error(err);
 
-  // render the error page
-  res.status(err.status || 500);
+  // Return only the status in production.
+  if (process.env.NODE_ENV === "production") {
+    return res.sendStatus(err.status || 500);
+  }
+
+  return res.status(err.status || 500).json({ error: err.message });
 });
 
 export default app;
