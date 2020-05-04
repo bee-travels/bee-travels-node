@@ -24,11 +24,8 @@ jobs:
       script: yarn lint
 
     - stage: test
-      name: Destination
-      script: yarn workspace destination test
-
-    - name: Currency Exchange
-      script: yarn workspace currency-exchange test
+      name: Test
+      script: yarn test
 
     - stage: deploy
       name: Docker image build

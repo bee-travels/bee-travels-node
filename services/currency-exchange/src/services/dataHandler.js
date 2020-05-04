@@ -5,14 +5,11 @@ import CSVParsingError from "./../errors/CSVParsingError";
 import CountryNotFoundError from "./../errors/CountryNotFoundError";
 import CurrencyNotFoundError from "./../errors/CurrencyNotFoundError";
 
-const METADATA_PATH = path.join(
-  __dirname,
-  "../../data/countryCurrencyMetadata.csv"
-);
+const CSV_PATH = path.join(__dirname, "../../data/countryCurrencyMetadata.csv");
 
-async function parseCurrencyMetadata() {
+async function parseMetadata(csv) {
   try {
-    const content = await fs.readFile(METADATA_PATH);
+    const content = await fs.readFile(csv);
     const metadata = parse(content, {
       columns: ["country", "currency", "code"],
     });
@@ -23,7 +20,7 @@ async function parseCurrencyMetadata() {
 }
 
 export async function getCountry(country) {
-  const metadata = await parseCurrencyMetadata();
+  const metadata = await parseMetadata(CSV_PATH);
 
   const countryInfo = metadata.find((r) => {
     if (r.country === undefined) {
@@ -40,7 +37,7 @@ export async function getCountry(country) {
 }
 
 export async function getCurrency(code) {
-  const metadata = await parseCurrencyMetadata();
+  const metadata = await parseMetadata(CSV_PATH);
 
   // Find all countries that use requested currency.
   const allCurrencyInfo = metadata.filter((r) => {

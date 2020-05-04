@@ -1,51 +1,43 @@
-/**
- * Service for retreiving destination location data from csv file
- */
+import path from "path";
+import { promises as fs } from "fs";
+import parse from "csv-parse/lib/sync";
+import CSVParsingError from "./../errors/CSVParsingError";
 
-import { parse } from "fast-csv";
-import { createReadStream } from "fs";
+const CSV_PATH = path.join(__dirname, "../../data/cities.csv");
 
-function getDestinationData(city, country) {
-  const fileStream = createReadStream(process.env.INIT_CWD + "/cities.csv");
-  const parser = parse({ headers: true });
+const pillify = (s) => s.toLowerCase().replace(" ", "-");
 
-  return new Promise(function (resolve) {
-    if (city) {
-      let cityData;
-      fileStream
-        .pipe(parser)
-        .on("error", (error) => console.error(error))
-        .on("readable", () => {
-          for (let row = parser.read(); row; row = parser.read()) {
-            const tempCity = JSON.parse(JSON.stringify(row)).city;
-            const tempCountry = JSON.parse(JSON.stringify(row)).country;
-
-            if (city === tempCity && country === tempCountry) {
-              cityData = JSON.parse(JSON.stringify(row));
-            }
-          }
-        })
-        .on("end", () => {
-          resolve(cityData);
-        });
-    } else {
-      let cities = [];
-
-      fileStream
-        .pipe(parser)
-        .on("error", (error) => console.error(error))
-        .on("readable", () => {
-          for (let row = parser.read(); row; row = parser.read()) {
-            const city = JSON.parse(JSON.stringify(row)).city;
-            const country = JSON.parse(JSON.stringify(row)).country;
-            cities.push({ city, country });
-          }
-        })
-        .on("end", () => {
-          resolve({ cities: cities });
-        });
-    }
-  });
+async function parseMetadata(csv) {
+  try {
+    const content = await fs.readFile(csv);
+    const metadata = parse(content, {
+      columns: ["city", "lat", "lng", "country", "population", "description"],
+    });
+    return metadata;
+  } catch (e) {
+    throw new CSVParsingError(e.message);
+  }
 }
 
-export { getDestinationData };
+export async function getCities() {
+  const metadata = await parseMetadata(CSV_PATH);
+  return metadata;
+}
+
+export async function getCitiesForCountry(country) {
+  const metadata = await parseMetadata(CSV_PATH);
+  const citiesData = metadata.filter(
+    (r) => pillify(r.country) === country.toLowerCase()
+  );
+  return citiesData;
+}
+
+export async function getCity(country, city) {
+  const metadata = await parseMetadata(CSV_PATH);
+  const cityData = metadata.find(
+    (r) =>
+      pillify(r.city) === city.toLowerCase() &&
+      pillify(r.country) === country.toLowerCase()
+  );
+  return cityData;
+}

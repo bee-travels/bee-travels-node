@@ -5608,6 +5608,7 @@ __metadata:
   dependencies:
     axios: ^0.19.2
     chai: ^4.2.0
+    chai-http: ^4.3.0
     csv-parse: ^4.9.0
     esm: ^3.2.25
     express: ^4.17.1
@@ -7843,21 +7844,13 @@ fsevents@^1.2.7:
   version: 0.0.0-use.local
   resolution: "hotel@workspace:services/hotel"
   dependencies:
-    "@typescript-eslint/eslint-plugin": 2.x
-    "@typescript-eslint/parser": 2.x
-    "@yarnpkg/pnpify": ^2.0.0-rc.21
-    babel-eslint: 10.x
-    eslint: 6.x
-    eslint-config-react-app: ^5.2.1
-    eslint-plugin-flowtype: 4.x
-    eslint-plugin-import: 2.x
-    eslint-plugin-jsx-a11y: 6.x
-    eslint-plugin-react: 7.x
-    eslint-plugin-react-hooks: 2.x
+    chai: ^4.2.0
     esm: ^3.2.25
     express: ^4.17.1
-    http-errors: ~1.6.2
-    prettier: ^2.0.5
+    mocha: ^7.1.2
+    nyc: ^15.0.1
+    pino-http: ^5.1.0
+    pino-pretty: ^4.0.0
     swagger-ui-express: ^4.1.1
     yamljs: ^0.3.0
   languageName: unknown

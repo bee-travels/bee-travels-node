@@ -3,7 +3,7 @@ import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 
 // Breaks code coverage if using import x from "x"
-const { getCurrency, getCountry } = require("./infoHandler");
+const { getCurrency, getCountry } = require("./dataHandler");
 const CurrencyNotFoundError = require("./../errors/CurrencyNotFoundError");
 const CountryNotFoundError = require("./../errors/CountryNotFoundError");
 

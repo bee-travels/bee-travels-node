@@ -31,8 +31,8 @@ router.get("/convert/:from/:to", async (req, res, next) => {
 router.get("/:code", async (req, res, next) => {
   const { code } = req.params;
   try {
-    const result = await getCurrency(code);
-    return res.json(result);
+    const data = await getCurrency(code);
+    return res.json(data);
   } catch (e) {
     if (e instanceof CurrencyNotFoundError) {
       return res.status(400).json({ error: e.message });
@@ -47,8 +47,8 @@ router.get("/", async (req, res, next) => {
     next();
   }
   try {
-    const result = await getCountry(country);
-    return res.json(result);
+    const data = await getCountry(country);
+    return res.json(data);
   } catch (e) {
     if (e instanceof CountryNotFoundError) {
       return res.status(400).json({ error: e.message });
