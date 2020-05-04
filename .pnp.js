@@ -9136,6 +9136,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["hotel", "workspace:services/hotel"],
             ["chai", "npm:4.2.0"],
+            ["chai-http", "npm:4.3.0"],
             ["esm", "npm:3.2.25"],
             ["express", "npm:4.17.1"],
             ["mocha", "npm:7.1.2"],

@@ -7845,6 +7845,7 @@ fsevents@^1.2.7:
   resolution: "hotel@workspace:services/hotel"
   dependencies:
     chai: ^4.2.0
+    chai-http: ^4.3.0
     esm: ^3.2.25
     express: ^4.17.1
     mocha: ^7.1.2

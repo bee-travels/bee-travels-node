@@ -27,7 +27,7 @@ export async function getCities() {
 export async function getCitiesForCountry(country) {
   const metadata = await parseMetadata(CSV_PATH);
   const citiesData = metadata.filter(
-    (r) => pillify(r.country) === country.toLowerCase()
+    (c) => pillify(c.country) === country.toLowerCase()
   );
   return citiesData;
 }
@@ -35,9 +35,9 @@ export async function getCitiesForCountry(country) {
 export async function getCity(country, city) {
   const metadata = await parseMetadata(CSV_PATH);
   const cityData = metadata.find(
-    (r) =>
-      pillify(r.city) === city.toLowerCase() &&
-      pillify(r.country) === country.toLowerCase()
+    (c) =>
+      pillify(c.city) === city.toLowerCase() &&
+      pillify(c.country) === country.toLowerCase()
   );
   return cityData;
 }
