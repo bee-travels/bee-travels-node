@@ -11,7 +11,7 @@ const DEFAULT_ZOOM = 7;
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg";
 
-const imageBase = "api/v1/destinations/images";
+const imageBase = "/api/v1/destinations/images";
 const normalizeDestinationName = (country, city) => {
   return `${city
     .toLowerCase()

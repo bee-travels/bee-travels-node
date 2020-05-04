@@ -6,7 +6,9 @@ import globalHistory from "globalHistory";
 
 const getSuggestionValue = ({ city, country }) => `${city}, ${country}`;
 
-const renderSuggestion = suggestion => (
+const pillify = (s) => s.toLowerCase().replace(" ", "-");
+
+const renderSuggestion = (suggestion) => (
   <span>{getSuggestionValue(suggestion)}</span>
 );
 
@@ -19,7 +21,7 @@ const filterSuggestions = (destinations, value) => {
   }
 
   return destinations.filter(
-    destination =>
+    (destination) =>
       destination.city.toLowerCase().slice(0, inputLength) === inputValue ||
       destination.country.toLowerCase().slice(0, inputLength) === inputValue
   );
@@ -44,14 +46,15 @@ const UncontrolledSearch = ({ theme }) => {
   }, []);
 
   const handleSuggestionSelected = useCallback((_, { suggestion }) => {
-    globalHistory.push(`/destination?${queryString.stringify(suggestion)}`);
+    const {country, city} = suggestion
+    globalHistory.push(`/destinations/${pillify(country)}/${pillify(city)}`);
   }, []);
 
   useEffect(() => {
     const loadDestinations = async () => {
       const res = await fetch("/api/v1/destinations");
-      const { cities } = await res.json();
-      setDestinations(cities);
+      const data = await res.json();
+      setDestinations(data);
     };
     loadDestinations();
   }, []);
@@ -61,7 +64,7 @@ const UncontrolledSearch = ({ theme }) => {
       style={{
         margin: " 23px 42px",
         width: "584px",
-        position: "relative"
+        position: "relative",
       }}
     >
       <svg
@@ -78,7 +81,7 @@ const UncontrolledSearch = ({ theme }) => {
           top: "24px",
           height: "20px",
           width: "20px",
-          transform: "translate(-50%, -50%)"
+          transform: "translate(-50%, -50%)",
         }}
         // class="bx--search-magnifier"
         // style="will-change: transform;"
@@ -95,7 +98,7 @@ const UncontrolledSearch = ({ theme }) => {
         inputProps={{
           placeholder: "Where will you bee traveling?",
           value: searchBarValue,
-          onChange: handleChange
+          onChange: handleChange,
         }}
         onSuggestionSelected={handleSuggestionSelected}
       />

@@ -10,7 +10,7 @@ const App = () => (
   <Router history={globalHistory}>
     <Switch>
       <Route exact path="/" component={HomeLayout} />
-      <Route path="/destination" component={BookingLayout} />
+      <Route path="/destinations/:country/:city" component={BookingLayout} />
       <Route component={ErrorLayout} />
     </Switch>
   </Router>
