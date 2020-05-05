@@ -1,0 +1,79 @@
+{
+	"folders": [
+		{
+      "name": "All",
+			"path": "."
+    },
+    // TODO: Adding more than one workspace folder breaks extension paths.
+		// {
+		// 	"name": "Currency Exchange",
+		// 	"path": "services/currency-exchange"
+		// },
+		// {
+		// 	"name": "Destination Service",
+		// 	"path": "services/destination"
+		// },
+		// {
+		// 	"name": "Hotel Service",
+		// 	"path": "services/hotel"
+    // },
+    // {
+		// 	"name": "UI",
+		// 	"path": "services/ui"
+		// },
+		// {
+		// 	"name": "UI Backend",
+		// 	"path": "services/ui/backend"
+		// },
+		// {
+		// 	"name": "UI Frontend",
+		// 	"path": "services/ui/frontend"
+		// }
+	],
+	"settings": {
+    "prettier.requireConfig": true,
+    "prettier.packageManager": "yarn",
+    "eslint.nodePath": ".vscode/pnpify",
+    "prettier.prettierPath": ".vscode/pnpify/prettier/index.js",
+    "[json]": {
+			"editor.formatOnSave": false,
+			"editor.defaultFormatter": "esbenp.prettier-vscode",
+    },
+    "[jsonc]": {
+      "editor.formatOnSave": false,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+		"[html]": {
+			"editor.formatOnSave": true,
+			"editor.defaultFormatter": "esbenp.prettier-vscode",
+		},
+		"[javascript]": {
+			"editor.formatOnSave": true,
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[typescript]": {
+			"editor.formatOnSave": true,
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[typescriptreact]": {
+			"editor.formatOnSave": true,
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[css]": {
+			"editor.formatOnSave": true,
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"editor.rulers": [80],
+		"editor.detectIndentation": false,
+		"editor.tabSize": 2,
+    "editor.insertSpaces": true,
+		"files.insertFinalNewline": true,
+		"files.trimTrailingWhitespace": true,
+	},
+	"extensions": {
+    "recommendations": [
+			"esbenp.prettier-vscode",
+			"dbaeumer.vscode-eslint"
+    ]
+  }
+}

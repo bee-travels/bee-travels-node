@@ -1,0 +1,66 @@
+.container {
+  flex: 1;
+}
+
+.input {
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  border-bottom: 1px solid rgb(141, 141, 141);
+  border-top: 0px none rgb(22, 22, 22);
+  border-left: 0px none rgb(22, 22, 22);
+  border-right: 0px none rgb(22, 22, 22);
+  background-color: rgb(244, 244, 244);
+  color: rgb(22, 22, 22);
+  font-size: 16px;
+  font-weight: 400;
+  /* height: 48px; */
+  height: 4rem;
+  line-height: 22px;
+  margin: 0;
+  outline: 2px solid rgba(0, 0, 0, 0);
+  outline-offset: -2px;
+  padding: 0 64px 0 64px;
+  width: 100%;
+  transition-duration: 0.11s, 0.11s;
+  transition-property: outline;
+  transition-timing-function: cubic-bezier(0.2, 0, 0.38, 0.9),
+    cubic-bezier(0.2, 0, 0.38, 0.9);
+}
+
+.input:focus {
+  outline: 2px solid #0f62fe;
+  outline-offset: -2px;
+}
+
+.suggestionsContainer {
+  background-color: rgb(244, 244, 244);
+  border: 0px none rgb(22, 22, 22);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 3px 0px;
+  color: rgb(22, 22, 22);
+  cursor: pointer;
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  width: 100%;
+  /* width: 313px; */
+}
+
+.suggestionsList {
+  margin: 0;
+  padding: 0;
+}
+
+.suggestion {
+  list-style: none;
+  height: 40px;
+  padding: 11px 16px;
+  border-top: 1px solid rgb(224, 224, 224);
+}
+
+.suggestionHighlighted {
+  background-color: rgb(229, 229, 229);
+}
