@@ -10,6 +10,8 @@ import Chip from "@material-ui/core/Chip";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Box from "@material-ui/core/Box";
 
+import styles from "./MultiSelect.module.css";
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(0),
@@ -308,18 +310,20 @@ const MultiSelect = ({ label, list, selected, onSelected }) => {
         inputProps={inputProps}
       >
         {list.map((name) => (
-          <div key={name} value={name}>
-            {/* <CustomMenuItem key={name} value={name}> */}
-            {/* <CustomBox component="div"> */}
-            <CustomCheckbox
-              checkedIcon={<CheckedIcon />}
-              icon={<UncheckedIcon />}
-              checked={selected.indexOf(name) > -1}
-            />
-            {/* <ListItemText primary={name} /> */}
-            <div>{name}</div>
-            {/* </CustomBox> */}
-            {/* </CustomMenuItem> */}
+          <div key={name} value={name} className={styles.itemWrap}>
+            <div key={name} value={name} className={styles.item}>
+              {/* <CustomMenuItem key={name} value={name}> */}
+              {/* <CustomBox component="div"> */}
+              <CustomCheckbox
+                checkedIcon={<CheckedIcon />}
+                icon={<UncheckedIcon />}
+                checked={selected.indexOf(name) > -1}
+              />
+              {/* <ListItemText primary={name} /> */}
+              <div className={styles.label}>{name}</div>
+              {/* </CustomBox> */}
+              {/* </CustomMenuItem> */}
+            </div>
           </div>
         ))}
       </CustomSelect>

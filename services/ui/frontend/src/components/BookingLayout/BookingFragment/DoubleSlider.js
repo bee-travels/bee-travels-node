@@ -31,21 +31,23 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-export default function RangeSlider() {
+export default function RangeSlider({
+  value,
+  onChange,
+  onChangeCommitted,
+  max,
+}) {
   const classes = useStyles();
-  const [value, setValue] = React.useState([20, 37]);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <div className={classes.root}>
       <PrettoSlider
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
+        onChangeCommitted={onChangeCommitted}
         aria-labelledby="range-slider"
         getAriaValueText={valuetext}
+        max={max}
       />
     </div>
   );

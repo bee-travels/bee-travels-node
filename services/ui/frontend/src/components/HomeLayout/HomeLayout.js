@@ -1,9 +1,8 @@
 import React from "react";
 import BeeLogo from "components/common/BeeLogo";
-import UncontrolledSearch from "components/common/UncontrolledSearch";
+import HomeSearch from "./HomeSearch";
 
 import styles from "./HomeLayout.module.css";
-import searchBarStyles from "./SearchBar.module.css";
 
 const Home = () => (
   <div className={styles.wrapper}>
@@ -15,7 +14,7 @@ const Home = () => (
         <div className={styles.logoUnderline} />
       </div>
     </div>
-    <UncontrolledSearch theme={searchBarStyles} />
+    <HomeSearch />
   </div>
 );
 
