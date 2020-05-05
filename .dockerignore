@@ -1,0 +1,8 @@
+# Ignore everything.
+**
+
+!.yarn
+!.pnp.js
+!.yarnrc.yml
+!package.json
+!yarn.lock

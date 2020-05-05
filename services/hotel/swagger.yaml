@@ -1,0 +1,97 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is a microservice that handles hotel data for Bee Travels
+  version: 1.0.0
+  title: Bee Travels Hotel Data Service
+  contact:
+    email: moficodes@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'https://github.com/bee-travels/bee-travels-node/blob/master/LICENSE'
+host: 'localhost:9101'
+basePath: /api/v1/hotels
+tags:
+  - name: Hotels
+    description: Operations associated with hotel data
+schemes:
+  - http
+paths:
+  /{city}/{country}:
+    get:
+      tags:
+        - Hotels
+      summary: Gets data associated with specific city
+      description: ''
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: city
+          type: string
+          description: City name for destination location
+          required: true
+        - in: path
+          name: country
+          type: string
+          description: Country name for destination location
+          required: true
+        - in: query
+          name: superchain
+          type: string
+          description: Filter by superchain name
+          required: false
+        - in: query
+          name: hotel
+          type: string
+          description: Filter by hotel name
+          required: false
+        - in: query
+          name: type
+          type: string
+          description: Filter by superchain name
+          required: false
+        - in: query
+          name: mincost
+          type: integer
+          description: Filter by mincost value
+          required: false
+        - in: query
+          name: maxcost
+          type: integer
+          description: Filter by maxcost value
+          required: false
+      responses:
+        '200':
+          description: Successfully got destination location data
+        '404':
+          description: Data not found
+        '500':
+          description: Internal Server Error
+  /info/{topic}:
+    get:
+      tags:
+        - Hotels
+      summary: Gets info data for Hotels
+      description: ''
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          schema:
+            type: string
+            enum:
+              - superchains
+              - hotels
+              - hotel-type
+          name:  topic
+          description: Topic to get list of superchains (topic=superchain) OR hotels (topic=name) OR hotel type (topic=type)
+          required: true
+      responses:
+        '200':
+          description: Successfully got the info
+        '404':
+          description: Info not found
+        '500':
+          description: Internal server error
+      
