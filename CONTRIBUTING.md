@@ -14,45 +14,11 @@ We recommend using Visual Studio Code for development.
 We also recommend installing the ESLint and Prettier VSCode extensions.
 
 ## Branch Organization
-> **Note:** Still being discussed.
-
-#### Option 1
 Submit all changes directly to the [master branch](https://github.com/bee-travels/bee-travels-node/tree/master/).
 We don't use separate branches for development or for upcoming releases.
 We do our best to keep `master` in good shape, with all tests passing.
 
 We should be able to release a new version from the tip of `master` at any time.
-
-#### Option 2
-We have 3 "master branches":
-1. [v1](https://github.com/bee-travels/bee-travels-node/tree/v1/) (basic)
-1. [v2](https://github.com/bee-travels/bee-travels-node/tree/v2/) (with-database)
-1. [v3](https://github.com/bee-travels/bee-travels-node/tree/v3/) (with-mqtt)
-
-Submit all changes directly to one of these branches.
-We don't use separate branches for development or for upcoming releases.
-We do our best to keep `v1`, `v2` and `v3` in good shape, with all tests passing.
-
-We should be able to release a new version from the tip of `v1`, `v2` and `v3` at any time.
-
-#### Option 3
-We have 6 branches:
-1. [v1](https://github.com/bee-travels/bee-travels-node/tree/v1/) (basic)
-1. [v2](https://github.com/bee-travels/bee-travels-node/tree/v2/) (with-database)
-1. [v3](https://github.com/bee-travels/bee-travels-node/tree/v3/) (with-mqtt)
-1. [v1-dev](https://github.com/bee-travels/bee-travels-node/tree/v1-dev/) (basic-dev)
-1. [v2-dev](https://github.com/bee-travels/bee-travels-node/tree/v2-dev/) (with-database-dev)
-1. [v3-dev](https://github.com/bee-travels/bee-travels-node/tree/v3-dev/) (with-mqtt-dev)
-
-Submit all changes to the offiliated `dev` branch.
-Merges into `master` are treated as a release and only PRs from `dev` will be merged.
-
-#### Option 4 (most likely)
-Mix of `Option 2` and `Option 3`
-1. [v1](https://github.com/bee-travels/bee-travels-node/tree/v1/) (basic)
-1. [v2](https://github.com/bee-travels/bee-travels-node/tree/v2/) (with-database)
-1. [v3](https://github.com/bee-travels/bee-travels-node/tree/v3/) (with-mqtt)
-1. [v3-dev](https://github.com/bee-travels/bee-travels-node/tree/v3-dev/) (with-mqtt-dev)
 
 ## Proposing a Change
 If you intend to make any non-trivial changes, we recommend filing an issue.
