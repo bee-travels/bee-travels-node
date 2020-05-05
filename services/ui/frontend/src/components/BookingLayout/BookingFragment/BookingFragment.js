@@ -233,21 +233,17 @@ const BookingFragment = ({
         maxcost: maxHotelPrice,
       });
 
-      console.log("loading hotels");
       const hotelResponse = await fetch(
         `/api/v1/hotels/${country}/${city}?${query}`
       );
-      console.log("done");
       const hotelList = await hotelResponse.json();
-      console.log(hotelList);
+
       setHotels(hotelList);
     };
 
     if (city && country) {
-      console.log("loading hotels");
       loadHotels();
     }
-    console.log("hotel", country, city);
   }, [
     city,
     country,

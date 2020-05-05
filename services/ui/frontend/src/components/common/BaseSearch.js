@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import globalHistory from "globalHistory";
 
-
 const getSuggestionValue = ({ city, country }) => `${city}, ${country}`;
 
 const pillify = (s) => s.toLowerCase().replace(" ", "-");
@@ -26,7 +25,7 @@ const filterSuggestions = (destinations, value) => {
   );
 };
 
-const BaseSearch = ({theme, onBlur}) => {
+const BaseSearch = ({ theme, onBlur }) => {
   const [destinations, setDestinations] = useState([]);
   const [searchBarValue, setSearchBarValue] = useState("");
   const [currentSuggestion, setCurrentSuggestion] = useState("");
@@ -46,7 +45,11 @@ const BaseSearch = ({theme, onBlur}) => {
 
   const handleSuggestionSelected = useCallback((_, { suggestion }) => {
     const { country, city } = suggestion;
-    globalHistory.push(`/destinations/${pillify(country)}/${pillify(city)}`);
+    globalHistory.push(
+      `/destinations/${pillify(country)}/${pillify(city)}${
+        globalHistory.location.search
+      }`
+    );
   }, []);
 
   useEffect(() => {
