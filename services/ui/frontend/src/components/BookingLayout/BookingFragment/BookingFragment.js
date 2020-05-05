@@ -18,8 +18,6 @@ import {
 
 const DEFAULT_MAX = 700;
 
-const findValidItemsInList = (a, b) => a.filter((aa) => b.includes(aa));
-
 const ListItem = ({ superchain, name, cost, images }) => {
   return (
     <div className={styles.listItem}>
@@ -44,6 +42,8 @@ const Filters = ({
   selectedHotels,
   selectedSuperchains,
   selectedExchangeRate,
+  minHotelPrice,
+  maxHotelPrice,
   typeList,
   hotelList,
   superchainList,
@@ -53,7 +53,6 @@ const Filters = ({
   onTypeSelectionChange,
   onMinMaxSelectionChange,
   onCurrencyChange,
-  defaultMax,
 }) => {
   const handleSuperchainChange = (values) => {
     onSuperchainSelectionChange(values);
@@ -71,23 +70,54 @@ const Filters = ({
     onCurrencyChange(e.target.value);
   };
 
-  const [slideValues, setSlideValues] = useState([0, defaultMax]);
+  // We need an intermediate state for while sliding
+  const [slideValues, setSlideValues] = useState([
+    minHotelPrice || 0,
+    maxHotelPrice || 700,
+  ]);
 
   // Called while sliding.
-  const handleUpdate = useCallback((event, newValue) => {
-    setSlideValues(newValue.map((x) => Math.round(x)));
+  const handleUpdate = useCallback((_, newValue) => {
+    const roundedValues = newValue.map((x) => Math.round(x));
+    setSlideValues(roundedValues);
   }, []);
 
   // Called while sliding is finished.
   const handleSet = useCallback(
-    (event, newValue) => {
-      setSlideValues(newValue.map((x) => Math.round(x)));
-      onMinMaxSelectionChange(newValue.map((x) => Math.round(x)));
+    (_, newValue) => {
+      const roundedValues = newValue.map((x) => Math.round(x));
+      setSlideValues(roundedValues);
+      onMinMaxSelectionChange(roundedValues);
     },
     [onMinMaxSelectionChange]
   );
 
-  const [min, max] = slideValues;
+  const scaledMax = Math.round(
+    priceConversion(DEFAULT_MAX, {
+      from: exchangeRates.USD,
+      to: exchangeRates[selectedExchangeRate],
+    })
+  );
+
+  const displayMinPrice = Math.round(
+    priceConversion(slideValues[0], {
+      from: exchangeRates.USD,
+      to: exchangeRates[selectedExchangeRate],
+    })
+  );
+
+  const displayMaxPrice = Math.round(
+    priceConversion(slideValues[1], {
+      from: exchangeRates.USD,
+      to: exchangeRates[selectedExchangeRate],
+    })
+  );
+
+  const minDisplayString = displayMinPrice.toLocaleString(undefined);
+  const maxDisplayString =
+    displayMaxPrice === scaledMax
+      ? `${scaledMax.toLocaleString(undefined)}+`
+      : displayMaxPrice.toLocaleString(undefined);
 
   return (
     <div className={styles.filters}>
@@ -124,18 +154,16 @@ const Filters = ({
       </div>
       <div className={styles.filterWide}>
         <div className={styles.wrapWrap}>
-          <div className={styles.numberLeft}>{min}</div>
+          <div className={styles.numberLeft}>{minDisplayString}</div>
           <div className={styles.sliderWrap}>
             <DoubleSlider
               value={slideValues}
               onChange={handleUpdate}
               onChangeCommitted={handleSet}
-              max={defaultMax}
+              max={700}
             />
           </div>
-          <div className={styles.numberRight}>
-            {max === defaultMax ? `${defaultMax}+` : max}
-          </div>
+          <div className={styles.numberRight}>{maxDisplayString}</div>
         </div>
       </div>
     </div>
@@ -144,19 +172,20 @@ const Filters = ({
 
 const priceConversion = (x, { from, to }) => (x / from) * to;
 
+const fixCurrency = (x) => (x !== "USD" ? x : undefined);
+const fixMin = (x) => (x === 0 ? undefined : x);
+const fixMax = (x) => (x === DEFAULT_MAX ? undefined : x);
+
 const BookingFragment = ({
   city,
   country,
   selectedSuperchains,
   selectedHotels,
   selectedTypes,
-  // minHotelPrice,
-  // maxHotelPrice,
+  minHotelPrice,
+  maxHotelPrice,
   selectedCurrency,
 }) => {
-  const [minHotelPrice, setMinHotelPrice] = useState(0);
-  const [maxHotelPrice, setMaxHotelPrice] = useState(undefined);
-
   const [exchangeRates, setExchangeRates] = useState({});
 
   const [superchainList, setSuperchainList] = useState([]);
@@ -165,21 +194,15 @@ const BookingFragment = ({
 
   const [hotels, setHotels] = useState([]);
 
-  const scaledMax =
-    Math.round(
-      priceConversion(DEFAULT_MAX, {
-        from: exchangeRates.USD,
-        to: exchangeRates[selectedCurrency],
-      }) / 100
-    ) * 100 || DEFAULT_MAX;
-
   const updateQuery = useCallback(
     (params) => {
       const query = queryString.stringify({
         [SUPERCHAINS]: selectedSuperchains,
         [HOTELS]: selectedHotels,
         [HOTEL_TYPE]: selectedTypes,
-        [CURRENCY]: selectedCurrency !== "USD" ? selectedCurrency : undefined,
+        [CURRENCY]: fixCurrency(selectedCurrency),
+        [MIN_HOTEL_PRICE]: fixMin(minHotelPrice),
+        [MAX_HOTEL_PRICE]: fixMax(maxHotelPrice),
         ...params,
       });
       globalHistory.push(`/destinations/${country}/${city}?${query}`);
@@ -187,6 +210,8 @@ const BookingFragment = ({
     [
       city,
       country,
+      maxHotelPrice,
+      minHotelPrice,
       selectedCurrency,
       selectedHotels,
       selectedSuperchains,
@@ -204,14 +229,8 @@ const BookingFragment = ({
             : undefined,
         hotel: selectedHotels.length > 0 ? selectedHotels.join(",") : undefined,
         type: selectedTypes.length > 0 ? selectedTypes.join(",") : undefined,
-        mincost: priceConversion(minHotelPrice, {
-          from: exchangeRates[selectedCurrency],
-          to: exchangeRates.USD,
-        }),
-        maxcost: priceConversion(maxHotelPrice, {
-          from: exchangeRates[selectedCurrency],
-          to: exchangeRates.USD,
-        }),
+        mincost: minHotelPrice,
+        maxcost: maxHotelPrice,
       });
 
       const hotelResponse = await fetch(
@@ -307,19 +326,17 @@ const BookingFragment = ({
 
   const handleMinMaxSelectionChange = useCallback(
     ([minCost, maxCost]) => {
-      setMinHotelPrice(minCost);
-      setMaxHotelPrice(maxCost === scaledMax ? undefined : maxCost);
-      // updateQuery({
-      //   [MIN_HOTEL_PRICE]: minCost,
-      //   [MAX_HOTEL_PRICE]: maxCost === scaledMax ? undefined : maxCost,
-      // });
+      updateQuery({
+        [MIN_HOTEL_PRICE]: fixMin(minCost),
+        [MAX_HOTEL_PRICE]: fixMax(maxCost),
+      });
     },
-    [scaledMax]
+    [updateQuery]
   );
 
   const handleCurrencyChange = useCallback(
     (currency) => {
-      updateQuery({ [CURRENCY]: currency });
+      updateQuery({ [CURRENCY]: fixCurrency(currency) });
     },
     [updateQuery]
   );
@@ -332,6 +349,8 @@ const BookingFragment = ({
         selectedSuperchains={selectedSuperchains}
         selectedExchangeRate={selectedCurrency}
         superchainList={superchainList}
+        minHotelPrice={minHotelPrice}
+        maxHotelPrice={maxHotelPrice}
         typeList={typeList}
         hotelList={hotelList}
         exchangeRates={exchangeRates}
@@ -340,16 +359,15 @@ const BookingFragment = ({
         onTypeSelectionChange={handleTypeSelectionChange}
         onMinMaxSelectionChange={handleMinMaxSelectionChange}
         onCurrencyChange={handleCurrencyChange}
-        defaultMax={scaledMax}
       />
       {hotels.map(({ superchain, name, cost, images }) => {
-        const priceString =
-          priceConversion(cost, {
-            from: exchangeRates.USD,
-            to: exchangeRates[selectedCurrency],
-          }).toFixed(2) +
-          " " +
-          selectedCurrency;
+        const priceString = priceConversion(cost, {
+          from: exchangeRates.USD,
+          to: exchangeRates[selectedCurrency],
+        }).toLocaleString(undefined, {
+          style: "currency",
+          currency: selectedCurrency,
+        });
         return (
           <ListItem
             superchain={superchain}

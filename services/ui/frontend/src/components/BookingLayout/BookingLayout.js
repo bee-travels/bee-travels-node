@@ -63,8 +63,8 @@ const Content = ({ location }) => {
   const superchains = arrayify(queryObject[SUPERCHAINS]);
   const hotels = arrayify(queryObject[HOTELS]);
   const hotelType = arrayify(queryObject[HOTEL_TYPE]);
-  // const minHotelPrice = parseInt(queryObject[MIN_HOTEL_PRICE], 10) || 0;
-  // const maxHotelPrice = parseInt(queryObject[MAX_HOTEL_PRICE], 10) || undefined;
+  const minHotelPrice = parseInt(queryObject[MIN_HOTEL_PRICE], 10) || 0;
+  const maxHotelPrice = parseInt(queryObject[MAX_HOTEL_PRICE], 10) || undefined;
   const currency = (queryObject[CURRENCY] || "usd").toUpperCase();
 
   const [cityName, setCityName] = useState("");
@@ -108,8 +108,8 @@ const Content = ({ location }) => {
         selectedSuperchains={superchains}
         selectedHotels={hotels}
         selectedTypes={hotelType}
-        // minHotelPrice={minHotelPrice}
-        // maxHotelPrice={maxHotelPrice}
+        minHotelPrice={minHotelPrice}
+        maxHotelPrice={maxHotelPrice}
         selectedCurrency={currency}
       />
     </SplitPaneLayout>
