@@ -39,6 +39,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:services/hotel"
       },
       {
+        "name": "hotel-v2",
+        "reference": "workspace:services/hotel-v2"
+      },
+      {
         "name": "ui-backend",
         "reference": "workspace:services/ui/backend"
       },
@@ -55,6 +59,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["currency-exchange", ["workspace:services/currency-exchange"]],
       ["destination", ["workspace:services/destination"]],
       ["hotel", ["workspace:services/hotel"]],
+      ["hotel-v2", ["workspace:services/hotel-v2"]],
       ["ui-backend", ["workspace:services/ui/backend"]],
       ["ui-frontend", ["workspace:services/ui/frontend"]]
     ],
@@ -9267,6 +9272,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
+            ["pino-http", "npm:5.1.0"],
+            ["pino-pretty", "npm:4.0.0"],
+            ["swagger-ui-express", "virtual:d28d6daf73693c5d74c339120c21d6cc607f245109100d111612a0f5fa6f911512f93177d04788c87fbaa4a22e653b2dbbe539c66e136a8bb3ee2190e6eedefd#npm:4.1.4"],
+            ["yamljs", "npm:0.3.0"]
+          ],
+          "linkType": "SOFT",
+        }]
+      ]],
+      ["hotel-v2", [
+        ["workspace:services/hotel-v2", {
+          "packageLocation": "./services/hotel-v2/",
+          "packageDependencies": [
+            ["hotel-v2", "workspace:services/hotel-v2"],
+            ["@cloudant/cloudant", "npm:4.2.4"],
+            ["chai", "npm:4.2.0"],
+            ["chai-http", "npm:4.3.0"],
+            ["esm", "npm:3.2.25"],
+            ["express", "npm:4.17.1"],
+            ["mocha", "npm:7.1.2"],
+            ["mongodb", "npm:3.5.7"],
+            ["nodemon", "npm:2.0.3"],
+            ["nyc", "npm:15.0.1"],
+            ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["swagger-ui-express", "virtual:d28d6daf73693c5d74c339120c21d6cc607f245109100d111612a0f5fa6f911512f93177d04788c87fbaa4a22e653b2dbbe539c66e136a8bb3ee2190e6eedefd#npm:4.1.4"],

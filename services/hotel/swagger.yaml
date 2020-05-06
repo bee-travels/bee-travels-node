@@ -17,7 +17,7 @@ tags:
 schemes:
   - http
 paths:
-  /{city}/{country}:
+  /{country}/{city}:
     get:
       tags:
         - Hotels
@@ -27,14 +27,14 @@ paths:
         - application/json
       parameters:
         - in: path
-          name: city
-          type: string
-          description: City name for destination location
-          required: true
-        - in: path
           name: country
           type: string
           description: Country name for destination location
+          required: true
+        - in: path
+          name: city
+          type: string
+          description: City name for destination location
           required: true
         - in: query
           name: superchain
@@ -63,16 +63,16 @@ paths:
           required: false
       responses:
         '200':
-          description: Successfully got destination location data
+          description: Successfully got destination hotel data
         '404':
           description: Data not found
         '500':
           description: Internal Server Error
-  /info/{topic}:
+  /info/{tag}:
     get:
       tags:
         - Hotels
-      summary: Gets info data for Hotels
+      summary: Gets data to filter by for Hotels
       description: ''
       produces:
         - application/json
@@ -84,14 +84,13 @@ paths:
               - superchains
               - hotels
               - hotel-type
-          name:  topic
-          description: Topic to get list of superchains (topic=superchain) OR hotels (topic=name) OR hotel type (topic=type)
+          name:  tag
+          description: Tag to get list of superchains (tag=superchain) OR hotels (tag=name) OR hotel type (tag=type)
           required: true
       responses:
         '200':
-          description: Successfully got the info
+          description: Successfully got the filter data
         '404':
-          description: Info not found
+          description: Filter data not found
         '500':
           description: Internal server error
-      
