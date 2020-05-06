@@ -4,7 +4,7 @@ import pinoPretty from "pino-pretty";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 
-import carRouter from "./routes/car";
+import carRouter from "./routes/cars";
 
 const app = express();
 
@@ -31,7 +31,7 @@ swaggerDocument.schemes = [process.env.SCHEME || "http"];
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Destination api.
-app.use("/api/v1/car", carRouter);
+app.use("/api/v1/cars", carRouter);
 
 // Catch 404s.
 app.use((_, res) => {

@@ -10,7 +10,7 @@ info:
     name: Apache 2.0
     url: 'https://github.com/bee-travels/bee-travels-node/blob/master/LICENSE'
 host: 'localhost:9102'
-basePath: /api/v1/car
+basePath: /api/v1/cars
 tags:
   - name: Car Rentals
     description: Operations associated with car rental data
@@ -100,4 +100,3 @@ paths:
           description: Info not found
         '500':
           description: Internal server error
-      

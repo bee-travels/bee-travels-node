@@ -1,4 +1,4 @@
-var MongoClient = require("mongodb").MongoClient;
+const MongoClient = require("mongodb").MongoClient;
 
 async function getCarDataFromMongo(city, country) {
   const client = await MongoClient.connect(process.env.DATABASE, {
@@ -17,9 +17,9 @@ async function getCarDataFromMongo(city, country) {
     let collection = db.collection("cars");
     let query = { city: city, country: country };
     let res = await collection.find(query);
-    var cars = [];
-    var car;
-    var hasNextCar = await res.hasNext();
+    let cars = [];
+    let car;
+    let hasNextCar = await res.hasNext();
     while (hasNextCar) {
       car = await res.next();
       delete car["_id"];
@@ -55,9 +55,9 @@ async function getCarInfoFromMongo() {
     let rentalCompanies = await rentalCompanyCollection.distinct(
       "rental_company"
     );
-    var carsInfo = [];
-    var carInfo;
-    var hasNextCarInfo = await res.hasNext();
+    let carsInfo = [];
+    let carInfo;
+    let hasNextCarInfo = await res.hasNext();
     while (hasNextCarInfo) {
       carInfo = await res.next();
       delete carInfo["_id"];
@@ -65,7 +65,7 @@ async function getCarInfoFromMongo() {
       hasNextCarInfo = await res.hasNext();
     }
     for (
-      var rentalCompany = 0;
+      let rentalCompany = 0;
       rentalCompany < rentalCompanies.length;
       rentalCompany++
     ) {

@@ -8,8 +8,11 @@ import {
   getCarInfoFromCloudant,
 } from "./cloudantService";
 
+const CARS_PATH = process.env.INIT_CWD + "/data/cars.json";
+const CAR_INFO_PATH = process.env.INIT_CWD + "/data/car-info.json";
+
 async function getCarData(city, country) {
-  var cars;
+  let cars;
   if (process.env.DATABASE) {
     if (process.env.DATABASE.indexOf("mongodb") > -1) {
       cars = await getCarDataFromMongo(city, country);
@@ -20,10 +23,10 @@ async function getCarData(city, country) {
     }
     return cars;
   } else {
-    var locationCars = [];
-    cars = require(process.env.INIT_CWD + "/cars.json");
-    for (var car = 0; car < cars.length; car++) {
-      if (cars[car].country == country && cars[car].city == city) {
+    let locationCars = [];
+    cars = require(CARS_PATH);
+    for (let car = 0; car < cars.length; car++) {
+      if (cars[car].country === country && cars[car].city === city) {
         locationCars.push(cars[car]);
       }
     }
@@ -42,18 +45,18 @@ async function getCars(city, country, f) {
     .toLowerCase()
     .replace("%20", " ")
     .replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
-  var data = await getCarData(city, country);
+  let data = await getCarData(city, country);
   if (!f && data) {
     return data;
   } else if (data) {
     data = data.filter((car) => {
-      var matchCompany =
+      let matchCompany =
         f.company.length === 0 || f.company.includes(car.rental_company);
-      var matchCar = f.car.length === 0 || f.car.includes(car.name);
-      var matchType = f.type.length === 0 || f.type.includes(car.body_type);
-      var matchStyle = f.style.length === 0 || f.style.includes(car.style);
-      var costHigherThan = car["cost"] > f.minCost;
-      var costLowerThan = car["cost"] < f.maxCost;
+      let matchCar = f.car.length === 0 || f.car.includes(car.name);
+      let matchType = f.type.length === 0 || f.type.includes(car.body_type);
+      let matchStyle = f.style.length === 0 || f.style.includes(car.style);
+      let costHigherThan = car["cost"] > f.minCost;
+      let costLowerThan = car["cost"] < f.maxCost;
       return (
         matchCompany &&
         matchCar &&
@@ -69,8 +72,8 @@ async function getCars(city, country, f) {
 }
 
 async function getInfo(topic) {
-  var carInfo;
-  var topicArray = [];
+  let carInfo;
+  let topicArray = [];
   if (process.env.DATABASE) {
     if (process.env.DATABASE.indexOf("mongodb") > -1) {
       carInfo = await getCarInfoFromMongo();
@@ -80,9 +83,13 @@ async function getInfo(topic) {
       carInfo = await getCarInfoFromCloudant();
     }
   } else {
-    carInfo = require(process.env.INIT_CWD + "/car-info.json");
+    if (topic === "rental_company") {
+      carInfo = require(CARS_PATH);
+    } else {
+      carInfo = require(CAR_INFO_PATH);
+    }
   }
-  for (var car = 0; car < carInfo.length; car++) {
+  for (let car = 0; car < carInfo.length; car++) {
     if (carInfo[car][topic] && !topicArray.includes(carInfo[car][topic])) {
       topicArray.push(carInfo[car][topic]);
     }
