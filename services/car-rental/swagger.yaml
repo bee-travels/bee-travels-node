@@ -1,0 +1,103 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is a microservice that handles car rental data for Bee Travels
+  version: 2.0.0
+  title: Bee Travels Car Rental Data Service
+  contact:
+    email: moficodes@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'https://github.com/bee-travels/bee-travels-node/blob/master/LICENSE'
+host: 'localhost:9102'
+basePath: /api/v1/car
+tags:
+  - name: Car Rentals
+    description: Operations associated with car rental data
+schemes:
+  - http
+paths:
+  /{city}/{country}:
+    get:
+      tags:
+        - Car Rentals
+      summary: Gets data associated with specific city
+      description: ''
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: city
+          type: string
+          description: City name for destination location
+          required: true
+        - in: path
+          name: country
+          type: string
+          description: Country name for destination location
+          required: true
+        - in: query
+          name: company
+          type: string
+          description: Filter by rental company name
+          required: false
+        - in: query
+          name: car
+          type: string
+          description: Filter by car name
+          required: false
+        - in: query
+          name: type
+          type: string
+          description: Filter by car body type
+          required: false
+        - in: query
+          name: style
+          type: string
+          description: Filter by car style
+          required: false
+        - in: query
+          name: mincost
+          type: integer
+          description: Filter by mincost value
+          required: false
+        - in: query
+          name: maxcost
+          type: integer
+          description: Filter by maxcost value
+          required: false
+      responses:
+        '200':
+          description: Successfully got destination location data
+        '404':
+          description: Data not found
+        '500':
+          description: Internal Server Error
+  /info/{topic}:
+    get:
+      tags:
+        - Car Rentals
+      summary: Gets info data for Car Rentals
+      description: ''
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          schema:
+            type: string
+            enum:
+              - company
+              - cars
+              - car-type
+              - car-style
+          name:  topic
+          description: Topic to get list of companies (topic=rental_company) OR cars (topic=name) OR car body type (topic=body_type) OR car style (topic=style)
+          required: true
+      responses:
+        '200':
+          description: Successfully got the info
+        '404':
+          description: Info not found
+        '500':
+          description: Internal server error
+      

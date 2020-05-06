@@ -43,7 +43,9 @@ const UncontrolledSearch = () => {
           <path d="M30,28.59,22.45,21A11,11,0,1,0,21,22.45L28.59,30ZM5,14a9,9,0,1,1,9,9A9,9,0,0,1,5,14Z"></path>
         </svg>
       </div>
-      {active && <BaseSearch theme={searchBarStyles} onBlur={handleDeactivate} />}
+      {active && (
+        <BaseSearch theme={searchBarStyles} onBlur={handleDeactivate} />
+      )}
     </div>
   );
 };
