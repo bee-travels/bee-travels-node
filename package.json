@@ -2,11 +2,7 @@
   "name": "bee-travels",
   "private": true,
   "workspaces": [
-    "services/currency-exchange",
-    "services/destination",
-    "services/hotel",
-    "services/ui/backend",
-    "services/ui/frontend"
+    "services/**/*"
   ],
   "scripts": {
     "lint": "eslint \"services/**/*.js\"",
