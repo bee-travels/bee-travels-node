@@ -35,6 +35,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:services/hotel"
       },
       {
+        "name": "payment",
+        "reference": "workspace:services/payment"
+      },
+      {
         "name": "ui-backend",
         "reference": "workspace:services/ui/backend"
       },
@@ -50,6 +54,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["currency-exchange", ["workspace:services/currency-exchange"]],
       ["destination", ["workspace:services/destination"]],
       ["hotel", ["workspace:services/hotel"]],
+      ["payment", ["workspace:services/payment"]],
       ["ui-backend", ["workspace:services/ui/backend"]],
       ["ui-frontend", ["workspace:services/ui/frontend"]]
     ],
@@ -13672,6 +13677,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pathval", "npm:1.1.0"]
           ],
           "linkType": "HARD",
+        }]
+      ]],
+      ["payment", [
+        ["workspace:services/payment", {
+          "packageLocation": "./services/payment/",
+          "packageDependencies": [
+            ["payment", "workspace:services/payment"],
+            ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:c51ebfc42de42235e3dc1c44fc7bdd2c2fcf335bcfc8402730f546d5135fd17c2f2d409783e93b5eee54d831df4955676c7c2f3700037c1e7d22704b380f804b#npm:7.1.1"],
+            ["chai-http", "npm:4.3.0"],
+            ["esm", "npm:3.2.25"],
+            ["express", "npm:4.17.1"],
+            ["mocha", "npm:7.1.2"],
+            ["nodemon", "npm:2.0.3"],
+            ["nyc", "npm:15.0.1"],
+            ["pino-http", "npm:5.1.0"],
+            ["pino-pretty", "npm:4.0.0"],
+            ["sinon", "npm:9.0.2"],
+            ["swagger-ui-express", "virtual:c51ebfc42de42235e3dc1c44fc7bdd2c2fcf335bcfc8402730f546d5135fd17c2f2d409783e93b5eee54d831df4955676c7c2f3700037c1e7d22704b380f804b#npm:4.1.4"],
+            ["yamljs", "npm:0.3.0"]
+          ],
+          "linkType": "SOFT",
         }]
       ]],
       ["pbf", [
