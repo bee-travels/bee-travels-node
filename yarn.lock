@@ -5321,6 +5321,7 @@ __metadata:
     esm: ^3.2.25
     express: ^4.17.1
     mocha: ^7.1.2
+    nodemon: ^2.0.3
     nyc: ^15.0.1
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -5613,6 +5614,7 @@ __metadata:
     esm: ^3.2.25
     express: ^4.17.1
     mocha: ^7.1.2
+    nodemon: ^2.0.3
     nyc: ^15.0.1
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -7849,6 +7851,7 @@ fsevents@^1.2.7:
     esm: ^3.2.25
     express: ^4.17.1
     mocha: ^7.1.2
+    nodemon: ^2.0.3
     nyc: ^15.0.1
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -16118,19 +16121,8 @@ resolve@1.1.7:
   version: 0.0.0-use.local
   resolution: "ui-backend@workspace:services/ui/backend"
   dependencies:
-    "@typescript-eslint/eslint-plugin": 2.x
-    "@typescript-eslint/parser": 2.x
-    babel-eslint: 10.x
-    eslint: 6.x
-    eslint-config-react-app: ^5.2.1
-    eslint-plugin-flowtype: 4.x
-    eslint-plugin-import: 2.x
-    eslint-plugin-jsx-a11y: 6.x
-    eslint-plugin-react: 7.x
-    eslint-plugin-react-hooks: 2.x
     express: ^4.17.1
     nodemon: ^2.0.3
-    prettier: ^2.0.5
     request: ^2.88.2
   languageName: unknown
   linkType: soft
