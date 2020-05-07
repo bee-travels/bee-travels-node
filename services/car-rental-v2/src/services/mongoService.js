@@ -1,6 +1,6 @@
 const MongoClient = require("mongodb").MongoClient;
 
-async function getCarDataFromMongo(city, country) {
+export async function getCarDataFromMongo(city, country) {
   const client = await MongoClient.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -34,7 +34,7 @@ async function getCarDataFromMongo(city, country) {
   }
 }
 
-async function getCarInfoFromMongo() {
+export async function getCarInfoFromMongo() {
   const client = await MongoClient.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -71,7 +71,6 @@ async function getCarInfoFromMongo() {
     ) {
       carsInfo.push({ rental_company: rentalCompanies[rentalCompany] });
     }
-    console.log(carsInfo);
     return carsInfo;
   } catch (err) {
     console.log(err);
@@ -79,5 +78,3 @@ async function getCarInfoFromMongo() {
     client.close();
   }
 }
-
-export { getCarDataFromMongo, getCarInfoFromMongo };

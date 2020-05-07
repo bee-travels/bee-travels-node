@@ -1,6 +1,6 @@
 FROM bee-travels/node-base:v1 as release
 
-WORKDIR /services/destination
+WORKDIR /services/destination-v2
 
 COPY src src
 COPY data data

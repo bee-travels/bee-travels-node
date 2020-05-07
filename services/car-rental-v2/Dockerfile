@@ -1,11 +1,11 @@
 FROM bee-travels/node-base:v1 as release
 
-WORKDIR /services/destination
+WORKDIR /services/car-rental-v2
 
 COPY src src
 COPY data data
-COPY package.json swagger.yaml ./
+COPY package.json .
 
-EXPOSE 9001
+EXPOSE 9102
 
 CMD ["yarn", "node", "-r", "esm", "./src/bin/www.js"]
