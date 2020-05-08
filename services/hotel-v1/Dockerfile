@@ -1,6 +1,6 @@
 FROM bee-travels/node-base:v1 as release
 
-WORKDIR /services/hotel-v2
+WORKDIR /services/hotel-v1
 
 COPY src src
 COPY package.json .

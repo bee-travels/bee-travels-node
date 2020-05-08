@@ -1,7 +1,7 @@
 {
-  "name": "hotel",
+  "name": "hotel-v1",
   "version": "0.0.0",
-  "description": "hotel service for bee-travels",
+  "description": "hotel v1 service for bee-travels",
   "private": true,
   "scripts": {
     "start": "nodemon -r esm ./src/bin/www.js",
@@ -12,15 +12,17 @@
     "express": "^4.17.1",
     "pino-http": "^5.1.0",
     "pino-pretty": "^4.0.0",
-    "swagger-ui-express": "^4.1.1",
-    "yamljs": "^0.3.0"
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "chai-http": "^4.3.0",
     "mocha": "^7.1.2",
     "nodemon": "^2.0.3",
-    "nyc": "^15.0.1"
+    "nyc": "^15.0.1",
+    "sinon": "^9.0.2"
   },
   "esm": {
     "cache": false

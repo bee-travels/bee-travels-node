@@ -1,13 +1,15 @@
 {
-  "name": "hotel-v2",
+  "name": "destination-v1",
   "version": "0.0.0",
-  "description": "hotel v2 service for bee-travels",
+  "description": "destination v1 service for bee-travels",
   "private": true,
   "scripts": {
     "start": "nodemon -r esm ./src/bin/www.js",
     "test": "nyc --require esm --cache false mocha \"src/**/?(*.)test.js\""
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "csv-parse": "^4.9.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "pino-http": "^5.1.0",

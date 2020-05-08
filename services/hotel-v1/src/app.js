@@ -1,10 +1,11 @@
 import express from "express";
 import logger from "pino-http";
 import pinoPretty from "pino-pretty";
+import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import YAML from "yamljs";
+import options from "./swaggerConfig";
 
-import destinationRouter from "./routes/destination";
+import hotelsRouter from "./routes/hotels";
 
 const app = express();
 
@@ -25,13 +26,13 @@ app.use(express.urlencoded({ extended: false }));
 
 // Setup Swagger.
 // Don't use `/` for swagger, it will catch everything.
-const swaggerDocument = YAML.load("./swagger.yaml");
-swaggerDocument.host = process.env.HOST_IP || "localhost:9001";
-swaggerDocument.schemes = [process.env.SCHEME || "http"];
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+options.swaggerDefinition.host = process.env.HOST_IP || "localhost:9101";
+options.swaggerDefinition.schemes = [process.env.SCHEME || "http"];
+const specs = swaggerJSDoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-// Destination api.
-app.use("/api/v1/destinations", destinationRouter);
+// Currency api.
+app.use("/api/v1/hotels", hotelsRouter);
 
 // Catch 404s.
 app.use((_, res) => {

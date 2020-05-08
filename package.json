@@ -10,13 +10,16 @@
     "kp": "process=$(lsof -i :\"$@\" -t); [ -z \"$process\" ] || echo killing port \"$@\"; echo $process | xargs kill",
     "kill-ports": "yarn kp 9000 && yarn kp 9001 && yarn kp 9101 && yarn kp 9201 && yarn kp 3000",
     "start": "yarn workspaces foreach -pi -j 10 \"$@\" run start",
-    "test": "yarn workspace currency-exchange run test && yarn workspace destination run test && yarn workspace hotel run test"
+    "test": "nyc --require esm --cache false mocha \"services/**/src/**/?(*.)test.js\""
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
     "@yarnpkg/pnpify": "^2.0.0-rc.21",
     "babel-eslint": "10.x",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-http": "^4.3.0",
     "eslint": "6.x",
     "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-flowtype": "4.x",
@@ -24,6 +27,10 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "2.x",
-    "prettier": "^2.0.5"
+    "esm": "^3.2.25",
+    "mocha": "^7.1.2",
+    "nyc": "^15.0.1",
+    "prettier": "^2.0.5",
+    "sinon": "^9.0.2"
   }
 }
