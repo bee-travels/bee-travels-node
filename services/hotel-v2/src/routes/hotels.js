@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getHotels, getFilterList } from "../service/dataHandler";
+import { getHotels, getFilterList } from "../services/dataHandler";
 
 const router = Router();
 

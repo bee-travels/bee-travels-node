@@ -8,8 +8,11 @@
     "test": "nyc --require esm --cache false mocha \"src/**/?(*.)test.js\""
   },
   "dependencies": {
+    "@cloudant/cloudant": "^4.2.4",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "mongodb": "^3.5.7",
+    "pg": "^8.0.3",
     "pino-http": "^5.1.0",
     "pino-pretty": "^4.0.0",
     "swagger-jsdoc": "^4.0.0",
