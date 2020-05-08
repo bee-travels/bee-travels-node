@@ -9,8 +9,8 @@
     "pretty": "prettier \"services/**/*.js\" --write",
     "kp": "process=$(lsof -i :\"$@\" -t); [ -z \"$process\" ] || echo killing port \"$@\"; echo $process | xargs kill",
     "kill-ports": "yarn kp 9000 && yarn kp 9001 && yarn kp 9101 && yarn kp 9201 && yarn kp 3000",
-    "start": "yarn workspaces foreach -pi -j 10 --include ui-backend --include ui-frontend --include destination-v1 --include hotel-v1 run start",
-    "test": "nyc --require esm --cache false mocha \"services/!(ui)/**/src/**/?(*.)test.js\""
+    "test": "nyc --require esm --cache false mocha \"services/!(ui)/**/src/**/?(*.)test.js\"",
+    "start": "BEE_TRAVELS_ARGS=\"$@\" make start"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "2.x",
