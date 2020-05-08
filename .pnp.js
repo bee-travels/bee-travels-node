@@ -6840,7 +6840,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chai", "npm:4.2.0"],
             ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
             ["chai-http", "npm:4.3.0"],
-            ["csv-parse", "npm:4.9.0"],
             ["esm", "npm:3.2.25"],
             ["express", "npm:4.17.1"],
             ["mocha", "npm:7.1.2"],

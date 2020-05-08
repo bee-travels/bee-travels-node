@@ -4,7 +4,7 @@ import { getDestinationDataFromMongo } from "./mongoService";
 import { getDestinationDataFromPostgres } from "./postgresService";
 import { getDestinationDataFromCloudant } from "./cloudantService";
 
-const DESTINATIONS_PATH = path.join(__dirname, "../../data/destination.json");
+const DESTINATIONS_PATH = path.join(__dirname, "../../data/destinations.json");
 
 const pillify = (s) => s.toLowerCase().replace(" ", "-");
 
