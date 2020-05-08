@@ -23,10 +23,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:."
       },
       {
-        "name": "car-rental",
-        "reference": "workspace:services/car-rental"
-      },
-      {
         "name": "car-rental-v2",
         "reference": "workspace:services/car-rental-v2"
       },
@@ -35,12 +31,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:services/currency-exchange"
       },
       {
-        "name": "destination",
-        "reference": "workspace:services/destination"
+        "name": "destination-v1",
+        "reference": "workspace:services/destination-v1"
       },
       {
-        "name": "hotel",
-        "reference": "workspace:services/hotel"
+        "name": "destination-v2",
+        "reference": "workspace:services/destination-v2"
+      },
+      {
+        "name": "hotel-v1",
+        "reference": "workspace:services/hotel-v1"
       },
       {
         "name": "hotel-v2",
@@ -59,11 +59,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "ignorePatternData": "(^(?:\\.vscode\\/pnpify(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$)",
     "fallbackExclusionList": [
       ["bee-travels", ["workspace:."]],
-      ["car-rental", ["workspace:services/car-rental"]],
       ["car-rental-v2", ["workspace:services/car-rental-v2"]],
       ["currency-exchange", ["workspace:services/currency-exchange"]],
-      ["destination", ["workspace:services/destination"]],
-      ["hotel", ["workspace:services/hotel"]],
+      ["destination-v1", ["workspace:services/destination-v1"]],
+      ["destination-v2", ["workspace:services/destination-v2"]],
+      ["hotel-v1", ["workspace:services/hotel-v1"]],
       ["hotel-v2", ["workspace:services/hotel-v2"]],
       ["ui-backend", ["workspace:services/ui/backend"]],
       ["ui-frontend", ["workspace:services/ui/frontend"]]
@@ -84,6 +84,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [
         "babel-eslint",
         "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:10.1.0"
+      ],
+      [
+        "chai",
+        "npm:4.2.0"
+      ],
+      [
+        "chai-as-promised",
+        "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"
+      ],
+      [
+        "chai-http",
+        "npm:4.3.0"
       ],
       [
         "eslint",
@@ -114,8 +126,24 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.5.1"
       ],
       [
+        "esm",
+        "npm:3.2.25"
+      ],
+      [
+        "mocha",
+        "npm:7.1.2"
+      ],
+      [
+        "nyc",
+        "npm:15.0.1"
+      ],
+      [
         "prettier",
         "npm:2.0.5"
+      ],
+      [
+        "sinon",
+        "npm:9.0.2"
       ]
     ],
     "locationBlacklistData": [
@@ -129,6 +157,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.29.0"],
             ["@yarnpkg/pnpify", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.0.0-rc.21"],
             ["babel-eslint", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:10.1.0"],
+            ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
+            ["chai-http", "npm:4.3.0"],
             ["eslint", "npm:6.8.0"],
             ["eslint-config-react-app", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:5.2.1"],
             ["eslint-plugin-flowtype", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:4.7.0"],
@@ -136,7 +167,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jsx-a11y", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:6.2.3"],
             ["eslint-plugin-react", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.19.0"],
             ["eslint-plugin-react-hooks", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.5.1"],
-            ["prettier", "npm:2.0.5"]
+            ["esm", "npm:3.2.25"],
+            ["mocha", "npm:7.1.2"],
+            ["nyc", "npm:15.0.1"],
+            ["prettier", "npm:2.0.5"],
+            ["sinon", "npm:9.0.2"]
           ],
           "linkType": "SOFT",
         }]
@@ -4451,6 +4486,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.29.0"],
             ["@yarnpkg/pnpify", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.0.0-rc.21"],
             ["babel-eslint", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:10.1.0"],
+            ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
+            ["chai-http", "npm:4.3.0"],
             ["eslint", "npm:6.8.0"],
             ["eslint-config-react-app", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:5.2.1"],
             ["eslint-plugin-flowtype", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:4.7.0"],
@@ -4458,7 +4496,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jsx-a11y", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:6.2.3"],
             ["eslint-plugin-react", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.19.0"],
             ["eslint-plugin-react-hooks", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.5.1"],
-            ["prettier", "npm:2.0.5"]
+            ["esm", "npm:3.2.25"],
+            ["mocha", "npm:7.1.2"],
+            ["nyc", "npm:15.0.1"],
+            ["prettier", "npm:2.0.5"],
+            ["sinon", "npm:9.0.2"]
           ],
           "linkType": "SOFT",
         }]
@@ -5088,29 +5130,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["car-rental", [
-        ["workspace:services/car-rental", {
-          "packageLocation": "./services/car-rental/",
-          "packageDependencies": [
-            ["car-rental", "workspace:services/car-rental"],
-            ["@cloudant/cloudant", "npm:4.2.4"],
-            ["chai", "npm:4.2.0"],
-            ["chai-http", "npm:4.3.0"],
-            ["esm", "npm:3.2.25"],
-            ["express", "npm:4.17.1"],
-            ["mocha", "npm:7.1.2"],
-            ["mongodb", "npm:3.5.7"],
-            ["nodemon", "npm:2.0.3"],
-            ["nyc", "npm:15.0.1"],
-            ["pg", "npm:8.0.3"],
-            ["pino-http", "npm:5.1.0"],
-            ["pino-pretty", "npm:4.0.0"],
-            ["swagger-ui-express", "virtual:d28d6daf73693c5d74c339120c21d6cc607f245109100d111612a0f5fa6f911512f93177d04788c87fbaa4a22e653b2dbbe539c66e136a8bb3ee2190e6eedefd#npm:4.1.4"],
-            ["yamljs", "npm:0.3.0"]
-          ],
-          "linkType": "SOFT",
-        }]
-      ]],
       ["car-rental-v2", [
         ["workspace:services/car-rental-v2", {
           "packageLocation": "./services/car-rental-v2/",
@@ -5118,7 +5137,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["car-rental-v2", "workspace:services/car-rental-v2"],
             ["@cloudant/cloudant", "npm:4.2.4"],
             ["chai", "npm:4.2.0"],
-            ["chai-as-promised", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:7.1.1"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
             ["chai-http", "npm:4.3.0"],
             ["esm", "npm:3.2.25"],
             ["express", "npm:4.17.1"],
@@ -5131,7 +5150,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
             ["swagger-jsdoc", "npm:4.0.0"],
-            ["swagger-ui-express", "virtual:d28d6daf73693c5d74c339120c21d6cc607f245109100d111612a0f5fa6f911512f93177d04788c87fbaa4a22e653b2dbbe539c66e136a8bb3ee2190e6eedefd#npm:4.1.4"]
+            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -5181,10 +5200,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["chai-as-promised", [
-        ["virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:7.1.1", {
-          "packageLocation": "./.yarn/$$virtual/chai-as-promised-virtual-10ed8d8c08/0/cache/chai-as-promised-npm-7.1.1-cdc17e4612-2.zip/node_modules/chai-as-promised/",
+        ["virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1", {
+          "packageLocation": "./.yarn/$$virtual/chai-as-promised-virtual-f8d7965142/0/cache/chai-as-promised-npm-7.1.1-cdc17e4612-2.zip/node_modules/chai-as-promised/",
           "packageDependencies": [
-            ["chai-as-promised", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:7.1.1"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
             ["chai", "npm:4.2.0"],
             ["check-error", "npm:1.0.2"]
           ],
@@ -6433,7 +6452,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["currency-exchange", "workspace:services/currency-exchange"],
             ["axios", "npm:0.19.2"],
             ["chai", "npm:4.2.0"],
-            ["chai-as-promised", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:7.1.1"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
             ["chai-http", "npm:4.3.0"],
             ["csv-parse", "npm:4.9.0"],
             ["esm", "npm:3.2.25"],
@@ -6444,8 +6463,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
-            ["swagger-ui-express", "virtual:d28d6daf73693c5d74c339120c21d6cc607f245109100d111612a0f5fa6f911512f93177d04788c87fbaa4a22e653b2dbbe539c66e136a8bb3ee2190e6eedefd#npm:4.1.4"],
-            ["yamljs", "npm:0.3.0"]
+            ["swagger-jsdoc", "npm:4.0.0"],
+            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -6812,15 +6831,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["destination", [
-        ["workspace:services/destination", {
-          "packageLocation": "./services/destination/",
+      ["destination-v1", [
+        ["workspace:services/destination-v1", {
+          "packageLocation": "./services/destination-v1/",
           "packageDependencies": [
-            ["destination", "workspace:services/destination"],
+            ["destination-v1", "workspace:services/destination-v1"],
             ["axios", "npm:0.19.2"],
             ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
             ["chai-http", "npm:4.3.0"],
-            ["csv-parse", "npm:4.9.0"],
             ["esm", "npm:3.2.25"],
             ["express", "npm:4.17.1"],
             ["mocha", "npm:7.1.2"],
@@ -6828,8 +6847,34 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nyc", "npm:15.0.1"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
-            ["swagger-ui-express", "virtual:d28d6daf73693c5d74c339120c21d6cc607f245109100d111612a0f5fa6f911512f93177d04788c87fbaa4a22e653b2dbbe539c66e136a8bb3ee2190e6eedefd#npm:4.1.4"],
-            ["yamljs", "npm:0.3.0"]
+            ["sinon", "npm:9.0.2"],
+            ["swagger-jsdoc", "npm:4.0.0"],
+            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
+          ],
+          "linkType": "SOFT",
+        }]
+      ]],
+      ["destination-v2", [
+        ["workspace:services/destination-v2", {
+          "packageLocation": "./services/destination-v2/",
+          "packageDependencies": [
+            ["destination-v2", "workspace:services/destination-v2"],
+            ["@cloudant/cloudant", "npm:4.2.4"],
+            ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
+            ["chai-http", "npm:4.3.0"],
+            ["esm", "npm:3.2.25"],
+            ["express", "npm:4.17.1"],
+            ["mocha", "npm:7.1.2"],
+            ["mongodb", "npm:3.5.7"],
+            ["nodemon", "npm:2.0.3"],
+            ["nyc", "npm:15.0.1"],
+            ["pg", "npm:8.0.3"],
+            ["pino-http", "npm:5.1.0"],
+            ["pino-pretty", "npm:4.0.0"],
+            ["sinon", "npm:9.0.2"],
+            ["swagger-jsdoc", "npm:4.0.0"],
+            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -9352,12 +9397,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["hotel", [
-        ["workspace:services/hotel", {
-          "packageLocation": "./services/hotel/",
+      ["hotel-v1", [
+        ["workspace:services/hotel-v1", {
+          "packageLocation": "./services/hotel-v1/",
           "packageDependencies": [
-            ["hotel", "workspace:services/hotel"],
+            ["hotel-v1", "workspace:services/hotel-v1"],
             ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
             ["chai-http", "npm:4.3.0"],
             ["esm", "npm:3.2.25"],
             ["express", "npm:4.17.1"],
@@ -9366,8 +9412,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nyc", "npm:15.0.1"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
-            ["swagger-ui-express", "virtual:d28d6daf73693c5d74c339120c21d6cc607f245109100d111612a0f5fa6f911512f93177d04788c87fbaa4a22e653b2dbbe539c66e136a8bb3ee2190e6eedefd#npm:4.1.4"],
-            ["yamljs", "npm:0.3.0"]
+            ["sinon", "npm:9.0.2"],
+            ["swagger-jsdoc", "npm:4.0.0"],
+            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -9379,6 +9426,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["hotel-v2", "workspace:services/hotel-v2"],
             ["@cloudant/cloudant", "npm:4.2.4"],
             ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
             ["chai-http", "npm:4.3.0"],
             ["esm", "npm:3.2.25"],
             ["express", "npm:4.17.1"],
@@ -9389,8 +9437,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
-            ["swagger-ui-express", "virtual:d28d6daf73693c5d74c339120c21d6cc607f245109100d111612a0f5fa6f911512f93177d04788c87fbaa4a22e653b2dbbe539c66e136a8bb3ee2190e6eedefd#npm:4.1.4"],
-            ["yamljs", "npm:0.3.0"]
+            ["sinon", "npm:9.0.2"],
+            ["swagger-jsdoc", "npm:4.0.0"],
+            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -18204,10 +18253,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["swagger-ui-express", [
-        ["virtual:d28d6daf73693c5d74c339120c21d6cc607f245109100d111612a0f5fa6f911512f93177d04788c87fbaa4a22e653b2dbbe539c66e136a8bb3ee2190e6eedefd#npm:4.1.4", {
-          "packageLocation": "./.yarn/$$virtual/swagger-ui-express-virtual-8ea5f2bbd4/0/cache/swagger-ui-express-npm-4.1.4-e09923ee17-2.zip/node_modules/swagger-ui-express/",
+        ["virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4", {
+          "packageLocation": "./.yarn/$$virtual/swagger-ui-express-virtual-67549c8277/0/cache/swagger-ui-express-npm-4.1.4-e09923ee17-2.zip/node_modules/swagger-ui-express/",
           "packageDependencies": [
-            ["swagger-ui-express", "virtual:d28d6daf73693c5d74c339120c21d6cc607f245109100d111612a0f5fa6f911512f93177d04788c87fbaa4a22e653b2dbbe539c66e136a8bb3ee2190e6eedefd#npm:4.1.4"],
+            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"],
             ["express", "npm:4.17.1"],
             ["swagger-ui-dist", "npm:3.25.0"]
           ],
@@ -19900,17 +19949,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["yaml", "npm:1.9.2"],
             ["@babel/runtime", "npm:7.9.2"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["yamljs", [
-        ["npm:0.3.0", {
-          "packageLocation": "./.yarn/cache/yamljs-npm-0.3.0-b0b262e524-2.zip/node_modules/yamljs/",
-          "packageDependencies": [
-            ["yamljs", "npm:0.3.0"],
-            ["argparse", "npm:1.0.10"],
-            ["glob", "npm:7.1.6"]
           ],
           "linkType": "HARD",
         }]

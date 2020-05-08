@@ -3707,6 +3707,9 @@ __metadata:
     "@typescript-eslint/parser": 2.x
     "@yarnpkg/pnpify": ^2.0.0-rc.21
     babel-eslint: 10.x
+    chai: ^4.2.0
+    chai-as-promised: ^7.1.1
+    chai-http: ^4.3.0
     eslint: 6.x
     eslint-config-react-app: ^5.2.1
     eslint-plugin-flowtype: 4.x
@@ -3714,7 +3717,11 @@ __metadata:
     eslint-plugin-jsx-a11y: 6.x
     eslint-plugin-react: 7.x
     eslint-plugin-react-hooks: 2.x
+    esm: ^3.2.25
+    mocha: ^7.1.2
+    nyc: ^15.0.1
     prettier: ^2.0.5
+    sinon: ^9.0.2
   languageName: unknown
   linkType: soft
 
@@ -4302,27 +4309,6 @@ __metadata:
     sinon: ^9.0.2
     swagger-jsdoc: ^4.0.0
     swagger-ui-express: ^4.1.1
-  languageName: unknown
-  linkType: soft
-
-"car-rental@workspace:services/car-rental":
-  version: 0.0.0-use.local
-  resolution: "car-rental@workspace:services/car-rental"
-  dependencies:
-    "@cloudant/cloudant": ^4.2.4
-    chai: ^4.2.0
-    chai-http: ^4.3.0
-    esm: ^3.2.25
-    express: ^4.17.1
-    mocha: ^7.1.2
-    mongodb: ^3.5.7
-    nodemon: ^2.0.3
-    nyc: ^15.0.1
-    pg: ^8.0.3
-    pino-http: ^5.1.0
-    pino-pretty: ^4.0.0
-    swagger-ui-express: ^4.1.1
-    yamljs: ^0.3.0
   languageName: unknown
   linkType: soft
 
@@ -5527,8 +5513,8 @@ __metadata:
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
+    swagger-jsdoc: ^4.0.0
     swagger-ui-express: ^4.1.1
-    yamljs: ^0.3.0
   languageName: unknown
   linkType: soft
 
@@ -5811,14 +5797,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"destination@workspace:services/destination":
+"destination-v1@workspace:services/destination-v1":
   version: 0.0.0-use.local
-  resolution: "destination@workspace:services/destination"
+  resolution: "destination-v1@workspace:services/destination-v1"
   dependencies:
     axios: ^0.19.2
     chai: ^4.2.0
+    chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
-    csv-parse: ^4.9.0
     esm: ^3.2.25
     express: ^4.17.1
     mocha: ^7.1.2
@@ -5826,8 +5812,32 @@ __metadata:
     nyc: ^15.0.1
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    sinon: ^9.0.2
+    swagger-jsdoc: ^4.0.0
     swagger-ui-express: ^4.1.1
-    yamljs: ^0.3.0
+  languageName: unknown
+  linkType: soft
+
+"destination-v2@workspace:services/destination-v2":
+  version: 0.0.0-use.local
+  resolution: "destination-v2@workspace:services/destination-v2"
+  dependencies:
+    "@cloudant/cloudant": ^4.2.4
+    chai: ^4.2.0
+    chai-as-promised: ^7.1.1
+    chai-http: ^4.3.0
+    esm: ^3.2.25
+    express: ^4.17.1
+    mocha: ^7.1.2
+    mongodb: ^3.5.7
+    nodemon: ^2.0.3
+    nyc: ^15.0.1
+    pg: ^8.0.3
+    pino-http: ^5.1.0
+    pino-pretty: ^4.0.0
+    sinon: ^9.0.2
+    swagger-jsdoc: ^4.0.0
+    swagger-ui-express: ^4.1.1
   languageName: unknown
   linkType: soft
 
@@ -7664,7 +7674,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"glob@npm:7.1.6, glob@npm:^7.0.3, glob@npm:^7.0.5, glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
+"glob@npm:7.1.6, glob@npm:^7.0.3, glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
   version: 7.1.6
   resolution: "glob@npm:7.1.6"
   dependencies:
@@ -8068,12 +8078,33 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"hotel-v1@workspace:services/hotel-v1":
+  version: 0.0.0-use.local
+  resolution: "hotel-v1@workspace:services/hotel-v1"
+  dependencies:
+    chai: ^4.2.0
+    chai-as-promised: ^7.1.1
+    chai-http: ^4.3.0
+    esm: ^3.2.25
+    express: ^4.17.1
+    mocha: ^7.1.2
+    nodemon: ^2.0.3
+    nyc: ^15.0.1
+    pino-http: ^5.1.0
+    pino-pretty: ^4.0.0
+    sinon: ^9.0.2
+    swagger-jsdoc: ^4.0.0
+    swagger-ui-express: ^4.1.1
+  languageName: unknown
+  linkType: soft
+
 "hotel-v2@workspace:services/hotel-v2":
   version: 0.0.0-use.local
   resolution: "hotel-v2@workspace:services/hotel-v2"
   dependencies:
     "@cloudant/cloudant": ^4.2.4
     chai: ^4.2.0
+    chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
     esm: ^3.2.25
     express: ^4.17.1
@@ -8084,26 +8115,9 @@ fsevents@^1.2.7:
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    sinon: ^9.0.2
+    swagger-jsdoc: ^4.0.0
     swagger-ui-express: ^4.1.1
-    yamljs: ^0.3.0
-  languageName: unknown
-  linkType: soft
-
-"hotel@workspace:services/hotel":
-  version: 0.0.0-use.local
-  resolution: "hotel@workspace:services/hotel"
-  dependencies:
-    chai: ^4.2.0
-    chai-http: ^4.3.0
-    esm: ^3.2.25
-    express: ^4.17.1
-    mocha: ^7.1.2
-    nodemon: ^2.0.3
-    nyc: ^15.0.1
-    pino-http: ^5.1.0
-    pino-pretty: ^4.0.0
-    swagger-ui-express: ^4.1.1
-    yamljs: ^0.3.0
   languageName: unknown
   linkType: soft
 
@@ -17654,19 +17668,6 @@ resolve@1.1.7:
   dependencies:
     "@babel/runtime": ^7.9.2
   checksum: 2/098baa974d33f13c3a93efba4e83c8992f533e78463010afc41a9c2ae574890fa670d91e8d18ffaf9af616c3a0683a4e93b69057bd143f53306570a117ebcb7f
-  languageName: node
-  linkType: hard
-
-"yamljs@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "yamljs@npm:0.3.0"
-  dependencies:
-    argparse: ^1.0.7
-    glob: ^7.0.5
-  bin:
-    json2yaml: ./bin/json2yaml
-    yaml2json: ./bin/yaml2json
-  checksum: 2/3ee0f59843b8626d81b8d4919f0f36d6a35d5d0eb1a11ef471593a30a7c579b8b7df9f013809d3d60e37d4084f0db313a1c663ad4bd6e5f343017ad350c6b234
   languageName: node
   linkType: hard
 

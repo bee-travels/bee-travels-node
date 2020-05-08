@@ -1,59 +1,59 @@
+import path from "path";
+import { promises as fs } from "fs";
 import { getDestinationDataFromMongo } from "./mongoService";
-import { getDestinationDataFromCloudant } from "./cloudantService";
 import { getDestinationDataFromPostgres } from "./postgresService";
+import { getDestinationDataFromCloudant } from "./cloudantService";
 
-const JSON_PATH = process.env.INIT_CWD + "/destination.json";
+const DESTINATIONS_PATH = path.join(__dirname, "../../data/destinations.json");
 
-async function getDestinationData(city, country) {
-  let destinations;
-  let cityIndex;
+const pillify = (s) => s.toLowerCase().replace(" ", "-");
 
-  if (process.env.DATABASE) {
-    if (process.env.DATABASE.indexOf("mongodb") > -1) {
-      destinations = await getDestinationDataFromMongo();
-    } else if (process.env.DATABASE.indexOf("postgres") > -1) {
-      destinations = await getDestinationDataFromPostgres();
-    } else {
-      destinations = await getDestinationDataFromCloudant();
-    }
-  } else {
-    destinations = require(JSON_PATH);
-  }
+async function parseMetadata(file) {
+  const content = await fs.readFile(file);
+  const metadata = JSON.parse(content);
+  return metadata;
+}
 
-  if (city) {
-    country = country
-      .trim()
-      .toLowerCase()
-      .replace("%20", " ")
-      .replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
-    city = city
-      .trim()
-      .toLowerCase()
-      .replace("%20", " ")
-      .replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
-
-    let cityData;
-    for (cityIndex = 0; cityIndex < destinations.length; cityIndex++) {
-      if (
-        city == destinations[cityIndex].city &&
-        country == destinations[cityIndex].country
-      ) {
-        cityData = destinations[cityIndex];
+async function loadData(db, allData) {
+  switch (db) {
+    case "mongodb":
+      return await getDestinationDataFromMongo();
+    case "postgres":
+      return await getDestinationDataFromPostgres();
+    case "cloudant":
+    case "couchdb":
+      return await getDestinationDataFromCloudant();
+    default:
+      const fullData = await parseMetadata(DESTINATIONS_PATH);
+      if (allData) {
+        return fullData;
       }
-    }
-    return cityData;
-  } else {
-    let cities = [];
-    let tempCity;
-    let tempCountry;
-
-    for (cityIndex = 0; cityIndex < destinations.length; cityIndex++) {
-      tempCity = destinations[cityIndex].city;
-      tempCountry = destinations[cityIndex].country;
-      cities.push({ city: tempCity, country: tempCountry });
-    }
-    return { cities: cities };
+      return fullData.map((item) => ({
+        country: item.country,
+        city: item.city,
+      }));
   }
 }
 
-export { getDestinationData };
+export async function getCities() {
+  const metadata = await loadData(process.env.DATABASE, false);
+  return metadata;
+}
+
+export async function getCitiesForCountry(country) {
+  const metadata = await loadData(process.env.DATABASE, false);
+  const citiesData = metadata.filter(
+    (c) => pillify(c.country) === country.toLowerCase()
+  );
+  return citiesData;
+}
+
+export async function getCity(country, city) {
+  const metadata = await loadData(process.env.DATABASE, true);
+  const cityData = metadata.find(
+    (c) =>
+      pillify(c.city) === city.toLowerCase() &&
+      pillify(c.country) === country.toLowerCase()
+  );
+  return cityData;
+}

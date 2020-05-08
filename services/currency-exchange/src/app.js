@@ -1,8 +1,9 @@
 import express from "express";
 import logger from "pino-http";
 import pinoPretty from "pino-pretty";
+import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import YAML from "yamljs";
+import options from "./swaggerConfig";
 
 import currencyRouter from "./routes/currency";
 
@@ -25,10 +26,10 @@ app.use(express.urlencoded({ extended: false }));
 
 // Setup Swagger.
 // Don't use `/` for swagger, it will catch everything.
-const swaggerDocument = YAML.load("./swagger.yaml");
-swaggerDocument.host = process.env.HOST_IP || "localhost:9201";
-swaggerDocument.schemes = [process.env.SCHEME || "http"];
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+options.swaggerDefinition.host = process.env.HOST_IP || "localhost:9001";
+options.swaggerDefinition.schemes = [process.env.SCHEME || "http"];
+const specs = swaggerJSDoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // Currency api.
 app.use("/api/v1/currency", currencyRouter);
