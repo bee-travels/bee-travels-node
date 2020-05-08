@@ -4,7 +4,7 @@ import pinoPretty from "pino-pretty";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 
-import destinationRouter from "./routes/hotel";
+import hotelRouter from "./routes/hotel";
 
 const app = express();
 
@@ -30,8 +30,8 @@ swaggerDocument.host = process.env.HOST_IP || "localhost:9101";
 swaggerDocument.schemes = [process.env.SCHEME || "http"];
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Destination api.
-app.use("/api/v1/hotels", destinationRouter);
+// Hotel api.
+app.use("/api/v1/hotels", hotelRouter);
 
 // Catch 404s.
 app.use((_, res) => {
