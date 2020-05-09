@@ -3710,6 +3710,7 @@ __metadata:
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
+    chai-things: ^0.2.0
     eslint: 6.x
     eslint-config-react-app: ^5.2.1
     eslint-plugin-flowtype: 4.x
@@ -4297,6 +4298,7 @@ __metadata:
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
+    chai-things: ^0.2.0
     esm: ^3.2.25
     express: ^4.17.1
     mocha: ^7.1.2
@@ -4361,6 +4363,25 @@ __metadata:
     qs: ^6.5.1
     superagent: ^3.7.0
   checksum: 2/e5918d80aa518278a078ca48ce9cb7f95e547cc0a5e8b191e904e6fc0adeb7c46871776f3155d734f79d650f86ed8bb73692bd548b001700aa1546a78a17c08e
+  languageName: node
+  linkType: hard
+
+"chai-json-schema@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "chai-json-schema@npm:1.5.1"
+  dependencies:
+    jsonpointer.js: 0.4.0
+    tv4: ^1.3.0
+  peerDependencies:
+    chai: ">= 1.6.1 < 5"
+  checksum: 2/14efab2a5b9e63e53a9f3f46bee7832f8f8a32797b275fdbca4235c5ded8b7a2a435945f269605fe254ef1f80870d9fce7d51d1046669e1d6dea664240d141a3
+  languageName: node
+  linkType: hard
+
+"chai-things@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "chai-things@npm:0.2.0"
+  checksum: 2/99a37451e635f15c24fb03565bd6885fcbb8425d5cd8409e894890fbbc6dd9d62e0af55792713d80bfbee7734c95d96ac67c8dec45cacba7666fe52b97ea9216
   languageName: node
   linkType: hard
 
@@ -5805,6 +5826,7 @@ __metadata:
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
+    chai-json-schema: ^1.5.1
     esm: ^3.2.25
     express: ^4.17.1
     mocha: ^7.1.2
@@ -5826,6 +5848,7 @@ __metadata:
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
+    chai-json-schema: ^1.5.1
     esm: ^3.2.25
     express: ^4.17.1
     mocha: ^7.1.2
@@ -10015,6 +10038,13 @@ fsevents@^1.2.7:
   version: 0.0.0
   resolution: "jsonify@npm:0.0.0"
   checksum: 2/53630f54108a55e062534503bf4a236165082ff75d2872a08ce8625b476dcf5ad8c990b012b9c740f93c61f20227161eb58dd41a16a0894699cc47d697d6d7c7
+  languageName: node
+  linkType: hard
+
+"jsonpointer.js@npm:0.4.0":
+  version: 0.4.0
+  resolution: "jsonpointer.js@npm:0.4.0"
+  checksum: 2/4ad0bfdcfd2731ce2b71b5d552e940c4d0128c8cf8134d5fbe1390aa35feda6cfc2644ded080d941f28079ee5abba97e5721bef40891fdffe91dbc647d92fa20
   languageName: node
   linkType: hard
 
@@ -16538,6 +16568,13 @@ resolve@1.1.7:
   version: 0.0.6
   resolution: "tunnel@npm:0.0.6"
   checksum: 2/78fbb1a55a44fc8de6a497923bf7bf6e7b14b396e0ddaf11fe624ab7f646a0d2ada03f6dcb4a80940faed9649e30d229114f218e8906badd12ded2323a6f666b
+  languageName: node
+  linkType: hard
+
+"tv4@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "tv4@npm:1.3.0"
+  checksum: 2/b42500b93482dea7bffb8ecbf47653a35d35edbd916d163e29d849c93a0510b7d92c7e210c035640d9449ff5859f0371841aadce2508e48a0ec14e4f80bfe375
   languageName: node
   linkType: hard
 

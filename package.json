@@ -20,6 +20,7 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "chai-http": "^4.3.0",
+    "chai-things": "^0.2.0",
     "eslint": "6.x",
     "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-flowtype": "4.x",
