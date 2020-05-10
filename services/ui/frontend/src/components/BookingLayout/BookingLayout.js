@@ -69,9 +69,10 @@ const Content = ({ location }) => {
 
   const [cityName, setCityName] = useState("");
   const [countryName, setCountryName] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   const [description, setDescription] = useState("");
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
     const loadDestination = async () => {
@@ -79,11 +80,12 @@ const Content = ({ location }) => {
         `/api/v1/destinations/${country}/${city}`
       );
       const destination = await destinationResponse.json();
-      setLatitude(destination.lat);
-      setLongitude(destination.lng);
+      setLatitude(destination.latitude);
+      setLongitude(destination.longitude);
       setDescription(destination.description);
       setCityName(destination.city);
       setCountryName(destination.country);
+      setImages(destination.images);
     };
 
     if (city && country) {
@@ -94,13 +96,12 @@ const Content = ({ location }) => {
   return (
     <SplitPaneLayout panelWidth="464px">
       <DestinationFragment
-        city={city}
-        country={country}
         cityName={cityName}
         countryName={countryName}
         latitude={latitude}
         longitude={longitude}
         description={description}
+        images={images}
       />
       <BookingFragment
         city={city}

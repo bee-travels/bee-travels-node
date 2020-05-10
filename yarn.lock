@@ -5822,7 +5822,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "destination-v1@workspace:services/destination-v1"
   dependencies:
-    axios: ^0.19.2
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
