@@ -9,6 +9,7 @@ import {
   getCarDataFromCloudant,
   getCarInfoFromCloudant,
 } from "./cloudantService";
+import TagNotFoundError from "./../errors/TagNotFoundError";
 
 const CARS_PATH = path.join(__dirname, "../../data/cars.json");
 
@@ -75,6 +76,12 @@ export async function getCars(country, city, filters) {
 
 export async function getFilterList(filterType) {
   const data = await loadData(process.env.DATABASE);
-  const listOfFilterOptions = data.map((item) => item[filterType]);
+  const listOfFilterOptions = data.map((item) => {
+    const valueForFilter = item[filterType];
+    if (valueForFilter !== undefined) {
+      return valueForFilter;
+    }
+    throw new TagNotFoundError(filterType);
+  });
   return [...new Set(listOfFilterOptions)];
 }

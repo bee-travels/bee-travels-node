@@ -13,7 +13,7 @@ describe("GET /api/v1/destinations", () => {
       .request(app)
       .get("/api/v1/destinations")
       .end((_, res) => {
-        expect(res.body.length).to.equal(183);
+        expect(res.body).to.have.lengthOf(182);
         done();
       });
   });

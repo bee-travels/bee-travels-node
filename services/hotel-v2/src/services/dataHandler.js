@@ -1,3 +1,5 @@
+import path from "path";
+import { promises as fs } from "fs";
 import { getHotelDataFromMongo, getHotelInfoFromMongo } from "./mongoService";
 import {
   getHotelDataFromPostgres,
@@ -8,48 +10,46 @@ import {
   getHotelInfoFromCloudant,
 } from "./cloudantService";
 
-const HOTELS_PATH = process.env.INIT_CWD + "/hotel-data.json";
-const HOTEL_INFO_PATH = process.env.INIT_CWD + "/hotel-info.json";
+const HOTELS_PATH = path.join(__dirname, "../../data/hotel-data.json");
 
 const pillify = (s) => s.toLowerCase().replace(" ", "-");
 
-async function getHotelData(country, city) {
-  let hotels;
-  if (process.env.DATABASE) {
-    if (process.env.DATABASE.indexOf("mongodb") > -1) {
-      hotels = await getHotelDataFromMongo(country, city);
-    } else if (process.env.DATABASE.indexOf("postgres") > -1) {
-      hotels = await getHotelDataFromPostgres(country, city);
-    } else {
-      hotels = await getHotelDataFromCloudant(country, city);
-    }
-    return hotels;
-  } else {
-    let locationHotels = [];
-    hotels = require(HOTELS_PATH);
-    for (let hotel = 0; hotel < hotels.length; hotel++) {
-      if (hotels[hotel].country === country && hotels[hotel].city === city) {
-        locationHotels.push(hotels[hotel]);
-      }
-    }
-    return locationHotels;
+async function parseMetadata(file) {
+  const content = await fs.readFile(file);
+  const metadata = JSON.parse(content);
+  return metadata;
+}
+
+async function loadData(db) {
+  switch (db) {
+    case "mongodb":
+      return await getHotelInfoFromMongo();
+    case "postgres":
+      return await getHotelInfoFromPostgres();
+    case "cloudant":
+    case "couchdb":
+      return await getHotelInfoFromCloudant();
+    default:
+      return await parseMetadata(HOTELS_PATH);
   }
 }
 
+async function loadHotelData(db) {
+  switch (db) {
+    case "mongodb":
+      return await getHotelDataFromMongo();
+    case "postgres":
+      return await getHotelDataFromPostgres();
+    case "cloudant":
+    case "couchdb":
+      return await getHotelDataFromCloudant();
+    default:
+      return await parseMetadata(HOTELS_PATH);
+  }
+}
 export async function getHotels(country, city, filters) {
-  country = country
-    .trim()
-    .toLowerCase()
-    .replace("%20", " ")
-    .replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
-  city = city
-    .trim()
-    .toLowerCase()
-    .replace("%20", " ")
-    .replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
-
   const { superchain, hotel, type, minCost, maxCost } = filters;
-  const metadata = await getHotelData(city, country);
+  const metadata = await loadHotelData(process.env.DATABASE);
 
   const hotelsData = metadata.filter((h) => {
     if (
@@ -72,18 +72,7 @@ export async function getHotels(country, city, filters) {
 }
 
 export async function getFilterList(filterType) {
-  let metadata;
-  if (process.env.DATABASE) {
-    if (process.env.DATABASE.indexOf("mongodb") > -1) {
-      metadata = await getHotelInfoFromMongo();
-    } else if (process.env.DATABASE.indexOf("postgres") > -1) {
-      metadata = await getHotelInfoFromPostgres();
-    } else {
-      metadata = await getHotelInfoFromCloudant();
-    }
-  } else {
-    metadata = require(HOTEL_INFO_PATH);
-  }
+  const metadata = await loadData(process.env.DATABASE);
   const listOfFilterOptions = metadata.map((item) => item[filterType]);
   return [...new Set(listOfFilterOptions)];
 }

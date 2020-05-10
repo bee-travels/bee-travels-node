@@ -1,23 +1,64 @@
 import { describe, it } from "mocha";
 import chai, { expect } from "chai";
-import chaiAsPromised from "chai-as-promised";
+import chaiJsonSchema from "chai-json-schema";
 
-// Breaks code coverage if using import x from "x"
-const { getData } = require("./dataHandler");
-const ExampleError = require("./../errors/ExampleError");
+chai.use(chaiJsonSchema);
 
-chai.use(chaiAsPromised);
+const { getCities, getCity } = require("./dataHandler");
 
-describe("getData", () => {
-  it("works", async () => {
-    const data = await getData();
+const destinationSchema = {
+  title: "destination schema v1",
+  type: "object",
+  required: [
+    "city",
+    "country",
+    "description",
+    "latitude",
+    "longitude",
+    "population",
+    "images",
+  ],
+  properties: {
+    city: { type: "string" },
+    country: { type: "string" },
+    description: { type: "string" },
+    latitude: { type: "number" },
+    longitude: { type: "number" },
+    population: { type: "number" },
+    images: {
+      type: "array",
+      minItems: 3,
+      items: {
+        type: "string",
+      },
+    },
+  },
+};
 
-    expect(data).to.deep.equal('success');
+const cityListSchema = {
+  title: "city list schema v1",
+  type: "array",
+  minItems: 100,
+  items: {
+    type: "object",
+    required: ["city", "country"],
+    properties: {
+      city: { type: "string" },
+      country: { type: "string" },
+    },
+  },
+};
+
+describe("getCities", () => {
+  it("returns all cities", async () => {
+    const data = await getCities();
+    expect(data).to.have.jsonSchema(cityListSchema);
   });
+});
 
-  it("throws", async () => {
-    await expect(getData()).to.eventually.be.rejectedWith(
-      ExampleError
-    );
+describe("getCity", () => {
+  it("returns city given valid country and city name", async () => {
+    const data = await getCity("united-states", "new-york");
+    expect(data).to.have.jsonSchema(destinationSchema);
   });
 });

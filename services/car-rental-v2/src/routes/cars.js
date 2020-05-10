@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { getCars, getFilterList } from "../services/dataHandler";
+import TagNotFoundError from "../errors/TagNotFoundError";
 
 const router = Router();
 
@@ -37,6 +38,9 @@ router.get("/info/:tag", async (req, res, next) => {
     const data = await getFilterList(tag);
     res.json(data);
   } catch (e) {
+    if (e instanceof TagNotFoundError) {
+      return res.status(400).json({ error: e.message });
+    }
     next(e);
   }
 });
