@@ -18829,9 +18829,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./services/ui/backend/",
           "packageDependencies": [
             ["ui-backend", "workspace:services/ui/backend"],
+            ["axios", "npm:0.19.2"],
             ["express", "npm:4.17.1"],
-            ["nodemon", "npm:2.0.3"],
-            ["request", "npm:2.88.2"]
+            ["nodemon", "npm:2.0.3"]
           ],
           "linkType": "SOFT",
         }]

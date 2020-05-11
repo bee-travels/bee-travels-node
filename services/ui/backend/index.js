@@ -1,7 +1,8 @@
 const path = require("path");
 
+const streamableAxios = require("./streamableAxios");
+
 const express = require("express");
-const request = require("request");
 
 const app = express();
 
@@ -22,9 +23,9 @@ const proxies = [
   },
 ];
 
-const proxyRequest = (req, res, url) => {
+const proxyRequest = async (req, res, url) => {
   req
-    .pipe(request({ url: url }))
+    .pipe(streamableAxios({ url: url }))
     .on("error", (e) => {
       console.error(e);
       res.sendStatus(500);
