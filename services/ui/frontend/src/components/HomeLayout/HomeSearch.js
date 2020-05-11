@@ -10,6 +10,7 @@ const HomeSearch = () => {
       style={{
         margin: " 23px 42px",
         width: "584px",
+        maxWidth: "calc(100% - 2 * 42px)",
         position: "relative",
       }}
     >

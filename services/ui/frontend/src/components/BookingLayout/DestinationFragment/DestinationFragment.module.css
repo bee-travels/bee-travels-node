@@ -1,13 +1,9 @@
-.container {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 464px;
-}
-
 .content {
+  position: relative;
   padding: 24px;
+  width: 100%;
+  padding-top: 4rem;
+  background-color: #ffffff;
 }
 
 .content > h1 {
@@ -15,6 +11,7 @@
   line-height: 3.125rem;
   font-weight: 600;
   margin: 0;
+  margin-top: 16px;
   margin-bottom: 4px;
 }
 
@@ -50,7 +47,7 @@
 }
 
 .searchIcon {
-  fill: var(--text-02);
+  fill: "#393939";
   margin-left: auto;
   width: 1.25rem;
 }
@@ -58,12 +55,12 @@
 .imageContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin: 0 24px 24px 24px;
+  margin: 0;
   grid-gap: 2px;
-  position: absolute;
-  bottom: 261px;
-  left: 0;
-  right: 0;
+  position: relative;
+  /* bottom: initial; */
+  /* left: 0;
+  right: 0; */
 }
 
 .image {
@@ -78,9 +75,13 @@
   bottom: 0;
   left: 0;
   right: 0;
+  visibility: hidden;
 }
 
 .titlebar {
+  z-index: 100;
+  background-color: #ffffff;
+  position: fixed;
   height: 4rem;
   width: 100%;
   display: flex;
@@ -114,7 +115,7 @@
 
 .searchIcon {
   position: absolute;
-  fill: var(--text-02);
+  fill: "#393939";
   /* color: rgb(22, 22, 22); */
   right: 0px;
   top: 22px;
@@ -131,4 +132,36 @@
 
 .searchIconWrapperActive .searchIcon {
   transform: translate(100%, 0);
+}
+
+@media (min-width: 1250px) {
+  .imageContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 24px 24px 24px;
+    grid-gap: 2px;
+    position: absolute;
+    bottom: 261px;
+    left: 0;
+    right: 0;
+  }
+
+  .content {
+    position: absolute;
+    padding: 24px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 4rem;
+    background-color: #ffffff;
+  }
+
+  .titlebar {
+    width: 464px;
+  }
+
+  .map {
+    visibility: visible;
+  }
 }

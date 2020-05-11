@@ -14,6 +14,7 @@ const Home = () => (
         <div className={styles.logoUnderline} />
       </div>
     </div>
+
     <HomeSearch />
   </div>
 );
