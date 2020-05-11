@@ -10,8 +10,6 @@ const DEFAULT_ZOOM = 7;
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg";
 
-const imageBase = "/api/v1/destinations/images";
-
 const truncateText = (text) => {
   const firstSentenceRegex = /^(.*?)\. (?=[A-Z])/;
   const lastSentenceRegex = /(.*\.)(?: .*)$/;
@@ -40,10 +38,9 @@ const DestinationFragment = ({
   latitude,
   longitude,
   description,
-  city,
-  country,
   cityName,
   countryName,
+  images,
 }) => {
   const [mapbox, setMapbox] = useState(undefined);
   const [mapElement, setMapElement] = useState(undefined);
@@ -70,6 +67,8 @@ const DestinationFragment = ({
     }
   }, [latitude, longitude, mapbox]);
 
+  const [image1, image2, image3] = images;
+
   return (
     <>
       <HideAndSeekSearch />
@@ -80,21 +79,27 @@ const DestinationFragment = ({
         <p>{truncateText(description)}</p>
 
         <div className={styles.imageContainer}>
-          <img
-            className={styles.image}
-            src={`${imageBase}/destination-${city}-${country}-001.jpg`}
-            alt={cityName + ", " + countryName}
-          />
-          <img
-            className={styles.image}
-            src={`${imageBase}/destination-${city}-${country}-002.jpg`}
-            alt={cityName + ", " + countryName}
-          />
-          <img
-            className={styles.image}
-            src={`${imageBase}/destination-${city}-${country}-003.jpg`}
-            alt={cityName + ", " + countryName}
-          />
+          {image1 && (
+            <img
+              className={styles.image}
+              src={image1}
+              alt={cityName + ", " + countryName}
+            />
+          )}
+          {image2 && (
+            <img
+              className={styles.image}
+              src={image2}
+              alt={cityName + ", " + countryName}
+            />
+          )}
+          {image3 && (
+            <img
+              className={styles.image}
+              src={image3}
+              alt={cityName + ", " + countryName}
+            />
+          )}
         </div>
         <div className={styles.map} ref={setMapElement} />
       </div>

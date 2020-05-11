@@ -1,5 +1,4 @@
 import { Router } from "express";
-import axios from "axios";
 import {
   getCities,
   getCity,
@@ -7,21 +6,6 @@ import {
 } from "../services/dataHandler";
 
 const router = Router();
-
-router.get("/images/*", async (req, res, next) => {
-  try {
-    const stream = await axios({
-      method: "get",
-      url: `http://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-destination/${req.params[0]}`,
-      responseType: "stream",
-    });
-    stream.data.pipe(res).on("error", (e) => {
-      next(e);
-    });
-  } catch (e) {
-    next(e);
-  }
-});
 
 router.get("/:country/:city", async (req, res, next) => {
   const { country, city } = req.params;
