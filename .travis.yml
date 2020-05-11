@@ -35,5 +35,4 @@ jobs:
         skip_cleanup: true
         script: .travis/build-and-push.sh
         on:
-          all_branches: true
-          condition: $TRAVIS_BRANCH =~ ^(master)$
+          branch: master
