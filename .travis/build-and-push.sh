@@ -8,7 +8,7 @@ docker build -t beetravels/destination-v1:${prefix}-$TRAVIS_COMMIT services/dest
 docker build -t beetravels/destination-v2:${prefix}-$TRAVIS_COMMIT services/destination-v2
 docker build -t beetravels/carrental-v2:${prefix}-$TRAVIS_COMMIT services/carrental-v2
 docker build -t beetravels/hotel-v1:${prefix}-$TRAVIS_COMMIT services/hotel-v1
-docker build -t beetravels/hotel-v1:${prefix}-$TRAVIS_COMMIT services/hotel-v2
+docker build -t beetravels/hotel-v2:${prefix}-$TRAVIS_COMMIT services/hotel-v2
 docker build -t beetravels/currencyexchange:${prefix}-$TRAVIS_COMMIT services/currency-exchange
 docker build -t beetravels/ui:${prefix}-$TRAVIS_COMMIT services/ui
 
