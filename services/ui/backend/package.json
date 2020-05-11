@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "UI for bee-travels",
   "scripts": {
-    "start": "yarn nodemon index.js"
+    "start": "nodemon index.js"
   },
   "keywords": [
     "react",

@@ -6,7 +6,7 @@ import BookingLayout from "components/BookingLayout/BookingLayout";
 import HomeLayout from "components/HomeLayout/HomeLayout";
 import ErrorLayout from "components/ErrorLayout/ErrorLayout";
 
-const App = () => (
+const CustomRouter = () => (
   <Router history={globalHistory}>
     <Switch>
       <Route exact path="/" component={HomeLayout} />
@@ -16,4 +16,4 @@ const App = () => (
   </Router>
 );
 
-export default App;
+export default CustomRouter;
