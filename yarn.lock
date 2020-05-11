@@ -14531,7 +14531,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"request@npm:^2.81.0, request@npm:^2.87.0, request@npm:^2.88.0, request@npm:^2.88.2":
+"request@npm:^2.81.0, request@npm:^2.87.0, request@npm:^2.88.0":
   version: 2.88.2
   resolution: "request@npm:2.88.2"
   dependencies:
@@ -16658,9 +16658,9 @@ resolve@1.1.7:
   version: 0.0.0-use.local
   resolution: "ui-backend@workspace:services/ui/backend"
   dependencies:
+    axios: ^0.19.2
     express: ^4.17.1
     nodemon: ^2.0.3
-    request: ^2.88.2
   languageName: unknown
   linkType: soft
 
