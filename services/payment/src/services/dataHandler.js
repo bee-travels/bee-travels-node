@@ -1,6 +1,7 @@
 import CreditCardExpiredError from './../errors/CreditCardExpiredError'
+import crypto from 'crypto'
 
-export async function processCreditcardPayment(chargeObject) {
+async function processCreditcardPayment(chargeObject) {
   //validation
   var exp_month = chargeObject.payment_method_details.exp_month
   var exp_year = chargeObject.payment_method_details.exp_year
