@@ -124,7 +124,7 @@ router.post(
   '/charge', async (req, res, next) => {
 
     const data = req.body
-
+    console.log(req.body)
     try {
       const rez = await processCreditcardPayment(data)
       return res.json(rez)
