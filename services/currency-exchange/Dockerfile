@@ -4,7 +4,7 @@ WORKDIR /services/currency-exchange
 
 COPY src src
 COPY data data
-COPY package.json swagger.yaml ./
+COPY package.json .
 
 EXPOSE 9201
 

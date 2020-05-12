@@ -16,20 +16,19 @@ services:
       - hotel
       - currency-exchange
     environment:
-      - NODE_ENV=production
       - DESTINATION_URL=http://destination:9001
       - HOTEL_URL=http://hotel:9101
       - CURRENCY_EXCHANGE_URL=http://currency-exchange:9201
 
   destination:
-    build: services/destination-v1
+    build: services/destination-v2
     ports:
       - "9001:9001"
     depends_on:
       - base
 
   hotel:
-      build: services/hotel-v1
+      build: services/hotel-v2
       ports:
         - "9101:9101"
       depends_on:
