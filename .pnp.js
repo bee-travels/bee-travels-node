@@ -5148,6 +5148,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chai-things", "npm:0.2.0"],
             ["esm", "npm:3.2.25"],
             ["express", "npm:4.17.1"],
+            ["jsdoc-openapi", "npm:0.0.6"],
             ["mocha", "npm:7.1.2"],
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
