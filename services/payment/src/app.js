@@ -1,7 +1,7 @@
 import express from "express";
 import logger from "pino-http";
 import pinoPretty from "pino-pretty";
-import swaggerJSDoc from "swagger-jsdoc";
+import swaggerJSDoc from "jsdoc-openapi";
 import swaggerUi from "swagger-ui-express";
 import options from "./swaggerConfig";
 
@@ -16,7 +16,7 @@ app.use(
     prettyPrint: process.env.NODE_ENV !== "production",
     // Yarn 2 doesn't like pino importing `pino-pretty` on it's own, so we need to
     // provide it.
-    prettifier: pinoPretty,
+    prettifier: pinoPretty
   })
 );
 

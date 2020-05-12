@@ -12389,13 +12389,13 @@ fsevents@^1.2.7:
     chai-http: ^4.3.0
     esm: ^3.2.25
     express: ^4.17.1
+    jsdoc-openapi: ^0.0.6
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
-    swagger-jsdoc: ^4.0.0
     swagger-ui-express: ^4.1.1
   languageName: unknown
   linkType: soft
