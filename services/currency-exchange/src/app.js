@@ -1,7 +1,7 @@
 import express from "express";
 import logger from "pino-http";
 import pinoPretty from "pino-pretty";
-import swaggerJSDoc from "swagger-jsdoc";
+import swaggerJSDoc from "jsdoc-openapi";
 import swaggerUi from "swagger-ui-express";
 import options from "./swaggerConfig";
 

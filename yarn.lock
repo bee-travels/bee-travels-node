@@ -5528,13 +5528,13 @@ __metadata:
     csv-parse: ^4.9.0
     esm: ^3.2.25
     express: ^4.17.1
+    jsdoc-openapi: ^0.0.6
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
-    swagger-jsdoc: ^4.0.0
     swagger-ui-express: ^4.1.1
   languageName: unknown
   linkType: soft
@@ -9832,6 +9832,21 @@ fsevents@^1.2.7:
   version: 0.1.1
   resolution: "jsbn@npm:0.1.1"
   checksum: 2/b530d48a64e6aff9523407856a54c5b9beee30f34a410612057f4fa097d90072fc8403c49604dacf0c3e7620dca43c2b7f0de3f954af611e43716a254c46f6f5
+  languageName: node
+  linkType: hard
+
+"jsdoc-openapi@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "jsdoc-openapi@npm:0.0.6"
+  dependencies:
+    commander: 5.0.0
+    doctrine: 3.0.0
+    glob: 7.1.6
+    js-yaml: 3.13.1
+    swagger-parser: 9.0.1
+  bin:
+    swagger-jsdoc: bin/swagger-jsdoc.js
+  checksum: 2/e5216c623b027e148c9f438c45093ef08c65aae3ddf170faa3755a946131d3578dd31c27f247dce944be52e99d940c4f8f6a1cd4f5b0bcac2261b26319281d62
   languageName: node
   linkType: hard
 
