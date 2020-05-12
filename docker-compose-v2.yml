@@ -16,6 +16,7 @@ services:
       - hotel
       - currency-exchange
       - payment
+
     environment:
       - DESTINATION_URL=http://destination:9001
       - HOTEL_URL=http://hotel:9101
@@ -49,3 +50,4 @@ services:
         - "9403:9403"
       depends_on:
         - base
+
