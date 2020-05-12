@@ -36,7 +36,7 @@ describe("convert", () => {
   it("throws with a fake `to` currency code", async () => {
     const fakeCode = "ABCD";
     sinon.stub(axios, "get").returns(ratesMock);
-    await expect(convert(fakeCode)).to.eventually.be.rejectedWith(
+    await expect(convert("USD", fakeCode)).to.eventually.be.rejectedWith(
       CurrencyNotFoundError
     );
   });
@@ -45,7 +45,7 @@ describe("convert", () => {
     const fakeCode = "ABCD";
     sinon.stub(axios, "get").rejects({ response: { status: 400 } });
 
-    await expect(convert("USD", fakeCode)).to.eventually.be.rejectedWith(
+    await expect(convert(fakeCode)).to.eventually.be.rejectedWith(
       CurrencyNotFoundError
     );
   });
