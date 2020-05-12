@@ -12379,9 +12379,9 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"payment@workspace:services/payment":
+"payment@workspace:services/payment-v2":
   version: 0.0.0-use.local
-  resolution: "payment@workspace:services/payment"
+  resolution: "payment@workspace:services/payment-v2"
   dependencies:
     axios: ^0.19.2
     chai: ^4.2.0

@@ -48,7 +48,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       },
       {
         "name": "payment",
-        "reference": "workspace:services/payment"
+        "reference": "workspace:services/payment-v2"
       },
       {
         "name": "ui-backend",
@@ -69,7 +69,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["destination-v2", ["workspace:services/destination-v2"]],
       ["hotel-v1", ["workspace:services/hotel-v1"]],
       ["hotel-v2", ["workspace:services/hotel-v2"]],
-      ["payment", ["workspace:services/payment"]],
+      ["payment", ["workspace:services/payment-v2"]],
       ["ui-backend", ["workspace:services/ui/backend"]],
       ["ui-frontend", ["workspace:services/ui/frontend"]]
     ],
@@ -14148,10 +14148,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["payment", [
-        ["workspace:services/payment", {
-          "packageLocation": "./services/payment/",
+        ["workspace:services/payment-v2", {
+          "packageLocation": "./services/payment-v2/",
           "packageDependencies": [
-            ["payment", "workspace:services/payment"],
+            ["payment", "workspace:services/payment-v2"],
             ["axios", "npm:0.19.2"],
             ["chai", "npm:4.2.0"],
             ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
