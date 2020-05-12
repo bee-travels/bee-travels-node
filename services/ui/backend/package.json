@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "UI for bee-travels",
   "scripts": {
-    "start": "yarn nodemon index.js"
+    "start": "nodemon index.js"
   },
   "keywords": [
     "react",
@@ -13,8 +13,8 @@
   "author": "moficodes@gmail.com, magicmax33@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "request": "^2.88.2"
+    "axios": "^0.19.2",
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"

@@ -1,0 +1,15 @@
+definitions:
+  Max:
+    required:
+      - firstname
+      - lastname
+    properties:
+      firstname:
+        description: Updated name of the pet
+        type: string
+      lastname:
+        description: Updated name of the pet
+        type: string
+      age:
+        description: Updated name of the pet
+        type: integer

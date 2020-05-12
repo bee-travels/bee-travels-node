@@ -7,24 +7,24 @@ export async function convert(_from, _to = "EUR", timeIndicator = "latest") {
   const from = _from.toUpperCase();
   const to = _to.toUpperCase();
 
-  const currencyUrl = `${EXCHANGE_ENDPOINT}/${timeIndicator}?base=${to}`;
+  const currencyUrl = `${EXCHANGE_ENDPOINT}/${timeIndicator}?base=${from}`;
 
   let rate;
   try {
     const { data } = await axios.get(currencyUrl);
-    rate = data.rates[from];
+    rate = data.rates[to];
   } catch (e) {
     if (!(e.response && e.response.data && e.response.data.error)) {
       throw e;
     }
-    if (e.response.data.error.includes(to)) {
-      throw new CurrencyNotFoundError(to);
+    if (e.response.data.error.includes(from)) {
+      throw new CurrencyNotFoundError(from);
     }
     throw new Error(e.response.data.error);
   }
 
   if (rate === undefined) {
-    throw new CurrencyNotFoundError(from);
+    throw new CurrencyNotFoundError(to);
   }
   return rate;
 }

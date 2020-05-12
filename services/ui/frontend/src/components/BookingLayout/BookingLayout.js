@@ -14,8 +14,41 @@ import {
   CURRENCY,
 } from "components/common/query-constants";
 
-const SplitPaneLayout = ({ children, panelWidth }) => {
+const SplitPaneLayout = ({ children, panelWidth, breakpoint }) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const reportWindowSize = (e) => {
+      setWindowWidth(e.target.innerWidth);
+    };
+    window.addEventListener("resize", reportWindowSize);
+    return () => window.removeEventListener("resize", reportWindowSize);
+  }, []);
+
   const [left, right] = children;
+
+  if (windowWidth < parseInt(breakpoint, 10)) {
+    return (
+      <>
+        <div
+          style={{
+            width: "100%",
+            background: "#ffffff",
+          }}
+        >
+          {left}
+        </div>
+        <div
+          style={{
+            background: "#f4f4f4",
+            overflow: "auto",
+          }}
+        >
+          {right}
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <div
@@ -25,7 +58,7 @@ const SplitPaneLayout = ({ children, panelWidth }) => {
           top: 0,
           bottom: 0,
           width: panelWidth,
-          background: "var(--ui-background)",
+          background: "#ffffff",
         }}
       >
         {left}
@@ -37,7 +70,7 @@ const SplitPaneLayout = ({ children, panelWidth }) => {
           top: 0,
           bottom: 0,
           right: 0,
-          background: "var(--ui-01)",
+          background: "#f4f4f4",
           overflow: "auto",
           paddingLeft: "1px",
         }}
@@ -94,7 +127,7 @@ const Content = ({ location }) => {
   }, [city, country]);
 
   return (
-    <SplitPaneLayout panelWidth="464px">
+    <SplitPaneLayout panelWidth="464px" breakpoint="1250px">
       <DestinationFragment
         cityName={cityName}
         countryName={countryName}
