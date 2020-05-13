@@ -12380,6 +12380,27 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"payment@workspace:services/payment-v2":
+  version: 0.0.0-use.local
+  resolution: "payment@workspace:services/payment-v2"
+  dependencies:
+    axios: ^0.19.2
+    chai: ^4.2.0
+    chai-as-promised: ^7.1.1
+    chai-http: ^4.3.0
+    esm: ^3.2.25
+    express: ^4.17.1
+    jsdoc-openapi: ^0.0.6
+    mocha: ^7.1.2
+    nodemon: ^2.0.3
+    nyc: ^15.0.1
+    pino-http: ^5.1.0
+    pino-pretty: ^4.0.0
+    sinon: ^9.0.2
+    swagger-ui-express: ^4.1.1
+  languageName: unknown
+  linkType: soft
+
 "pbf@npm:^3.0.5, pbf@npm:^3.2.1":
   version: 3.2.1
   resolution: "pbf@npm:3.2.1"
