@@ -1,6 +1,10 @@
 import path from "path";
 import { promises as fs } from "fs";
-import { getCarDataFromMongo, getCarInfoFromMongo } from "./mongoService";
+import {
+  getCarDataFromMongo,
+  getCarInfoFromMongo,
+  buildCarMongoQuery,
+} from "./mongoService";
 import {
   getCarDataFromPostgres,
   getCarInfoFromPostgres,
@@ -13,7 +17,14 @@ import TagNotFoundError from "./../errors/TagNotFoundError";
 
 const CARS_PATH = path.join(__dirname, "../../data/cars.json");
 
-const pillify = (s) => s.toLowerCase().replace(" ", "-");
+const filterTypes = ["rental_company", "name", "body_type", "style"];
+
+const capitalize = (text) =>
+  text
+    .toLowerCase()
+    .split("-")
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(" ");
 
 async function parseMetadata(file) {
   const content = await fs.readFile(file);
@@ -21,10 +32,39 @@ async function parseMetadata(file) {
   return metadata;
 }
 
-async function loadData(db) {
-  switch (db) {
+export async function getCars(country, city, filters) {
+  let data;
+  let query;
+  switch (process.env.CAR_DATABASE) {
     case "mongodb":
-      return await getCarInfoFromMongo();
+      query = buildCarMongoQuery(
+        capitalize(country),
+        capitalize(city),
+        filters
+      );
+      data = await getCarDataFromMongo(query);
+      break;
+    case "postgres":
+      data = await getCarDataFromPostgres();
+      break;
+    case "cloudant":
+    case "couchdb":
+      data = await getCarDataFromCloudant();
+      break;
+    default:
+      data = await parseMetadata(CARS_PATH);
+  }
+
+  return data;
+}
+
+export async function getFilterList(filterType) {
+  if (filterTypes.includes(filterType) === false) {
+    throw new TagNotFoundError(filterType);
+  }
+  switch (process.env.CAR_DATABASE) {
+    case "mongodb":
+      return await getCarInfoFromMongo(filterType);
     case "postgres":
       return await getCarInfoFromPostgres();
     case "cloudant":
@@ -33,55 +73,4 @@ async function loadData(db) {
     default:
       return await parseMetadata(CARS_PATH);
   }
-}
-
-async function loadCarData(db) {
-  switch (db) {
-    case "mongodb":
-      return await getCarDataFromMongo();
-    case "postgres":
-      return await getCarDataFromPostgres();
-    case "cloudant":
-    case "couchdb":
-      return await getCarDataFromCloudant();
-    default:
-      return await parseMetadata(CARS_PATH);
-  }
-}
-
-export async function getCars(country, city, filters) {
-  const { company, car, type, style, minCost, maxCost } = filters;
-  const data = await loadCarData(process.env.DATABASE);
-
-  const carsData = data.filter((h) => {
-    if (
-      pillify(h.city) !== city.toLowerCase() ||
-      pillify(h.country) !== country.toLowerCase()
-    ) {
-      return false;
-    }
-
-    return (
-      (company === undefined || company.includes(h.rental_company)) &&
-      (car === undefined || car.includes(h.name)) &&
-      (type === undefined || type.includes(h.body_type)) &&
-      (style === undefined || style.includes(h.style)) &&
-      (minCost === undefined || minCost <= h.cost) &&
-      (maxCost === undefined || h.cost <= maxCost)
-    );
-  });
-
-  return carsData;
-}
-
-export async function getFilterList(filterType) {
-  const data = await loadData(process.env.DATABASE);
-  const listOfFilterOptions = data.map((item) => {
-    const valueForFilter = item[filterType];
-    if (valueForFilter !== undefined) {
-      return valueForFilter;
-    }
-    throw new TagNotFoundError(filterType);
-  });
-  return [...new Set(listOfFilterOptions)];
 }

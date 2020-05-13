@@ -31,7 +31,7 @@ options.swaggerDefinition.schemes = [process.env.SCHEME || "http"];
 const specs = swaggerJSDoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-// Currency api.
+// cars api.
 app.use("/api/v1/cars", carsRouter);
 
 // Catch 404s.

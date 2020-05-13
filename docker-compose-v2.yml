@@ -14,12 +14,14 @@ services:
       - base
       - destination
       - hotel
+      - car-rental
       - currency-exchange
       - payment
 
     environment:
       - DESTINATION_URL=http://destination:9001
       - HOTEL_URL=http://hotel:9101
+      - CAR_URL=http://car-rental:9102
       - CURRENCY_EXCHANGE_URL=http://currency-exchange:9201
       - PAYMENT_URL=http://payment:9403
 
@@ -37,6 +39,16 @@ services:
       depends_on:
         - base
 
+  car-rental:
+      build: services/car-rental-v2
+      ports:
+        - "9102:9102"
+      depends_on:
+        - base
+      environment:
+        - CAR_DATABASE=${CAR_DATABASE}
+        - MONGO_CONNECTION_URL=mongodb://localhost:27017
+
   currency-exchange:
     build: services/currency-exchange
     ports:
@@ -50,4 +62,3 @@ services:
         - "9403:9403"
       depends_on:
         - base
-

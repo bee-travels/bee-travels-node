@@ -1,7 +1,55 @@
+import IllegalDatabaseQueryError from "./../errors/IllegalDatabaseQueryError";
 const MongoClient = require("mongodb").MongoClient;
 
-export async function getCarDataFromMongo(city, country) {
-  const client = await MongoClient.connect(process.env.DATABASE, {
+function isValidQueryValue(value) {
+  if (/\$/.test(value)) {
+    throw new IllegalDatabaseQueryError(value);
+  }
+  let valueParsed;
+  try {
+    valueParsed = JSON.parse(value);
+  } catch {
+    return value;
+  }
+  if (valueParsed instanceof Object) {
+    throw new IllegalDatabaseQueryError(value);
+  }
+  return value;
+}
+
+export function buildCarMongoQuery(country, city, filters) {
+  const { company, car, type, style, minCost, maxCost } = filters;
+  let query = {
+    country: isValidQueryValue(country),
+    city: isValidQueryValue(city),
+  };
+  if (company) {
+    query.rental_company = { $in: isValidQueryValue(company) };
+  }
+  if (car) {
+    query.name = { $in: isValidQueryValue(car) };
+  }
+  if (type) {
+    query.body_type = { $in: isValidQueryValue(type) };
+  }
+  if (style) {
+    query.style = { $in: isValidQueryValue(style) };
+  }
+  if (minCost) {
+    query.cost = { $gte: isValidQueryValue(minCost) };
+  }
+  if (maxCost) {
+    if (query.cost) {
+      query.cost.$lte = isValidQueryValue(maxCost);
+    } else {
+      query.cost = { $lte: isValidQueryValue(maxCost) };
+    }
+  }
+  return query;
+}
+
+export async function getCarDataFromMongo(query) {
+  const client = await MongoClient.connect(process.env.MONGO_CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }).catch((err) => {
@@ -15,7 +63,6 @@ export async function getCarDataFromMongo(city, country) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("cars");
-    let query = { city: city, country: country };
     let res = await collection.find(query);
     let cars = [];
     let car;
@@ -34,8 +81,8 @@ export async function getCarDataFromMongo(city, country) {
   }
 }
 
-export async function getCarInfoFromMongo() {
-  const client = await MongoClient.connect(process.env.DATABASE, {
+export async function getCarInfoFromMongo(filterType) {
+  const client = await MongoClient.connect(process.env.MONGO_CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }).catch((err) => {
@@ -48,30 +95,10 @@ export async function getCarInfoFromMongo() {
 
   try {
     const db = client.db("beetravels");
-    let collection = db.collection("car_info");
-    let rentalCompanyCollection = db.collection("cars");
-    let query = {};
-    let res = await collection.find(query);
-    let rentalCompanies = await rentalCompanyCollection.distinct(
-      "rental_company"
+    let collection = db.collection(
+      filterType === "rental_company" ? "cars" : "car_info"
     );
-    let carsInfo = [];
-    let carInfo;
-    let hasNextCarInfo = await res.hasNext();
-    while (hasNextCarInfo) {
-      carInfo = await res.next();
-      delete carInfo["_id"];
-      carsInfo.push(carInfo);
-      hasNextCarInfo = await res.hasNext();
-    }
-    for (
-      let rentalCompany = 0;
-      rentalCompany < rentalCompanies.length;
-      rentalCompany++
-    ) {
-      carsInfo.push({ rental_company: rentalCompanies[rentalCompany] });
-    }
-    return carsInfo;
+    return await collection.distinct(filterType);
   } catch (err) {
     console.log(err);
   } finally {
