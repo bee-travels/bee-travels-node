@@ -15,10 +15,13 @@ services:
       - destination
       - hotel
       - currency-exchange
+      - payment
+
     environment:
       - DESTINATION_URL=http://destination:9001
       - HOTEL_URL=http://hotel:9101
       - CURRENCY_EXCHANGE_URL=http://currency-exchange:9201
+      - PAYMENT_URL=http://payment:9403
 
   destination:
     build: services/destination-v2
@@ -40,3 +43,11 @@ services:
       - "9201:9201"
     depends_on:
       - base
+
+  payment:
+      build: services/payment-v2
+      ports:
+        - "9403:9403"
+      depends_on:
+        - base
+
