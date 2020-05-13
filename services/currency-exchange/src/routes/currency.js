@@ -81,4 +81,14 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+/**
+ * POST /api/v1/currency
+ * @description TODO.
+ * @requestBody {Max} max - TODO.
+ */
+router.post("/", (req, res) => {
+  console.log(req.body);
+  res.end();
+});
+
 export default router;

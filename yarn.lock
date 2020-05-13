@@ -4301,6 +4301,7 @@ __metadata:
     chai-things: ^0.2.0
     esm: ^3.2.25
     express: ^4.17.1
+    jsdoc-openapi: ^0.0.6
     mocha: ^7.1.2
     mongodb: ^3.5.7
     nodemon: ^2.0.3
