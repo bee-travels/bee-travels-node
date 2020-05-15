@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getCars, getFilterList } from "../services/dataHandler";
 import TagNotFoundError from "../errors/TagNotFoundError";
+import IllegalDatabaseQueryError from "../errors/IllegalDatabaseQueryError";
 
 const router = Router();
 
@@ -55,6 +56,9 @@ router.get("/:country/:city", async (req, res, next) => {
     });
     res.json(data);
   } catch (e) {
+    if (e instanceof IllegalDatabaseQueryError) {
+      return res.status(e.status).json({ error: "Invalid query" });
+    }
     next(e);
   }
 });
