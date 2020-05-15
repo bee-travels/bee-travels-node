@@ -12,7 +12,7 @@ describe("buildCarMongoQuery", () => {
   it("returns car query for mongo", async () => {
     const data = buildCarMongoQuery("United States", "New York", {
       company: undefined,
-      car: "Toyota Camry",
+      car: ["Toyota Camry"],
       type: undefined,
       style: undefined,
       minCost: 100,
@@ -22,12 +22,12 @@ describe("buildCarMongoQuery", () => {
     expect(data).to.deep.equal({
       country: "United States",
       city: "New York",
-      name: { $in: "Toyota Camry" },
+      name: { $in: ["Toyota Camry"] },
       cost: { $gte: 100, $lte: 300 },
     });
   });
 
-  it("throws IllegalDatabaseQueryError with query injection", async () => {
+  it("throws IllegalDatabaseQueryError for query injection", function () {
     expect(
       buildCarMongoQuery("United States", "New York", {
         company: undefined,

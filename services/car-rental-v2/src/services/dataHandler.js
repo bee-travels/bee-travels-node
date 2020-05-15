@@ -14,8 +14,7 @@ import {
   getCarInfoFromCloudant,
 } from "./cloudantService";
 import TagNotFoundError from "./../errors/TagNotFoundError";
-
-const CARS_PATH = path.join(__dirname, "../../data/cars.json");
+import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
 
 const filterTypes = ["rental_company", "name", "body_type", "style"];
 
@@ -25,12 +24,6 @@ const capitalize = (text) =>
     .split("-")
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(" ");
-
-async function parseMetadata(file) {
-  const content = await fs.readFile(file);
-  const metadata = JSON.parse(content);
-  return metadata;
-}
 
 export async function getCars(country, city, filters) {
   let data;
@@ -52,7 +45,7 @@ export async function getCars(country, city, filters) {
       data = await getCarDataFromCloudant();
       break;
     default:
-      data = await parseMetadata(CARS_PATH);
+      throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
   }
 
   return data;
@@ -71,6 +64,6 @@ export async function getFilterList(filterType) {
     case "couchdb":
       return await getCarInfoFromCloudant();
     default:
-      return await parseMetadata(CARS_PATH);
+      throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
   }
 }
