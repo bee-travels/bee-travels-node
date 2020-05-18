@@ -1,7 +1,9 @@
-definitions:
-  FilterType:
-    enum:
-      - rental_company
-      - name
-      - body_type
-      - style
+components:
+  schemas:
+    FilterType:
+      type: string
+      enum:
+        - rental_company
+        - name
+        - body_type
+        - style

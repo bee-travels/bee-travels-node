@@ -1,7 +1,7 @@
 import express from "express";
 import logger from "pino-http";
 import pinoPretty from "pino-pretty";
-import swaggerJSDoc from "jsdoc-openapi";
+import commentParser from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
 import options from "./swaggerConfig";
 
@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 // Don't use `/` for swagger, it will catch everything.
 options.swaggerDefinition.host = process.env.HOST_IP || "localhost:9102";
 options.swaggerDefinition.schemes = [process.env.SCHEME || "http"];
-const specs = swaggerJSDoc(options);
+const specs = commentParser(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // cars api.

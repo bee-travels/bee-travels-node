@@ -31,6 +31,9 @@ services:
       - "9001:9001"
     depends_on:
       - base
+    environment:
+        - DESTINATION_DATABASE=${DESTINATION_DATABASE}
+        - MONGO_CONNECTION_URL=mongodb://localhost:27017
 
   hotel:
       build: services/hotel-v2

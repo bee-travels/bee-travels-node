@@ -5159,11 +5159,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chai-things", "npm:0.2.0"],
             ["esm", "npm:3.2.25"],
             ["express", "npm:4.17.1"],
-            ["jsdoc-openapi", "npm:0.0.6"],
             ["mocha", "npm:7.1.2"],
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.0.6"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
@@ -6922,6 +6922,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.0.6"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
@@ -13608,6 +13609,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["open", "npm:7.0.3"],
             ["is-docker", "npm:2.0.0"],
             ["is-wsl", "npm:2.1.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["openapi-comment-parser", [
+        ["npm:0.0.6", {
+          "packageLocation": "./.yarn/cache/openapi-comment-parser-npm-0.0.6-7c9659a192-2.zip/node_modules/openapi-comment-parser/",
+          "packageDependencies": [
+            ["openapi-comment-parser", "npm:0.0.6"],
+            ["comment-parser", "npm:0.7.4"],
+            ["glob", "npm:7.1.6"],
+            ["js-yaml", "npm:3.13.1"],
+            ["swagger-parser", "npm:9.0.1"]
           ],
           "linkType": "HARD",
         }]

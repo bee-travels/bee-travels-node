@@ -4302,11 +4302,11 @@ __metadata:
     chai-things: ^0.2.0
     esm: ^3.2.25
     express: ^4.17.1
-    jsdoc-openapi: ^0.0.6
     mocha: ^7.1.2
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
+    openapi-comment-parser: ^0.0.6
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -5863,6 +5863,7 @@ __metadata:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
+    openapi-comment-parser: ^0.0.6
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -11895,6 +11896,18 @@ fsevents@^1.2.7:
     is-docker: ^2.0.0
     is-wsl: ^2.1.1
   checksum: 2/4577accaea709dde0d7a1092076828bb9678247356ced467a628f947c78096429b702b98077d512970807168c081af2c238fdb77cdb100cfce1c4d9f85c5816f
+  languageName: node
+  linkType: hard
+
+"openapi-comment-parser@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "openapi-comment-parser@npm:0.0.6"
+  dependencies:
+    comment-parser: ^0.7.4
+    glob: 7.1.6
+    js-yaml: 3.13.1
+    swagger-parser: 9.0.1
+  checksum: 2/e6a65a141876739b943c009f84f3656594cf5ce539fd8a608f44d1ff09d66a54b3f7230af339173a8628876087120b19affafc6f3e90afa8844f1a44306f99dc
   languageName: node
   linkType: hard
 

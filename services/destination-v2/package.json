@@ -12,6 +12,7 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "mongodb": "^3.5.7",
+    "openapi-comment-parser": "^0.0.6",
     "pg": "^8.0.3",
     "pino-http": "^5.1.0",
     "pino-pretty": "^4.0.0",
