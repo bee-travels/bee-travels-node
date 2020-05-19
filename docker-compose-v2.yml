@@ -41,6 +41,9 @@ services:
         - "9101:9101"
       depends_on:
         - base
+      environment:
+        - HOTEL_DATABASE=${HOTEL_DATABASE}
+        - MONGO_CONNECTION_URL=mongodb://localhost:27017
 
   car-rental:
       build: services/car-rental-v2

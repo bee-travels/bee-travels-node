@@ -12,7 +12,7 @@ const options = {
       },
     },
   },
-  apis: ["src/routes/*.js"],
+  apis: ["src/routes/*.?(js|yaml|yml)"],
 };
 
 export default options;

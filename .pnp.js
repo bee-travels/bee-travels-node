@@ -9498,6 +9498,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.0.6"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],

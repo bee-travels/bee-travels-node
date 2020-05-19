@@ -1,6 +1,8 @@
-import path from "path";
-import { promises as fs } from "fs";
-import { getHotelDataFromMongo, getHotelInfoFromMongo } from "./mongoService";
+import {
+  getHotelDataFromMongo,
+  getHotelInfoFromMongo,
+  buildHotelMongoQuery,
+} from "./mongoService";
 import {
   getHotelDataFromPostgres,
   getHotelInfoFromPostgres,
@@ -9,70 +11,57 @@ import {
   getHotelDataFromCloudant,
   getHotelInfoFromCloudant,
 } from "./cloudantService";
+import TagNotFoundError from "./../errors/TagNotFoundError";
+import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
 
-const HOTELS_PATH = path.join(__dirname, "../../data/hotel-data.json");
+const filterTypes = ["superchain", "name", "type"];
 
-const pillify = (s) => s.toLowerCase().replace(" ", "-");
+const capitalize = (text) =>
+  text
+    .toLowerCase()
+    .split("-")
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(" ");
 
-async function parseMetadata(file) {
-  const content = await fs.readFile(file);
-  const metadata = JSON.parse(content);
-  return metadata;
+export async function getHotels(country, city, filters) {
+  let data;
+  let query;
+  switch (process.env.HOTEL_DATABASE) {
+    case "mongodb":
+      query = buildHotelMongoQuery(
+        capitalize(country),
+        capitalize(city),
+        filters
+      );
+      data = await getHotelDataFromMongo(query);
+      break;
+    case "postgres":
+      data = await getHotelDataFromPostgres();
+      break;
+    case "cloudant":
+    case "couchdb":
+      data = await getHotelDataFromCloudant();
+      break;
+    default:
+      throw new DatabaseNotFoundError(process.env.HOTEL_DATABASE);
+  }
+
+  return data;
 }
 
-async function loadData(db) {
-  switch (db) {
+export async function getFilterList(filterType) {
+  if (filterTypes.includes(filterType) === false) {
+    throw new TagNotFoundError(filterType);
+  }
+  switch (process.env.HOTEL_DATABASE) {
     case "mongodb":
-      return await getHotelInfoFromMongo();
+      return await getHotelInfoFromMongo(filterType);
     case "postgres":
       return await getHotelInfoFromPostgres();
     case "cloudant":
     case "couchdb":
       return await getHotelInfoFromCloudant();
     default:
-      return await parseMetadata(HOTELS_PATH);
+      throw new DatabaseNotFoundError(process.env.HOTEL_DATABASE);
   }
-}
-
-async function loadHotelData(db) {
-  switch (db) {
-    case "mongodb":
-      return await getHotelDataFromMongo();
-    case "postgres":
-      return await getHotelDataFromPostgres();
-    case "cloudant":
-    case "couchdb":
-      return await getHotelDataFromCloudant();
-    default:
-      return await parseMetadata(HOTELS_PATH);
-  }
-}
-export async function getHotels(country, city, filters) {
-  const { superchain, hotel, type, minCost, maxCost } = filters;
-  const metadata = await loadHotelData(process.env.DATABASE);
-
-  const hotelsData = metadata.filter((h) => {
-    if (
-      pillify(h.city) !== city.toLowerCase() ||
-      pillify(h.country) !== country.toLowerCase()
-    ) {
-      return false;
-    }
-
-    return (
-      (superchain === undefined || superchain.includes(h.superchain)) &&
-      (hotel === undefined || hotel.includes(h.name)) &&
-      (type === undefined || type.includes(h.type)) &&
-      (minCost === undefined || minCost <= h.cost) &&
-      (maxCost === undefined || h.cost <= maxCost)
-    );
-  });
-
-  return hotelsData;
-}
-
-export async function getFilterList(filterType) {
-  const metadata = await loadData(process.env.DATABASE);
-  const listOfFilterOptions = metadata.map((item) => item[filterType]);
-  return [...new Set(listOfFilterOptions)];
 }

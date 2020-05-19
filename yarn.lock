@@ -8153,6 +8153,7 @@ fsevents@^1.2.7:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
+    openapi-comment-parser: ^0.0.6
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0

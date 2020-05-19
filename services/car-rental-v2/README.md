@@ -15,7 +15,7 @@ The car rentals used consist of the following data for various destination locat
 * Cost
 * Images of the car ([Hosted on IBM Cloud Cloud Object Storage](https://www.ibm.com/cloud/object-storage))
 
-The source of the car rental service data is provided from a database. The following databases are currently supported: MongoDB, PostgreSQL, Cloudant, and CouchDB. Check out [this](https://github.com/bee-travels/data-generator/tree/master/src/hotels) for more info on data generation and populating a database with hotel data.
+The source of the car rental service data is provided from a database. The following databases are currently supported: MongoDB, PostgreSQL, Cloudant, and CouchDB. Check out [this](https://github.com/bee-travels/data-generator/tree/master/src/hotels) for more info on data generation and populating a database with car rental data.
 
 ## Environment Variables
 
