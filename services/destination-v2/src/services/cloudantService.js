@@ -1,17 +1,30 @@
-var Cloudant = require("@cloudant/cloudant");
+import { isValidNoSQLQueryValue } from "./queryValidationService";
+const Cloudant = require("@cloudant/cloudant");
 
-async function getDestinationDataFromCloudant() {
-  var cloudant = Cloudant(process.env.DATABASE);
-  var db = cloudant.db.use("destination");
-
-  const res = await db.list({ include_docs: true });
-  var destinations = [];
-  for (var destination = 0; destination < res.rows.length; destination++) {
-    delete res.rows[destination].doc["_id"];
-    delete res.rows[destination].doc["_rev"];
-    destinations.push(res.rows[destination].doc);
+export function buildDestinationCloudantQuery(country, city) {
+  let query = {
+    country: isValidNoSQLQueryValue(country),
+  };
+  if (city) {
+    query.city = isValidNoSQLQueryValue(city);
   }
-  return destinations;
+  return query;
+}
+
+async function getDestinationDataFromCloudant(query) {
+  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
+  const db = cloudant.db.use("destination");
+
+  let res = await db.find({
+    selector: query,
+    fields: query.city === undefined ? ["country", "city"] : [],
+    limit: 200,
+  });
+  for (let destination = 0; destination < res.docs.length; destination++) {
+    delete res.docs[destination]["_id"];
+    delete res.docs[destination]["_rev"];
+  }
+  return res.docs;
 }
 
 export { getDestinationDataFromCloudant };

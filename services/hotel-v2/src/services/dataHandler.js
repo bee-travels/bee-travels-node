@@ -10,6 +10,7 @@ import {
 import {
   getHotelDataFromCloudant,
   getHotelInfoFromCloudant,
+  buildHotelCloudantQuery,
 } from "./cloudantService";
 import TagNotFoundError from "./../errors/TagNotFoundError";
 import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
@@ -40,7 +41,12 @@ export async function getHotels(country, city, filters) {
       break;
     case "cloudant":
     case "couchdb":
-      data = await getHotelDataFromCloudant();
+      query = buildHotelCloudantQuery(
+        capitalize(country),
+        capitalize(city),
+        filters
+      );
+      data = await getHotelDataFromCloudant(query);
       break;
     default:
       throw new DatabaseNotFoundError(process.env.HOTEL_DATABASE);
@@ -60,7 +66,7 @@ export async function getFilterList(filterType) {
       return await getHotelInfoFromPostgres();
     case "cloudant":
     case "couchdb":
-      return await getHotelInfoFromCloudant();
+      return await getHotelInfoFromCloudant(filterType);
     default:
       throw new DatabaseNotFoundError(process.env.HOTEL_DATABASE);
   }

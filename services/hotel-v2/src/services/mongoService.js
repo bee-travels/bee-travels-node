@@ -1,64 +1,29 @@
-import IllegalDatabaseQueryError from "./../errors/IllegalDatabaseQueryError";
+import { isValidNoSQLQueryValue } from "./queryValidationService";
 const MongoClient = require("mongodb").MongoClient;
-
-const ILLEGAL_STRING_REGEX = /\$/;
-
-function illegalString(string) {
-  const illegal = true;
-  if (typeof string === "number") {
-    return !illegal;
-  }
-  if (ILLEGAL_STRING_REGEX.test(string)) {
-    return illegal;
-  }
-  try {
-    // If we can parse the string as JSON, it's illegal.
-    JSON.parse(string);
-    return illegal;
-  } catch {
-    return !illegal;
-  }
-}
-function isValidQueryValue(value) {
-  // If the query is an array check if any items are illegal strings.
-  if (value instanceof Array) {
-    value.forEach((v) => {
-      if (illegalString(v)) {
-        throw new IllegalDatabaseQueryError(v);
-      }
-    });
-    return value;
-  }
-  // Check if query is an illegal string.
-  if (illegalString(value)) {
-    throw new IllegalDatabaseQueryError(value);
-  }
-  return value;
-}
 
 export function buildHotelMongoQuery(country, city, filters) {
   const { superchain, hotel, type, minCost, maxCost } = filters;
   let query = {
-    country: isValidQueryValue(country),
-    city: isValidQueryValue(city),
+    country: isValidNoSQLQueryValue(country),
+    city: isValidNoSQLQueryValue(city),
   };
   if (superchain) {
-    query.superchain = { $in: isValidQueryValue(superchain) };
+    query.superchain = { $in: isValidNoSQLQueryValue(superchain) };
   }
   if (hotel) {
-    query.name = { $in: isValidQueryValue(hotel) };
+    query.name = { $in: isValidNoSQLQueryValue(hotel) };
   }
   if (type) {
-    query.type = { $in: isValidQueryValue(type) };
+    query.type = { $in: isValidNoSQLQueryValue(type) };
   }
   if (minCost) {
-    query.cost = { $gte: isValidQueryValue(minCost) };
+    query.cost = { $gte: isValidNoSQLQueryValue(minCost) };
   }
   if (maxCost) {
     if (query.cost) {
-      query.cost.$lte = isValidQueryValue(maxCost);
+      query.cost.$lte = isValidNoSQLQueryValue(maxCost);
     } else {
-      query.cost = { $lte: isValidQueryValue(maxCost) };
+      query.cost = { $lte: isValidNoSQLQueryValue(maxCost) };
     }
   }
   return query;

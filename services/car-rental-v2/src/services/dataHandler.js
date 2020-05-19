@@ -10,6 +10,7 @@ import {
 import {
   getCarDataFromCloudant,
   getCarInfoFromCloudant,
+  buildCarCloudantQuery,
 } from "./cloudantService";
 import TagNotFoundError from "./../errors/TagNotFoundError";
 import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
@@ -40,7 +41,12 @@ export async function getCars(country, city, filters) {
       break;
     case "cloudant":
     case "couchdb":
-      data = await getCarDataFromCloudant();
+      query = buildCarCloudantQuery(
+        capitalize(country),
+        capitalize(city),
+        filters
+      );
+      data = await getCarDataFromCloudant(query);
       break;
     default:
       throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
@@ -60,7 +66,7 @@ export async function getFilterList(filterType) {
       return await getCarInfoFromPostgres();
     case "cloudant":
     case "couchdb":
-      return await getCarInfoFromCloudant();
+      return await getCarInfoFromCloudant(filterType);
     default:
       throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
   }
