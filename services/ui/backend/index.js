@@ -18,6 +18,10 @@ const proxies = [
     path: "/api/v1/hotels*",
   },
   {
+    service: process.env.HOTEL_URL || "http://localhost:9102",
+    path: "/api/v1/cars*",
+  },
+  {
     service: process.env.DESTINATION_URL || "http://localhost:9001",
     path: "/api/v1/destinations*",
   },

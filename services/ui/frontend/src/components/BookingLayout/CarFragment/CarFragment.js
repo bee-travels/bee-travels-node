@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import queryString from "query-string";
-import styles from "./BookingFragment.module.css";
+import styles from "./CarFragment.module.css";
 import DoubleSlider from "./DoubleSlider";
 import MultiSelect from "./MultiSelect";
 import Select from "./Select";
@@ -8,23 +8,26 @@ import Select from "./Select";
 import globalHistory from "globalHistory";
 
 import {
-  SUPERCHAINS,
-  HOTEL_TYPE,
-  HOTELS,
-  MIN_HOTEL_PRICE,
-  MAX_HOTEL_PRICE,
+  TYPE,
+  NAME,
+  MIN_PRICE,
+  MAX_PRICE,
   CURRENCY,
+  CAR_STYLE,
+  RENTAL_COMPANY,
 } from "components/common/query-constants";
+
+const fragmentEndpoint = "/api/v1/cars";
 
 const DEFAULT_MAX = 700;
 
-const ListItem = ({ superchain, name, cost, images }) => {
+const ListItem = ({ superchain, name, cost, image }) => {
   return (
     <div className={styles.listItem}>
       <div
         className={styles.listItemImage}
         style={{
-          background: `transparent url(${images[0]}) no-repeat 0 0 / cover`,
+          background: `transparent url(${image}) no-repeat 0 0 / cover`,
         }}
       />
 
@@ -38,12 +41,14 @@ const ListItem = ({ superchain, name, cost, images }) => {
 };
 
 const Filters = ({
+  selectedStyles,
   selectedTypes,
   selectedHotels,
   selectedSuperchains,
   selectedExchangeRate,
   minHotelPrice,
   maxHotelPrice,
+  styleList,
   typeList,
   hotelList,
   superchainList,
@@ -53,6 +58,7 @@ const Filters = ({
   onTypeSelectionChange,
   onMinMaxSelectionChange,
   onCurrencyChange,
+  onStyleSelectionChange,
 }) => {
   const handleSuperchainChange = (values) => {
     onSuperchainSelectionChange(values);
@@ -64,6 +70,10 @@ const Filters = ({
 
   const handleTypeChange = (values) => {
     onTypeSelectionChange(values);
+  };
+
+  const handleStyleChange = (values) => {
+    onStyleSelectionChange(values);
   };
 
   const handleCurrencyChange = (e) => {
@@ -123,7 +133,7 @@ const Filters = ({
     <div className={styles.filters}>
       <div className={styles.filterWide}>
         <MultiSelect
-          label="Superchains"
+          label="Rental Companies"
           list={superchainList}
           selected={selectedSuperchains}
           onSelected={handleSuperchainChange}
@@ -131,7 +141,7 @@ const Filters = ({
       </div>
       <div className={styles.filterWide}>
         <MultiSelect
-          label="Hotels"
+          label="Cars"
           list={hotelList}
           selected={selectedHotels}
           onSelected={handleHotelChange}
@@ -143,6 +153,14 @@ const Filters = ({
           list={typeList}
           selected={selectedTypes}
           onSelected={handleTypeChange}
+        />
+      </div>
+      <div className={styles.filterNarrow}>
+        <MultiSelect
+          label="Style"
+          list={styleList}
+          selected={selectedStyles}
+          onSelected={handleStyleChange}
         />
       </div>
       <div className={styles.filterSuperNarrow}>
@@ -176,42 +194,70 @@ const fixCurrency = (x) => (x !== "USD" ? x : undefined);
 const fixMin = (x) => (x === 0 ? undefined : x);
 const fixMax = (x) => (x === DEFAULT_MAX ? undefined : x);
 
-const BookingFragment = ({
-  city,
-  country,
-  selectedSuperchains,
-  selectedHotels,
-  selectedTypes,
-  minHotelPrice,
-  maxHotelPrice,
-  selectedCurrency,
-}) => {
+const arrayify = (maybeArray) => {
+  const _maybeArray = maybeArray || [];
+  if (Array.isArray(_maybeArray)) {
+    return _maybeArray;
+  }
+  return [_maybeArray];
+};
+
+const BookingFragment = ({ city, country, search }) => {
+  const queryObject = useMemo(() => queryString.parse(search), [search]);
+  const selectedSuperchains = useMemo(
+    () => arrayify(queryObject[RENTAL_COMPANY]),
+    [queryObject]
+  );
+  const selectedHotels = useMemo(() => arrayify(queryObject[NAME]), [
+    queryObject,
+  ]);
+  const selectedCarStyle = useMemo(() => arrayify(queryObject[CAR_STYLE]), [
+    queryObject,
+  ]);
+  const selectedTypes = useMemo(() => arrayify(queryObject[TYPE]), [
+    queryObject,
+  ]);
+  const minHotelPrice = useMemo(
+    () => parseInt(queryObject[MIN_PRICE], 10) || 0,
+    [queryObject]
+  );
+  const maxHotelPrice = useMemo(
+    () => parseInt(queryObject[MAX_PRICE], 10) || undefined,
+    [queryObject]
+  );
+  const selectedCurrency = useMemo(
+    () => (queryObject[CURRENCY] || "usd").toUpperCase(),
+    [queryObject]
+  );
+
   const [exchangeRates, setExchangeRates] = useState({});
 
   const [superchainList, setSuperchainList] = useState([]);
   const [hotelList, setHotelList] = useState([]);
   const [typeList, setTypeList] = useState([]);
-
+  const [styleList, setStyleList] = useState([]);
   const [hotels, setHotels] = useState([]);
 
   const updateQuery = useCallback(
     (params) => {
       const query = queryString.stringify({
-        [SUPERCHAINS]: selectedSuperchains,
-        [HOTELS]: selectedHotels,
-        [HOTEL_TYPE]: selectedTypes,
+        [RENTAL_COMPANY]: selectedSuperchains,
+        [CAR_STYLE]: selectedCarStyle,
+        [NAME]: selectedHotels,
+        [TYPE]: selectedTypes,
         [CURRENCY]: fixCurrency(selectedCurrency),
-        [MIN_HOTEL_PRICE]: fixMin(minHotelPrice),
-        [MAX_HOTEL_PRICE]: fixMax(maxHotelPrice),
+        [MIN_PRICE]: fixMin(minHotelPrice),
+        [MAX_PRICE]: fixMax(maxHotelPrice),
         ...params,
       });
-      globalHistory.push(`/destinations/${country}/${city}?${query}`);
+      globalHistory.push(`/destinations/${country}/${city}/cars?${query}`);
     },
     [
       city,
       country,
       maxHotelPrice,
       minHotelPrice,
+      selectedCarStyle,
       selectedCurrency,
       selectedHotels,
       selectedSuperchains,
@@ -223,18 +269,20 @@ const BookingFragment = ({
   useEffect(() => {
     const loadHotels = async () => {
       const query = queryString.stringify({
-        superchain:
+        company:
           selectedSuperchains.length > 0
             ? selectedSuperchains.join(",")
             : undefined,
-        hotel: selectedHotels.length > 0 ? selectedHotels.join(",") : undefined,
+        car: selectedHotels.length > 0 ? selectedHotels.join(",") : undefined,
         type: selectedTypes.length > 0 ? selectedTypes.join(",") : undefined,
+        style:
+          selectedCarStyle.length > 0 ? selectedCarStyle.join(",") : undefined,
         mincost: minHotelPrice,
         maxcost: maxHotelPrice,
       });
 
       const hotelResponse = await fetch(
-        `/api/v1/hotels/${country}/${city}?${query}`
+        `${fragmentEndpoint}/${country}/${city}?${query}`
       );
       const hotelList = await hotelResponse.json();
 
@@ -247,25 +295,26 @@ const BookingFragment = ({
   }, [
     city,
     country,
-    selectedSuperchains,
-    selectedHotels,
-    selectedTypes,
-    selectedCurrency,
-    exchangeRates,
-    minHotelPrice,
     maxHotelPrice,
+    minHotelPrice,
+    selectedCarStyle,
+    selectedHotels,
+    selectedSuperchains,
+    selectedTypes,
   ]);
 
   // Load list of superchains.
   useEffect(() => {
     const loadSuperchains = async () => {
-      const superchainResponse = await fetch("/api/v1/hotels/info/superchain");
+      const superchainResponse = await fetch(
+        `${fragmentEndpoint}/info/rental_company`
+      );
       const superchainList = await superchainResponse.json();
       setSuperchainList(superchainList);
     };
 
     loadSuperchains();
-  }, [selectedSuperchains, updateQuery]);
+  }, []);
 
   // Load exchange rates.
   useEffect(() => {
@@ -285,7 +334,7 @@ const BookingFragment = ({
   // Load list of hotels chains.
   useEffect(() => {
     const loadHotelChains = async () => {
-      const hotelResponse = await fetch("/api/v1/hotels/info/name");
+      const hotelResponse = await fetch(`${fragmentEndpoint}/info/name`);
       const hotelList = await hotelResponse.json();
       setHotelList(hotelList);
     };
@@ -296,7 +345,7 @@ const BookingFragment = ({
   // Load list of hotel types.
   useEffect(() => {
     const loadHotelTypes = async () => {
-      const typeResponse = await fetch("/api/v1/hotels/info/type");
+      const typeResponse = await fetch(`${fragmentEndpoint}/info/body_type`);
       const typeList = await typeResponse.json();
       setTypeList(typeList);
     };
@@ -304,23 +353,41 @@ const BookingFragment = ({
     loadHotelTypes();
   }, []);
 
+  useEffect(() => {
+    const loadHotelTypes = async () => {
+      const typeResponse = await fetch(`${fragmentEndpoint}/info/style`);
+      const typeList = await typeResponse.json();
+      console.log(typeList);
+      setStyleList(typeList);
+    };
+
+    loadHotelTypes();
+  }, []);
+
   const handleSuperchainSelectionChange = useCallback(
     (superchains) => {
-      updateQuery({ [SUPERCHAINS]: superchains });
+      updateQuery({ [RENTAL_COMPANY]: superchains });
     },
     [updateQuery]
   );
 
   const handleHotelSelectionChange = useCallback(
     (hotels) => {
-      updateQuery({ [HOTELS]: hotels });
+      updateQuery({ [NAME]: hotels });
     },
     [updateQuery]
   );
 
   const handleTypeSelectionChange = useCallback(
     (types) => {
-      updateQuery({ [HOTEL_TYPE]: types });
+      updateQuery({ [TYPE]: types });
+    },
+    [updateQuery]
+  );
+
+  const handleStyleSelectionChange = useCallback(
+    (styles) => {
+      updateQuery({ [CAR_STYLE]: styles });
     },
     [updateQuery]
   );
@@ -328,8 +395,8 @@ const BookingFragment = ({
   const handleMinMaxSelectionChange = useCallback(
     ([minCost, maxCost]) => {
       updateQuery({
-        [MIN_HOTEL_PRICE]: fixMin(minCost),
-        [MAX_HOTEL_PRICE]: fixMax(maxCost),
+        [MIN_PRICE]: fixMin(minCost),
+        [MAX_PRICE]: fixMax(maxCost),
       });
     },
     [updateQuery]
@@ -346,6 +413,7 @@ const BookingFragment = ({
     <>
       <Filters
         selectedTypes={selectedTypes}
+        selectedStyles={selectedCarStyle}
         selectedHotels={selectedHotels}
         selectedSuperchains={selectedSuperchains}
         selectedExchangeRate={selectedCurrency}
@@ -353,15 +421,17 @@ const BookingFragment = ({
         minHotelPrice={minHotelPrice}
         maxHotelPrice={maxHotelPrice}
         typeList={typeList}
+        styleList={styleList}
         hotelList={hotelList}
         exchangeRates={exchangeRates}
         onSuperchainSelectionChange={handleSuperchainSelectionChange}
         onHotelSelectionChange={handleHotelSelectionChange}
         onTypeSelectionChange={handleTypeSelectionChange}
+        onStyleSelectionChange={handleStyleSelectionChange}
         onMinMaxSelectionChange={handleMinMaxSelectionChange}
         onCurrencyChange={handleCurrencyChange}
       />
-      {hotels.map(({ superchain, name, cost, images }) => {
+      {hotels.map(({ rental_company, name, cost, image }) => {
         const priceString = priceConversion(cost, {
           from: exchangeRates.USD,
           to: exchangeRates[selectedCurrency],
@@ -371,10 +441,10 @@ const BookingFragment = ({
         });
         return (
           <ListItem
-            superchain={superchain}
+            superchain={rental_company}
             name={name}
             cost={priceString}
-            images={images}
+            image={image}
           />
         );
       })}
