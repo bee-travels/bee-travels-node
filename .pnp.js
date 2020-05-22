@@ -27,6 +27,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:services/car-rental-v2"
       },
       {
+        "name": "checkout-v2",
+        "reference": "workspace:services/checkout-v2"
+      },
+      {
         "name": "currency-exchange",
         "reference": "workspace:services/currency-exchange"
       },
@@ -64,6 +68,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "fallbackExclusionList": [
       ["bee-travels", ["workspace:."]],
       ["car-rental-v2", ["workspace:services/car-rental-v2"]],
+      ["checkout-v2", ["workspace:services/checkout-v2"]],
       ["currency-exchange", ["workspace:services/currency-exchange"]],
       ["destination-v1", ["workspace:services/destination-v1"]],
       ["destination-v2", ["workspace:services/destination-v2"]],
@@ -5315,6 +5320,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["check-error", "npm:1.0.2"]
           ],
           "linkType": "HARD",
+        }]
+      ]],
+      ["checkout-v2", [
+        ["workspace:services/checkout-v2", {
+          "packageLocation": "./services/checkout-v2/",
+          "packageDependencies": [
+            ["checkout-v2", "workspace:services/checkout-v2"],
+            ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
+            ["chai-http", "npm:4.3.0"],
+            ["esm", "npm:3.2.25"],
+            ["express", "npm:4.17.1"],
+            ["mocha", "npm:7.1.2"],
+            ["nodemon", "npm:2.0.3"],
+            ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.1.0"],
+            ["pino-http", "npm:5.1.0"],
+            ["pino-pretty", "npm:4.0.0"],
+            ["sinon", "npm:9.0.2"],
+            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
+          ],
+          "linkType": "SOFT",
         }]
       ]],
       ["chokidar", [
@@ -13583,6 +13610,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["open", "npm:7.0.3"],
             ["is-docker", "npm:2.0.0"],
             ["is-wsl", "npm:2.1.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["openapi-comment-parser", [
+        ["npm:0.1.0", {
+          "packageLocation": "./.yarn/cache/openapi-comment-parser-npm-0.1.0-cc67dd41f3-2.zip/node_modules/openapi-comment-parser/",
+          "packageDependencies": [
+            ["openapi-comment-parser", "npm:0.1.0"]
           ],
           "linkType": "HARD",
         }]

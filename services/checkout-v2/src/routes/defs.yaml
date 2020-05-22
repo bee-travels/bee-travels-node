@@ -1,0 +1,104 @@
+definitions:
+  Cart:
+    type: object
+    properties:
+      total_amount:
+        type: number
+        format: decimal
+        example: 499.99
+      currency:
+        type: string
+        description: "Three-letter ISO currency code, in lowercase. Must be a supported currency."
+        example: "USD"
+      status:
+        type: string
+        example: unprocessed
+      cart_items:
+        type: array
+        $ref: '#/definitions/CartItem'
+      billing_details :
+        type: object
+        $ref: '#/definitions/BillingDetails'
+      payment_method_details:
+        type: object
+        $ref: '#/definitions/Card'
+  '#/definitions/CartItem'  :
+    type: object
+    properties:
+      cart_item_type:
+        type: string
+        example: CarRental|HotelReservation|Flight
+      cart_item_uuid:
+        type: string
+      cart_item_cost:
+        type: number
+        format: decimal
+        example: 30.99
+      currency:
+        type: string
+        description: "Three-letter ISO currency code, in lowercase. Must be a supported currency."
+        example: "USD"
+      start_date:
+        type: string
+        example: 05/21/2020
+      end_date:
+        type: string
+        example: 06/22/2020
+
+  BillingDetails  :
+    type: object
+    properties:
+      name:
+        type: string
+        example: John Doe
+      phone:
+          type: string
+          example: "+1 (415) 777 8888"
+      email:
+          type: string
+          example: null
+      address :
+        type: object
+        $ref: '#/definitions/Address'
+
+  Address:
+    type: object
+    properties:
+      line1:
+        type: string
+        example: 42 Arnold Lane
+      line2:
+        type: string
+        example: "#747"
+      city:
+        type: string
+        example: Madrid
+      postal_code:
+        type: string
+        example: 76NE
+      state:
+        type: string
+        example: null
+      country:
+        type: string
+        example: Spain
+
+  Card:
+    type: object
+    properties:
+      creditcard_number:
+        type: string
+        example: "4242 4242 4242 4242"
+      exp_month:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 12
+        example: 2
+      exp_year:
+        type: integer
+        format: int32
+        example: 2023
+      cvc:
+        type: string
+        example: "0017"
