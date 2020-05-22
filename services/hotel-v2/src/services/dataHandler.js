@@ -6,6 +6,7 @@ import {
 import {
   getHotelDataFromPostgres,
   getHotelInfoFromPostgres,
+  buildHotelPostgresQuery,
 } from "./postgresService";
 import {
   getHotelDataFromCloudant,
@@ -37,7 +38,12 @@ export async function getHotels(country, city, filters) {
       data = await getHotelDataFromMongo(query);
       break;
     case "postgres":
-      data = await getHotelDataFromPostgres();
+      query = buildHotelPostgresQuery(
+        capitalize(country),
+        capitalize(city),
+        filters
+      );
+      data = await getHotelDataFromPostgres(query);
       break;
     case "cloudant":
     case "couchdb":
@@ -63,7 +69,7 @@ export async function getFilterList(filterType) {
     case "mongodb":
       return await getHotelInfoFromMongo(filterType);
     case "postgres":
-      return await getHotelInfoFromPostgres();
+      return await getHotelInfoFromPostgres(filterType);
     case "cloudant":
     case "couchdb":
       return await getHotelInfoFromCloudant(filterType);

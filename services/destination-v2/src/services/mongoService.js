@@ -1,21 +1,24 @@
-import { isValidNoSQLQueryValue } from "./queryValidationService";
+import { isValidQueryValue } from "query-validator";
 const MongoClient = require("mongodb").MongoClient;
 
 export function buildDestinationMongoQuery(country, city) {
   let query = {
-    country: isValidNoSQLQueryValue(country),
+    country: isValidQueryValue(country),
   };
   if (city) {
-    query.city = isValidNoSQLQueryValue(city);
+    query.city = isValidQueryValue(city);
   }
   return query;
 }
 
-async function getDestinationDataFromMongo(query) {
-  const client = await MongoClient.connect(process.env.MONGO_CONNECTION_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }).catch((err) => {
+export async function getDestinationDataFromMongo(query) {
+  const client = await MongoClient.connect(
+    process.env.DESTINATION_MONGO_CONNECTION_URL,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  ).catch((err) => {
     console.log(err);
   });
 
@@ -51,5 +54,3 @@ async function getDestinationDataFromMongo(query) {
     client.close();
   }
 }
-
-export { getDestinationDataFromMongo };

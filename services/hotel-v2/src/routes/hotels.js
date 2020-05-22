@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getHotels, getFilterList } from "../services/dataHandler";
 import TagNotFoundError from "../errors/TagNotFoundError";
-import IllegalDatabaseQueryError from "../errors/IllegalDatabaseQueryError";
+import { IllegalDatabaseQueryError } from "query-validator";
 
 const router = Router();
 

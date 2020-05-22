@@ -24,7 +24,11 @@ The source of the car rental service data is provided from a database. The follo
   * `postgres`
   * `cloudant`
   * `couchdb`
-* `MONGO_CONNECTION_URL` - variable for the Mongo database connection URL
+* `CAR_MONGO_CONNECTION_URL` - variable for the `mongodb` database connection URL
+* `CAR_COUCH_CLOUDANT_CONNECTION_URL` - variable for the `couchdb` or `cloudant` database connection URL
+* `CAR_PG_HOST` - variable for the `postgres` database host
+* `CAR_PG_USER` - variable for the `postgres` database user
+* `CAR_PG_PASSWORD` - variable for the `postgres` database password
 
 ## APIs
 

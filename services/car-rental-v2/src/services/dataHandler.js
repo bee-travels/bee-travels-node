@@ -6,6 +6,7 @@ import {
 import {
   getCarDataFromPostgres,
   getCarInfoFromPostgres,
+  buildCarPostgresQuery,
 } from "./postgresService";
 import {
   getCarDataFromCloudant,
@@ -25,7 +26,6 @@ const capitalize = (text) =>
     .join(" ");
 
 export async function getCars(country, city, filters) {
-  let data;
   let query;
   switch (process.env.CAR_DATABASE) {
     case "mongodb":
@@ -34,11 +34,14 @@ export async function getCars(country, city, filters) {
         capitalize(city),
         filters
       );
-      data = await getCarDataFromMongo(query);
-      break;
+      return await getCarDataFromMongo(query);
     case "postgres":
-      data = await getCarDataFromPostgres();
-      break;
+      query = buildCarPostgresQuery(
+        capitalize(country),
+        capitalize(city),
+        filters
+      );
+      return await getCarDataFromPostgres(query);
     case "cloudant":
     case "couchdb":
       query = buildCarCloudantQuery(
@@ -46,13 +49,10 @@ export async function getCars(country, city, filters) {
         capitalize(city),
         filters
       );
-      data = await getCarDataFromCloudant(query);
-      break;
+      return await getCarDataFromCloudant(query);
     default:
       throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
   }
-
-  return data;
 }
 
 export async function getFilterList(filterType) {
@@ -63,7 +63,7 @@ export async function getFilterList(filterType) {
     case "mongodb":
       return await getCarInfoFromMongo(filterType);
     case "postgres":
-      return await getCarInfoFromPostgres();
+      return await getCarInfoFromPostgres(filterType);
     case "cloudant":
     case "couchdb":
       return await getCarInfoFromCloudant(filterType);

@@ -1,42 +1,45 @@
-import { isValidNoSQLQueryValue } from "./queryValidationService";
+import { isValidQueryValue } from "query-validator";
 const MongoClient = require("mongodb").MongoClient;
 
 export function buildCarMongoQuery(country, city, filters) {
   const { company, car, type, style, minCost, maxCost } = filters;
   let query = {
-    country: isValidNoSQLQueryValue(country),
-    city: isValidNoSQLQueryValue(city),
+    country: isValidQueryValue(country),
+    city: isValidQueryValue(city),
   };
   if (company) {
-    query.rental_company = { $in: isValidNoSQLQueryValue(company) };
+    query.rental_company = { $in: isValidQueryValue(company) };
   }
   if (car) {
-    query.name = { $in: isValidNoSQLQueryValue(car) };
+    query.name = { $in: isValidQueryValue(car) };
   }
   if (type) {
-    query.body_type = { $in: isValidNoSQLQueryValue(type) };
+    query.body_type = { $in: isValidQueryValue(type) };
   }
   if (style) {
-    query.style = { $in: isValidNoSQLQueryValue(style) };
+    query.style = { $in: isValidQueryValue(style) };
   }
   if (minCost) {
-    query.cost = { $gte: isValidNoSQLQueryValue(minCost) };
+    query.cost = { $gte: isValidQueryValue(minCost) };
   }
   if (maxCost) {
     if (query.cost) {
-      query.cost.$lte = isValidNoSQLQueryValue(maxCost);
+      query.cost.$lte = isValidQueryValue(maxCost);
     } else {
-      query.cost = { $lte: isValidNoSQLQueryValue(maxCost) };
+      query.cost = { $lte: isValidQueryValue(maxCost) };
     }
   }
   return query;
 }
 
 export async function getCarDataFromMongo(query) {
-  const client = await MongoClient.connect(process.env.MONGO_CONNECTION_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }).catch((err) => {
+  const client = await MongoClient.connect(
+    process.env.CAR_MONGO_CONNECTION_URL,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  ).catch((err) => {
     console.log(err);
   });
 
@@ -66,10 +69,13 @@ export async function getCarDataFromMongo(query) {
 }
 
 export async function getCarInfoFromMongo(filterType) {
-  const client = await MongoClient.connect(process.env.MONGO_CONNECTION_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }).catch((err) => {
+  const client = await MongoClient.connect(
+    process.env.CAR_MONGO_CONNECTION_URL,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  ).catch((err) => {
     console.log(err);
   });
 

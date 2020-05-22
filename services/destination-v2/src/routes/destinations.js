@@ -4,7 +4,7 @@ import {
   getCity,
   getCitiesForCountry,
 } from "../services/dataHandler";
-import IllegalDatabaseQueryError from "../errors/IllegalDatabaseQueryError";
+import { IllegalDatabaseQueryError } from "query-validator";
 
 const router = Router();
 

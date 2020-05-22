@@ -16,6 +16,7 @@
     "pg": "^8.0.3",
     "pino-http": "^5.1.0",
     "pino-pretty": "^4.0.0",
+    "query-validator": "workspace:*",
     "swagger-jsdoc": "^4.0.0",
     "swagger-ui-express": "^4.1.1"
   },

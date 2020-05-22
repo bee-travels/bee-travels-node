@@ -25,7 +25,11 @@ The source of the destination service data is provided from a database. The foll
   * `postgres`
   * `cloudant`
   * `couchdb`
-* `MONGO_CONNECTION_URL` - variable for the Mongo database connection URL
+* `DESTINATION_MONGO_CONNECTION_URL` - variable for the `mongodb` database connection URL
+* `DESTINATION_COUCH_CLOUDANT_CONNECTION_URL` - variable for the `couchdb` or `cloudant` database connection URL
+* `DESTINATION_PG_HOST` - variable for the `postgres` database host
+* `DESTINATION_PG_USER` - variable for the `postgres` database user
+* `DESTINATION_PG_PASSWORD` - variable for the `postgres` database password
 
 ## APIs
 

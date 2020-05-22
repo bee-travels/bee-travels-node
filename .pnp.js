@@ -57,6 +57,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {
         "name": "ui-frontend",
         "reference": "workspace:services/ui/frontend"
+      },
+      {
+        "name": "query-validator",
+        "reference": "workspace:packages/query-validator"
       }
     ],
     "enableTopLevelFallback": true,
@@ -70,6 +74,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["hotel-v1", ["workspace:services/hotel-v1"]],
       ["hotel-v2", ["workspace:services/hotel-v2"]],
       ["payment", ["workspace:services/payment-v2"]],
+      ["query-validator", ["workspace:packages/query-validator"]],
       ["ui-backend", ["workspace:services/ui/backend"]],
       ["ui-frontend", ["workspace:services/ui/frontend"]]
     ],
@@ -5167,6 +5172,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
+            ["query-validator", "workspace:packages/query-validator"],
             ["sinon", "npm:9.0.2"],
             ["swagger-jsdoc", "npm:4.0.0"],
             ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
@@ -6926,6 +6932,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
+            ["query-validator", "workspace:packages/query-validator"],
             ["sinon", "npm:9.0.2"],
             ["swagger-jsdoc", "npm:4.0.0"],
             ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
@@ -9502,6 +9509,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
+            ["query-validator", "workspace:packages/query-validator"],
             ["sinon", "npm:9.0.2"],
             ["swagger-jsdoc", "npm:4.0.0"],
             ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
@@ -15845,6 +15853,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["strict-uri-encode", "npm:2.0.0"]
           ],
           "linkType": "HARD",
+        }]
+      ]],
+      ["query-validator", [
+        ["workspace:packages/query-validator", {
+          "packageLocation": "./packages/query-validator/",
+          "packageDependencies": [
+            ["query-validator", "workspace:packages/query-validator"]
+          ],
+          "linkType": "SOFT",
         }]
       ]],
       ["querystring", [

@@ -2,7 +2,10 @@ import {
   getDestinationDataFromMongo,
   buildDestinationMongoQuery,
 } from "./mongoService";
-import { getDestinationDataFromPostgres } from "./postgresService";
+import {
+  getDestinationDataFromPostgres,
+  buildDestinationPostgresQuery,
+} from "./postgresService";
 import {
   getDestinationDataFromCloudant,
   buildDestinationCloudantQuery,
@@ -21,7 +24,10 @@ export async function getCities() {
     case "mongodb":
       return await getDestinationDataFromMongo({});
     case "postgres":
-      return await getDestinationDataFromPostgres({});
+      return await getDestinationDataFromPostgres({
+        statement: "",
+        values: [],
+      });
     case "cloudant":
     case "couchdb":
       return await getDestinationDataFromCloudant({});
@@ -37,7 +43,8 @@ export async function getCitiesForCountry(country) {
       query = buildDestinationMongoQuery(capitalize(country), null);
       return await getDestinationDataFromMongo(query);
     case "postgres":
-      return await getDestinationDataFromPostgres({});
+      query = buildDestinationPostgresQuery(capitalize(country), null);
+      return await getDestinationDataFromPostgres(query);
     case "cloudant":
     case "couchdb":
       query = buildDestinationCloudantQuery(capitalize(country), null);
@@ -54,7 +61,11 @@ export async function getCity(country, city) {
       query = buildDestinationMongoQuery(capitalize(country), capitalize(city));
       return await getDestinationDataFromMongo(query);
     case "postgres":
-      return await getDestinationDataFromPostgres({});
+      query = buildDestinationPostgresQuery(
+        capitalize(country),
+        capitalize(city)
+      );
+      return await getDestinationDataFromPostgres(query);
     case "cloudant":
     case "couchdb":
       query = buildDestinationCloudantQuery(

@@ -1,18 +1,20 @@
-import { isValidNoSQLQueryValue } from "./queryValidationService";
+import { isValidQueryValue } from "query-validator";
 const Cloudant = require("@cloudant/cloudant");
 
 export function buildDestinationCloudantQuery(country, city) {
   let query = {
-    country: isValidNoSQLQueryValue(country),
+    country: isValidQueryValue(country),
   };
   if (city) {
-    query.city = isValidNoSQLQueryValue(city);
+    query.city = isValidQueryValue(city);
   }
   return query;
 }
 
-async function getDestinationDataFromCloudant(query) {
-  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
+export async function getDestinationDataFromCloudant(query) {
+  const cloudant = Cloudant(
+    process.env.DESTINATION_COUCH_CLOUDANT_CONNECTION_URL
+  );
   const db = cloudant.db.use("destination");
 
   let res = await db.find({
@@ -26,5 +28,3 @@ async function getDestinationDataFromCloudant(query) {
   }
   return res.docs;
 }
-
-export { getDestinationDataFromCloudant };

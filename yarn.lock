@@ -4310,6 +4310,7 @@ __metadata:
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    query-validator: "workspace:*"
     sinon: ^9.0.2
     swagger-jsdoc: ^4.0.0
     swagger-ui-express: ^4.1.1
@@ -5867,6 +5868,7 @@ __metadata:
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    query-validator: "workspace:*"
     sinon: ^9.0.2
     swagger-jsdoc: ^4.0.0
     swagger-ui-express: ^4.1.1
@@ -8157,6 +8159,7 @@ fsevents@^1.2.7:
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    query-validator: "workspace:*"
     sinon: ^9.0.2
     swagger-jsdoc: ^4.0.0
     swagger-ui-express: ^4.1.1
@@ -13914,6 +13917,12 @@ fsevents@^1.2.7:
   checksum: 2/b2db992d195633b56100eecc8a3e87bfaf30a80b997b3cfeda1accc28195a71eda112ef16b7a6ee4c7d06cfcd372a8a2d627967158dc8d20f80430f32ffaa4c7
   languageName: node
   linkType: hard
+
+"query-validator@workspace:*, query-validator@workspace:packages/query-validator":
+  version: 0.0.0-use.local
+  resolution: "query-validator@workspace:packages/query-validator"
+  languageName: unknown
+  linkType: soft
 
 "querystring-es3@npm:^0.2.0":
   version: 0.2.1

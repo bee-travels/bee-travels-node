@@ -1,39 +1,39 @@
-import { isValidNoSQLQueryValue } from "./queryValidationService";
+import { isValidQueryValue } from "query-validator";
 const Cloudant = require("@cloudant/cloudant");
 
 export function buildCarCloudantQuery(country, city, filters) {
   const { company, car, type, style, minCost, maxCost } = filters;
   let query = {
-    country: isValidNoSQLQueryValue(country),
-    city: isValidNoSQLQueryValue(city),
+    country: isValidQueryValue(country),
+    city: isValidQueryValue(city),
   };
   if (company) {
-    query.rental_company = { $in: isValidNoSQLQueryValue(company) };
+    query.rental_company = { $in: isValidQueryValue(company) };
   }
   if (car) {
-    query.name = { $in: isValidNoSQLQueryValue(car) };
+    query.name = { $in: isValidQueryValue(car) };
   }
   if (type) {
-    query.body_type = { $in: isValidNoSQLQueryValue(type) };
+    query.body_type = { $in: isValidQueryValue(type) };
   }
   if (style) {
-    query.style = { $in: isValidNoSQLQueryValue(style) };
+    query.style = { $in: isValidQueryValue(style) };
   }
   if (minCost) {
-    query.cost = { $gte: isValidNoSQLQueryValue(minCost) };
+    query.cost = { $gte: isValidQueryValue(minCost) };
   }
   if (maxCost) {
     if (query.cost) {
-      query.cost.$lte = isValidNoSQLQueryValue(maxCost);
+      query.cost.$lte = isValidQueryValue(maxCost);
     } else {
-      query.cost = { $lte: isValidNoSQLQueryValue(maxCost) };
+      query.cost = { $lte: isValidQueryValue(maxCost) };
     }
   }
   return query;
 }
 
 export async function getCarDataFromCloudant(query) {
-  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
+  const cloudant = Cloudant(process.env.CAR_COUCH_CLOUDANT_CONNECTION_URL);
   const db = cloudant.db.use("cars");
 
   const res = await db.find({ selector: query, limit: 200 });
@@ -45,7 +45,7 @@ export async function getCarDataFromCloudant(query) {
 }
 
 export async function getCarInfoFromCloudant(filterType) {
-  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
+  const cloudant = Cloudant(process.env.CAR_COUCH_CLOUDANT_CONNECTION_URL);
   const db = cloudant.db.use(
     filterType === "rental_company" ? "cars" : "car_info"
   );

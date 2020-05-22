@@ -1,5 +1,6 @@
-import IllegalDatabaseQueryError from "./../errors/IllegalDatabaseQueryError";
-const ILLEGAL_STRING_REGEX = /\$/;
+import IllegalDatabaseQueryError from "./IllegalDatabaseQueryError";
+import SQL_RESERVED_WORDS from "./sqlReservedWords";
+const ILLEGAL_STRING_REGEX = /\$|'|;/;
 
 function illegalString(string) {
   const illegal = true;
@@ -9,6 +10,12 @@ function illegalString(string) {
   if (ILLEGAL_STRING_REGEX.test(string)) {
     return illegal;
   }
+  const words = string.split(" ");
+  for (let word of words) {
+    if (SQL_RESERVED_WORDS.includes(word.toUpperCase())) {
+      return illegal;
+    }
+  }
   try {
     // If we can parse the string as JSON, it's illegal.
     JSON.parse(string);
@@ -17,7 +24,8 @@ function illegalString(string) {
     return !illegal;
   }
 }
-export function isValidNoSQLQueryValue(value) {
+
+export function isValidQueryValue(value) {
   // If the query is an array check if any items are illegal strings.
   if (value instanceof Array) {
     value.forEach((v) => {
@@ -33,3 +41,5 @@ export function isValidNoSQLQueryValue(value) {
   }
   return value;
 }
+
+export { default as IllegalDatabaseQueryError } from "./IllegalDatabaseQueryError";
