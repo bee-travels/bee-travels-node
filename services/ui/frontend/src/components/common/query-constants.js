@@ -1,6 +1,15 @@
+// hotels
 export const SUPERCHAINS = "sc";
-export const HOTELS = "h";
-export const HOTEL_TYPE = "t";
-export const MIN_HOTEL_PRICE = "min";
-export const MAX_HOTEL_PRICE = "max";
+
+// cars
+export const RENTAL_COMPANY = "rc";
+export const CAR_STYLE = "cs";
+
+// flights
+
+// common
+export const NAME = "n";
+export const TYPE = "t";
+export const MIN_PRICE = "min";
+export const MAX_PRICE = "max";
 export const CURRENCY = "currency";

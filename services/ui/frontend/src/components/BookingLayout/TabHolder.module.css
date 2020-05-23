@@ -1,0 +1,27 @@
+.tabRow {
+  display: flex;
+  height: 48px;
+  background-color: #ffffff;
+}
+
+.tabBase {
+  flex: 1;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 3px solid transparent;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tabActive {
+  composes: tabBase;
+  border-bottom: 3px solid #0f62fe;
+}
+
+.tab {
+  composes: tabBase;
+  color: #a2a2a2;
+}

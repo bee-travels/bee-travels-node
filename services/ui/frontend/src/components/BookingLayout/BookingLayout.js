@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import queryString from "query-string";
-
 import DestinationFragment from "./DestinationFragment/DestinationFragment";
-import BookingFragment from "./BookingFragment/BookingFragment";
-import {
-  SUPERCHAINS,
-  HOTELS,
-  HOTEL_TYPE,
-  MIN_HOTEL_PRICE,
-  MAX_HOTEL_PRICE,
-  CURRENCY,
-} from "components/common/query-constants";
+import HotelFragment from "./HotelFragment/HotelFragment";
+import CarFragment from "./CarFragment/CarFragment";
+
+import TabHolder from "./TabHolder";
 
 const SplitPaneLayout = ({ children, panelWidth, breakpoint }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -81,24 +74,8 @@ const SplitPaneLayout = ({ children, panelWidth, breakpoint }) => {
   );
 };
 
-const arrayify = (maybeArray) => {
-  const _maybeArray = maybeArray || [];
-  if (Array.isArray(_maybeArray)) {
-    return _maybeArray;
-  }
-  return [_maybeArray];
-};
-
 const Content = ({ location }) => {
   const { country, city } = useParams();
-
-  const queryObject = queryString.parse(location.search);
-  const superchains = arrayify(queryObject[SUPERCHAINS]);
-  const hotels = arrayify(queryObject[HOTELS]);
-  const hotelType = arrayify(queryObject[HOTEL_TYPE]);
-  const minHotelPrice = parseInt(queryObject[MIN_HOTEL_PRICE], 10) || 0;
-  const maxHotelPrice = parseInt(queryObject[MAX_HOTEL_PRICE], 10) || undefined;
-  const currency = (queryObject[CURRENCY] || "usd").toUpperCase();
 
   const [cityName, setCityName] = useState("");
   const [countryName, setCountryName] = useState("");
@@ -136,16 +113,10 @@ const Content = ({ location }) => {
         description={description}
         images={images}
       />
-      <BookingFragment
-        city={city}
-        country={country}
-        selectedSuperchains={superchains}
-        selectedHotels={hotels}
-        selectedTypes={hotelType}
-        minHotelPrice={minHotelPrice}
-        maxHotelPrice={maxHotelPrice}
-        selectedCurrency={currency}
-      />
+      <TabHolder location={location}>
+        <HotelFragment city={city} country={country} search={location.search} />
+        <CarFragment city={city} country={country} search={location.search} />
+      </TabHolder>
     </SplitPaneLayout>
   );
 };
