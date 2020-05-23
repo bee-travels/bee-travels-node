@@ -3716,6 +3716,7 @@ __metadata:
     eslint-plugin-flowtype: 4.x
     eslint-plugin-import: 2.x
     eslint-plugin-jsx-a11y: 6.x
+    eslint-plugin-openapi-jsdoc: ^0.0.2
     eslint-plugin-react: 7.x
     eslint-plugin-react-hooks: 2.x
     esm: ^3.2.25
@@ -4833,6 +4834,13 @@ __metadata:
     has-own-prop: ^2.0.0
     repeat-string: ^1.6.1
   checksum: 2/80bc181741f7966946e09ba253e97a4709288acb65e8b30e641efbca0a1a2c79f31d4df6cd1412a17ddb3d1289f552ec13e1d3f983b42ac84de6344fd062cf3d
+  languageName: node
+  linkType: hard
+
+"comment-parser@npm:^0.7.4":
+  version: 0.7.4
+  resolution: "comment-parser@npm:0.7.4"
+  checksum: 2/1938dec44c526a6206edb17a93424da82dc599a0fbb39fc7b8745fa8fca08708bafb0b408f4d05cf02a239816d33eb90a4256e1166544e6729eaee908908d82d
   languageName: node
   linkType: hard
 
@@ -6561,6 +6569,15 @@ __metadata:
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6
   checksum: 2/b3123ca859e24a15be4580fa9f4180eb6ca1d8acec603a228b490a9d6cfb4e6ee81d4e16d92ac90fac1516d09d10aece58fceb8fb8134610e4e0e7592427e125
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-openapi-jsdoc@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "eslint-plugin-openapi-jsdoc@npm:0.0.2"
+  dependencies:
+    comment-parser: ^0.7.4
+  checksum: 2/e83187e8fb6ab0706e4b1177d64e754b4d4dd6dd553fed7049b7dee448ea3217119374b881ee88ea5c2f2732e948b3ad9db58aabf7b13a6f34de7acbc7a74b9a
   languageName: node
   linkType: hard
 
