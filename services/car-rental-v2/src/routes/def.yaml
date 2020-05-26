@@ -1,7 +1,0 @@
-definitions:
-  FilterType:
-    enum:
-      - rental_company
-      - name
-      - body_type
-      - style

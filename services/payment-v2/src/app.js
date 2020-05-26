@@ -1,9 +1,8 @@
 import express from "express";
 import logger from "pino-http";
 import pinoPretty from "pino-pretty";
-import swaggerJSDoc from "jsdoc-openapi";
+import openapi from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
-import options from "./swaggerConfig";
 
 import paymentRouter from "./routes/payment";
 
@@ -16,7 +15,7 @@ app.use(
     prettyPrint: process.env.NODE_ENV !== "production",
     // Yarn 2 doesn't like pino importing `pino-pretty` on it's own, so we need to
     // provide it.
-    prettifier: pinoPretty
+    prettifier: pinoPretty,
   })
 );
 
@@ -26,9 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Setup Swagger.
 // Don't use `/` for swagger, it will catch everything.
-options.swaggerDefinition.host = process.env.HOST_IP || "localhost:9403";
-options.swaggerDefinition.schemes = [process.env.SCHEME || "http"];
-const specs = swaggerJSDoc(options);
+const specs = openapi();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // Currency api.

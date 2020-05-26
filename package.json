@@ -2,7 +2,8 @@
   "name": "bee-travels",
   "private": true,
   "workspaces": [
-    "services/**/*"
+    "services/**/*",
+    "packages/**/*"
   ],
   "scripts": {
     "lint": "eslint \"services/**/*.js\"",

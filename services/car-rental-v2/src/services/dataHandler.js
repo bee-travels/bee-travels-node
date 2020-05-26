@@ -1,87 +1,73 @@
-import path from "path";
-import { promises as fs } from "fs";
-import { getCarDataFromMongo, getCarInfoFromMongo } from "./mongoService";
+import {
+  getCarDataFromMongo,
+  getCarInfoFromMongo,
+  buildCarMongoQuery,
+} from "./mongoService";
 import {
   getCarDataFromPostgres,
   getCarInfoFromPostgres,
+  buildCarPostgresQuery,
 } from "./postgresService";
 import {
   getCarDataFromCloudant,
   getCarInfoFromCloudant,
+  buildCarCloudantQuery,
 } from "./cloudantService";
 import TagNotFoundError from "./../errors/TagNotFoundError";
+import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
 
-const CARS_PATH = path.join(__dirname, "../../data/cars.json");
+const filterTypes = ["rental_company", "name", "body_type", "style"];
 
-const pillify = (s) => s.toLowerCase().replace(" ", "-");
-
-async function parseMetadata(file) {
-  const content = await fs.readFile(file);
-  const metadata = JSON.parse(content);
-  return metadata;
-}
-
-async function loadData(db) {
-  switch (db) {
-    case "mongodb":
-      return await getCarInfoFromMongo();
-    case "postgres":
-      return await getCarInfoFromPostgres();
-    case "cloudant":
-    case "couchdb":
-      return await getCarInfoFromCloudant();
-    default:
-      return await parseMetadata(CARS_PATH);
-  }
-}
-
-async function loadCarData(db) {
-  switch (db) {
-    case "mongodb":
-      return await getCarDataFromMongo();
-    case "postgres":
-      return await getCarDataFromPostgres();
-    case "cloudant":
-    case "couchdb":
-      return await getCarDataFromCloudant();
-    default:
-      return await parseMetadata(CARS_PATH);
-  }
-}
+const capitalize = (text) =>
+  text
+    .toLowerCase()
+    .split("-")
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(" ");
 
 export async function getCars(country, city, filters) {
-  const { company, car, type, style, minCost, maxCost } = filters;
-  const data = await loadCarData(process.env.DATABASE);
-
-  const carsData = data.filter((h) => {
-    if (
-      pillify(h.city) !== city.toLowerCase() ||
-      pillify(h.country) !== country.toLowerCase()
-    ) {
-      return false;
-    }
-
-    return (
-      (company === undefined || company.includes(h.rental_company)) &&
-      (car === undefined || car.includes(h.name)) &&
-      (type === undefined || type.includes(h.body_type)) &&
-      (style === undefined || style.includes(h.style)) &&
-      (minCost === undefined || minCost <= h.cost) &&
-      (maxCost === undefined || h.cost <= maxCost)
-    );
-  });
-
-  return carsData;
+  let query;
+  switch (process.env.CAR_DATABASE) {
+    case "mongodb":
+      query = buildCarMongoQuery(
+        capitalize(country),
+        capitalize(city),
+        filters
+      );
+      return await getCarDataFromMongo(query);
+    case "postgres":
+      query = buildCarPostgresQuery(
+        capitalize(country),
+        capitalize(city),
+        filters
+      );
+      return await getCarDataFromPostgres(query);
+    case "cloudant":
+    case "couchdb":
+      query = buildCarCloudantQuery(
+        capitalize(country),
+        capitalize(city),
+        filters
+      );
+      return await getCarDataFromCloudant(query);
+    default:
+      throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
+  }
 }
 
 export async function getFilterList(filterType) {
-  const data = await loadData(process.env.DATABASE);
-  const listOfFilterOptions = data.map((item) => {
-    const valueForFilter = item[filterType];
-    if (valueForFilter !== undefined) {
-      return valueForFilter;
-    }
+  if (filterTypes.includes(filterType) === false) {
     throw new TagNotFoundError(filterType);
-  });
-  return [...new Set(listOfFilterOptions)];
+  }
+  switch (process.env.CAR_DATABASE) {
+    case "mongodb":
+      return await getCarInfoFromMongo(filterType);
+    case "postgres":
+      return await getCarInfoFromPostgres(filterType);
+    case "cloudant":
+    case "couchdb":
+      return await getCarInfoFromCloudant(filterType);
+    default:
+      throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
+  }
 }

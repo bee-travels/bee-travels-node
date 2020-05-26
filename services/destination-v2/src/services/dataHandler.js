@@ -1,59 +1,79 @@
-import path from "path";
-import { promises as fs } from "fs";
-import { getDestinationDataFromMongo } from "./mongoService";
-import { getDestinationDataFromPostgres } from "./postgresService";
-import { getDestinationDataFromCloudant } from "./cloudantService";
+import {
+  getDestinationDataFromMongo,
+  buildDestinationMongoQuery,
+} from "./mongoService";
+import {
+  getDestinationDataFromPostgres,
+  buildDestinationPostgresQuery,
+} from "./postgresService";
+import {
+  getDestinationDataFromCloudant,
+  buildDestinationCloudantQuery,
+} from "./cloudantService";
+import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
 
-const DESTINATIONS_PATH = path.join(__dirname, "../../data/destinations.json");
+const capitalize = (text) =>
+  text
+    .toLowerCase()
+    .split("-")
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(" ");
 
-const pillify = (s) => s.toLowerCase().replace(" ", "-");
-
-async function parseMetadata(file) {
-  const content = await fs.readFile(file);
-  const metadata = JSON.parse(content);
-  return metadata;
-}
-
-async function loadData(db, allData) {
-  switch (db) {
+export async function getCities() {
+  switch (process.env.DESTINATION_DATABASE) {
     case "mongodb":
-      return await getDestinationDataFromMongo();
+      return await getDestinationDataFromMongo({});
     case "postgres":
-      return await getDestinationDataFromPostgres();
+      return await getDestinationDataFromPostgres({
+        statement: "",
+        values: [],
+      });
     case "cloudant":
     case "couchdb":
-      return await getDestinationDataFromCloudant();
+      return await getDestinationDataFromCloudant({});
     default:
-      const fullData = await parseMetadata(DESTINATIONS_PATH);
-      if (allData) {
-        return fullData;
-      }
-      return fullData.map((item) => ({
-        country: item.country,
-        city: item.city,
-      }));
+      throw new DatabaseNotFoundError(process.env.DESTINATION_DATABASE);
   }
 }
 
-export async function getCities() {
-  const metadata = await loadData(process.env.DATABASE, false);
-  return metadata;
-}
-
 export async function getCitiesForCountry(country) {
-  const metadata = await loadData(process.env.DATABASE, false);
-  const citiesData = metadata.filter(
-    (c) => pillify(c.country) === country.toLowerCase()
-  );
-  return citiesData;
+  let query;
+  switch (process.env.DESTINATION_DATABASE) {
+    case "mongodb":
+      query = buildDestinationMongoQuery(capitalize(country), null);
+      return await getDestinationDataFromMongo(query);
+    case "postgres":
+      query = buildDestinationPostgresQuery(capitalize(country), null);
+      return await getDestinationDataFromPostgres(query);
+    case "cloudant":
+    case "couchdb":
+      query = buildDestinationCloudantQuery(capitalize(country), null);
+      return await getDestinationDataFromCloudant(query);
+    default:
+      throw new DatabaseNotFoundError(process.env.DESTINATION_DATABASE);
+  }
 }
 
 export async function getCity(country, city) {
-  const metadata = await loadData(process.env.DATABASE, true);
-  const cityData = metadata.find(
-    (c) =>
-      pillify(c.city) === city.toLowerCase() &&
-      pillify(c.country) === country.toLowerCase()
-  );
-  return cityData;
+  let query;
+  switch (process.env.DESTINATION_DATABASE) {
+    case "mongodb":
+      query = buildDestinationMongoQuery(capitalize(country), capitalize(city));
+      return await getDestinationDataFromMongo(query);
+    case "postgres":
+      query = buildDestinationPostgresQuery(
+        capitalize(country),
+        capitalize(city)
+      );
+      return await getDestinationDataFromPostgres(query);
+    case "cloudant":
+    case "couchdb":
+      query = buildDestinationCloudantQuery(
+        capitalize(country),
+        capitalize(city)
+      );
+      return await getDestinationDataFromCloudant(query);
+    default:
+      throw new DatabaseNotFoundError(process.env.DESTINATION_DATABASE);
+  }
 }

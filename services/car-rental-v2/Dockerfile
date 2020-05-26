@@ -3,7 +3,6 @@ FROM bee-travels/node-base:v1 as release
 WORKDIR /services/car-rental-v2
 
 COPY src src
-COPY data data
 COPY package.json .
 
 EXPOSE 9102

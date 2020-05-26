@@ -1,10 +1,24 @@
-var MongoClient = require("mongodb").MongoClient;
+import { isValidQueryValue } from "query-validator";
+const MongoClient = require("mongodb").MongoClient;
 
-async function getDestinationDataFromMongo() {
-  const client = await MongoClient.connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }).catch((err) => {
+export function buildDestinationMongoQuery(country, city) {
+  let query = {
+    country: isValidQueryValue(country),
+  };
+  if (city) {
+    query.city = isValidQueryValue(city);
+  }
+  return query;
+}
+
+export async function getDestinationDataFromMongo(query) {
+  const client = await MongoClient.connect(
+    process.env.DESTINATION_MONGO_CONNECTION_URL,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  ).catch((err) => {
     console.log(err);
   });
 
@@ -15,14 +29,21 @@ async function getDestinationDataFromMongo() {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("destination");
-    let query = {};
     let res = await collection.find(query);
-    var destinations = [];
-    var destination;
-    var hasNextDestination = await res.hasNext();
+    let destinations = [];
+    let destination;
+    let hasNextDestination = await res.hasNext();
     while (hasNextDestination) {
       destination = await res.next();
       delete destination["_id"];
+      if (query.city === undefined) {
+        delete destination["id"];
+        delete destination["latitude"];
+        delete destination["longitude"];
+        delete destination["population"];
+        delete destination["description"];
+        delete destination["images"];
+      }
       destinations.push(destination);
       hasNextDestination = await res.hasNext();
     }
@@ -33,5 +54,3 @@ async function getDestinationDataFromMongo() {
     client.close();
   }
 }
-
-export { getDestinationDataFromMongo };

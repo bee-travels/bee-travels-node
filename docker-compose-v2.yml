@@ -14,12 +14,14 @@ services:
       - base
       - destination
       - hotel
+      - car-rental
       - currency-exchange
       - payment
 
     environment:
       - DESTINATION_URL=http://destination:9001
       - HOTEL_URL=http://hotel:9101
+      - CAR_URL=http://car-rental:9102
       - CURRENCY_EXCHANGE_URL=http://currency-exchange:9201
       - PAYMENT_URL=http://payment:9403
 
@@ -29,6 +31,13 @@ services:
       - "9001:9001"
     depends_on:
       - base
+    environment:
+        - DESTINATION_DATABASE=${DESTINATION_DATABASE}
+        - DESTINATION_MONGO_CONNECTION_URL=mongodb://localhost:27017
+        - DESTINATION_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@localhost:5984
+        - DESTINATION_PG_HOST=localhost
+        - DESTINATION_PG_USER=postgres
+        - DESTINATION_PG_PASSWORD=admin
 
   hotel:
       build: services/hotel-v2
@@ -36,6 +45,27 @@ services:
         - "9101:9101"
       depends_on:
         - base
+      environment:
+        - HOTEL_DATABASE=${HOTEL_DATABASE}
+        - HOTEL_MONGO_CONNECTION_URL=mongodb://localhost:27017
+        - HOTEL_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@localhost:5984
+        - HOTEL_PG_HOST=localhost
+        - HOTEL_PG_USER=postgres
+        - HOTEL_PG_PASSWORD=admin
+
+  car-rental:
+      build: services/car-rental-v2
+      ports:
+        - "9102:9102"
+      depends_on:
+        - base
+      environment:
+        - CAR_DATABASE=${CAR_DATABASE}
+        - CAR_MONGO_CONNECTION_URL=mongodb://localhost:27017
+        - CAR_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@localhost:5984
+        - CAR_PG_HOST=localhost
+        - CAR_PG_USER=postgres
+        - CAR_PG_PASSWORD=admin
 
   currency-exchange:
     build: services/currency-exchange
@@ -50,4 +80,3 @@ services:
         - "9403:9403"
       depends_on:
         - base
-

@@ -14,11 +14,13 @@ services:
       - base
       - destination
       - hotel
+      - car-rental
       - currency-exchange
     environment:
       - NODE_ENV=production
       - DESTINATION_URL=http://destination:9001
       - HOTEL_URL=http://hotel:9101
+      - CAR_URL=http://car-rental:9102
       - CURRENCY_EXCHANGE_URL=http://currency-exchange:9201
 
   destination:
@@ -32,6 +34,13 @@ services:
       build: services/hotel-v1
       ports:
         - "9101:9101"
+      depends_on:
+        - base
+
+  car-rental:
+      build: services/car-rental-v1
+      ports:
+        - "9102:9102"
       depends_on:
         - base
 

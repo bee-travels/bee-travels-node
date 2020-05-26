@@ -1,19 +1,38 @@
+import { isValidQueryValue } from "query-validator";
 const { Client } = require("pg");
 
-var types = require("pg").types;
+let types = require("pg").types;
 types.setTypeParser(1700, function (val) {
   return parseFloat(val);
 });
 
-async function getDestinationDataFromPostgres() {
+export function buildDestinationPostgresQuery(country, city) {
+  let query = {
+    statement: " WHERE country=$1",
+    values: [isValidQueryValue(country)],
+  };
+  if (city) {
+    query.values.push(isValidQueryValue(city));
+    query.statement = query.statement + " and city=$2";
+  }
+  return query;
+}
+
+export async function getDestinationDataFromPostgres(query) {
   const client = new Client({
-    connectionString: process.env.DATABASE,
+    host: process.env.DESTINATION_PG_HOST,
+    user: process.env.DESTINATION_PG_USER,
+    password: process.env.DESTINATION_PG_PASSWORD,
+    database: "beetravels",
   });
 
   try {
     client.connect();
 
-    const res = await client.query("SELECT * FROM destination");
+    const select = query.values.length === 2 ? "*" : "country, city";
+    const statement =
+      "SELECT " + select + " FROM destination" + query.statement;
+    const res = await client.query(statement, query.values);
     return res.rows;
   } catch (err) {
     console.log(err.stack);
@@ -21,5 +40,3 @@ async function getDestinationDataFromPostgres() {
     client.end();
   }
 }
-
-export { getDestinationDataFromPostgres };

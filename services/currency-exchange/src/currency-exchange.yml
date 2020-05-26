@@ -1,0 +1,8 @@
+openapi: "3.0.0"
+info:
+  title: "Bee Travels Currency Exchange Service"
+  version: "1.0.0"
+  description: "Currency exchange service"
+  license:
+    name: "Apache 2.0"
+    url: "https://github.com/bee-travels/bee-travels-node/blob/master/LICENSE"

@@ -1,10 +1,42 @@
+import { isValidQueryValue } from "query-validator";
 const MongoClient = require("mongodb").MongoClient;
 
-export async function getHotelDataFromMongo(country, city) {
-  const client = await MongoClient.connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }).catch((err) => {
+export function buildHotelMongoQuery(country, city, filters) {
+  const { superchain, hotel, type, minCost, maxCost } = filters;
+  let query = {
+    country: isValidQueryValue(country),
+    city: isValidQueryValue(city),
+  };
+  if (superchain) {
+    query.superchain = { $in: isValidQueryValue(superchain) };
+  }
+  if (hotel) {
+    query.name = { $in: isValidQueryValue(hotel) };
+  }
+  if (type) {
+    query.type = { $in: isValidQueryValue(type) };
+  }
+  if (minCost) {
+    query.cost = { $gte: isValidQueryValue(minCost) };
+  }
+  if (maxCost) {
+    if (query.cost) {
+      query.cost.$lte = isValidQueryValue(maxCost);
+    } else {
+      query.cost = { $lte: isValidQueryValue(maxCost) };
+    }
+  }
+  return query;
+}
+
+export async function getHotelDataFromMongo(query) {
+  const client = await MongoClient.connect(
+    process.env.HOTEL_MONGO_CONNECTION_URL,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  ).catch((err) => {
     console.log(err);
   });
 
@@ -15,7 +47,6 @@ export async function getHotelDataFromMongo(country, city) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("hotels");
-    let query = { country: country, city: city };
     let res = await collection.find(query);
     let hotels = [];
     let hotel;
@@ -34,11 +65,14 @@ export async function getHotelDataFromMongo(country, city) {
   }
 }
 
-export async function getHotelInfoFromMongo() {
-  const client = await MongoClient.connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }).catch((err) => {
+export async function getHotelInfoFromMongo(filterType) {
+  const client = await MongoClient.connect(
+    process.env.HOTEL_MONGO_CONNECTION_URL,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  ).catch((err) => {
     console.log(err);
   });
 
@@ -49,18 +83,7 @@ export async function getHotelInfoFromMongo() {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("hotel_info");
-    let query = {};
-    let res = await collection.find(query);
-    let hotelsInfo = [];
-    let hotelInfo;
-    let hasNextHotelInfo = await res.hasNext();
-    while (hasNextHotelInfo) {
-      hotelInfo = await res.next();
-      delete hotelInfo["_id"];
-      hotelsInfo.push(hotelInfo);
-      hasNextHotelInfo = await res.hasNext();
-    }
-    return hotelsInfo;
+    return await collection.distinct(filterType);
   } catch (err) {
     console.log(err);
   } finally {

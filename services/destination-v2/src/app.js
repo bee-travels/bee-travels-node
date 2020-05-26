@@ -1,9 +1,8 @@
 import express from "express";
 import logger from "pino-http";
 import pinoPretty from "pino-pretty";
-import swaggerJSDoc from "swagger-jsdoc";
+import openapi from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
-import options from "./swaggerConfig";
 
 import destinationsRouter from "./routes/destinations";
 
@@ -26,12 +25,10 @@ app.use(express.urlencoded({ extended: false }));
 
 // Setup Swagger.
 // Don't use `/` for swagger, it will catch everything.
-options.swaggerDefinition.host = process.env.HOST_IP || "localhost:9001";
-options.swaggerDefinition.schemes = [process.env.SCHEME || "http"];
-const specs = swaggerJSDoc(options);
+const specs = openapi();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-// Currency api.
+// destinations api.
 app.use("/api/v1/destinations", destinationsRouter);
 
 // Catch 404s.

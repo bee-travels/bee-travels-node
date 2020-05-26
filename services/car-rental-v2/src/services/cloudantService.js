@@ -1,10 +1,42 @@
+import { isValidQueryValue } from "query-validator";
 const Cloudant = require("@cloudant/cloudant");
 
-async function getCarDataFromCloudant(city, country) {
-  const cloudant = Cloudant(process.env.DATABASE);
+export function buildCarCloudantQuery(country, city, filters) {
+  const { company, car, type, style, minCost, maxCost } = filters;
+  let query = {
+    country: isValidQueryValue(country),
+    city: isValidQueryValue(city),
+  };
+  if (company) {
+    query.rental_company = { $in: isValidQueryValue(company) };
+  }
+  if (car) {
+    query.name = { $in: isValidQueryValue(car) };
+  }
+  if (type) {
+    query.body_type = { $in: isValidQueryValue(type) };
+  }
+  if (style) {
+    query.style = { $in: isValidQueryValue(style) };
+  }
+  if (minCost) {
+    query.cost = { $gte: isValidQueryValue(minCost) };
+  }
+  if (maxCost) {
+    if (query.cost) {
+      query.cost.$lte = isValidQueryValue(maxCost);
+    } else {
+      query.cost = { $lte: isValidQueryValue(maxCost) };
+    }
+  }
+  return query;
+}
+
+export async function getCarDataFromCloudant(query) {
+  const cloudant = Cloudant(process.env.CAR_COUCH_CLOUDANT_CONNECTION_URL);
   const db = cloudant.db.use("cars");
 
-  const res = await db.find({ selector: { city: city, country: country } });
+  const res = await db.find({ selector: query, limit: 200 });
   for (let car = 0; car < res.docs.length; car++) {
     delete res.docs[car]["_id"];
     delete res.docs[car]["_rev"];
@@ -12,22 +44,25 @@ async function getCarDataFromCloudant(city, country) {
   return res.docs;
 }
 
-async function getCarInfoFromCloudant() {
-  const cloudant = Cloudant(process.env.DATABASE);
-  const db = cloudant.db.use("car_info");
-  const dbRC = cloudant.db.use("cars");
+export async function getCarInfoFromCloudant(filterType) {
+  const cloudant = Cloudant(process.env.CAR_COUCH_CLOUDANT_CONNECTION_URL);
+  const db = cloudant.db.use(
+    filterType === "rental_company" ? "cars" : "car_info"
+  );
 
-  const res = await db.find({ selector: {} });
-  const resRC = await dbRC.find({ selector: {} });
-  for (let info = 0; info < res.docs.length; info++) {
-    delete res.docs[info]["_id"];
-    delete res.docs[info]["_rev"];
+  const res = await db.find({
+    selector: { _id: { $gt: null } },
+    fields: [filterType],
+    limit: 200,
+  });
+  let result = [];
+  for (let filter = 0; filter < res.docs.length; filter++) {
+    Object.keys(res.docs[filter]).forEach(function (key) {
+      let temp = res.docs[filter][key];
+      if (!result.includes(temp)) {
+        result.push(temp);
+      }
+    });
   }
-  for (let rc = 0; rc < resRC.docs.length; rc++) {
-    res.docs.push({ rental_company: resRC.docs[rc]["rental_company"] });
-  }
-
-  return res.docs;
+  return result;
 }
-
-export { getCarDataFromCloudant, getCarInfoFromCloudant };
