@@ -1,0 +1,9 @@
+openapi: "3.0.3"
+info:
+  title: "Bee Travels Car Rental V1 Service"
+  version: "1.0.0"
+  description: "Operations associated with Car Rental data"
+  license:
+    name: "Apache 2.0"
+    url:
+      "https://github.com/bee-travels/bee-travels-node/blob/master/LICENSE"

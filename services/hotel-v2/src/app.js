@@ -1,9 +1,8 @@
 import express from "express";
 import logger from "pino-http";
 import pinoPretty from "pino-pretty";
-import commentParser from "openapi-comment-parser";
+import openapi from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
-import options from "./swaggerConfig";
 
 import hotelsRouter from "./routes/hotels";
 
@@ -26,9 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Setup Swagger.
 // Don't use `/` for swagger, it will catch everything.
-options.swaggerDefinition.host = process.env.HOST_IP || "localhost:9101";
-options.swaggerDefinition.schemes = [process.env.SCHEME || "http"];
-const specs = commentParser(options);
+const specs = openapi();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // hotels api.

@@ -4,7 +4,7 @@ import pinoPretty from "pino-pretty";
 import openapi from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
 
-import currencyRouter from "./routes/currency";
+import carsRouter from "./routes/cars";
 
 const app = express();
 
@@ -25,11 +25,11 @@ app.use(express.urlencoded({ extended: false }));
 
 // Setup Swagger.
 // Don't use `/` for swagger, it will catch everything.
-const specs = openapi();
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+const spec = openapi();
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec));
 
-// Currency api.
-app.use("/api/v1/currency", currencyRouter);
+// cars api.
+app.use("/api/v1/cars", carsRouter);
 
 // Catch 404s.
 app.use((_, res) => {

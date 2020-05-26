@@ -12,12 +12,11 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "mongodb": "^3.5.7",
-    "openapi-comment-parser": "^0.0.6",
+    "openapi-comment-parser": "^0.3.0",
     "pg": "^8.0.3",
     "pino-http": "^5.1.0",
     "pino-pretty": "^4.0.0",
     "query-validator": "workspace:*",
-    "swagger-jsdoc": "^4.0.0",
     "swagger-ui-express": "^4.1.1"
   },
   "devDependencies": {

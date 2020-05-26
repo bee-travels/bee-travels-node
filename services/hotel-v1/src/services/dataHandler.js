@@ -4,7 +4,12 @@ import { promises as fs } from "fs";
 const HOTELS_PATH = path.join(__dirname, "../../data/hotel-data.json");
 const HOTEL_INFO_PATH = path.join(__dirname, "../../data/hotel-info.json");
 
-const pillify = (s) => s.toLowerCase().replace(" ", "-");
+const capitalize = (text) =>
+  text
+    .toLowerCase()
+    .split("-")
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(" ");
 
 async function parseMetadata(file) {
   const content = await fs.readFile(file);
@@ -17,10 +22,7 @@ export async function getHotels(country, city, filters) {
   const metadata = await parseMetadata(HOTELS_PATH);
 
   const hotelsData = metadata.filter((h) => {
-    if (
-      pillify(h.city) !== city.toLowerCase() ||
-      pillify(h.country) !== country.toLowerCase()
-    ) {
+    if (h.city !== capitalize(city) || h.country !== capitalize(country)) {
       return false;
     }
 

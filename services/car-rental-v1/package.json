@@ -1,15 +1,13 @@
 {
-  "name": "currency-exchange",
+  "name": "car-rental-v1",
   "version": "0.0.0",
-  "description": "currency exchange service for bee-travels",
+  "description": "car rental v1 service for bee-travels",
   "private": true,
   "scripts": {
     "start": "nodemon -r esm ./src/bin/www.js",
     "test": "nyc --require esm --cache false mocha \"src/**/?(*.)test.js\""
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "csv-parse": "^4.9.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "openapi-comment-parser": "^0.3.0",

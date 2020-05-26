@@ -23,6 +23,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:."
       },
       {
+        "name": "car-rental-v1",
+        "reference": "workspace:services/car-rental-v1"
+      },
+      {
         "name": "car-rental-v2",
         "reference": "workspace:services/car-rental-v2"
       },
@@ -67,6 +71,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "ignorePatternData": "(^(?:\\.vscode\\/pnpify(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$)",
     "fallbackExclusionList": [
       ["bee-travels", ["workspace:."]],
+      ["car-rental-v1", ["workspace:services/car-rental-v1"]],
       ["car-rental-v2", ["workspace:services/car-rental-v2"]],
       ["currency-exchange", ["workspace:services/currency-exchange"]],
       ["destination-v1", ["workspace:services/destination-v1"]],
@@ -194,52 +199,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["sinon", "npm:9.0.2"]
           ],
           "linkType": "SOFT",
-        }]
-      ]],
-      ["@apidevtools/json-schema-ref-parser", [
-        ["npm:8.0.0", {
-          "packageLocation": "./.yarn/cache/@apidevtools-json-schema-ref-parser-npm-8.0.0-3f5ddbd534-2.zip/node_modules/@apidevtools/json-schema-ref-parser/",
-          "packageDependencies": [
-            ["@apidevtools/json-schema-ref-parser", "npm:8.0.0"],
-            ["@jsdevtools/ono", "npm:7.1.2"],
-            ["call-me-maybe", "npm:1.0.1"],
-            ["js-yaml", "npm:3.13.1"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["@apidevtools/openapi-schemas", [
-        ["npm:2.0.3", {
-          "packageLocation": "./.yarn/cache/@apidevtools-openapi-schemas-npm-2.0.3-7c8af509de-2.zip/node_modules/@apidevtools/openapi-schemas/",
-          "packageDependencies": [
-            ["@apidevtools/openapi-schemas", "npm:2.0.3"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["@apidevtools/swagger-methods", [
-        ["npm:3.0.1", {
-          "packageLocation": "./.yarn/cache/@apidevtools-swagger-methods-npm-3.0.1-17adb94c48-2.zip/node_modules/@apidevtools/swagger-methods/",
-          "packageDependencies": [
-            ["@apidevtools/swagger-methods", "npm:3.0.1"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["@apidevtools/swagger-parser", [
-        ["npm:9.0.1", {
-          "packageLocation": "./.yarn/cache/@apidevtools-swagger-parser-npm-9.0.1-28b270a30e-2.zip/node_modules/@apidevtools/swagger-parser/",
-          "packageDependencies": [
-            ["@apidevtools/swagger-parser", "npm:9.0.1"],
-            ["@apidevtools/json-schema-ref-parser", "npm:8.0.0"],
-            ["@apidevtools/openapi-schemas", "npm:2.0.3"],
-            ["@apidevtools/swagger-methods", "npm:3.0.1"],
-            ["@jsdevtools/ono", "npm:7.1.2"],
-            ["call-me-maybe", "npm:1.0.1"],
-            ["openapi-types", "npm:1.3.5"],
-            ["z-schema", "npm:4.2.3"]
-          ],
-          "linkType": "HARD",
         }]
       ]],
       ["@babel/code-frame", [
@@ -2165,15 +2124,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/istanbul-lib-coverage", "npm:2.0.1"],
             ["@types/istanbul-reports", "npm:1.1.1"],
             ["@types/yargs", "npm:13.0.8"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["@jsdevtools/ono", [
-        ["npm:7.1.2", {
-          "packageLocation": "./.yarn/cache/@jsdevtools-ono-npm-7.1.2-c8dd9d821b-2.zip/node_modules/@jsdevtools/ono/",
-          "packageDependencies": [
-            ["@jsdevtools/ono", "npm:7.1.2"]
           ],
           "linkType": "HARD",
         }]
@@ -5152,6 +5102,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["car-rental-v1", [
+        ["workspace:services/car-rental-v1", {
+          "packageLocation": "./services/car-rental-v1/",
+          "packageDependencies": [
+            ["car-rental-v1", "workspace:services/car-rental-v1"],
+            ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
+            ["chai-http", "npm:4.3.0"],
+            ["esm", "npm:3.2.25"],
+            ["express", "npm:4.17.1"],
+            ["mocha", "npm:7.1.2"],
+            ["nodemon", "npm:2.0.3"],
+            ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.0"],
+            ["pino-http", "npm:5.1.0"],
+            ["pino-pretty", "npm:4.0.0"],
+            ["sinon", "npm:9.0.2"],
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
+          ],
+          "linkType": "SOFT",
+        }]
+      ]],
       ["car-rental-v2", [
         ["workspace:services/car-rental-v2", {
           "packageLocation": "./services/car-rental-v2/",
@@ -5168,14 +5140,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.0.6"],
+            ["openapi-comment-parser", "npm:0.3.0"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["query-validator", "workspace:packages/query-validator"],
             ["sinon", "npm:9.0.2"],
-            ["swagger-jsdoc", "npm:4.0.0"],
-            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -5710,13 +5681,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/commander-npm-4.1.1-22a0fe921b-2.zip/node_modules/commander/",
           "packageDependencies": [
             ["commander", "npm:4.1.1"]
-          ],
-          "linkType": "HARD",
-        }],
-        ["npm:5.0.0", {
-          "packageLocation": "./.yarn/cache/commander-npm-5.0.0-7f140fb018-2.zip/node_modules/commander/",
-          "packageDependencies": [
-            ["commander", "npm:5.0.0"]
           ],
           "linkType": "HARD",
         }]
@@ -6515,14 +6479,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["csv-parse", "npm:4.9.0"],
             ["esm", "npm:3.2.25"],
             ["express", "npm:4.17.1"],
-            ["jsdoc-openapi", "npm:0.0.6"],
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.0"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
-            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -6903,11 +6867,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.0"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
-            ["swagger-jsdoc", "npm:4.0.0"],
-            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -6928,14 +6892,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.0.6"],
+            ["openapi-comment-parser", "npm:0.3.0"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["query-validator", "workspace:packages/query-validator"],
             ["sinon", "npm:9.0.2"],
-            ["swagger-jsdoc", "npm:4.0.0"],
-            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -9481,11 +9444,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.0"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
-            ["swagger-jsdoc", "npm:4.0.0"],
-            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -9505,14 +9468,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.0.6"],
+            ["openapi-comment-parser", "npm:0.3.0"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["query-validator", "workspace:packages/query-validator"],
             ["sinon", "npm:9.0.2"],
-            ["swagger-jsdoc", "npm:4.0.0"],
-            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -11382,20 +11344,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["jsdoc-openapi", [
-        ["npm:0.0.6", {
-          "packageLocation": "./.yarn/cache/jsdoc-openapi-npm-0.0.6-101cb638ed-2.zip/node_modules/jsdoc-openapi/",
-          "packageDependencies": [
-            ["jsdoc-openapi", "npm:0.0.6"],
-            ["commander", "npm:5.0.0"],
-            ["doctrine", "npm:3.0.0"],
-            ["glob", "npm:7.1.6"],
-            ["js-yaml", "npm:3.13.1"],
-            ["swagger-parser", "npm:9.0.1"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
       ["jsdom", [
         ["npm:11.12.0", {
           "packageLocation": "./.yarn/cache/jsdom-npm-11.12.0-6d22373139-2.zip/node_modules/jsdom/",
@@ -12069,15 +12017,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/lodash.get-npm-4.4.2-7bda64ed87-2.zip/node_modules/lodash.get/",
           "packageDependencies": [
             ["lodash.get", "npm:4.4.2"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["lodash.isequal", [
-        ["npm:4.5.0", {
-          "packageLocation": "./.yarn/cache/lodash.isequal-npm-4.5.0-f8b0f64d63-2.zip/node_modules/lodash.isequal/",
-          "packageDependencies": [
-            ["lodash.isequal", "npm:4.5.0"]
           ],
           "linkType": "HARD",
         }]
@@ -13623,23 +13562,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["openapi-comment-parser", [
-        ["npm:0.0.6", {
-          "packageLocation": "./.yarn/cache/openapi-comment-parser-npm-0.0.6-7c9659a192-2.zip/node_modules/openapi-comment-parser/",
+        ["npm:0.3.0", {
+          "packageLocation": "./.yarn/cache/openapi-comment-parser-npm-0.3.0-9e4c89f351-2.zip/node_modules/openapi-comment-parser/",
           "packageDependencies": [
-            ["openapi-comment-parser", "npm:0.0.6"],
-            ["comment-parser", "npm:0.7.4"],
-            ["glob", "npm:7.1.6"],
-            ["js-yaml", "npm:3.13.1"],
-            ["swagger-parser", "npm:9.0.1"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["openapi-types", [
-        ["npm:1.3.5", {
-          "packageLocation": "./.yarn/cache/openapi-types-npm-1.3.5-f765461ce7-2.zip/node_modules/openapi-types/",
-          "packageDependencies": [
-            ["openapi-types", "npm:1.3.5"]
+            ["openapi-comment-parser", "npm:0.3.0"]
           ],
           "linkType": "HARD",
         }]
@@ -14207,14 +14133,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chai-http", "npm:4.3.0"],
             ["esm", "npm:3.2.25"],
             ["express", "npm:4.17.1"],
-            ["jsdoc-openapi", "npm:0.0.6"],
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.0"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
-            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"]
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -18360,30 +18286,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["swagger-jsdoc", [
-        ["npm:4.0.0", {
-          "packageLocation": "./.yarn/cache/swagger-jsdoc-npm-4.0.0-f0763f3b02-2.zip/node_modules/swagger-jsdoc/",
-          "packageDependencies": [
-            ["swagger-jsdoc", "npm:4.0.0"],
-            ["commander", "npm:5.0.0"],
-            ["doctrine", "npm:3.0.0"],
-            ["glob", "npm:7.1.6"],
-            ["js-yaml", "npm:3.13.1"],
-            ["swagger-parser", "npm:9.0.1"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["swagger-parser", [
-        ["npm:9.0.1", {
-          "packageLocation": "./.yarn/cache/swagger-parser-npm-9.0.1-28e12dca09-2.zip/node_modules/swagger-parser/",
-          "packageDependencies": [
-            ["swagger-parser", "npm:9.0.1"],
-            ["@apidevtools/swagger-parser", "npm:9.0.1"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
       ["swagger-ui-dist", [
         ["npm:3.25.0", {
           "packageLocation": "./.yarn/cache/swagger-ui-dist-npm-3.25.0-ef52d43531-2.zip/node_modules/swagger-ui-dist/",
@@ -18394,10 +18296,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["swagger-ui-express", [
-        ["virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4", {
-          "packageLocation": "./.yarn/$$virtual/swagger-ui-express-virtual-67549c8277/0/cache/swagger-ui-express-npm-4.1.4-e09923ee17-2.zip/node_modules/swagger-ui-express/",
+        ["virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4", {
+          "packageLocation": "./.yarn/$$virtual/swagger-ui-express-virtual-91f1860da0/0/cache/swagger-ui-express-npm-4.1.4-e09923ee17-2.zip/node_modules/swagger-ui-express/",
           "packageDependencies": [
-            ["swagger-ui-express", "virtual:5560d614f318fa40e685c02ae69496c0a351d9787d5f351152f8a03829a9a419e3f1e5ac7510cf3e89e691ea49bd784f870f88416ba3d29416b838add232d278#npm:4.1.4"],
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"],
             ["express", "npm:4.17.1"],
             ["swagger-ui-dist", "npm:3.25.0"]
           ],
@@ -19317,15 +19219,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["validator", [
-        ["npm:12.2.0", {
-          "packageLocation": "./.yarn/cache/validator-npm-12.2.0-600d531bf7-2.zip/node_modules/validator/",
-          "packageDependencies": [
-            ["validator", "npm:12.2.0"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
       ["value-equal", [
         ["npm:1.0.1", {
           "packageLocation": "./.yarn/cache/value-equal-npm-1.0.1-7811e93c9b-2.zip/node_modules/value-equal/",
@@ -20196,19 +20089,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["flat", "npm:4.1.0"],
             ["lodash", "npm:4.17.15"],
             ["yargs", "npm:13.3.2"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["z-schema", [
-        ["npm:4.2.3", {
-          "packageLocation": "./.yarn/cache/z-schema-npm-4.2.3-b4a54a8802-2.zip/node_modules/z-schema/",
-          "packageDependencies": [
-            ["z-schema", "npm:4.2.3"],
-            ["commander", "npm:2.20.3"],
-            ["lodash.get", "npm:4.4.2"],
-            ["lodash.isequal", "npm:4.5.0"],
-            ["validator", "npm:12.2.0"]
           ],
           "linkType": "HARD",
         }]

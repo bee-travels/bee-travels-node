@@ -1,6 +1,6 @@
-class ExampleError extends Error {
-  constructor(message) {
-    super(message);
+class TagNotFoundError extends Error {
+  constructor(tag) {
+    super(`Tag "${tag}" does not exist.`);
     // Ensure the name of this error is the same as the class name
     this.name = this.constructor.name;
     // This clips the constructor invocation from the stack trace.
@@ -9,4 +9,4 @@ class ExampleError extends Error {
   }
 }
 
-export default ExampleError;
+export default TagNotFoundError;
