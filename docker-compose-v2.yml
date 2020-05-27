@@ -33,9 +33,9 @@ services:
       - base
     environment:
         - DESTINATION_DATABASE=${DESTINATION_DATABASE}
-        - DESTINATION_MONGO_CONNECTION_URL=mongodb://localhost:27017
-        - DESTINATION_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@localhost:5984
-        - DESTINATION_PG_HOST=localhost
+        - DESTINATION_MONGO_CONNECTION_URL=mongodb://mongo:27017
+        - DESTINATION_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
+        - DESTINATION_PG_HOST=postgres
         - DESTINATION_PG_USER=postgres
         - DESTINATION_PG_PASSWORD=admin
 
@@ -47,9 +47,9 @@ services:
         - base
       environment:
         - HOTEL_DATABASE=${HOTEL_DATABASE}
-        - HOTEL_MONGO_CONNECTION_URL=mongodb://localhost:27017
-        - HOTEL_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@localhost:5984
-        - HOTEL_PG_HOST=localhost
+        - HOTEL_MONGO_CONNECTION_URL=mongodb://mongo:27017
+        - HOTEL_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
+        - HOTEL_PG_HOST=postgres
         - HOTEL_PG_USER=postgres
         - HOTEL_PG_PASSWORD=admin
 
@@ -61,9 +61,9 @@ services:
         - base
       environment:
         - CAR_DATABASE=${CAR_DATABASE}
-        - CAR_MONGO_CONNECTION_URL=mongodb://localhost:27017
-        - CAR_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@localhost:5984
-        - CAR_PG_HOST=localhost
+        - CAR_MONGO_CONNECTION_URL=mongodb://mongo:27017
+        - CAR_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
+        - CAR_PG_HOST=postgres
         - CAR_PG_USER=postgres
         - CAR_PG_PASSWORD=admin
 
@@ -80,3 +80,33 @@ services:
         - "9403:9403"
       depends_on:
         - base
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+
+  mongo:
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    image: mongo
+    restart: always
+
+  couch:
+    image: couchdb
+    restart: always
+    ports:
+      - "5984:5984"
+    environment:
+      COUCHDB_USER: admin
+      COUCHDB_PASSWORD: admin
+
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: admin
