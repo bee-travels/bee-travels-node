@@ -1,4 +1,3 @@
-import { processCart } from "./dataHandler"
 import CartProcessingError from "./../errors/CartProcessingError"
 import crypto from 'crypto'
 

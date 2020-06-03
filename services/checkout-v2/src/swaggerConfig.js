@@ -1,5 +1,5 @@
 const options = {
-  swaggerDefinition: {
+  definition: {
     openapi: "3.0.0",
     info: {
       title: "Bee Travels Checkout V2 Service",
@@ -11,7 +11,7 @@ const options = {
       }
     }
   },
-  apis: ["src/routes/*.?(js|yaml|yml)"]
+  paths: ["src/routes/*.?(js|yaml|yml)"]
 };
 
 export default options;

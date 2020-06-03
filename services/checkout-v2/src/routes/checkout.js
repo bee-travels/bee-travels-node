@@ -5,7 +5,8 @@ const router = Router();
 
 /**
  * POST /api/v1/checkout/cart:
- * @requestBody {Cart} This is the JSON body required to initiate the Checkout service for Bee Travels
+ * @requestBody {Cart}
+ * @bodyDescription This is the JSON body required to initiate the Checkout service for Bee Travels
  */
 router.post("/cart", async (req, res, next) => {
   const data = req.body;

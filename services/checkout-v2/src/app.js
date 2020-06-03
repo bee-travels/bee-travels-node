@@ -26,8 +26,6 @@ app.use(express.urlencoded({ extended: false }));
 
 // Setup Swagger.
 // Don't use `/` for swagger, it will catch everything.
-options.swaggerDefinition.host = process.env.HOST_IP || "localhost:9402";
-options.swaggerDefinition.schemes = [process.env.SCHEME || "http"];
 const specs = commentParser(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
