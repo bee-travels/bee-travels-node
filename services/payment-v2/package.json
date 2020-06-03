@@ -11,7 +11,7 @@
     "axios": "^0.19.2",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "openapi-comment-parser": "^0.3.0",
+    "openapi-comment-parser": "^0.3.3",
     "pino-http": "^5.1.0",
     "pino-pretty": "^4.0.0",
     "swagger-ui-express": "^4.1.1"
