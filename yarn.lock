@@ -4286,7 +4286,7 @@ __metadata:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -4309,7 +4309,7 @@ __metadata:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -5536,7 +5536,7 @@ __metadata:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -5843,7 +5843,7 @@ __metadata:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -5866,7 +5866,7 @@ __metadata:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -8156,7 +8156,7 @@ fsevents@^1.2.7:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -8178,7 +8178,7 @@ fsevents@^1.2.7:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -11903,13 +11903,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"openapi-comment-parser@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "openapi-comment-parser@npm:0.3.0"
-  checksum: 2/8cb64513452cebf4cdb012a12d235e94f64430d68775cca0fba10a7df0a8874357cc6179754d1c0eab236e64fb07bd9e6ea5c939101a31038d60fa10e44380a6
-  languageName: node
-  linkType: hard
-
 "openapi-comment-parser@npm:^0.3.3":
   version: 0.3.3
   resolution: "openapi-comment-parser@npm:0.3.3"
@@ -12422,7 +12415,7 @@ fsevents@^1.2.7:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
