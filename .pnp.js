@@ -43,6 +43,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:services/destination-v2"
       },
       {
+        "name": "email-v2",
+        "reference": "workspace:services/email-v2"
+      },
+      {
         "name": "hotel-v1",
         "reference": "workspace:services/hotel-v1"
       },
@@ -76,6 +80,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["currency-exchange", ["workspace:services/currency-exchange"]],
       ["destination-v1", ["workspace:services/destination-v1"]],
       ["destination-v2", ["workspace:services/destination-v2"]],
+      ["email-v2", ["workspace:services/email-v2"]],
       ["hotel-v1", ["workspace:services/hotel-v1"]],
       ["hotel-v2", ["workspace:services/hotel-v2"]],
       ["payment", ["workspace:services/payment-v2"]],
@@ -2406,6 +2411,39 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@nodelib/fs.walk", "npm:1.2.4"],
             ["@nodelib/fs.scandir", "npm:2.1.3"],
             ["fastq", "npm:1.7.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@sendgrid/client", [
+        ["npm:7.1.1", {
+          "packageLocation": "./.yarn/cache/@sendgrid-client-npm-7.1.1-79cc939dbe-2.zip/node_modules/@sendgrid/client/",
+          "packageDependencies": [
+            ["@sendgrid/client", "npm:7.1.1"],
+            ["@sendgrid/helpers", "npm:7.0.1"],
+            ["axios", "npm:0.19.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@sendgrid/helpers", [
+        ["npm:7.0.1", {
+          "packageLocation": "./.yarn/cache/@sendgrid-helpers-npm-7.0.1-86159f0d94-2.zip/node_modules/@sendgrid/helpers/",
+          "packageDependencies": [
+            ["@sendgrid/helpers", "npm:7.0.1"],
+            ["chalk", "npm:2.4.2"],
+            ["deepmerge", "npm:4.2.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@sendgrid/mail", [
+        ["npm:7.1.1", {
+          "packageLocation": "./.yarn/cache/@sendgrid-mail-npm-7.1.1-c761ddea99-2.zip/node_modules/@sendgrid/mail/",
+          "packageDependencies": [
+            ["@sendgrid/mail", "npm:7.1.1"],
+            ["@sendgrid/client", "npm:7.1.1"],
+            ["@sendgrid/helpers", "npm:7.0.1"]
           ],
           "linkType": "HARD",
         }]
@@ -6716,6 +6754,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["deepmerge", [
+        ["npm:4.2.2", {
+          "packageLocation": "./.yarn/cache/deepmerge-npm-4.2.2-112165ced2-2.zip/node_modules/deepmerge/",
+          "packageDependencies": [
+            ["deepmerge", "npm:4.2.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["default-gateway", [
         ["npm:4.2.0", {
           "packageLocation": "./.yarn/cache/default-gateway-npm-4.2.0-f6bdd83987-2.zip/node_modules/default-gateway/",
@@ -7282,6 +7329,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["minimalistic-crypto-utils", "npm:1.0.1"]
           ],
           "linkType": "HARD",
+        }]
+      ]],
+      ["email-v2", [
+        ["workspace:services/email-v2", {
+          "packageLocation": "./services/email-v2/",
+          "packageDependencies": [
+            ["email-v2", "workspace:services/email-v2"],
+            ["@sendgrid/mail", "npm:7.1.1"],
+            ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
+            ["chai-http", "npm:4.3.0"],
+            ["esm", "npm:3.2.25"],
+            ["express", "npm:4.17.1"],
+            ["mocha", "npm:7.1.2"],
+            ["nodemon", "npm:2.0.3"],
+            ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.3"],
+            ["pino-http", "npm:5.1.0"],
+            ["pino-pretty", "npm:4.0.0"],
+            ["prettier", "npm:2.0.5"],
+            ["sinon", "npm:9.0.2"],
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
+          ],
+          "linkType": "SOFT",
         }]
       ]],
       ["emoji-regex", [
@@ -13566,6 +13637,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/openapi-comment-parser-npm-0.3.0-9e4c89f351-2.zip/node_modules/openapi-comment-parser/",
           "packageDependencies": [
             ["openapi-comment-parser", "npm:0.3.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:0.3.3", {
+          "packageLocation": "./.yarn/cache/openapi-comment-parser-npm-0.3.3-4ebea52316-2.zip/node_modules/openapi-comment-parser/",
+          "packageDependencies": [
+            ["openapi-comment-parser", "npm:0.3.3"]
           ],
           "linkType": "HARD",
         }]
