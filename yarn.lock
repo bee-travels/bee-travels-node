@@ -3699,7 +3699,7 @@ __metadata:
     eslint-plugin-flowtype: 4.x
     eslint-plugin-import: 2.x
     eslint-plugin-jsx-a11y: 6.x
-    eslint-plugin-openapi-jsdoc: ^0.0.2
+    eslint-plugin-openapi: ^0.0.3
     eslint-plugin-react: 7.x
     eslint-plugin-react-hooks: 2.x
     esm: ^3.2.25
@@ -6598,12 +6598,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-openapi-jsdoc@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "eslint-plugin-openapi-jsdoc@npm:0.0.2"
+"eslint-plugin-openapi@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "eslint-plugin-openapi@npm:0.0.3"
   dependencies:
     comment-parser: ^0.7.4
-  checksum: 2/e83187e8fb6ab0706e4b1177d64e754b4d4dd6dd553fed7049b7dee448ea3217119374b881ee88ea5c2f2732e948b3ad9db58aabf7b13a6f34de7acbc7a74b9a
+  checksum: 2/c2693bf6acf7796deb3bfa726e30d3996117ed4c14145b6496cf64d06f241167c3ba4a55cfd0093dba688dd083f688dcecb394d8a2b6c88252ff2d42b7fe9fb6
   languageName: node
   linkType: hard
 

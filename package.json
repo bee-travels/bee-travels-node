@@ -27,7 +27,7 @@
     "eslint-plugin-flowtype": "4.x",
     "eslint-plugin-import": "2.x",
     "eslint-plugin-jsx-a11y": "6.x",
-    "eslint-plugin-openapi-jsdoc": "^0.0.2",
+    "eslint-plugin-openapi": "^0.0.3",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "2.x",
     "esm": "^3.2.25",

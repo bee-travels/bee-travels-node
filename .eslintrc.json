@@ -1,5 +1,5 @@
 {
-  "extends": ["react-app", "plugin:openapi-jsdoc/recommended"],
+  "extends": ["react-app", "plugin:openapi/recommended"],
   "rules": {
     "no-var": 1
   }

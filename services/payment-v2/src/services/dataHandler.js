@@ -3,14 +3,14 @@ import crypto from 'crypto'
 
 async function processCreditcardPayment(chargeObject) {
   //validation
-  var exp_month = chargeObject.payment_method_details.exp_month
-  var exp_year = chargeObject.payment_method_details.exp_year
+  let exp_month = chargeObject.payment_method_details.exp_month
+  let exp_year = chargeObject.payment_method_details.exp_year
 
-  var currentTime = new Date()
+  let currentTime = new Date()
   // returns the month (from 0 to 11)
-  var currentMonth = currentTime.getMonth() + 1
+  let currentMonth = currentTime.getMonth() + 1
   // returns the year (four digits)
-  var currentYear = currentTime.getFullYear()
+  let currentYear = currentTime.getFullYear()
 
   if (exp_year < currentYear) {
     throw new CreditCardExpiredError("Card expired")

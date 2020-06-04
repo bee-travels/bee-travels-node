@@ -17,10 +17,10 @@ const router = Router();
  */
 router.post("/", async (req, res, next) => {
   try {
-    var email = req.body.email;
-    var body = req.body.body;
-    var subject = req.body.subject;
-    var from = req.body.from;
+    let email = req.body.email;
+    let body = req.body.body;
+    let subject = req.body.subject;
+    let from = req.body.from;
     const response = await sendEmail(email, from, subject, body);
 
     return res.json(response);

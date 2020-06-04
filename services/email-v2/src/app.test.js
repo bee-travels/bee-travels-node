@@ -16,7 +16,7 @@ describe("POST /", () => {
       .request(app)
       .post("/api/v1/emails")
       .end((err, res) => {
-        expect(err).to.be.null;
+        expect(err).to.be.null();
         expect(res).to.have.status(200);
         done();
       });
@@ -47,9 +47,6 @@ describe("Testing 404 /", () => {
   })
 });
 
-describe("Testing 404 /", () => {
-
-});
 
 
 
