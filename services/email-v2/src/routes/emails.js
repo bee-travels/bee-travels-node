@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { sendEmail } from "../services/dataHandler";
+import dataHandler from "../services/dataHandler";
 import EmailError from "../errors/EmailError";
-import { format } from "prettier";
 
 const router = Router();
 
@@ -21,7 +20,7 @@ router.post("/", async (req, res, next) => {
     let body = req.body.body;
     let subject = req.body.subject;
     let from = req.body.from;
-    const response = await sendEmail(email, from, subject, body);
+    const response = await dataHandler.sendEmail(email, from, subject, body);
 
     return res.json(response);
   } catch (e) {

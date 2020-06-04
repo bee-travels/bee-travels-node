@@ -15,7 +15,7 @@ async function processCreditcardPayment(chargeObject) {
   if (exp_year < currentYear) {
     throw new CreditCardExpiredError("Card expired")
   }
-  if (exp_year == currentYear && exp_month < currentMonth) {
+  if (exp_year === currentYear && exp_month < currentMonth) {
     throw new CreditCardExpiredError("Card expired this year")
   }
   const confirmation_id = crypto.randomBytes(16).toString("hex")

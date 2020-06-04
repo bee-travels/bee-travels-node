@@ -6,7 +6,8 @@ import chaiAsPromised from "chai-as-promised";
 
 
 // Breaks code coverage if using import x from "x"
-const { sendEmail } = require("./dataHandler");
+const handler = require("./dataHandler").default;
+console.log(handler);
 
 chai.use(chaiAsPromised);
 
@@ -18,7 +19,7 @@ describe("sendEmail", () => {
     const body = "test body"
     const subject = "test subject";
 
-    const res = await sendEmail(to, from, subject, body);
+    const res = await handler.sendEmail(to, from, subject, body);
     expect(res).to.deep.equal('success');
   });
 });

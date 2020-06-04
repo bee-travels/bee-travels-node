@@ -6,6 +6,7 @@ import chaiHttp from "chai-http";
 
 // Breaks code coverage if using import x from "x"
 const app = require("./app").default;
+const sendEmail = require("./services/dataHandler").default;
 
 chai.use(chaiHttp);
 
@@ -15,7 +16,7 @@ describe("POST /", () => {
     chai
       .request(app)
       .post("/api/v1/emails")
-      .end((err, res) => {
+      .end((_, res) => {
         expect(res).to.have.status(200);
         done();
       });
@@ -29,6 +30,19 @@ describe("POST /", () => {
       .post("/api/v1/emails")
       .end((_, res) => {
         expect(res).to.have.status(400);
+        done();
+      })
+  })
+
+  it("should return 500 on unknown error", (done) => {
+    sinon.stub(sgMail, "send").throws();
+    sinon.stub(sendEmail, "sendEmail").throws(new Error("unknown error"));
+
+    chai
+      .request(app)
+      .post("/api/v1/emails")
+      .end((_, res) => {
+        expect(res).to.have.status(500);
         done();
       })
   })
