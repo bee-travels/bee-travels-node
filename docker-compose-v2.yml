@@ -47,7 +47,7 @@ services:
       - couch
       - postgres
       - mongo
-    image: beetravels/data-gen-destination:f26bc645da40f9abcef8774bf53671078636154e
+    image: beetravels/data-gen-destination:4d84f1ca05c92686bd4adcfc84da65bc44e9c1e8
     restart: on-failure
     environment: 
       - PG_USER=postgres
@@ -56,14 +56,14 @@ services:
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
       - GENERATE_DATA=false
-      - DATABASE=postgresdb
+      - DATABASE=${DESTINATION_DATABASE}
 
   hotel-data-gen:
     depends_on: 
       - couch
       - postgres
       - mongo
-    image: beetravels/data-gen-hotel:f26bc645da40f9abcef8774bf53671078636154e
+    image: beetravels/data-gen-hotel:4d84f1ca05c92686bd4adcfc84da65bc44e9c1e8
     restart: on-failure
     environment: 
       - PG_USER=postgres
@@ -72,14 +72,14 @@ services:
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
       - GENERATE_DATA=false
-      - DATABASE=postgresdb
+      - DATABASE=${HOTEL_DATABASE}
 
   cars-data-gen:
     depends_on: 
       - couch
       - postgres
       - mongo
-    image: beetravels/data-gen-carrental:f26bc645da40f9abcef8774bf53671078636154e
+    image: beetravels/data-gen-carrental:4d84f1ca05c92686bd4adcfc84da65bc44e9c1e8
     restart: on-failure
     environment: 
       - PG_USER=postgres
@@ -88,7 +88,7 @@ services:
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
       - GENERATE_DATA=false
-      - DATABASE=postgresdb
+      - DATABASE=${CAR_DATABASE}
 
   destination:
     build: services/destination-v2
@@ -99,7 +99,7 @@ services:
       - destination-data-gen
     environment:
       - DESTINATION_DATABASE=${DESTINATION_DATABASE}
-      - DESTINATION_MONGO_CONNECTION_URL=mongodb://mongo:27017
+      - DESTINATION_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - DESTINATION_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
       - DESTINATION_PG_HOST=postgres
       - DESTINATION_PG_USER=postgres
@@ -114,7 +114,7 @@ services:
       - hotel-data-gen
     environment:
       - HOTEL_DATABASE=${HOTEL_DATABASE}
-      - HOTEL_MONGO_CONNECTION_URL=mongodb://mongo:27017
+      - HOTEL_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - HOTEL_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
       - HOTEL_PG_HOST=postgres
       - HOTEL_PG_USER=postgres
@@ -129,7 +129,7 @@ services:
       - cars-data-gen
     environment:
       - CAR_DATABASE=${CAR_DATABASE}
-      - CAR_MONGO_CONNECTION_URL=mongodb://mongo:27017
+      - CAR_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - CAR_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
       - CAR_PG_HOST=postgres
       - CAR_PG_USER=postgres

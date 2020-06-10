@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {sendEmail} from "../services/dataHandler";
+import { sendEmail } from "../services/dataHandler";
 import EmailError from "../errors/EmailError";
 
 const router = Router();

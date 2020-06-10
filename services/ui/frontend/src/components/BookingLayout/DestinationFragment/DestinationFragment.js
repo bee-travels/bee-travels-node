@@ -11,9 +11,6 @@ mapboxgl.accessToken =
   "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg";
 
 const truncateText = (text) => {
-  if(!text){
-    return "no text";
-  }
   const firstSentenceRegex = /^(.*?)\. (?=[A-Z])/;
   const lastSentenceRegex = /(.*\.)(?: .*)$/;
   let trimmedDescription = text
@@ -37,16 +34,14 @@ const truncateText = (text) => {
   return trimmedDescription;
 };
 
-const DestinationFragment = (props) => {
-  console.log("PROPS", props)
-  const {
-    latitude,
-    longitude,
-    description,
-    cityName,
-    countryName,
-    images,
-  } = props;
+const DestinationFragment = ({
+  latitude,
+  longitude,
+  description,
+  cityName,
+  countryName,
+  images,
+}) => {
   const [mapbox, setMapbox] = useState(undefined);
   const [mapElement, setMapElement] = useState(undefined);
 

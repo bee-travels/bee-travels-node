@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 
 describe("POST /", () => {
   it("should return 200 on send mail", (done) => {
-    sinon.stub(sgMail, "send").returns('success');
+    sinon.stub(sgMail, "send").returns("success");
     chai
       .request(app)
       .post("/api/v1/emails")
@@ -21,7 +21,6 @@ describe("POST /", () => {
       });
   });
 
-
   it("should return 400 on email error", (done) => {
     sinon.stub(sgMail, "send").throws();
     chai
@@ -30,8 +29,8 @@ describe("POST /", () => {
       .end((_, res) => {
         expect(res).to.have.status(400);
         done();
-      })
-  })
+      });
+  });
 });
 
 describe("Testing 404 /", () => {
@@ -42,11 +41,8 @@ describe("Testing 404 /", () => {
       .end((_, res) => {
         expect(res).to.have.status(404);
         done();
-      })
-  })
+      });
+  });
 });
-
-
-
 
 afterEach(() => sinon.restore());

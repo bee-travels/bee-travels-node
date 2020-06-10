@@ -8,4 +8,3 @@ export default class CreditCardExpiredError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 }
-

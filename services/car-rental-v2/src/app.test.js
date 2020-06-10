@@ -48,17 +48,17 @@ describe("GET /api/v1/cars/info/:tag", () => {
 //     expect(res.body).to.have.lengthOf(50);
 //   });
 
-  // TODO: fixme
-  // it("returns a list of all sedans", async () => {
-  //   const type = "sedan";
-  //   const res = await chai
-  //     .request(app)
-  //     .get(`/api/v1/cars/united-states/new-york?type=${type}`)
-  //     .send();
-  //   expect(res.body).to.all.have.property("body_type", type);
-  // });
+// TODO: fixme
+// it("returns a list of all sedans", async () => {
+//   const type = "sedan";
+//   const res = await chai
+//     .request(app)
+//     .get(`/api/v1/cars/united-states/new-york?type=${type}`)
+//     .send();
+//   expect(res.body).to.all.have.property("body_type", type);
+// });
 
-  // TODO: Test invalid country
-  // TODO: Test invalid city
-  // TODO: Test invalid filters
-  // });
+// TODO: Test invalid country
+// TODO: Test invalid city
+// TODO: Test invalid filters
+// });

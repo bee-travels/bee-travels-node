@@ -7,7 +7,6 @@ const app = require("./app").default;
 
 chai.use(chaiHttp);
 
-
 // TODO: fixme
 // describe("GET /api/v1/destinations", () => {
 //   it("returns list of cities", (done) => {

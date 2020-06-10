@@ -31,12 +31,12 @@ const proxyRequest = async (req, res, url) => {
   req
     .pipe(streamableAxios({ url: url }))
     .on("error", (e) => {
-      console.error("error in streamable axios : ",e);
+      console.error("error in streamable axios : ", e);
       res.sendStatus(500);
     })
     .pipe(res)
     .on("error", (e) => {
-      console.error("error in result : ",e);
+      console.error("error in result : ", e);
       res.sendStatus(500);
     });
 };
