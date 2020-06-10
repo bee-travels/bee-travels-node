@@ -6,11 +6,11 @@ const router = Router();
 
 /**
  * POST /api/v1/emails
- * @description Example route
+ * @description Send an email to a specific address
  * @response 200 - OK
  * @response 400 - Error
  * @operationId sendMail
- * @bodyDescription send email
+ * @bodyDescription send email content
  * @bodyContent {Email} application/json
  * @bodyRequired
  */

@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Bee Travels Email V2 Service
   version: 1.0.0
-  description: replace this with a real description of your service
+  description: Email service for bee-travels application. Responsible for sending notification email to users.
   license:
     name: Apache 2.0
     url: https://github.com/bee-travels/bee-travels-node/blob/master/LICENSE

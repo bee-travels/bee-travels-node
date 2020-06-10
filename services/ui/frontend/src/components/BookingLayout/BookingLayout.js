@@ -89,7 +89,9 @@ const Content = ({ location }) => {
       const destinationResponse = await fetch(
         `/api/v1/destinations/${country}/${city}`
       );
-      const destination = await destinationResponse.json();
+      const destination_arr = await destinationResponse.json();
+      const destination = destination_arr[0];
+      console.log("destination: ", destination)
       setLatitude(destination.latitude);
       setLongitude(destination.longitude);
       setDescription(destination.description);
