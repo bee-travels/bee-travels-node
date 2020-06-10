@@ -47,6 +47,9 @@ export async function getDestinationDataFromMongo(query) {
       destinations.push(destination);
       hasNextDestination = await res.hasNext();
     }
+    if (query.city !== undefined) {
+      return destination;
+    }
     return destinations;
   } catch (err) {
     console.log(err);

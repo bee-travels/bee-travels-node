@@ -1,0 +1,13 @@
+components:
+  schemas:
+    Email:
+      type: object
+      properties:
+        email:
+          type: string
+        from:
+          type: string
+        subject:
+          type: string
+        body:
+          type: string

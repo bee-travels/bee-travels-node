@@ -6,6 +6,149 @@ services:
     image: bee-travels/node-base:v1
     build: .
 
+  mongo-express:
+    image: mongo-express
+    restart: always
+    environment:
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+    ports:
+      - 8081:8081
+
+  mongo:
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    image: mongo
+    environment: 
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    restart: always
+
+  couch:
+    image: couchdb
+    restart: always
+    ports:
+      - "5984:5984"
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=admin
+
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=admin
+  
+  destination-data-gen:
+    depends_on: 
+      - couch
+      - postgres
+      - mongo
+    image: beetravels/data-gen-destination:4d84f1ca05c92686bd4adcfc84da65bc44e9c1e8
+    restart: on-failure
+    environment: 
+      - PG_USER=postgres
+      - PG_HOST=postgres 
+      - PG_PASSWORD=admin
+      - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
+      - GENERATE_DATA=false
+      - DATABASE=${DESTINATION_DATABASE}
+
+  hotel-data-gen:
+    depends_on: 
+      - couch
+      - postgres
+      - mongo
+    image: beetravels/data-gen-hotel:4d84f1ca05c92686bd4adcfc84da65bc44e9c1e8
+    restart: on-failure
+    environment: 
+      - PG_USER=postgres
+      - PG_HOST=postgres 
+      - PG_PASSWORD=admin
+      - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
+      - GENERATE_DATA=false
+      - DATABASE=${HOTEL_DATABASE}
+
+  cars-data-gen:
+    depends_on: 
+      - couch
+      - postgres
+      - mongo
+    image: beetravels/data-gen-carrental:4d84f1ca05c92686bd4adcfc84da65bc44e9c1e8
+    restart: on-failure
+    environment: 
+      - PG_USER=postgres
+      - PG_HOST=postgres 
+      - PG_PASSWORD=admin
+      - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
+      - GENERATE_DATA=false
+      - DATABASE=${CAR_DATABASE}
+
+  destination:
+    build: services/destination-v2
+    ports:
+      - "9001:9001"
+    depends_on:
+      - base
+      - destination-data-gen
+    environment:
+      - DESTINATION_DATABASE=${DESTINATION_DATABASE}
+      - DESTINATION_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - DESTINATION_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
+      - DESTINATION_PG_HOST=postgres
+      - DESTINATION_PG_USER=postgres
+      - DESTINATION_PG_PASSWORD=admin
+
+  hotel:
+    build: services/hotel-v2
+    ports:
+      - "9101:9101"
+    depends_on:
+      - base
+      - hotel-data-gen
+    environment:
+      - HOTEL_DATABASE=${HOTEL_DATABASE}
+      - HOTEL_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - HOTEL_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
+      - HOTEL_PG_HOST=postgres
+      - HOTEL_PG_USER=postgres
+      - HOTEL_PG_PASSWORD=admin
+
+  car-rental:
+    build: services/car-rental-v2
+    ports:
+      - "9102:9102"
+    depends_on:
+      - base
+      - cars-data-gen
+    environment:
+      - CAR_DATABASE=${CAR_DATABASE}
+      - CAR_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - CAR_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
+      - CAR_PG_HOST=postgres
+      - CAR_PG_USER=postgres
+      - CAR_PG_PASSWORD=admin
+
+  currency-exchange:
+    build: services/currency-exchange
+    ports:
+      - "9201:9201"
+    depends_on:
+      - base
+  
+  email-service:
+    build: services/email-v2
+    ports: 
+      - "9301:9301"
+    depends_on: 
+      - base
+  
   ui:
     build: services/ui
     ports:
@@ -16,97 +159,13 @@ services:
       - hotel
       - car-rental
       - currency-exchange
-      - payment
 
     environment:
+      - NODE_ENV=production
       - DESTINATION_URL=http://destination:9001
       - HOTEL_URL=http://hotel:9101
       - CAR_URL=http://car-rental:9102
       - CURRENCY_EXCHANGE_URL=http://currency-exchange:9201
-      - PAYMENT_URL=http://payment:9403
 
-  destination:
-    build: services/destination-v2
-    ports:
-      - "9001:9001"
-    depends_on:
-      - base
-    environment:
-        - DESTINATION_DATABASE=${DESTINATION_DATABASE}
-        - DESTINATION_MONGO_CONNECTION_URL=mongodb://mongo:27017
-        - DESTINATION_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
-        - DESTINATION_PG_HOST=postgres
-        - DESTINATION_PG_USER=postgres
-        - DESTINATION_PG_PASSWORD=admin
 
-  hotel:
-      build: services/hotel-v2
-      ports:
-        - "9101:9101"
-      depends_on:
-        - base
-      environment:
-        - HOTEL_DATABASE=${HOTEL_DATABASE}
-        - HOTEL_MONGO_CONNECTION_URL=mongodb://mongo:27017
-        - HOTEL_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
-        - HOTEL_PG_HOST=postgres
-        - HOTEL_PG_USER=postgres
-        - HOTEL_PG_PASSWORD=admin
 
-  car-rental:
-      build: services/car-rental-v2
-      ports:
-        - "9102:9102"
-      depends_on:
-        - base
-      environment:
-        - CAR_DATABASE=${CAR_DATABASE}
-        - CAR_MONGO_CONNECTION_URL=mongodb://mongo:27017
-        - CAR_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
-        - CAR_PG_HOST=postgres
-        - CAR_PG_USER=postgres
-        - CAR_PG_PASSWORD=admin
-
-  currency-exchange:
-    build: services/currency-exchange
-    ports:
-      - "9201:9201"
-    depends_on:
-      - base
-
-  payment:
-      build: services/payment-v2
-      ports:
-        - "9403:9403"
-      depends_on:
-        - base
-
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-
-  mongo:
-    container_name: mongo
-    ports:
-      - "27017:27017"
-    image: mongo
-    restart: always
-
-  couch:
-    image: couchdb
-    restart: always
-    ports:
-      - "5984:5984"
-    environment:
-      COUCHDB_USER: admin
-      COUCHDB_PASSWORD: admin
-
-  postgres:
-    image: postgres
-    restart: always
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_PASSWORD: admin

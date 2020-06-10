@@ -33,7 +33,7 @@ export async function getDestinationDataFromPostgres(query) {
     const statement =
       "SELECT " + select + " FROM destination" + query.statement;
     const res = await client.query(statement, query.values);
-    return res.rows;
+    return query.values.length === 2 ? res.rows[0] : res.rows;
   } catch (err) {
     console.log(err.stack);
   } finally {

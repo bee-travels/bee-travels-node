@@ -26,5 +26,5 @@ export async function getDestinationDataFromCloudant(query) {
     delete res.docs[destination]["_id"];
     delete res.docs[destination]["_rev"];
   }
-  return res.docs;
+  return query.city === undefined ? res.docs : res.docs[0];
 }

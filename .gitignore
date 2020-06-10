@@ -114,3 +114,5 @@ dist
 !.yarn/cache
 !.yarn/releases
 !.yarn/plugins
+
+.env

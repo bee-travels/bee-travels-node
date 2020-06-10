@@ -43,6 +43,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:services/destination-v2"
       },
       {
+        "name": "email-v2",
+        "reference": "workspace:services/email-v2"
+      },
+      {
         "name": "hotel-v1",
         "reference": "workspace:services/hotel-v1"
       },
@@ -76,6 +80,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["currency-exchange", ["workspace:services/currency-exchange"]],
       ["destination-v1", ["workspace:services/destination-v1"]],
       ["destination-v2", ["workspace:services/destination-v2"]],
+      ["email-v2", ["workspace:services/email-v2"]],
       ["hotel-v1", ["workspace:services/hotel-v1"]],
       ["hotel-v2", ["workspace:services/hotel-v2"]],
       ["payment", ["workspace:services/payment-v2"]],
@@ -137,8 +142,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:6.2.3"
       ],
       [
-        "eslint-plugin-openapi-jsdoc",
-        "npm:0.0.2"
+        "eslint-plugin-openapi",
+        "npm:0.0.3"
       ],
       [
         "eslint-plugin-react",
@@ -189,7 +194,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-flowtype", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:4.7.0"],
             ["eslint-plugin-import", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.20.2"],
             ["eslint-plugin-jsx-a11y", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:6.2.3"],
-            ["eslint-plugin-openapi-jsdoc", "npm:0.0.2"],
+            ["eslint-plugin-openapi", "npm:0.0.3"],
             ["eslint-plugin-react", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.19.0"],
             ["eslint-plugin-react-hooks", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.5.1"],
             ["esm", "npm:3.2.25"],
@@ -2410,6 +2415,39 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@sendgrid/client", [
+        ["npm:7.1.1", {
+          "packageLocation": "./.yarn/cache/@sendgrid-client-npm-7.1.1-79cc939dbe-2.zip/node_modules/@sendgrid/client/",
+          "packageDependencies": [
+            ["@sendgrid/client", "npm:7.1.1"],
+            ["@sendgrid/helpers", "npm:7.0.1"],
+            ["axios", "npm:0.19.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@sendgrid/helpers", [
+        ["npm:7.0.1", {
+          "packageLocation": "./.yarn/cache/@sendgrid-helpers-npm-7.0.1-86159f0d94-2.zip/node_modules/@sendgrid/helpers/",
+          "packageDependencies": [
+            ["@sendgrid/helpers", "npm:7.0.1"],
+            ["chalk", "npm:2.4.2"],
+            ["deepmerge", "npm:4.2.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@sendgrid/mail", [
+        ["npm:7.1.1", {
+          "packageLocation": "./.yarn/cache/@sendgrid-mail-npm-7.1.1-c761ddea99-2.zip/node_modules/@sendgrid/mail/",
+          "packageDependencies": [
+            ["@sendgrid/mail", "npm:7.1.1"],
+            ["@sendgrid/client", "npm:7.1.1"],
+            ["@sendgrid/helpers", "npm:7.0.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@sindresorhus/is", [
         ["npm:0.14.0", {
           "packageLocation": "./.yarn/cache/@sindresorhus-is-npm-0.14.0-9f906ea34b-2.zip/node_modules/@sindresorhus/is/",
@@ -4465,7 +4503,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-flowtype", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:4.7.0"],
             ["eslint-plugin-import", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.20.2"],
             ["eslint-plugin-jsx-a11y", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:6.2.3"],
-            ["eslint-plugin-openapi-jsdoc", "npm:0.0.2"],
+            ["eslint-plugin-openapi", "npm:0.0.3"],
             ["eslint-plugin-react", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.19.0"],
             ["eslint-plugin-react-hooks", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:2.5.1"],
             ["esm", "npm:3.2.25"],
@@ -5115,7 +5153,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.0"],
+            ["openapi-comment-parser", "npm:0.3.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
@@ -5140,7 +5178,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.0"],
+            ["openapi-comment-parser", "npm:0.3.3"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
@@ -6482,7 +6520,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.0"],
+            ["openapi-comment-parser", "npm:0.3.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
@@ -6716,6 +6754,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["deepmerge", [
+        ["npm:4.2.2", {
+          "packageLocation": "./.yarn/cache/deepmerge-npm-4.2.2-112165ced2-2.zip/node_modules/deepmerge/",
+          "packageDependencies": [
+            ["deepmerge", "npm:4.2.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["default-gateway", [
         ["npm:4.2.0", {
           "packageLocation": "./.yarn/cache/default-gateway-npm-4.2.0-f6bdd83987-2.zip/node_modules/default-gateway/",
@@ -6867,7 +6914,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.0"],
+            ["openapi-comment-parser", "npm:0.3.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
@@ -6892,7 +6939,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.0"],
+            ["openapi-comment-parser", "npm:0.3.3"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
@@ -7282,6 +7329,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["minimalistic-crypto-utils", "npm:1.0.1"]
           ],
           "linkType": "HARD",
+        }]
+      ]],
+      ["email-v2", [
+        ["workspace:services/email-v2", {
+          "packageLocation": "./services/email-v2/",
+          "packageDependencies": [
+            ["email-v2", "workspace:services/email-v2"],
+            ["@sendgrid/mail", "npm:7.1.1"],
+            ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
+            ["chai-http", "npm:4.3.0"],
+            ["esm", "npm:3.2.25"],
+            ["express", "npm:4.17.1"],
+            ["mocha", "npm:7.1.2"],
+            ["nodemon", "npm:2.0.3"],
+            ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.3"],
+            ["pino-http", "npm:5.1.0"],
+            ["pino-pretty", "npm:4.0.0"],
+            ["prettier", "npm:2.0.5"],
+            ["sinon", "npm:9.0.2"],
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
+          ],
+          "linkType": "SOFT",
         }]
       ]],
       ["emoji-regex", [
@@ -7795,11 +7866,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
-      ["eslint-plugin-openapi-jsdoc", [
-        ["npm:0.0.2", {
-          "packageLocation": "./.yarn/cache/eslint-plugin-openapi-jsdoc-npm-0.0.2-852dc15f04-2.zip/node_modules/eslint-plugin-openapi-jsdoc/",
+      ["eslint-plugin-openapi", [
+        ["npm:0.0.3", {
+          "packageLocation": "./.yarn/cache/eslint-plugin-openapi-npm-0.0.3-9ebe5f0793-2.zip/node_modules/eslint-plugin-openapi/",
           "packageDependencies": [
-            ["eslint-plugin-openapi-jsdoc", "npm:0.0.2"],
+            ["eslint-plugin-openapi", "npm:0.0.3"],
             ["comment-parser", "npm:0.7.4"]
           ],
           "linkType": "HARD",
@@ -9444,7 +9515,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.0"],
+            ["openapi-comment-parser", "npm:0.3.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
@@ -9468,7 +9539,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.0"],
+            ["openapi-comment-parser", "npm:0.3.3"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
@@ -13562,10 +13633,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["openapi-comment-parser", [
-        ["npm:0.3.0", {
-          "packageLocation": "./.yarn/cache/openapi-comment-parser-npm-0.3.0-9e4c89f351-2.zip/node_modules/openapi-comment-parser/",
+        ["npm:0.3.3", {
+          "packageLocation": "./.yarn/cache/openapi-comment-parser-npm-0.3.3-4ebea52316-2.zip/node_modules/openapi-comment-parser/",
           "packageDependencies": [
-            ["openapi-comment-parser", "npm:0.3.0"]
+            ["openapi-comment-parser", "npm:0.3.3"]
           ],
           "linkType": "HARD",
         }]
@@ -14136,7 +14207,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.0"],
+            ["openapi-comment-parser", "npm:0.3.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],

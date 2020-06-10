@@ -1901,6 +1901,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sendgrid/client@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "@sendgrid/client@npm:7.1.1"
+  dependencies:
+    "@sendgrid/helpers": ^7.0.1
+    axios: ^0.19.2
+  checksum: 2/7e84a54c4419c465b2c55e36ea28cea02faac9ced9b78884cac499e9b6dce12e409c43343be518b63793f698e91b29c59868d774af1b4620b6693a5c366f3ba2
+  languageName: node
+  linkType: hard
+
+"@sendgrid/helpers@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "@sendgrid/helpers@npm:7.0.1"
+  dependencies:
+    chalk: ^2.0.1
+    deepmerge: ^4.2.2
+  checksum: 2/35ad45248a4d06eb40dbd50b2ba8f897df39e69a556a6468764b9e3cb0ededa8399b499d5c1cbb5b62405284c02d40fe355d5560ce65192484c53405fd4447ce
+  languageName: node
+  linkType: hard
+
+"@sendgrid/mail@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "@sendgrid/mail@npm:7.1.1"
+  dependencies:
+    "@sendgrid/client": ^7.1.1
+    "@sendgrid/helpers": ^7.0.1
+  checksum: 2/19536670f4c3d5de7f843d57e91427aad1649aea63d1d63c35a49bb2cfdc1d55e62fb4b245bf011995ab4084b42a037205cbcb3789f5d9b0cb44769a942f0f6e
+  languageName: node
+  linkType: hard
+
 "@sindresorhus/is@npm:^0.14.0":
   version: 0.14.0
   resolution: "@sindresorhus/is@npm:0.14.0"
@@ -3669,7 +3699,7 @@ __metadata:
     eslint-plugin-flowtype: 4.x
     eslint-plugin-import: 2.x
     eslint-plugin-jsx-a11y: 6.x
-    eslint-plugin-openapi-jsdoc: ^0.0.2
+    eslint-plugin-openapi: ^0.0.3
     eslint-plugin-react: 7.x
     eslint-plugin-react-hooks: 2.x
     esm: ^3.2.25
@@ -4256,7 +4286,7 @@ __metadata:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -4279,7 +4309,7 @@ __metadata:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -5506,7 +5536,7 @@ __metadata:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -5670,6 +5700,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"deepmerge@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "deepmerge@npm:4.2.2"
+  checksum: 2/85abf8e0045ee280996e7d2396979c877ef0741e413b716e42441110e0a83ac08098b2a49cea035510060bf667c0eae3189b2a52349f5fa4b000c211041637b1
+  languageName: node
+  linkType: hard
+
 "default-gateway@npm:^4.2.0":
   version: 4.2.0
   resolution: "default-gateway@npm:4.2.0"
@@ -5806,7 +5843,7 @@ __metadata:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -5829,7 +5866,7 @@ __metadata:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -6179,6 +6216,28 @@ __metadata:
   checksum: 2/84df133c94a0985c359a5f0a45a27f8208b5dcbc486e5557480fcbf6d50041e3bccb0de7ab4b021f313755bf8657a79f53ff67c555203eecb6d81bfc10292825
   languageName: node
   linkType: hard
+
+"email-v2@workspace:services/email-v2":
+  version: 0.0.0-use.local
+  resolution: "email-v2@workspace:services/email-v2"
+  dependencies:
+    "@sendgrid/mail": ^7.1.1
+    chai: ^4.2.0
+    chai-as-promised: ^7.1.1
+    chai-http: ^4.3.0
+    esm: ^3.2.25
+    express: ^4.17.1
+    mocha: ^7.1.2
+    nodemon: ^2.0.3
+    nyc: ^15.0.1
+    openapi-comment-parser: ^0.3.3
+    pino-http: ^5.1.0
+    pino-pretty: ^4.0.0
+    prettier: ^2.0.5
+    sinon: ^9.0.2
+    swagger-ui-express: ^4.1.1
+  languageName: unknown
+  linkType: soft
 
 "emoji-regex@npm:^7.0.1, emoji-regex@npm:^7.0.2":
   version: 7.0.3
@@ -6539,12 +6598,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-openapi-jsdoc@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "eslint-plugin-openapi-jsdoc@npm:0.0.2"
+"eslint-plugin-openapi@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "eslint-plugin-openapi@npm:0.0.3"
   dependencies:
     comment-parser: ^0.7.4
-  checksum: 2/e83187e8fb6ab0706e4b1177d64e754b4d4dd6dd553fed7049b7dee448ea3217119374b881ee88ea5c2f2732e948b3ad9db58aabf7b13a6f34de7acbc7a74b9a
+  checksum: 2/c2693bf6acf7796deb3bfa726e30d3996117ed4c14145b6496cf64d06f241167c3ba4a55cfd0093dba688dd083f688dcecb394d8a2b6c88252ff2d42b7fe9fb6
   languageName: node
   linkType: hard
 
@@ -8097,7 +8156,7 @@ fsevents@^1.2.7:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -8119,7 +8178,7 @@ fsevents@^1.2.7:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -11844,10 +11903,10 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"openapi-comment-parser@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "openapi-comment-parser@npm:0.3.0"
-  checksum: 2/8cb64513452cebf4cdb012a12d235e94f64430d68775cca0fba10a7df0a8874357cc6179754d1c0eab236e64fb07bd9e6ea5c939101a31038d60fa10e44380a6
+"openapi-comment-parser@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "openapi-comment-parser@npm:0.3.3"
+  checksum: 2/a17d62a7943f5797abb5b31a3b4bfeb68521aa7a9b38207d85baf6412b6ba35e8868290dd9ccffe348860dcf708b93577b2b9194814580b4b767597fe3e7acd6
   languageName: node
   linkType: hard
 
@@ -12356,7 +12415,7 @@ fsevents@^1.2.7:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.0
+    openapi-comment-parser: ^0.3.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
