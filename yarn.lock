@@ -3740,6 +3740,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bintrees@npm:1.0.1":
+  version: 1.0.1
+  resolution: "bintrees@npm:1.0.1"
+  checksum: 2/e78592a05f6fb0635ef23a7763e8d7a0a1f060efeb0523308484cfc2e36f2bbe0517f397b6a1dfd4fc09e83c874990dafd5fef451b1c43b51763ec9d3aa1f272
+  languageName: node
+  linkType: hard
+
 "bl@npm:^2.2.0":
   version: 2.2.0
   resolution: "bl@npm:2.2.0"
@@ -4451,6 +4458,30 @@ __metadata:
   checksum: 2/1460ad12da600b277575f53b7512d6e59005a34e3235ae62cfe12ff5d83b68a6ff568841907eb5f041c3f468d1385ea9fcfd22344df02175d28ea8a8b9330940
   languageName: node
   linkType: hard
+
+"checkout-v2@workspace:services/checkout-v2":
+  version: 0.0.0-use.local
+  resolution: "checkout-v2@workspace:services/checkout-v2"
+  dependencies:
+    chai: ^4.2.0
+    chai-as-promised: ^7.1.1
+    chai-http: ^4.3.0
+    esm: ^3.2.25
+    express: ^4.17.1
+    mocha: ^7.1.2
+    nodemon: ^2.0.3
+    nyc: ^15.0.1
+    openapi-comment-parser: ^0.3.3
+    pg: ^8.0.3
+    pino-http: ^5.1.0
+    pino-pretty: ^4.0.0
+    prom-client: ^12.0.0
+    query-validator: "workspace:*"
+    response-time: ^2.3.2
+    sinon: ^9.0.2
+    swagger-ui-express: ^4.1.1
+  languageName: unknown
+  linkType: soft
 
 "chokidar@npm:3.3.0":
   version: 3.3.0
@@ -5813,7 +5844,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"depd@npm:~1.1.2":
+"depd@npm:~1.1.0, depd@npm:~1.1.2":
   version: 1.1.2
   resolution: "depd@npm:1.1.2"
   checksum: 2/f45566ff7019a346852f095768a380778ed544de24e103b479fd5d3e61982d670efbb5234c09d0588d7fdb09c26c48283d7150e4be5e6ce5d3d37cd268d75c4d
@@ -11859,7 +11890,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"on-headers@npm:~1.0.2":
+"on-headers@npm:~1.0.1, on-headers@npm:~1.0.2":
   version: 1.0.2
   resolution: "on-headers@npm:1.0.2"
   checksum: 2/51e75c80755169e765aa76238722e5ad1623f62b13bbc23544ade20cdbb6950cf0e6aa91de35d02ec956f47dc072ee460d8eef82354e4abf8fa692885cb3f2d8
@@ -13679,6 +13710,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"prom-client@npm:^12.0.0":
+  version: 12.0.0
+  resolution: "prom-client@npm:12.0.0"
+  dependencies:
+    tdigest: ^0.1.1
+  checksum: 2/d2a973c86da9637ddbe5c2e2e3d7ca5970291d07458881183c3a801708333eae9d1179f0036f08aa0dffebd8a04ee1a291e3aa4385005f8511c4abc11f5d8e06
+  languageName: node
+  linkType: hard
+
 "promise-deferred@npm:^2.0.3":
   version: 2.0.3
   resolution: "promise-deferred@npm:2.0.3"
@@ -14794,6 +14834,16 @@ resolve@1.1.7:
   dependencies:
     path-parse: ^1.0.6
   checksum: 2/76954aad72cd6ba127db4fcb3354a88be83f532ba7d58e166f776136bbeded410e0f3db86737fe0f3b4714627835bde078fa662887362336aaffb4bb7002a847
+  languageName: node
+  linkType: hard
+
+"response-time@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "response-time@npm:2.3.2"
+  dependencies:
+    depd: ~1.1.0
+    on-headers: ~1.0.1
+  checksum: 2/dad4624ef77ca37898f1e23535eaea34575c38bd7f94ae0e2f216c399c3b1ac026f4ce87f8e63f82370080542af5938710f797ea3fda97a0caadc6a923727fdd
   languageName: node
   linkType: hard
 
@@ -16285,6 +16335,15 @@ resolve@1.1.7:
     safe-buffer: ^5.1.2
     yallist: ^3.0.3
   checksum: 2/d325c316ac329ecb18f2b8cd3f85a80ab4a4105ada601b9253aaafae3fc14268e3cd874ccc265b6a08e60ebd17fbc31bd3dbc0d1018f874b536eb2a6e8ef6d9c
+  languageName: node
+  linkType: hard
+
+"tdigest@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "tdigest@npm:0.1.1"
+  dependencies:
+    bintrees: 1.0.1
+  checksum: 2/467e2ecd00437339ba55dc41bb89a2ce84f6a0fd36fea49d872e72a12eba56490e00fa7f9f140333c0d3ff2bce83ab315d3b7edfb6ea794cc251458bd1ede520
   languageName: node
   linkType: hard
 

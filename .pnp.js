@@ -31,6 +31,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:services/car-rental-v2"
       },
       {
+        "name": "checkout-v2",
+        "reference": "workspace:services/checkout-v2"
+      },
+      {
         "name": "currency-exchange",
         "reference": "workspace:services/currency-exchange"
       },
@@ -77,6 +81,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["bee-travels", ["workspace:."]],
       ["car-rental-v1", ["workspace:services/car-rental-v1"]],
       ["car-rental-v2", ["workspace:services/car-rental-v2"]],
+      ["checkout-v2", ["workspace:services/checkout-v2"]],
       ["currency-exchange", ["workspace:services/currency-exchange"]],
       ["destination-v1", ["workspace:services/destination-v1"]],
       ["destination-v2", ["workspace:services/destination-v2"]],
@@ -4550,6 +4555,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["bintrees", [
+        ["npm:1.0.1", {
+          "packageLocation": "./.yarn/cache/bintrees-npm-1.0.1-806f76e302-2.zip/node_modules/bintrees/",
+          "packageDependencies": [
+            ["bintrees", "npm:1.0.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["bl", [
         ["npm:2.2.0", {
           "packageLocation": "./.yarn/cache/bl-npm-2.2.0-7827241b90-2.zip/node_modules/bl/",
@@ -5336,6 +5350,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["check-error", "npm:1.0.2"]
           ],
           "linkType": "HARD",
+        }]
+      ]],
+      ["checkout-v2", [
+        ["workspace:services/checkout-v2", {
+          "packageLocation": "./services/checkout-v2/",
+          "packageDependencies": [
+            ["checkout-v2", "workspace:services/checkout-v2"],
+            ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
+            ["chai-http", "npm:4.3.0"],
+            ["esm", "npm:3.2.25"],
+            ["express", "npm:4.17.1"],
+            ["mocha", "npm:7.1.2"],
+            ["nodemon", "npm:2.0.3"],
+            ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.3"],
+            ["pg", "npm:8.0.3"],
+            ["pino-http", "npm:5.1.0"],
+            ["pino-pretty", "npm:4.0.0"],
+            ["prom-client", "npm:12.0.0"],
+            ["query-validator", "workspace:packages/query-validator"],
+            ["response-time", "npm:2.3.2"],
+            ["sinon", "npm:9.0.2"],
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
+          ],
+          "linkType": "SOFT",
         }]
       ]],
       ["chokidar", [
@@ -15601,6 +15641,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["prom-client", [
+        ["npm:12.0.0", {
+          "packageLocation": "./.yarn/cache/prom-client-npm-12.0.0-c79f647aa9-2.zip/node_modules/prom-client/",
+          "packageDependencies": [
+            ["prom-client", "npm:12.0.0"],
+            ["tdigest", "npm:0.1.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["promise", [
         ["npm:7.3.1", {
           "packageLocation": "./.yarn/cache/promise-npm-7.3.1-5d81d474c0-2.zip/node_modules/promise/",
@@ -16808,6 +16858,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["rework", "npm:1.0.1"],
             ["rework-visit", "npm:1.0.0"],
             ["source-map", "npm:0.6.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["response-time", [
+        ["npm:2.3.2", {
+          "packageLocation": "./.yarn/cache/response-time-npm-2.3.2-e5c67ab5c5-2.zip/node_modules/response-time/",
+          "packageDependencies": [
+            ["response-time", "npm:2.3.2"],
+            ["depd", "npm:1.1.2"],
+            ["on-headers", "npm:1.0.2"]
           ],
           "linkType": "HARD",
         }]
@@ -18423,6 +18484,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mkdirp", "npm:0.5.5"],
             ["safe-buffer", "npm:5.2.0"],
             ["yallist", "npm:3.1.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["tdigest", [
+        ["npm:0.1.1", {
+          "packageLocation": "./.yarn/cache/tdigest-npm-0.1.1-61312a207b-2.zip/node_modules/tdigest/",
+          "packageDependencies": [
+            ["tdigest", "npm:0.1.1"],
+            ["bintrees", "npm:1.0.1"]
           ],
           "linkType": "HARD",
         }]
