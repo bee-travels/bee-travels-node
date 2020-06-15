@@ -16,7 +16,9 @@ components:
           example: unprocessed
         cart_items:
           type: array
-          $ref: '#/components/schemas/CartItem'
+          items:
+            type: object
+            $ref: '#/components/schemas/CartItem'
         billing_details :
           type: object
           $ref: '#/components/schemas/BillingDetails'

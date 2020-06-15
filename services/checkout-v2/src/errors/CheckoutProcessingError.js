@@ -1,4 +1,4 @@
-class CheckoutProcessingError extends Error {
+export default class CheckoutProcessingError extends Error {
   constructor(message) {
     super(message);
     // Ensure the name of this error is the same as the class name
@@ -8,5 +8,3 @@ class CheckoutProcessingError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 }
-
-export default CheckoutProcessingError;
