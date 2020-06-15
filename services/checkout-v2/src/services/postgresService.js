@@ -1,94 +1,36 @@
-/*
-    Postgres DB data access class
-*/
-import {Pool, Client} from 'pg'
-import logger from '../lib/logger'
-
-export default class Postgres_db {
-
-    constructor(usr, pwd,  database_name, host='localhost', port=5432){
-
-        this.database_name = database_name
-        this.usr = usr
-        this.pwd = pwd
-        this.host = host
-        this.port = port
-
-        this.driver_name = 'Postgres_db_driver'
-
-        logger.info(`initializing  ${this.driver_name} class to connect to ${this.database_name}`)
-        
-
-    }
-
-    async query_async(text, values){
-
-        const pool = new Pool({
-            user: this.usr,
-            password: this.pwd,
-            host: this.host,
-            port: this.port,
-            database: this.database_name
-        })
-
-        try {
-            const res = await pool.query(text, values)
-            return res.rows
-            
-          } catch (err) {
-            logger.error(err.stack)
-          } finally {
-              pool.end()
-          }
-        
-    }
-
-    async execute_sql(sql){
-
-        const pool = new Pool({
-            user: this.usr,
-            password: this.pwd,
-            host: this.host,
-            port: this.port,
-            database: this.database_name
-        })
-
-        await pool.query(sql, (err, res) => {
-            
-            pool.end()
-
-            if (err) {
-                     return console.error('Error acquiring client', err.stack)
-            } 
-
-            return res
-          })
+import { isValidQueryValue } from "query-validator";
+import { Client } from 'pg'
 
 
-    }
+let types = require("pg").types;
+types.setTypeParser(1700, function (val) {
+  return parseFloat(val);
+});
 
-    async execute_sql_client(sql){
+export function buildCheckoutSavePostgresStatement(checkout_object, payment_confirm) {
 
-        const pool = new Pool({
-            user: this.usr,
-            password: this.pwd,
-            host: this.host,
-            port: this.port,
-            database: this.database_name
-        })
+  const current_date = Date.now();
+  const statement = 'INSERT INTO checkout.transaction(first_name, last_name, email, street, country, created) \
+                                          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *'
+  const values = [isValidQueryValue(checkout_object.first_name), isValidQueryValue(checkout_object.last_name), isValidQueryValue(checkout_object.email), isValidQueryValue(checkout_object.line1), isValidQueryValue(checkout_object.line2), isValidQueryValue(checkout_object.country), current_date]
+  return { statement: statement, values: values };
+}
 
-    
-        const client = await pool.connect()
-        const result = await client.query({
-            rowMode: 'array',
-            text: sql,
-          })
+export async function checkoutSavePostgres(query) {
+  const client = new Client({
+    host: process.env.CHECKOUT_PG_HOST,
+    user: process.env.CHECKOUT_PG_USER,
+    password: process.env.CHECKOUT_PG_PASSWORD,
+    database: "checkout",
+  });
 
-        //await pool.end()
-        await client.end()
-        
-
-        return result
-
-    }
+  try {
+    client.connect();
+    const res = await client.query(query.statement, query.values);
+    return res.rows;
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    client.end();
+  }
 }
