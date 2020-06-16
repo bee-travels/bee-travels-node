@@ -5357,6 +5357,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./services/checkout-v2/",
           "packageDependencies": [
             ["checkout-v2", "workspace:services/checkout-v2"],
+            ["axios", "npm:0.19.2"],
             ["chai", "npm:4.2.0"],
             ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
             ["chai-http", "npm:4.3.0"],

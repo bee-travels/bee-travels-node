@@ -1,30 +1,39 @@
-import CheckoutProcessingError from "./../errors/CheckoutProcessingError"
-import crypto from 'crypto'
+import CheckoutProcessingError from "./../errors/CheckoutProcessingError";
+import crypto from "crypto";
 
 import {
-
   buildCheckoutSavePostgresStatement,
-  checkoutSavePostgres,
+  checkoutSavePostgres
 } from "./postgresService";
 
-import {
-  buildCheckoutSaveDb2Statement,
-  checkoutSaveDb2
-} from "./db2Service"
+import processPayment from './serviceHandler'
 
-export async function processCheckout(CheckoutObject) {
-
+import { buildCheckoutSaveDb2Statement, checkoutSaveDb2 } from "./db2Service";
+export async function getData() {
+  return 'success'
+}
+export async function processCheckout(checkoutObject) {
   //validation
-  const cart_items = CheckoutObject.cart_items
+  const cart_items = checkoutObject.cart_items;
   if (cart_items.length === 0) {
-    throw new CheckoutProcessingError("Cart contains zero items")
+    throw new CheckoutProcessingError("Cart contains zero items");
   }
 
+  //setup for processing payment
+  //create an invoice id
+  const invoice_id = crypto.randomBytes(16).toString("hex");
+  const statement_descriptor = `BeeTravels.com/r/${invoice_id}`;
   //call payment svc
+  const postProcessPaymentResult = processPayment(invoice_id, statement_descriptor, checkoutObject)
 
-  //look up Checkout item details via guid
-  // if car look by guid -> ford xxx ( start end)
-  // to hotel/car/flight svc to construct receipt???
+  return postProcessPaymentResult;
+
+  // return {
+  //   "status": "succeeded",
+  //   "confirmation_id": "23ea1233a8fcde349ad5671e647e1c06"
+  // }
+
+  //const confirmation_id = crypto.randomBytes(16).toString("hex");
 
   //payment success;
   //send user basic - email receipt
@@ -42,12 +51,18 @@ export async function processCheckout(CheckoutObject) {
 
   */
 
-
   //persist to db
   //pass back payment confirm/ref #
   //reference number - relates to checkout db info if success
-  const confirmation_id = crypto.randomBytes(16).toString("hex")
-  return { status: "succeeded", confirmation_id: confirmation_id }
+
+  // const sql_statement = await buildCheckoutSavePostgresStatement(checkoutObject, confirmation_id);
+  // const result = await checkoutSavePostgres(sql_statement);
+  // console.log(result);
+  //return { status: "succeeded", confirmation_id: postProcessPaymentResult };
+
+
+
+
 
   /*
   let query;
@@ -55,12 +70,12 @@ export async function processCheckout(CheckoutObject) {
 
     case "postgres":
       query = buildCheckoutSavePostgresStatement(
-        CheckoutObject
+        checkoutObject
       );
       return await checkoutSavePostgres(query);
     case "db2":
       query = buildCheckoutSaveDb2Statement(
-        CheckoutObject
+        checkoutObject
       );
       return await checkoutSaveDb2(query);
     default:
@@ -73,10 +88,7 @@ export async function processCheckout(CheckoutObject) {
 */
 }
 
-
 export function readinessCheck() {
-
-
   //db2 or postGres
   //call
   //email svc
