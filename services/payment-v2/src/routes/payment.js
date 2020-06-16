@@ -4,10 +4,19 @@ import CreditCardExpiredError from "../errors/CreditCardExpiredError";
 
 const router = Router();
 
+
 /**
  * POST /api/v1/payment/charge
- * @requestBody {Charge} This is the JSON body required when calling the payment service for Bee Travels
+ * @summary Payment Service Stub
+ * @bodyContent {Charge} application/json
+ * @bodyRequired
+ * @bodyDescription This is the JSON body required when calling the payment service for Bee Travels
+ * @response 200 - Success
+ * @response 403 - Invalid query
+ * @response 404 - Database not found
+ * @response 500 - Internal server error
  */
+
 router.post("/charge", async (req, res, next) => {
   const data = req.body;
   try {

@@ -4,18 +4,12 @@ import chaiHttp from "chai-http";
 
 // Breaks code coverage if using import x from "x"
 const app = require("./app").default;
-//const { getExampleChargeData } = require("./services/dataHandler");
 chai.use(chaiHttp);
 
 //ref: https://stackoverflow.com/questions/35697763/post-request-via-chai
 
 describe('Payment API Endpoint Test Group', () => {
-  //const ip_address = process.env.IP
-  //const port = process.env.PORT
-  const ip_address = 'localhost'
-  const port = 9403
 
-  const host = "http://" + ip_address + ':' + port;
   const path = "/api/v1/payment/charge";
 
   it('should send correct cc in body and succeed to : /api/v1/payment/charge POST', (done) => {
@@ -23,7 +17,7 @@ describe('Payment API Endpoint Test Group', () => {
     const request_body = getExampleChargeData(2, 2033)
 
     chai
-      .request(host)
+      .request(app)
       .post(path)
       .set('content-type', 'application/json')
       .send(request_body)
@@ -47,7 +41,7 @@ describe('Payment API Endpoint Test Group', () => {
     var request_body = getExampleChargeData(5, 2020)
 
     chai
-      .request(host)
+      .request(app)
       .post(path)
       .set('content-type', 'application/json')
       .send(request_body)
@@ -65,7 +59,7 @@ describe('Payment API Endpoint Test Group', () => {
     var request_body = getExampleChargeData(2, 1967)
 
     chai
-      .request(host)
+      .request(app)
       .post(path)
       .set('content-type', 'application/json')
       .send(request_body)
