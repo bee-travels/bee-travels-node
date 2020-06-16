@@ -5,13 +5,28 @@ set search_path to chekcout;
 CREATE EXTENSION pgcrypto;
 
   CREATE TABLE IF NOT EXISTS transactions (
-      first_name VARCHAR,
-      first_name VARCHAR,
-      first_name VARCHAR,
-      first_name VARCHAR,
-      first_name VARCHAR,
-      first_name VARCHAR,
-      first_name VARCHAR,
+      transaction_id VARCHAR,
+      first_name VARCHAR NOT NULL,
+      last_name VARCHAR NOT NULL,
+      email VARCHAR NOT NULL,
+      address1 VARCHAR NOT NULL,
+      address2 VARCHAR,
+      postal_code VARCHAR NOT NULL,
+      country VARCHAR NOT NULL,
+      total_cost FLOAT NOT NULL,
+      currency CHAR(3) NOT NULL,
+      time_stamp TIMESTAMP NOT NULL,
       payment_confirmation VARCHAR UNIQUE,
-      PRIMARY KEY (user_id)
+      PRIMARY KEY (transaction_id)
   );
+
+CREATE TABLE IF NOT EXISTS cart_items (
+      transaction_id VARCHAR NOT NULL,
+      cart_item_type VARCHAR NOT NULL,
+      cart_item_uuid VARCHAR NOT NULL,
+      cost FLOAT NOT NULL,
+      currency CHAR(3) NOT NULL,
+      start_date_time TIMESTAMP NOT NULL,
+      end_date_time TIMESTAMP NOT NULL,
+      FOREIGN KEY (transaction_id) REFERENCES transactions(transaction_id) ON UPDATE CASCADE
+);
