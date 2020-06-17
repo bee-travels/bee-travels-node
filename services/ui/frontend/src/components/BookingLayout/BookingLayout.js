@@ -90,7 +90,7 @@ const Content = ({ location }) => {
         `/api/v1/destinations/${country}/${city}`
       );
       const destination = await destinationResponse.json();
-      console.log("DESTINATION : ",destination);
+      console.log("DESTINATION : ", destination);
       setLatitude(destination.latitude);
       setLongitude(destination.longitude);
       setDescription(destination.description);

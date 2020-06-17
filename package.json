@@ -35,5 +35,8 @@
     "nyc": "^15.0.1",
     "prettier": "^2.0.5",
     "sinon": "^9.0.2"
+  },
+  "dependencies": {
+    "openapi-comment-parser": "^0.3.4"
   }
 }
