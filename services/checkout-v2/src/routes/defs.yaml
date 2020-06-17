@@ -59,7 +59,7 @@ components:
             example: "+1 (415) 777 8888"
         email:
             type: string
-            example: null
+            example: "mary@poppins.net"
         address :
           type: object
           $ref: '#/components/schemas/Address'
@@ -69,19 +69,19 @@ components:
       properties:
         line1:
           type: string
-          example: 42 Arnold Lane
+          example: 42 Avienda de Princapessa
         line2:
           type: string
           example: "#747"
         city:
           type: string
-          example: Madrid
+          example: Málaga
         postal_code:
           type: string
           example: 76NE
         state:
           type: string
-          example: null
+          example: Andalusia
         country:
           type: string
           example: Spain

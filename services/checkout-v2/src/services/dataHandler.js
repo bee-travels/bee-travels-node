@@ -23,8 +23,21 @@ export async function processCheckout(checkoutObject) {
   //create an invoice id
   const invoice_id = crypto.randomBytes(16).toString("hex");
   const statement_descriptor = `BeeTravels.com/r/${invoice_id}`;
+  var postProcessPaymentResult = await processPayment(invoice_id, statement_descriptor, checkoutObject);
+
   //call payment svc
-  const postProcessPaymentResult = processPayment(invoice_id, statement_descriptor, checkoutObject)
+  // await processPayment(invoice_id, statement_descriptor, checkoutObject).then((res, bez) => {
+  //   console.log("unpromising!")
+  //   console.log(res)
+  //   console.log(bez)
+  //   postProcessPaymentResult = res
+  // }).catch(function (err) {
+  //   console.error(err)
+  // });
+
+  console.log(">>>>")
+  console.log(postProcessPaymentResult)
+
 
   return postProcessPaymentResult;
 

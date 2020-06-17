@@ -20,7 +20,10 @@ const router = Router();
 router.post("/charge", async (req, res, next) => {
   const data = req.body;
   try {
+
     const postProcCCresult = await processCreditcardPayment(data);
+    console.log("postProcCC")
+    console.log(postProcCCresult)
     return res.json(postProcCCresult);
   } catch (e) {
     if (e instanceof CreditCardExpiredError) {

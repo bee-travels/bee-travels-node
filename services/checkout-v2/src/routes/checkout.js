@@ -17,9 +17,15 @@ const router = Router();
 router.post("/cart", async (req, res, next) => {
   const data = req.body;
   try {
+    console.log(data)
     const postProcessCheckout = await processCheckout(data);
+    console.log("in route!!")
+    console.log(postProcessCheckout)
+
+
     return res.json(postProcessCheckout);
   } catch (e) {
+    console.log(e);
     if (e instanceof CheckoutProcessingError) {
       return res.status(400).json({ error: e.message });
     }

@@ -22,6 +22,8 @@ describe('Checkout API Endpoint Test Group', () => {
       .send(request_body)
       .end((error, response, body) => {
         if (response) {
+
+          console.log(response)
           expect(response.status).to.equal(200)
           expect(response.body.status).to.equal('succeeded')
           expect(response.body.confirmation_id).not.to.equal(null)
