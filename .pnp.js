@@ -171,6 +171,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "npm:15.0.1"
       ],
       [
+        "openapi-comment-parser",
+        "npm:0.3.4"
+      ],
+      [
         "prettier",
         "npm:2.0.5"
       ],
@@ -205,6 +209,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["esm", "npm:3.2.25"],
             ["mocha", "npm:7.1.2"],
             ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["prettier", "npm:2.0.5"],
             ["sinon", "npm:9.0.2"]
           ],
@@ -1872,6 +1877,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@egjs/hammerjs", [
+        ["npm:2.0.17", {
+          "packageLocation": "./.yarn/cache/@egjs-hammerjs-npm-2.0.17-2e03ba4087-2.zip/node_modules/@egjs/hammerjs/",
+          "packageDependencies": [
+            ["@egjs/hammerjs", "npm:2.0.17"],
+            ["@types/hammerjs", "npm:2.0.36"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@emotion/hash", [
         ["npm:0.8.0", {
           "packageLocation": "./.yarn/cache/@emotion-hash-npm-0.8.0-0104f4bbf3-2.zip/node_modules/@emotion/hash/",
@@ -2821,6 +2836,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/events", "npm:3.0.0"],
             ["@types/minimatch", "npm:3.0.3"],
             ["@types/node", "npm:12.12.37"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@types/hammerjs", [
+        ["npm:2.0.36", {
+          "packageLocation": "./.yarn/cache/@types-hammerjs-npm-2.0.36-1456ebf0d4-2.zip/node_modules/@types/hammerjs/",
+          "packageDependencies": [
+            ["@types/hammerjs", "npm:2.0.36"]
           ],
           "linkType": "HARD",
         }]
@@ -4514,6 +4538,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["esm", "npm:3.2.25"],
             ["mocha", "npm:7.1.2"],
             ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["prettier", "npm:2.0.5"],
             ["sinon", "npm:9.0.2"]
           ],
@@ -5158,7 +5183,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.3"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
@@ -5183,7 +5208,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.3"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
@@ -6525,7 +6550,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.3"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
@@ -6919,7 +6944,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.3"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
@@ -6944,7 +6969,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.3"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
@@ -7350,7 +7375,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.3"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["prettier", "npm:2.0.5"],
@@ -9546,7 +9571,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.3"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
@@ -9561,6 +9586,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["hotel-v2", "workspace:services/hotel-v2"],
             ["@cloudant/cloudant", "npm:4.2.4"],
+            ["axios", "npm:0.19.2"],
             ["chai", "npm:4.2.0"],
             ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
             ["chai-http", "npm:4.3.0"],
@@ -9570,7 +9596,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mongodb", "npm:3.5.7"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.3"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["pg", "npm:8.0.3"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
@@ -11806,6 +11832,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["keycharm", [
+        ["npm:0.2.0", {
+          "packageLocation": "./.yarn/cache/keycharm-npm-0.2.0-413f7c52dc-2.zip/node_modules/keycharm/",
+          "packageDependencies": [
+            ["keycharm", "npm:0.2.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["keyv", [
         ["npm:3.1.0", {
           "packageLocation": "./.yarn/cache/keyv-npm-3.1.0-81c9ff4454-2.zip/node_modules/keyv/",
@@ -12811,6 +12846,22 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["moment", [
+        ["npm:2.24.0", {
+          "packageLocation": "./.yarn/cache/moment-npm-2.24.0-d95decfdfe-2.zip/node_modules/moment/",
+          "packageDependencies": [
+            ["moment", "npm:2.24.0"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:2.26.0", {
+          "packageLocation": "./.yarn/cache/moment-npm-2.26.0-5c58938a26-2.zip/node_modules/moment/",
+          "packageDependencies": [
+            ["moment", "npm:2.26.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["mongodb", [
         ["npm:3.5.7", {
           "packageLocation": "./.yarn/cache/mongodb-npm-3.5.7-d5164d6606-2.zip/node_modules/mongodb/",
@@ -13664,10 +13715,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["openapi-comment-parser", [
-        ["npm:0.3.3", {
-          "packageLocation": "./.yarn/cache/openapi-comment-parser-npm-0.3.3-4ebea52316-2.zip/node_modules/openapi-comment-parser/",
+        ["npm:0.3.4", {
+          "packageLocation": "./.yarn/cache/openapi-comment-parser-npm-0.3.4-4acf7a5853-2.zip/node_modules/openapi-comment-parser/",
           "packageDependencies": [
-            ["openapi-comment-parser", "npm:0.3.3"]
+            ["openapi-comment-parser", "npm:0.3.4"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["openapi-ui-express", [
+        ["npm:0.0.8", {
+          "packageLocation": "./.yarn/cache/openapi-ui-express-npm-0.0.8-a048049e7c-2.zip/node_modules/openapi-ui-express/",
+          "packageDependencies": [
+            ["openapi-ui-express", "npm:0.0.8"],
+            ["express", "npm:4.17.1"]
           ],
           "linkType": "HARD",
         }]
@@ -14238,7 +14299,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mocha", "npm:7.1.2"],
             ["nodemon", "npm:2.0.3"],
             ["nyc", "npm:15.0.1"],
-            ["openapi-comment-parser", "npm:0.3.3"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["pino-http", "npm:5.1.0"],
             ["pino-pretty", "npm:4.0.0"],
             ["sinon", "npm:9.0.2"],
@@ -15887,7 +15948,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         ["workspace:packages/query-validator", {
           "packageLocation": "./packages/query-validator/",
           "packageDependencies": [
-            ["query-validator", "workspace:packages/query-validator"]
+            ["query-validator", "workspace:packages/query-validator"],
+            ["openapi-comment-parser", "npm:0.3.4"]
           ],
           "linkType": "SOFT",
         }]
@@ -16126,6 +16188,23 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/react-error-overlay-npm-6.0.7-2914e1fee8-2.zip/node_modules/react-error-overlay/",
           "packageDependencies": [
             ["react-error-overlay", "npm:6.0.7"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["react-graph-vis", [
+        ["virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:1.0.5", {
+          "packageLocation": "./.yarn/$$virtual/react-graph-vis-virtual-1fdf0c4fa7/0/cache/react-graph-vis-npm-1.0.5-e9847a84a9-2.zip/node_modules/react-graph-vis/",
+          "packageDependencies": [
+            ["react-graph-vis", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:1.0.5"],
+            ["lodash", "npm:4.17.15"],
+            ["prop-types", "npm:15.7.2"],
+            ["react", "npm:16.13.1"],
+            ["uuid", "npm:2.0.3"],
+            ["vis-network", "npm:5.4.1"]
+          ],
+          "packagePeers": [
+            "react"
           ],
           "linkType": "HARD",
         }]
@@ -18935,7 +19014,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ui-backend", "workspace:services/ui/backend"],
             ["axios", "npm:0.19.2"],
             ["express", "npm:4.17.1"],
-            ["nodemon", "npm:2.0.3"]
+            ["nodemon", "npm:2.0.3"],
+            ["openapi-comment-parser", "npm:0.3.4"],
+            ["openapi-ui-express", "npm:0.0.8"]
           ],
           "linkType": "SOFT",
         }]
@@ -18960,11 +19041,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["history", "npm:4.10.1"],
             ["mapbox-gl", "npm:1.9.1"],
             ["nouislider", "npm:14.2.0"],
+            ["openapi-comment-parser", "npm:0.3.4"],
             ["prettier", "npm:2.0.5"],
             ["query-string", "npm:6.12.1"],
             ["react", "npm:16.13.1"],
             ["react-autosuggest", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:9.4.3"],
             ["react-dom", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:16.13.1"],
+            ["react-graph-vis", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:1.0.5"],
             ["react-router-dom", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:5.1.2"],
             ["react-scripts", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:3.4.1"]
           ],
@@ -19293,6 +19376,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["uuid", [
+        ["npm:2.0.3", {
+          "packageLocation": "./.yarn/unplugged/uuid-npm-2.0.3-3ff56c79d0/node_modules/uuid/",
+          "packageDependencies": [
+            ["uuid", "npm:2.0.3"]
+          ],
+          "linkType": "HARD",
+        }],
         ["npm:3.4.0", {
           "packageLocation": "./.yarn/cache/uuid-npm-3.4.0-4fd8ef88ad-2.zip/node_modules/uuid/",
           "packageDependencies": [
@@ -19356,6 +19446,59 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["assert-plus", "npm:1.0.0"],
             ["core-util-is", "npm:1.0.2"],
             ["extsprintf", "npm:1.3.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["vis-data", [
+        ["virtual:be598ed3fb5b52949536b83b5213317e91361464181f51e530001bf2c0c3c04bbd44f8603c00f39f0f3a16f672d00a64bdbaed2bc5a41978c31c53fdda3fbfcb#npm:6.6.1", {
+          "packageLocation": "./.yarn/unplugged/vis-data-virtual-183440fde1/node_modules/vis-data/",
+          "packageDependencies": [
+            ["vis-data", "virtual:be598ed3fb5b52949536b83b5213317e91361464181f51e530001bf2c0c3c04bbd44f8603c00f39f0f3a16f672d00a64bdbaed2bc5a41978c31c53fdda3fbfcb#npm:6.6.1"],
+            ["moment", "npm:2.26.0"],
+            ["uuid", null],
+            ["vis-util", "npm:1.1.10"]
+          ],
+          "packagePeers": [
+            "moment",
+            "uuid",
+            "vis-util"
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["vis-network", [
+        ["npm:5.4.1", {
+          "packageLocation": "./.yarn/unplugged/vis-network-npm-5.4.1-be598ed3fb/node_modules/vis-network/",
+          "packageDependencies": [
+            ["vis-network", "npm:5.4.1"],
+            ["@egjs/hammerjs", "npm:2.0.17"],
+            ["component-emitter", "npm:1.3.0"],
+            ["keycharm", "npm:0.2.0"],
+            ["moment", "npm:2.26.0"],
+            ["timsort", "npm:0.3.0"],
+            ["vis-data", "virtual:be598ed3fb5b52949536b83b5213317e91361464181f51e530001bf2c0c3c04bbd44f8603c00f39f0f3a16f672d00a64bdbaed2bc5a41978c31c53fdda3fbfcb#npm:6.6.1"],
+            ["vis-util", "npm:1.1.10"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["vis-util", [
+        ["npm:1.1.10", {
+          "packageLocation": "./.yarn/cache/vis-util-npm-1.1.10-5790995955-2.zip/node_modules/vis-util/",
+          "packageDependencies": [
+            ["vis-util", "npm:1.1.10"],
+            ["moment", "npm:2.24.0"],
+            ["vis-uuid", "npm:1.1.3"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["vis-uuid", [
+        ["npm:1.1.3", {
+          "packageLocation": "./.yarn/cache/vis-uuid-npm-1.1.3-c0a32b2f05-2.zip/node_modules/vis-uuid/",
+          "packageDependencies": [
+            ["vis-uuid", "npm:1.1.3"]
           ],
           "linkType": "HARD",
         }]

@@ -1413,6 +1413,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@egjs/hammerjs@npm:^2.0.15":
+  version: 2.0.17
+  resolution: "@egjs/hammerjs@npm:2.0.17"
+  dependencies:
+    "@types/hammerjs": ^2.0.36
+  checksum: 2/a4d8bc16513b3163a4fb7ce9af6ebda91d3fc7472f7826c33350732b148ab5ce2ad1060ee3cb22dae512325a999f68e51ebda49ea517184cc65cba665e785d2a
+  languageName: node
+  linkType: hard
+
 "@emotion/hash@npm:^0.8.0":
   version: 0.8.0
   resolution: "@emotion/hash@npm:0.8.0"
@@ -2250,6 +2259,13 @@ __metadata:
     "@types/minimatch": "*"
     "@types/node": "*"
   checksum: 2/f74ae67cb205302da0d452e925529f817a253c4dce5d59ae6077d592238b921db750da143b8a5f8427a5011e202937d8a7b264f7d14b0ddc7f8137ca5e1af1b6
+  languageName: node
+  linkType: hard
+
+"@types/hammerjs@npm:^2.0.36":
+  version: 2.0.36
+  resolution: "@types/hammerjs@npm:2.0.36"
+  checksum: 2/7ca40b0b93262e7af6884d306bfa1360a36e974fb19c4f20170e9892244ed414898e6ff75923f1b27829d0d37000a7d3610f04c04cdf9a7e475439a7a32782d1
   languageName: node
   linkType: hard
 
@@ -3705,6 +3721,7 @@ __metadata:
     esm: ^3.2.25
     mocha: ^7.1.2
     nyc: ^15.0.1
+    openapi-comment-parser: ^0.3.4
     prettier: ^2.0.5
     sinon: ^9.0.2
   languageName: unknown
@@ -4286,7 +4303,7 @@ __metadata:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.3
+    openapi-comment-parser: ^0.3.4
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -4309,7 +4326,7 @@ __metadata:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.3
+    openapi-comment-parser: ^0.3.4
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -4854,7 +4871,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"component-emitter@npm:^1.2.0, component-emitter@npm:^1.2.1":
+"component-emitter@npm:^1.2.0, component-emitter@npm:^1.2.1, component-emitter@npm:^1.3.0":
   version: 1.3.0
   resolution: "component-emitter@npm:1.3.0"
   checksum: 2/fc4edbf1014f0aed88dcec33ca02d2938734e428423f640d8a3f94975615b8e8c506c19e29b93949637c5a281353e75fa79e299e0d57732f42a9fe346cb2cad6
@@ -5536,7 +5553,7 @@ __metadata:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.3
+    openapi-comment-parser: ^0.3.4
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -5843,7 +5860,7 @@ __metadata:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.3
+    openapi-comment-parser: ^0.3.4
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -5866,7 +5883,7 @@ __metadata:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.3
+    openapi-comment-parser: ^0.3.4
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -6230,7 +6247,7 @@ __metadata:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.3
+    openapi-comment-parser: ^0.3.4
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     prettier: ^2.0.5
@@ -8180,7 +8197,7 @@ fsevents@^1.2.7:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.3
+    openapi-comment-parser: ^0.3.4
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -8193,6 +8210,7 @@ fsevents@^1.2.7:
   resolution: "hotel-v2@workspace:services/hotel-v2"
   dependencies:
     "@cloudant/cloudant": ^4.2.4
+    axios: ^0.19.2
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
@@ -8202,7 +8220,7 @@ fsevents@^1.2.7:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.3
+    openapi-comment-parser: ^0.3.4
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -10237,6 +10255,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"keycharm@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "keycharm@npm:0.2.0"
+  checksum: 2/7fe8856f486399e34adc8af72c365c57804e69f02ef945005764abdb6b157ad8924c34525c9ca84cb3d2d772209565828f7e2b68e6a44c145c6af90462e87094
+  languageName: node
+  linkType: hard
+
 "keyv@npm:^3.0.0":
   version: 3.1.0
   resolution: "keyv@npm:3.1.0"
@@ -11150,6 +11175,20 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"moment@npm:2.24.0":
+  version: 2.24.0
+  resolution: "moment@npm:2.24.0"
+  checksum: 2/983617bc51c8121a88d9530671fb9e5dc2c71d67ba5bf1b16ebef25b51bd3d1291f17735ac33e8604f4984a275561dfe0fb883664eceacf8f67291ffd26acee9
+  languageName: node
+  linkType: hard
+
+"moment@npm:^2.24.0":
+  version: 2.26.0
+  resolution: "moment@npm:2.26.0"
+  checksum: 2/67bf24cd08c7aa392981f37ce1802214bc39f0f269cb77d9c7b50d9548e936fd23eacab55615882aea13736dfdb89880f2ac998400962253991e9cb0e54e8d71
+  languageName: node
+  linkType: hard
+
 "mongodb@npm:^3.5.7":
   version: 3.5.7
   resolution: "mongodb@npm:3.5.7"
@@ -11927,10 +11966,19 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"openapi-comment-parser@npm:^0.3.3":
-  version: 0.3.3
-  resolution: "openapi-comment-parser@npm:0.3.3"
-  checksum: 2/a17d62a7943f5797abb5b31a3b4bfeb68521aa7a9b38207d85baf6412b6ba35e8868290dd9ccffe348860dcf708b93577b2b9194814580b4b767597fe3e7acd6
+"openapi-comment-parser@npm:^0.3.4":
+  version: 0.3.4
+  resolution: "openapi-comment-parser@npm:0.3.4"
+  checksum: 2/f970175648c11e60ad05fcbacf3ff74980f10ced492bde3e6f7cd68947fe184bdf8bb27f5248e895f79faad2763e0532e30e7834c1ad0053630d21270c3f9f25
+  languageName: node
+  linkType: hard
+
+"openapi-ui-express@npm:^0.0.8":
+  version: 0.0.8
+  resolution: "openapi-ui-express@npm:0.0.8"
+  dependencies:
+    express: ^4.17.1
+  checksum: 2/41a834f1282df5b58fa0ef7f87ed3063557a058db37f1261b4cc72f8216e235b80425582d5dd97d03521b8db5dd43f5d5719f79dfb23d2d86d3929e2496c22c0
   languageName: node
   linkType: hard
 
@@ -12439,7 +12487,7 @@ fsevents@^1.2.7:
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.3
+    openapi-comment-parser: ^0.3.4
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     sinon: ^9.0.2
@@ -13933,6 +13981,8 @@ fsevents@^1.2.7:
 "query-validator@workspace:*, query-validator@workspace:packages/query-validator":
   version: 0.0.0-use.local
   resolution: "query-validator@workspace:packages/query-validator"
+  dependencies:
+    openapi-comment-parser: ^0.3.4
   languageName: unknown
   linkType: soft
 
@@ -14129,6 +14179,20 @@ fsevents@^1.2.7:
   version: 6.0.7
   resolution: "react-error-overlay@npm:6.0.7"
   checksum: 2/35533e193f9ca6dbb5cffe6c52b748dc68dbab0b9e54cb5c12cd0d8fb48ee6dea67eb33d1a3e4483d0dc16664a22b3c4f7f86441daa6774d18501d1dbd0c8283
+  languageName: node
+  linkType: hard
+
+"react-graph-vis@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "react-graph-vis@npm:1.0.5"
+  dependencies:
+    lodash: ^4.17.15
+    prop-types: ^15.5.10
+    uuid: ^2.0.1
+    vis-network: ^5.1.1
+  peerDependencies:
+    react: "*"
+  checksum: 2/e18fc833fdd382c184bf7db227e9e24e2082f86b25ccd382ebd8f5f5f43c6e52377c7ea3baee77bfaac32705e43e2bb7578d524903674284b41026ba27d0cd84
   languageName: node
   linkType: hard
 
@@ -16726,6 +16790,8 @@ resolve@1.1.7:
     axios: ^0.19.2
     express: ^4.17.1
     nodemon: ^2.0.3
+    openapi-comment-parser: ^0.3.4
+    openapi-ui-express: ^0.0.8
   languageName: unknown
   linkType: soft
 
@@ -16748,11 +16814,13 @@ resolve@1.1.7:
     history: ^4.10.1
     mapbox-gl: ^1.7.0
     nouislider: ^14.1.1
+    openapi-comment-parser: ^0.3.4
     prettier: ^2.0.5
     query-string: ^6.12.1
     react: ^16.13.1
     react-autosuggest: ^9.4.3
     react-dom: ^16.13.1
+    react-graph-vis: ^1.0.5
     react-router-dom: ^5.1.2
     react-scripts: 3.4.1
   languageName: unknown
@@ -17035,6 +17103,13 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
+"uuid@npm:^2.0.1":
+  version: 2.0.3
+  resolution: "uuid@npm:2.0.3"
+  checksum: 2/4c7d0889b36f98bcff6f1295c59273b342250216815f5cf7bc41ca31cedbaac87cd2fd6b2051f55a5e0bef1ddaa4085eb27a40e29591465936b2163710140c08
+  languageName: node
+  linkType: hard
+
 "uuid@npm:^3.0.1, uuid@npm:^3.3.2, uuid@npm:^3.3.3":
   version: 3.4.0
   resolution: "uuid@npm:3.4.0"
@@ -17090,6 +17165,49 @@ resolve@1.1.7:
     core-util-is: 1.0.2
     extsprintf: ^1.2.0
   checksum: 2/38ea80312cb42e5e8b4ac562d108d675b2354a79f8f125d363671f692657461b9181fd26f4fc9acdca433f8afee099cb78058806e1303e6b15b8fb022affba94
+  languageName: node
+  linkType: hard
+
+"vis-data@npm:^6.1.1":
+  version: 6.6.1
+  resolution: "vis-data@npm:6.6.1"
+  peerDependencies:
+    moment: ^2.24.0
+    uuid: ^7.0.0 || ^8.0.0
+    vis-util: ^4.0.0
+  checksum: 2/e89da0f14eb9bac2ce3995e340407c8366e68bcd332e8e4ddf395321a60ee03c73fc8de8ab6a0a02eaed847b2fd1ef47cd70d14b1a0b1d5db4ae233f6fb42f23
+  languageName: node
+  linkType: hard
+
+"vis-network@npm:^5.1.1":
+  version: 5.4.1
+  resolution: "vis-network@npm:5.4.1"
+  dependencies:
+    "@egjs/hammerjs": ^2.0.15
+    component-emitter: ^1.3.0
+    keycharm: ^0.2.0
+    moment: ^2.24.0
+    timsort: ^0.3.0
+    vis-data: ^6.1.1
+    vis-util: ^1.1.6
+  checksum: 2/996181766fc037246303751f3049d33ef722c0c20e11e31b39cbfec0c3b90c514f8d6fd18746470b804e0124972ed17aae39d476a013ce1235ab6da63aa785e8
+  languageName: node
+  linkType: hard
+
+"vis-util@npm:^1.1.6":
+  version: 1.1.10
+  resolution: "vis-util@npm:1.1.10"
+  dependencies:
+    moment: 2.24.0
+    vis-uuid: 1.1.3
+  checksum: 2/6574e7e201440f21ed6c38cff214513988e712cef7621b1f815131e08d14ba1966125a09b5fb2785bd456b79612ecc991fb4f4064da2ff91ca915ede17596b42
+  languageName: node
+  linkType: hard
+
+"vis-uuid@npm:1.1.3":
+  version: 1.1.3
+  resolution: "vis-uuid@npm:1.1.3"
+  checksum: 2/9c35b7536cdeba7c1ae70b0014eb3761593d7b97cc500990fd7591a134e91209549602ba87bbd4d1726f0b187a7fe89b40ccc9caa0d0be77d08d539b54a78fa9
   languageName: node
   linkType: hard
 

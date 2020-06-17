@@ -1,0 +1,13 @@
+components:
+  schemas:
+    CurrencyCode:
+      type: string
+      example: USD
+    Country:
+      type: string
+      example: united states of america
+  examples:
+    Jessica:
+      value:
+        id: 10
+        name: Jessica Smith
