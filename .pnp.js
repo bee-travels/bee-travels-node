@@ -47,6 +47,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:services/email-v2"
       },
       {
+        "name": "flights-v2",
+        "reference": "workspace:services/flights-v2"
+      },
+      {
         "name": "hotel-v1",
         "reference": "workspace:services/hotel-v1"
       },
@@ -81,6 +85,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["destination-v1", ["workspace:services/destination-v1"]],
       ["destination-v2", ["workspace:services/destination-v2"]],
       ["email-v2", ["workspace:services/email-v2"]],
+      ["flights-v2", ["workspace:services/flights-v2"]],
       ["hotel-v1", ["workspace:services/hotel-v1"]],
       ["hotel-v2", ["workspace:services/hotel-v2"]],
       ["payment", ["workspace:services/payment-v2"]],
@@ -176,6 +181,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [
         "sinon",
         "npm:9.0.2"
+      ],
+      [
+        "vis-network",
+        "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.6.10"
       ]
     ],
     "locationBlacklistData": [
@@ -206,7 +215,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nyc", "npm:15.0.1"],
             ["openapi-comment-parser", "npm:0.3.4"],
             ["prettier", "npm:2.0.5"],
-            ["sinon", "npm:9.0.2"]
+            ["sinon", "npm:9.0.2"],
+            ["vis-network", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.6.10"]
           ],
           "linkType": "SOFT",
         }]
@@ -4535,7 +4545,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nyc", "npm:15.0.1"],
             ["openapi-comment-parser", "npm:0.3.4"],
             ["prettier", "npm:2.0.5"],
-            ["sinon", "npm:9.0.2"]
+            ["sinon", "npm:9.0.2"],
+            ["vis-network", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.6.10"]
           ],
           "linkType": "SOFT",
         }]
@@ -8643,6 +8654,32 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["flatten", "npm:1.0.3"]
           ],
           "linkType": "HARD",
+        }]
+      ]],
+      ["flights-v2", [
+        ["workspace:services/flights-v2", {
+          "packageLocation": "./services/flights-v2/",
+          "packageDependencies": [
+            ["flights-v2", "workspace:services/flights-v2"],
+            ["@cloudant/cloudant", "npm:4.2.4"],
+            ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
+            ["chai-http", "npm:4.3.0"],
+            ["esm", "npm:3.2.25"],
+            ["express", "npm:4.17.1"],
+            ["mocha", "npm:7.1.2"],
+            ["mongodb", "npm:3.5.7"],
+            ["nodemon", "npm:2.0.3"],
+            ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.4"],
+            ["pg", "npm:8.0.3"],
+            ["pino-http", "npm:5.1.0"],
+            ["pino-pretty", "npm:4.0.0"],
+            ["query-validator", "workspace:packages/query-validator"],
+            ["sinon", "npm:9.0.2"],
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
+          ],
+          "linkType": "SOFT",
         }]
       ]],
       ["flush-write-stream", [
@@ -19448,6 +19485,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["timsort", "npm:0.3.0"],
             ["vis-data", "virtual:be598ed3fb5b52949536b83b5213317e91361464181f51e530001bf2c0c3c04bbd44f8603c00f39f0f3a16f672d00a64bdbaed2bc5a41978c31c53fdda3fbfcb#npm:6.6.1"],
             ["vis-util", "npm:1.1.10"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.6.10", {
+          "packageLocation": "./.yarn/unplugged/vis-network-virtual-02da243617/node_modules/vis-network/",
+          "packageDependencies": [
+            ["vis-network", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.6.10"],
+            ["@egjs/hammerjs", null],
+            ["component-emitter", null],
+            ["keycharm", null],
+            ["moment", null],
+            ["timsort", null],
+            ["uuid", null],
+            ["vis-data", null],
+            ["vis-util", null]
+          ],
+          "packagePeers": [
+            "component-emitter",
+            "@egjs/hammerjs",
+            "keycharm",
+            "moment",
+            "timsort",
+            "uuid",
+            "vis-data",
+            "vis-util"
           ],
           "linkType": "HARD",
         }]

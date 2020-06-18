@@ -37,6 +37,7 @@
     "sinon": "^9.0.2"
   },
   "dependencies": {
-    "openapi-comment-parser": "^0.3.4"
+    "openapi-comment-parser": "^0.3.4",
+    "vis-network": "^7.6.10"
   }
 }

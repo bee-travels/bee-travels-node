@@ -6,7 +6,10 @@ docker build -t bee-travels/node-base:v1 .
 
 docker build -t beetravels/destination-v1:${prefix}-$TRAVIS_COMMIT services/destination-v1
 docker build -t beetravels/destination-v2:${prefix}-$TRAVIS_COMMIT services/destination-v2
-docker build -t beetravels/carrental-v2:${prefix}-$TRAVIS_COMMIT services/carrental-v2
+docker build -t beetravels/carrental-v1:${prefix}-$TRAVIS_COMMIT services/car-rental-v1
+docker build -t beetravels/carrental-v2:${prefix}-$TRAVIS_COMMIT services/car-rental-v2
+docker build -t beetravels/flights-v2:${prefix}-$TRAVIS_COMMIT services/flights-v2
+docker build -t beetravels/email-v2:${prefix}-$TRAVIS_COMMIT services/email-v2
 docker build -t beetravels/hotel-v1:${prefix}-$TRAVIS_COMMIT services/hotel-v1
 docker build -t beetravels/hotel-v2:${prefix}-$TRAVIS_COMMIT services/hotel-v2
 docker build -t beetravels/currencyexchange:${prefix}-$TRAVIS_COMMIT services/currency-exchange
@@ -15,7 +18,10 @@ docker build -t beetravels/ui:${prefix}-$TRAVIS_COMMIT services/ui
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 docker push beetravels/destination-v1:${prefix}-$TRAVIS_COMMIT
 docker push beetravels/destination-v2:${prefix}-$TRAVIS_COMMIT
+docker push beetravels/carrental-v1:${prefix}-$TRAVIS_COMMIT
 docker push beetravels/carrental-v2:${prefix}-$TRAVIS_COMMIT
+docker push beetravels/flights-v2:${prefix}-$TRAVIS_COMMIT
+docker push beetravels/email-v2:${prefix}-$TRAVIS_COMMIT
 docker push beetravels/hotel-v1:${prefix}-$TRAVIS_COMMIT
 docker push beetravels/hotel-v2:${prefix}-$TRAVIS_COMMIT
 docker push beetravels/currencyexchange:${prefix}-$TRAVIS_COMMIT

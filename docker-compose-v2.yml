@@ -47,7 +47,7 @@ services:
       - couch
       - postgres
       - mongo
-    image: beetravels/data-gen-destination:4d84f1ca05c92686bd4adcfc84da65bc44e9c1e8
+    image: beetravels/data-gen-destination:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
     restart: on-failure
     environment: 
       - PG_USER=postgres
@@ -63,7 +63,7 @@ services:
       - couch
       - postgres
       - mongo
-    image: beetravels/data-gen-hotel:4d84f1ca05c92686bd4adcfc84da65bc44e9c1e8
+    image: beetravels/data-gen-hotel:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
     restart: on-failure
     environment: 
       - PG_USER=postgres
@@ -79,7 +79,7 @@ services:
       - couch
       - postgres
       - mongo
-    image: beetravels/data-gen-carrental:4d84f1ca05c92686bd4adcfc84da65bc44e9c1e8
+    image: beetravels/data-gen-carrental:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
     restart: on-failure
     environment: 
       - PG_USER=postgres
@@ -89,6 +89,22 @@ services:
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
       - GENERATE_DATA=false
       - DATABASE=${CAR_DATABASE}
+
+  flights-data-gen:
+    depends_on: 
+      - couch
+      - postgres
+      - mongo
+    image: beetravels/data-gen-airports:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
+    restart: on-failure
+    environment: 
+      - PG_USER=postgres
+      - PG_HOST=postgres 
+      - PG_PASSWORD=admin
+      - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
+      - GENERATE_DATA=false
+      - DATABASE=${FLIGHTS_DATABASE}
 
   destination:
     build: services/destination-v2
@@ -134,6 +150,21 @@ services:
       - CAR_PG_HOST=postgres
       - CAR_PG_USER=postgres
       - CAR_PG_PASSWORD=admin
+  
+  flights:
+    build: services/flights-v2
+    ports:
+      - "9103:9103"
+    depends_on:
+      - base
+      - flights-data-gen
+    environment:
+      - FLIGHTS_DATABASE=${FLIGHTS_DATABASE}
+      - FLIGHTS_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - FLIGHTS_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
+      - FLIGHTS_PG_HOST=postgres
+      - FLIGHTS_PG_USER=postgres
+      - FLIGHTS_PG_PASSWORD=admin
 
   currency-exchange:
     build: services/currency-exchange
