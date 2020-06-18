@@ -3724,6 +3724,7 @@ __metadata:
     openapi-comment-parser: ^0.3.4
     prettier: ^2.0.5
     sinon: ^9.0.2
+    vis-network: ^7.6.10
   languageName: unknown
   linkType: soft
 
@@ -7362,7 +7363,7 @@ __metadata:
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
-    openapi-comment-parser: ^0.3.3
+    openapi-comment-parser: ^0.3.4
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -17191,6 +17192,22 @@ resolve@1.1.7:
     vis-data: ^6.1.1
     vis-util: ^1.1.6
   checksum: 2/996181766fc037246303751f3049d33ef722c0c20e11e31b39cbfec0c3b90c514f8d6fd18746470b804e0124972ed17aae39d476a013ce1235ab6da63aa785e8
+  languageName: node
+  linkType: hard
+
+"vis-network@npm:^7.6.10":
+  version: 7.6.10
+  resolution: "vis-network@npm:7.6.10"
+  peerDependencies:
+    "@egjs/hammerjs": ^2.0.0
+    component-emitter: ^1.3.0
+    keycharm: ^0.2.0 || ^0.3.0
+    moment: ^2.24.0
+    timsort: ^0.3.0
+    uuid: ^3.4.0 || ^7.0.0 || ^8.0.0
+    vis-data: ^6.2.1
+    vis-util: ^3.0.0 || ^4.0.0
+  checksum: 2/a860bc5456f6c89fb7109505db7fa77769059a712b5087201b144fcd20b765e856b2ac76a86e59aa4f9d12f36193684a534e9c6fcd5ac76e85b9c85293db7ce9
   languageName: node
   linkType: hard
 

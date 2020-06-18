@@ -1,6 +1,5 @@
 import { Router } from "express";
 import {
-  getData,
   getAirport,
   getAirports,
   getAirportsList,
@@ -8,40 +7,22 @@ import {
   getOneStopFlights,
   getTwoStopFlights,
 } from "../services/dataHandler";
-import ExampleError from "../errors/ExampleError";
 
 const router = Router();
 
 /**
- * GET /api/v1/flights
- * @description Example route
- * @response 200 - OK
- * @response 400 - Error
- */
-router.get("/", async (req, res, next) => {
-  try {
-    const data = await getData();
-    return res.json(data);
-  } catch (e) {
-    if (e instanceof ExampleError) {
-      return res.status(400).json({ error: e.message });
-    }
-    next(e);
-  }
-});
-
-/**
- * GET /api/v1/flights/airports/{country}/{city}
+ * GET /api/v1/flights/airports
  * @description Get all airports
- * @pathParam {string} country - Country of the rental company using slug casing (ex. united-states)
- * @pathParam {string} city - City of the rental company using slug casing (ex. new-york)
+ * @queryParam {string} [country] - Country of the rental company using slug casing (ex. united-states)
+ * @queryParam {string} [city] - City of the rental company using slug casing (ex. new-york)
+ * @queryParam {string} [code] - 3 Letter iata code for the airport
  * @response 200 - OK
  * @response 400 - Error
  */
-router.get("/airports/:country/:city", async (req, res, next) => {
-  const { country, city } = req.params;
+router.get("/airports", async (req, res, next) => {
+  const { country, city, code } = req.query;
   try {
-    const data = await getAirports(city, country);
+    const data = await getAirports(city, country, code);
     res.json(data);
   } catch (e) {
     next(e);
@@ -49,12 +30,12 @@ router.get("/airports/:country/:city", async (req, res, next) => {
 });
 
 /**
- * GET /api/v1/flights/airports
+ * GET /api/v1/flights/airports/all
  * @description Get all cities and countries we have flights from
  * @response 200 - OK
  * @response 400 - Error
  */
-router.get("/airports", async (req, res, next) => {
+router.get("/airports/all", async (req, res, next) => {
   try {
     const data = await getAirportsList();
     res.json(data);

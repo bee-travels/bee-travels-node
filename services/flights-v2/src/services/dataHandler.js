@@ -1,4 +1,3 @@
-import ExampleError from "./../errors/ExampleError";
 import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
 import {
   getAirportFromPostgres,
@@ -9,23 +8,24 @@ import {
   getTwoStopFlightsFromPostgres,
 } from "./postgresService";
 
-export async function getData() {
-  throw new ExampleError("TODO: Implement me!");
-}
-
-const capitalize = (text) =>
-  text
+const capitalize = (text) => {
+  if (!text) return text;
+  return text
     .toLowerCase()
     .split("-")
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(" ");
+};
 
-export async function getAirports(city, country) {
+const upper = (text) => (text ? text.toUpperCase() : text);
+
+export async function getAirports(city, country, code) {
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
       return await getAirportsFromPostgres(
         capitalize(city),
-        capitalize(country)
+        capitalize(country),
+        upper(code)
       );
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);

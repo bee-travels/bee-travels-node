@@ -30,22 +30,64 @@ export async function getAirportFromPostgres(id) {
   }
 }
 
-export async function getAirportsFromPostgres(city, country) {
+export async function getAirportsFromPostgres(city, country, code) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
     password: process.env.FLIGHTS_PG_PASSWORD,
     database: "beetravels",
   });
-  let query = {
-    statement: "country=$1, city=$2",
-    values: [isValidQueryValue(country), isValidQueryValue(city)],
-  };
+  let query;
+  if (city && country && code) {
+    query = {
+      statement: "WHERE country=$1, city=$2, iata_code=$3",
+      values: [
+        isValidQueryValue(country),
+        isValidQueryValue(city),
+        isValidQueryValue(code),
+      ],
+    };
+  } else if (city && country) {
+    query = {
+      statement: "WHERE country=$1, city=$2",
+      values: [isValidQueryValue(country), isValidQueryValue(city)],
+    };
+  } else if (city && code) {
+    query = {
+      statement: "WHERE city=$1, iata_code=$2",
+      values: [isValidQueryValue(city), isValidQueryValue(code)],
+    };
+  } else if (country && code) {
+    query = {
+      statement: "WHERE country=$1, iata_code=$2",
+      values: [isValidQueryValue(country), isValidQueryValue(code)],
+    };
+  } else if (city) {
+    query = {
+      statement: "WHERE city=$1",
+      values: [isValidQueryValue(city)],
+    };
+  } else if (country) {
+    query = {
+      statement: "WHERE country=$1",
+      values: [isValidQueryValue(country)],
+    };
+  } else if (code) {
+    query = {
+      statement: "WHERE iata_code=$1",
+      values: [isValidQueryValue(code)],
+    };
+  } else {
+    query = {
+      statement: "",
+      values: [],
+    };
+  }
 
   try {
     client.connect();
 
-    const statement = "SELECT * from airports WHERE " + query.statement;
+    const statement = "SELECT * from airports " + query.statement;
 
     const res = await client.query(statement, query.values);
     return res.rows;
