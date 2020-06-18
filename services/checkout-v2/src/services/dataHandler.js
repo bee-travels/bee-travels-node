@@ -23,18 +23,12 @@ export async function processCheckout(checkoutObject) {
   //create an invoice id
   const invoice_id = crypto.randomBytes(16).toString("hex");
   const statement_descriptor = `BeeTravels.com/r/${invoice_id}`;
-  var postProcessPaymentResult = await processPayment(invoice_id, statement_descriptor, checkoutObject);
-
-  //call payment svc
-  // await processPayment(invoice_id, statement_descriptor, checkoutObject).then((res, bez) => {
-  //   console.log("unpromising!")
-  //   console.log(res)
-  //   console.log(bez)
-  //   postProcessPaymentResult = res
-  // }).catch(function (err) {
-  //   console.error(err)
-  // });
-
+  try {
+    var postProcessPaymentResult = await processPayment(invoice_id, statement_descriptor, checkoutObject);
+  } catch (payex) {
+    console.error(payex)
+    return payex.message
+  }
   console.log(">>>>")
   console.log(postProcessPaymentResult)
 
@@ -47,7 +41,7 @@ export async function processCheckout(checkoutObject) {
   // }
 
   //const confirmation_id = crypto.randomBytes(16).toString("hex");
-
+  //const confirmation_id = postProcessPaymentResult.confirmation_id;
   //payment success;
   //send user basic - email receipt
 
@@ -56,7 +50,7 @@ export async function processCheckout(checkoutObject) {
     you've booked
     1 car
     2 hotels
-    1 flight
+    3 flight
     confirmationid
     total price
 
@@ -68,8 +62,8 @@ export async function processCheckout(checkoutObject) {
   //pass back payment confirm/ref #
   //reference number - relates to checkout db info if success
 
-  // const sql_statement = await buildCheckoutSavePostgresStatement(checkoutObject, confirmation_id);
-  // const result = await checkoutSavePostgres(sql_statement);
+  //const sql_statement = await buildCheckoutSavePostgresStatement(checkoutObject, confirmation_id);
+  //const result = await checkoutSavePostgres(sql_statement);
   // console.log(result);
   //return { status: "succeeded", confirmation_id: postProcessPaymentResult };
 

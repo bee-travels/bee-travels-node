@@ -30,7 +30,7 @@ components:
       properties:
         cart_item_type:
           type: string
-          example: CarRental|HotelReservation|Flight
+          example: Car|Hotel|Flight
         cart_item_uuid:
           type: string
         cart_item_cost:

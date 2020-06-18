@@ -76,7 +76,7 @@ describe('Checkout API Endpoint Test Group', () => {
 });
 
 
-//"CarRental|HotelReservation|Flight"
+//"Car|Hotel|Flight"
 function getExampleCheckoutData(exp_month, exp_year, cart_item_type) {
   return {
     total_amount: 499.99,
