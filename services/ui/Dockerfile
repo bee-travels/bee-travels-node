@@ -12,7 +12,7 @@ FROM bee-travels/node-base:v1 as release
 WORKDIR /services/ui/backend
 
 COPY --from=ui /services/ui/frontend/build client/build
-COPY  backend/index.js backend/doc-collector.js backend/streamableAxios.js backend/package.json ./
+COPY  backend/index.js backend/doc-collector.js backed/info-collector.js backend/streamableAxios.js backend/package.json ./
 
 EXPOSE 9000
 
