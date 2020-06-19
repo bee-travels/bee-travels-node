@@ -6,6 +6,7 @@ import {
   getDirectFlightsFromPostgres,
   getOneStopFlightsFromPostgres,
   getTwoStopFlightsFromPostgres,
+  postgresReadinessCheck,
 } from "./postgresService";
 
 const capitalize = (text) => {
@@ -19,60 +20,100 @@ const capitalize = (text) => {
 
 const upper = (text) => (text ? text.toUpperCase() : text);
 
-export async function getAirports(city, country, code) {
+export async function getAirports(city, country, code, jaegerTracer) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getAirportsFromPostgres(
+      jaegerTracer.start("getAirportsFromPostgres");
+      data = await getAirportsFromPostgres(
         capitalize(city),
         capitalize(country),
-        upper(code)
+        upper(code),
+        jaegerTracer
       );
+      jaegerTracer.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getAirportsList() {
+export async function getAirportsList(jaegerTracer) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getAirportsListFromPostgres();
+      jaegerTracer.start("getAirportsListFromPostgres");
+      data = await getAirportsListFromPostgres(jaegerTracer);
+      jaegerTracer.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getAirport(id) {
+export async function getAirport(id, jaegerTracer) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getAirportFromPostgres(id);
+      jaegerTracer.start("getAirportFromPostgres");
+      data = await getAirportFromPostgres(id, jaegerTracer);
+      jaegerTracer.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getDirectFlights(from, to) {
+export async function getDirectFlights(from, to, jaegerTracer) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getDirectFlightsFromPostgres(from, to);
+      jaegerTracer.start("getDirectFlightsFromPostgres");
+      data = await getDirectFlightsFromPostgres(from, to, jaegerTracer);
+      jaegerTracer.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getOneStopFlights(from, to) {
+export async function getOneStopFlights(from, to, jaegerTracer) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getOneStopFlightsFromPostgres(from, to);
+      jaegerTracer.start("getOneStopFlightsFromPostgres");
+      data = await getOneStopFlightsFromPostgres(from, to, jaegerTracer);
+      jaegerTracer.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getTwoStopFlights(from, to) {
+export async function getTwoStopFlights(from, to, jaegerTracer) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getTwoStopFlightsFromPostgres(from, to);
+      jaegerTracer.start("getTwoStopFlightsFromPostgres");
+      data = await getTwoStopFlightsFromPostgres(from, to, jaegerTracer);
+      jaegerTracer.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
+  }
+  return data;
+}
+
+export async function readinessCheck() {
+  switch (process.env.FLIGHTS_DATABASE) {
+    case "postgres":
+      return await postgresReadinessCheck();
+    default:
+      return false;
   }
 }

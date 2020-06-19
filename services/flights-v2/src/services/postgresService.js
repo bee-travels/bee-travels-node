@@ -3,7 +3,7 @@ import { isValidQueryValue } from "query-validator";
 
 types.setTypeParser(1700, (val) => parseFloat(val));
 
-export async function getAirportFromPostgres(id) {
+export async function getAirportFromPostgres(id, jaegerTracer) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -16,11 +16,15 @@ export async function getAirportFromPostgres(id) {
   };
 
   try {
+    jaegerTracer.start("postgresClientConnect");
     client.connect();
+    jaegerTracer.stop();
 
     const statement = "SELECT * from airports WHERE " + query.statement;
 
+    jaegerTracer.start("postgresQuery");
     const res = await client.query(statement, query.values);
+    jaegerTracer.stop();
 
     return res.rows.length > 0 ? res.rows[0] : {};
   } catch (e) {
@@ -30,7 +34,12 @@ export async function getAirportFromPostgres(id) {
   }
 }
 
-export async function getAirportsFromPostgres(city, country, code) {
+export async function getAirportsFromPostgres(
+  city,
+  country,
+  code,
+  jaegerTracer
+) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -85,11 +94,15 @@ export async function getAirportsFromPostgres(city, country, code) {
   }
 
   try {
+    jaegerTracer.start("postgresClientConnect");
     client.connect();
+    jaegerTracer.stop();
 
     const statement = "SELECT * from airports " + query.statement;
 
+    jaegerTracer.start("postgresQuery");
     const res = await client.query(statement, query.values);
+    jaegerTracer.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -98,7 +111,7 @@ export async function getAirportsFromPostgres(city, country, code) {
   }
 }
 
-export async function getAirportsListFromPostgres() {
+export async function getAirportsListFromPostgres(jaegerTracer) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -106,10 +119,14 @@ export async function getAirportsListFromPostgres() {
     database: "beetravels",
   });
   try {
+    jaegerTracer.start("postgresClientConnect");
     client.connect();
+    jaegerTracer.stop();
     const statement =
       "select distinct city, country from airports where city <> ''";
+    jaegerTracer.start("postgresQuery");
     const res = await client.query(statement);
+    jaegerTracer.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -118,7 +135,7 @@ export async function getAirportsListFromPostgres() {
   }
 }
 
-export async function getDirectFlightsFromPostgres(from, to) {
+export async function getDirectFlightsFromPostgres(from, to, jaegerTracer) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -130,9 +147,13 @@ export async function getDirectFlightsFromPostgres(from, to) {
     values: [isValidQueryValue(from), isValidQueryValue(to)],
   };
   try {
+    jaegerTracer.start("postgresClientConnect");
     client.connect();
+    jaegerTracer.stop();
     const statement = "select * from flights where " + query.statement;
+    jaegerTracer.start("postgresQuery");
     const res = await client.query(statement, query.values);
+    jaegerTracer.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -141,7 +162,7 @@ export async function getDirectFlightsFromPostgres(from, to) {
   }
 }
 
-export async function getOneStopFlightsFromPostgres(from, to) {
+export async function getOneStopFlightsFromPostgres(from, to, jaegerTracer) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -154,7 +175,9 @@ export async function getOneStopFlightsFromPostgres(from, to) {
   };
 
   try {
+    jaegerTracer.start("postgresClientConnect");
     client.connect();
+    jaegerTracer.stop();
     const statement = `
     SELECT flight1.id AS flight1id, flight2.id AS flight2id, flight1.source_airport_id
     AS source_airport_id, flight1.destination_airport_id AS layover_airport_id
@@ -169,7 +192,9 @@ export async function getOneStopFlightsFromPostgres(from, to) {
     flight1.airlines = flight2.airlines AND flight2.flight_time >= ( flight1.flight_time
     + flight1.flight_duration + 60 ) ORDER BY totaltime
     `;
+    jaegerTracer.start("postgresQuery");
     const res = await client.query(statement, query.values);
+    jaegerTracer.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -178,7 +203,7 @@ export async function getOneStopFlightsFromPostgres(from, to) {
   }
 }
 
-export async function getTwoStopFlightsFromPostgres(from, to) {
+export async function getTwoStopFlightsFromPostgres(from, to, jaegerTracer) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -191,7 +216,9 @@ export async function getTwoStopFlightsFromPostgres(from, to) {
   };
 
   try {
+    jaegerTracer.start("postgresClientConnect");
     client.connect();
+    jaegerTracer.stop();
     const statement = `
     SELECT   *
     FROM     flights f,
@@ -199,11 +226,30 @@ export async function getTwoStopFlightsFromPostgres(from, to) {
     WHERE    f.source_airport_id = $1
     ORDER BY c.totaltime limit 20;
     `;
+    jaegerTracer.start("postgresQuery");
     const res = await client.query(statement, query.values);
+    jaegerTracer.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
   } finally {
     client.end();
   }
+}
+
+export async function postgresReadinessCheck() {
+  const client = new Client({
+    host: process.env.FLIGHTS_PG_HOST,
+    user: process.env.FLIGHTS_PG_USER,
+    password: process.env.FLIGHTS_PG_PASSWORD,
+  });
+
+  try {
+    await client.connect();
+  } catch (err) {
+    return false;
+  } finally {
+    client.end();
+  }
+  return true;
 }
