@@ -7,6 +7,7 @@ import {
 } from "./postgresService";
 
 import processPayment from './serviceHandler'
+import sendMail from './emailService'
 
 import { buildCheckoutSaveDb2Statement, checkoutSaveDb2 } from "./db2Service";
 export async function getData() {
@@ -22,7 +23,8 @@ export async function processCheckout(checkoutObject) {
   //setup for processing payment
   //create an invoice id
   const invoice_id = crypto.randomBytes(16).toString("hex");
-  const statement_descriptor = `BeeTravels.com/r/${invoice_id}`;
+  //this is what typically shows up on cc statements
+  const statement_descriptor = `need help: https://BeeTravels.info/r/${invoice_id}`;
   try {
     var postProcessPaymentResult = await processPayment(invoice_id, statement_descriptor, checkoutObject);
   } catch (payex) {
@@ -32,41 +34,34 @@ export async function processCheckout(checkoutObject) {
   console.log(">>>>")
   console.log(postProcessPaymentResult)
 
-
-  return postProcessPaymentResult;
-
   // return {
   //   "status": "succeeded",
   //   "confirmation_id": "23ea1233a8fcde349ad5671e647e1c06"
   // }
 
-  //const confirmation_id = crypto.randomBytes(16).toString("hex");
-  //const confirmation_id = postProcessPaymentResult.confirmation_id;
-  //payment success;
-  //send user basic - email receipt
+  if (postProcessPaymentResult.status == "succeeded") {
+    let sentMail = await sendMail(invoice_id, checkoutObject);
 
-  /*
-    text
-    you've booked
-    1 car
-    2 hotels
-    3 flight
-    confirmationid
-    total price
+    console.log(sentMail)
+    if (sentMail[0].statusCode == 202) {
+      //persist to db
+      postProcessPaymentResult.mailId = 202; //sentMail[0].headers["x-message-id"];
+
+    }
+
+    return postProcessPaymentResult;
+  } else {
+    throw new CheckoutProcessingError(postProcessPaymentResult.message);
+  }
 
 
 
-  */
+
+
+
+
 
   //persist to db
-  //pass back payment confirm/ref #
-  //reference number - relates to checkout db info if success
-
-  //const sql_statement = await buildCheckoutSavePostgresStatement(checkoutObject, confirmation_id);
-  //const result = await checkoutSavePostgres(sql_statement);
-  // console.log(result);
-  //return { status: "succeeded", confirmation_id: postProcessPaymentResult };
-
 
 
 

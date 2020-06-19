@@ -7,8 +7,6 @@ export default async function processPayment(invoice_id, statement_descriptor, c
   const data = getChargeData(invoice_id, statement_descriptor, checkout_object);
   const res = await axios.post(PAYMENT_ENDPOINT, data)
   return res.data;
-
-
 }
 
 function getChargeData(invoice_id, statement_descriptor, checkout_object) {
