@@ -30,7 +30,7 @@ export async function getDestinationDataFromCloudant(query, jaegerTracer) {
     delete res.docs[destination]["_rev"];
   }
   jaegerTracer.stop();
-  return res.docs;
+  return query.city === undefined ? res.docs : res.docs[0];
 }
 
 export async function cloudantReadinessCheck() {

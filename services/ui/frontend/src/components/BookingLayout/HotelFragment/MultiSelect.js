@@ -312,17 +312,12 @@ const MultiSelect = ({ label, list, selected, onSelected }) => {
         {list.map((name) => (
           <div key={name} value={name} className={styles.itemWrap}>
             <div key={name} value={name} className={styles.item}>
-              {/* <CustomMenuItem key={name} value={name}> */}
-              {/* <CustomBox component="div"> */}
               <CustomCheckbox
                 checkedIcon={<CheckedIcon />}
                 icon={<UncheckedIcon />}
                 checked={selected.indexOf(name) > -1}
               />
-              {/* <ListItemText primary={name} /> */}
               <div className={styles.label}>{name}</div>
-              {/* </CustomBox> */}
-              {/* </CustomMenuItem> */}
             </div>
           </div>
         ))}

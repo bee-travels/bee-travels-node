@@ -51,6 +51,9 @@ export async function getDestinationDataFromMongo(query, jaegerTracer) {
       hasNextDestination = await res.hasNext();
     }
     jaegerTracer.stop();
+    if (query.city !== undefined) {
+      return destination;
+    }
     return destinations;
   } catch (err) {
     console.log(err);

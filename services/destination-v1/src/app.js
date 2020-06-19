@@ -37,8 +37,11 @@ app.use(express.urlencoded({ extended: false }));
 
 // Setup Swagger.
 // Don't use `/` for swagger, it will catch everything.
-const specs = openapi();
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+const spec = openapi();
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec));
+app.get("/spec", (_, res) => {
+  res.json(spec);
+});
 
 // Currency api.
 app.use("/api/v1/destinations", destinationsRouter);

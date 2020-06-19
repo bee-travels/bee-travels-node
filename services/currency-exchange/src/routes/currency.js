@@ -16,11 +16,12 @@ const opossumOptions = {
 
 /**
  * GET /api/v1/currency/rates
+ * @tag Currency
+ * @summary Get exchange rates
  * @description Get a list of all exchange rates.
- * @queryParam {[string]} from - TODO.
- * @response 200 - TODO.
- * @response 500 - TODO.
- * @response 400 - TODO.
+ * @response 200 - OK
+ * @response 500 - Internal Server Error
+ * @responseExample {Jessica} 200.*\/*.Jessica
  */
 router.get("/rates", async (req, res, next) => {
   const jaegerTracer = new Jaeger("rates", req, res);
@@ -35,9 +36,14 @@ router.get("/rates", async (req, res, next) => {
 
 /**
  * GET /api/v1/currency/convert/{from}/{to}
+ * @tag Currency
+ * @summary Get conversion ratio
  * @description Get exchange rate for converting one currency to another.
- * @pathParam {string} from - TODO.
- * @pathParam {string} to - TODO.
+ * @pathParam {CurrencyCode} from - The 3 digit currency code we are converting from.
+ * @pathParam {CurrencyCode} to - The 3 digit currency code we are converting to.
+ * @response 200 - OK
+ * @response 400 - Currency Not Found Error
+ * @response 500 - Internal Server Error
  */
 router.get("/convert/:from/:to", async (req, res, next) => {
   const jaegerTracer = new Jaeger("convert", req, res);
@@ -56,8 +62,13 @@ router.get("/convert/:from/:to", async (req, res, next) => {
 
 /**
  * GET /api/v1/currency/{code}
- * @description TODO.
- * @pathParam {string} code - TODO.
+ * @tag Currency
+ * @summary Get countries for currency
+ * @description Get a list of countries that use the provided currency code.
+ * @pathParam {CurrencyCode} code - The 3 digit currency code.
+ * @response 200 - OK
+ * @response 400 - Currency Not Found Error
+ * @response 500 - Internal Server Error
  */
 router.get("/:code", async (req, res, next) => {
   const jaegerTracer = new Jaeger("code", req, res);
@@ -76,8 +87,13 @@ router.get("/:code", async (req, res, next) => {
 
 /**
  * GET /api/v1/currency
- * @description TODO.
- * @queryParam {string} country - TODO.
+ * @tag Currency
+ * @summary Get currency for country
+ * @description Get the currency that the provided country uses.
+ * @queryParam {Country} country - The full country name.
+ * @response 200 - OK
+ * @response 400 - Country Not Found Error
+ * @response 500 - Internal Server Error
  */
 router.get("/", async (req, res, next) => {
   const jaegerTracer = new Jaeger("country", req, res);
@@ -95,16 +111,6 @@ router.get("/", async (req, res, next) => {
     }
     return next(e);
   }
-});
-
-/**
- * POST /api/v1/currency
- * @description TODO.
- * @requestBody {Max} max - TODO.
- */
-router.post("/", (req, res) => {
-  console.log(req.body);
-  res.end();
 });
 
 export default router;

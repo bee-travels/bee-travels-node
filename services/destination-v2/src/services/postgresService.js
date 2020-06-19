@@ -36,7 +36,7 @@ export async function getDestinationDataFromPostgres(query, jaegerTracer) {
     jaegerTracer.start("postgresQuery");
     const res = await client.query(statement, query.values);
     jaegerTracer.stop();
-    return res.rows;
+    return query.values.length === 2 ? res.rows[0] : res.rows;
   } catch (err) {
     console.log(err.stack);
   } finally {

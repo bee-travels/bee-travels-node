@@ -16,11 +16,13 @@ const stringToArray = (s) => s && s.split(",");
 
 /**
  * GET /api/v1/hotels/info/{filter}
- * @description Gets list of a type to filter Hotel data by
- * @pathParam {FilterType} filter - The name of the filter to get options for
- * @response 200 - Success
- * @response 400 - Data not found
- * @response 500 - Internal server error
+ * @tag Hotel
+ * @summary Get filter list
+ * @description Gets list of a type to filter Hotel data by.
+ * @pathParam {FilterType} filter - The name of the filter to get options for.
+ * @response 200 - OK
+ * @response 400 - Filter Not Found Error
+ * @response 500 - Internal Server Error
  */
 router.get("/info/:tag", async (req, res, next) => {
   const jaegerTracer = new Jaeger("info", req, res);
@@ -39,17 +41,20 @@ router.get("/info/:tag", async (req, res, next) => {
 
 /**
  * GET /api/v1/hotels/{country}/{city}
- * @description Gets data associated with a specific city
- * @pathParam {string} country - Country of the hotel using slug casing (ex. united-states)
- * @pathParam {string} city - City of the hotel using slug casing (ex. new-york)
- * @queryParam {string} [superchain] - Hotel superchain name
- * @queryParam {string} [hotel] - Hotel Name
- * @queryParam {string} [type] - Hotel Type
- * @queryParam {number} [mincost] - Min Cost
- * @queryParam {number} [maxcost] - Max Cost
- * @response 200 - Success
- * @response 500 - Internal server error
+ * @tag Hotel
+ * @summary Get list of hotels
+ * @description Gets data associated with a specific city.
+ * @pathParam {string} country - Country of the hotel using slug casing.
+ * @pathParam {string} city - City of the hotel using slug casing.
+ * @queryParam {string} [superchain] - Hotel superchain name.
+ * @queryParam {string} [hotel] - Hotel Name.
+ * @queryParam {string} [type] - Hotel Type.
+ * @queryParam {number} [mincost] - Min Cost.
+ * @queryParam {number} [maxcost] - Max Cost.
+ * @response 200 - OK
+ * @response 500 - Internal Server Error
  */
+// TODO: throw 2 400 errors for CountryNotFound and CityNotFound for country X.
 router.get("/:country/:city", async (req, res, next) => {
   const jaegerTracer = new Jaeger("city", req, res);
   const { country, city } = req.params;

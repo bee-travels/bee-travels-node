@@ -12,7 +12,7 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "jaeger-client": "^3.18.0",
-    "openapi-comment-parser": "^0.3.0",
+    "openapi-comment-parser": "^0.3.4",
     "opentracing": "^0.14.4",
     "opossum": "^5.0.0",
     "pino-http": "^5.1.0",

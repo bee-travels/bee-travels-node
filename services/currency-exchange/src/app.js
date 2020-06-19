@@ -1,13 +1,17 @@
+import os from "os";
+
 import express from "express";
 import logger from "pino-http";
 import pinoPretty from "pino-pretty";
 import openapi from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
 import client from "prom-client";
+import axios from "axios";
 
 import currencyRouter from "./routes/currency";
 import prometheus from "./prometheus";
 import health from "./health";
+import services from "./external-services";
 
 const app = express();
 
@@ -37,8 +41,29 @@ app.use(express.urlencoded({ extended: false }));
 
 // Setup Swagger.
 // Don't use `/` for swagger, it will catch everything.
-const specs = openapi();
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+const spec = openapi();
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec));
+app.get("/spec", (_, res) => {
+  res.json(spec);
+});
+
+app.get("/info", (_, res) => {
+  const infoPromises = Object.values(services).map((service) => {
+    return axios
+      .get(`${service}/info`)
+      .then((res) => res.data)
+      .catch(() => {});
+  });
+
+  Promise.all(infoPromises).then((infoArray) => {
+    res.json({
+      service: "currency-exchange",
+      hostname: os.hostname(),
+      database: process.env.DATABASE,
+      children: infoArray,
+    });
+  });
+});
 
 // Currency api.
 app.use("/api/v1/currency", currencyRouter);

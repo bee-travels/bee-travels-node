@@ -1,0 +1,11 @@
+openapi: 3.0.3
+info:
+  title: Bee Travels API
+  version: 1.0.0
+  x-github: https://github.com/bee-travels/bee-travels-node
+
+tags:
+- name: Currency
+- name: Car Rental
+- name: Hotel
+- name: Destination

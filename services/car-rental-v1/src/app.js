@@ -39,6 +39,9 @@ app.use(express.urlencoded({ extended: false }));
 // Don't use `/` for swagger, it will catch everything.
 const spec = openapi();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec));
+app.get("/spec", (_, res) => {
+  res.json(spec);
+});
 
 // cars api.
 app.use("/api/v1/cars", carsRouter);
