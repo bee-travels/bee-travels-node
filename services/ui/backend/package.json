@@ -14,7 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "openapi-comment-parser": "^0.3.4",
+    "openapi-ui-express": "^0.0.8"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
