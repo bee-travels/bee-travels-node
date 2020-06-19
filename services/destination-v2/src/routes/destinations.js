@@ -4,9 +4,17 @@ import {
   getCity,
   getCitiesForCountry,
 } from "../services/dataHandler";
+import Jaeger from "./jaeger";
+import CircuitBreaker from "opossum";
 import { IllegalDatabaseQueryError } from "query-validator";
 
 const router = Router();
+
+const opossumOptions = {
+  timeout: 15000, // If our function takes longer than 15 seconds, trigger a failure
+  errorThresholdPercentage: 50, // When 50% of requests fail, trip the circuit
+  resetTimeout: 30000, // After 30 seconds, try again.
+};
 
 /**
  * GET /api/v1/destinations/{country}/{city}
@@ -18,9 +26,11 @@ const router = Router();
  * @response 500 - Internal server error
  */
 router.get("/:country/:city", async (req, res, next) => {
+  const jaegerTracer = new Jaeger("city", req, res);
   const { country, city } = req.params;
   try {
-    const data = await getCity(country, city);
+    const breaker = new CircuitBreaker(getCity, opossumOptions);
+    const data = await breaker.fire(country, city, jaegerTracer);
     res.json(data);
   } catch (e) {
     if (e instanceof IllegalDatabaseQueryError) {
@@ -39,9 +49,11 @@ router.get("/:country/:city", async (req, res, next) => {
  * @response 500 - Internal server error
  */
 router.get("/:country", async (req, res, next) => {
+  const jaegerTracer = new Jaeger("country", req, res);
   const { country } = req.params;
   try {
-    const data = await getCitiesForCountry(country);
+    const breaker = new CircuitBreaker(getCitiesForCountry, opossumOptions);
+    const data = await breaker.fire(country, jaegerTracer);
     res.json(data);
   } catch (e) {
     if (e instanceof IllegalDatabaseQueryError) {
@@ -58,9 +70,11 @@ router.get("/:country", async (req, res, next) => {
  * @response 403 - Invalid query
  * @response 500 - Internal server error
  */
-router.get("/", async (_, res, next) => {
+router.get("/", async (req, res, next) => {
+  const jaegerTracer = new Jaeger("cities", req, res);
   try {
-    const data = await getCities();
+    const breaker = new CircuitBreaker(getCities, opossumOptions);
+    const data = await breaker.fire(jaegerTracer);
     res.json(data);
   } catch (e) {
     if (e instanceof IllegalDatabaseQueryError) {

@@ -1,5 +1,5 @@
 import { isValidQueryValue } from "query-validator";
-const Cloudant = require("@cloudant/cloudant");
+import Cloudant from "@cloudant/cloudant";
 
 export function buildHotelCloudantQuery(country, city, filters) {
   const { superchain, hotel, type, minCost, maxCost } = filters;
@@ -29,22 +29,29 @@ export function buildHotelCloudantQuery(country, city, filters) {
   return query;
 }
 
-export async function getHotelDataFromCloudant(query) {
+export async function getHotelDataFromCloudant(query, jaegerTracer) {
+  jaegerTracer.start("cloudantClientConnect");
   const cloudant = Cloudant(process.env.HOTEL_COUCH_CLOUDANT_CONNECTION_URL);
+  jaegerTracer.stop();
   const db = cloudant.db.use("hotels");
 
+  jaegerTracer.start("cloudantQuery");
   const res = await db.find({ selector: query, limit: 200 });
   for (let hotel = 0; hotel < res.docs.length; hotel++) {
     delete res.docs[hotel]["_id"];
     delete res.docs[hotel]["_rev"];
   }
+  jaegerTracer.stop();
   return res.docs;
 }
 
-export async function getHotelInfoFromCloudant(filterType) {
+export async function getHotelInfoFromCloudant(filterType, jaegerTracer) {
+  jaegerTracer.start("cloudantClientConnect");
   const cloudant = Cloudant(process.env.HOTEL_COUCH_CLOUDANT_CONNECTION_URL);
+  jaegerTracer.stop();
   const db = cloudant.db.use("hotel_info");
 
+  jaegerTracer.start("cloudantQuery");
   const res = await db.find({
     selector: { _id: { $gt: null } },
     fields: [filterType],
@@ -59,5 +66,16 @@ export async function getHotelInfoFromCloudant(filterType) {
       }
     });
   }
+  jaegerTracer.stop();
   return result;
+}
+
+export async function cloudantReadinessCheck() {
+  const cloudant = Cloudant(process.env.HOTEL_COUCH_CLOUDANT_CONNECTION_URL);
+  try {
+    await cloudant.ping();
+  } catch (err) {
+    return false;
+  }
+  return true;
 }

@@ -1,5 +1,5 @@
 import { isValidQueryValue } from "query-validator";
-const MongoClient = require("mongodb").MongoClient;
+import { MongoClient } from "mongodb";
 
 export function buildDestinationMongoQuery(country, city) {
   let query = {
@@ -11,7 +11,8 @@ export function buildDestinationMongoQuery(country, city) {
   return query;
 }
 
-export async function getDestinationDataFromMongo(query) {
+export async function getDestinationDataFromMongo(query, jaegerTracer) {
+  jaegerTracer.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.DESTINATION_MONGO_CONNECTION_URL,
     {
@@ -21,6 +22,7 @@ export async function getDestinationDataFromMongo(query) {
   ).catch((err) => {
     console.log(err);
   });
+  jaegerTracer.stop();
 
   if (!client) {
     return;
@@ -29,6 +31,7 @@ export async function getDestinationDataFromMongo(query) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("destination");
+    jaegerTracer.start("mongoQuery");
     let res = await collection.find(query);
     let destinations = [];
     let destination;
@@ -47,10 +50,29 @@ export async function getDestinationDataFromMongo(query) {
       destinations.push(destination);
       hasNextDestination = await res.hasNext();
     }
+    jaegerTracer.stop();
     return destinations;
   } catch (err) {
     console.log(err);
   } finally {
     client.close();
   }
+}
+
+export async function mongoReadinessCheck() {
+  const client = await MongoClient.connect(
+    process.env.DESTINATION_MONGO_CONNECTION_URL,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  ).catch((err) => {
+    return false;
+  });
+
+  if (!client) {
+    return false;
+  }
+
+  return true;
 }

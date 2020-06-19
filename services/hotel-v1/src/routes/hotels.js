@@ -1,8 +1,16 @@
 import { Router } from "express";
 import { getHotels, getFilterList } from "../services/dataHandler";
 import TagNotFoundError from "../errors/TagNotFoundError";
+import Jaeger from "./jaeger";
+import CircuitBreaker from "opossum";
 
 const router = Router();
+
+const opossumOptions = {
+  timeout: 15000, // If our function takes longer than 15 seconds, trigger a failure
+  errorThresholdPercentage: 50, // When 50% of requests fail, trip the circuit
+  resetTimeout: 30000, // After 30 seconds, try again.
+};
 
 const stringToArray = (s) => s && s.split(",");
 
@@ -15,9 +23,11 @@ const stringToArray = (s) => s && s.split(",");
  * @response 500 - Internal server error
  */
 router.get("/info/:tag", async (req, res, next) => {
+  const jaegerTracer = new Jaeger("info", req, res);
   const { tag } = req.params;
   try {
-    const data = await getFilterList(tag);
+    const breaker = new CircuitBreaker(getFilterList, opossumOptions);
+    const data = await breaker.fire(tag, jaegerTracer);
     res.json(data);
   } catch (e) {
     if (e instanceof TagNotFoundError) {
@@ -41,17 +51,24 @@ router.get("/info/:tag", async (req, res, next) => {
  * @response 500 - Internal server error
  */
 router.get("/:country/:city", async (req, res, next) => {
+  const jaegerTracer = new Jaeger("city", req, res);
   const { country, city } = req.params;
   const { superchain, hotel, type, mincost, maxcost } = req.query;
 
   try {
-    const data = await getHotels(country, city, {
-      superchain: stringToArray(superchain),
-      hotel: stringToArray(hotel),
-      type: stringToArray(type),
-      minCost: parseInt(mincost, 10) || undefined,
-      maxCost: parseInt(maxcost, 10) || undefined,
-    });
+    const breaker = new CircuitBreaker(getHotels, opossumOptions);
+    const data = await breaker.fire(
+      country,
+      city,
+      {
+        superchain: stringToArray(superchain),
+        hotel: stringToArray(hotel),
+        type: stringToArray(type),
+        minCost: parseInt(mincost, 10) || undefined,
+        maxCost: parseInt(maxcost, 10) || undefined,
+      },
+      jaegerTracer
+    );
     res.json(data);
   } catch (e) {
     next(e);

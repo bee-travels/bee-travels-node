@@ -19,8 +19,10 @@ async function parseMetadata(csv) {
   }
 }
 
-export async function getCountry(country) {
+export async function getCountry(country, jaegerTracer) {
+  jaegerTracer.start("parseMetadata");
   const metadata = await parseMetadata(CSV_PATH);
+  jaegerTracer.stop();
 
   const countryInfo = metadata.find((r) => {
     if (r.country === undefined) {
@@ -36,8 +38,10 @@ export async function getCountry(country) {
   return countryInfo;
 }
 
-export async function getCurrency(code) {
+export async function getCurrency(code, jaegerTracer) {
+  jaegerTracer.start("parseMetadata");
   const metadata = await parseMetadata(CSV_PATH);
+  jaegerTracer.stop();
 
   // Find all countries that use requested currency.
   const allCurrencyInfo = metadata.filter((r) => {

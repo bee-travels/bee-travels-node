@@ -3,8 +3,11 @@ import logger from "pino-http";
 import pinoPretty from "pino-pretty";
 import openapi from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
+import client from "prom-client";
 
 import hotelsRouter from "./routes/hotels";
+import prometheus from "./prometheus";
+import health from "./health";
 
 const app = express();
 
@@ -19,6 +22,15 @@ app.use(
   })
 );
 
+// Prometheus metrics collected for all service api endpoints
+app.use("/api", prometheus);
+app.get("/metrics", (_, res) => {
+  res.set("Content-Type", client.register.contentType);
+  res.end(client.register.metrics());
+});
+
+app.use(health);
+
 // Body parsing.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,7 +40,7 @@ app.use(express.urlencoded({ extended: false }));
 const specs = openapi();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-// Currency api.
+// hotels api.
 app.use("/api/v1/hotels", hotelsRouter);
 
 // Catch 404s.
