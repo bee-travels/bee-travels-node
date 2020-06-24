@@ -2,7 +2,7 @@ import path from "path";
 import { promises as fs } from "fs";
 import TagNotFoundError from "./../errors/TagNotFoundError";
 
-const CARS_PATH = path.join(__dirname, "../../data/cars.json");
+const CARS_PATH = path.join(__dirname, "./../../data/cars.json");
 
 const capitalize = (text) =>
   text

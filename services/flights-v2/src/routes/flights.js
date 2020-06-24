@@ -6,8 +6,8 @@ import {
   getDirectFlights,
   getOneStopFlights,
   getTwoStopFlights,
-} from "../services/dataHandler";
-import Jaeger from "../jaeger";
+} from "./../services/dataHandler";
+import Jaeger from "./../jaeger";
 import CircuitBreaker from "opossum";
 
 const router = Router();

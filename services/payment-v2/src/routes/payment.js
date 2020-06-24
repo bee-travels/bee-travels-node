@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { processCreditcardPayment } from "../services/dataHandler";
-import CreditCardExpiredError from "../errors/CreditCardExpiredError";
-import Jaeger from "../jaeger";
+import { processCreditcardPayment } from "./../services/dataHandler";
+import CreditCardExpiredError from "./../errors/CreditCardExpiredError";
+import Jaeger from "./../jaeger";
 import CircuitBreaker from "opossum";
 
 const router = Router();

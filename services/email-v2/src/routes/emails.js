@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { sendEmail } from "../services/dataHandler";
-import EmailError from "../errors/EmailError";
-import Jaeger from "../jaeger";
+import { sendEmail } from "./../services/dataHandler";
+import EmailError from "./../errors/EmailError";
+import Jaeger from "./../jaeger";
 import CircuitBreaker from "opossum";
 
 const router = Router();

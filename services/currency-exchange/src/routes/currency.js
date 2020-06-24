@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { getCountry, getCurrency } from "../services/dataHandler";
-import { getExchangeRates, convert } from "../services/exchangeHandler";
-import CountryNotFoundError from "../errors/CountryNotFoundError";
-import CurrencyNotFoundError from "../errors/CurrencyNotFoundError";
-import Jaeger from "../jaeger";
+import { getCountry, getCurrency } from "./../services/dataHandler";
+import { getExchangeRates, convert } from "./../services/exchangeHandler";
+import CountryNotFoundError from "./../errors/CountryNotFoundError";
+import CurrencyNotFoundError from "./../errors/CurrencyNotFoundError";
+import Jaeger from "./../jaeger";
 import CircuitBreaker from "opossum";
 
 const router = Router();

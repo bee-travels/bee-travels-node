@@ -1,7 +1,7 @@
 import path from "path";
 import { promises as fs } from "fs";
 
-const DESTINATIONS_PATH = path.join(__dirname, "../../data/destinations.json");
+const DESTINATIONS_PATH = path.join(__dirname, "./../../data/destinations.json");
 
 const capitalize = (text) =>
   text

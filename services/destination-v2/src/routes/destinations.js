@@ -3,8 +3,8 @@ import {
   getCities,
   getCity,
   getCitiesForCountry,
-} from "../services/dataHandler";
-import Jaeger from "../jaeger";
+} from "./../services/dataHandler";
+import Jaeger from "./../jaeger";
 import CircuitBreaker from "opossum";
 import { IllegalDatabaseQueryError } from "query-validator";
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { getHotels, getFilterList } from "../services/dataHandler";
-import TagNotFoundError from "../errors/TagNotFoundError";
-import Jaeger from "../jaeger";
+import { getHotels, getFilterList } from "./../services/dataHandler";
+import TagNotFoundError from "./../errors/TagNotFoundError";
+import Jaeger from "./../jaeger";
 import CircuitBreaker from "opossum";
 import { IllegalDatabaseQueryError } from "query-validator";
 
