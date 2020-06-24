@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { processCreditcardPayment } from "../services/dataHandler";
 import CreditCardExpiredError from "../errors/CreditCardExpiredError";
-import Jaeger from "./jaeger";
+import Jaeger from "../jaeger";
 import CircuitBreaker from "opossum";
 
 const router = Router();
@@ -17,7 +17,7 @@ const opossumOptions = {
  * @requestBody {Charge} This is the JSON body required when calling the payment service for Bee Travels
  */
 router.post("/charge", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("charge", req, res);
+  const context = new Jaeger("charge", req, res);
   const data = req.body;
   try {
     const breaker = new CircuitBreaker(

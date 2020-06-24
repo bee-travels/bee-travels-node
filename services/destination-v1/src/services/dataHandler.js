@@ -22,25 +22,25 @@ async function parseMetadata(file, allData) {
   }));
 }
 
-export async function getCities(jaegerTracer) {
-  jaegerTracer.start("parseMetadata");
+export async function getCities(context) {
+  context.start("parseMetadata");
   const metadata = await parseMetadata(DESTINATIONS_PATH, false);
-  jaegerTracer.stop();
+  context.stop();
   return metadata;
 }
 
-export async function getCitiesForCountry(country, jaegerTracer) {
-  jaegerTracer.start("parseMetadata");
+export async function getCitiesForCountry(country, context) {
+  context.start("parseMetadata");
   const metadata = await parseMetadata(DESTINATIONS_PATH, false);
-  jaegerTracer.stop();
+  context.stop();
   const citiesData = metadata.filter((c) => c.country === capitalize(country));
   return citiesData;
 }
 
-export async function getCity(country, city, jaegerTracer) {
-  jaegerTracer.start("parseMetadata");
+export async function getCity(country, city, context) {
+  context.start("parseMetadata");
   const metadata = await parseMetadata(DESTINATIONS_PATH, true);
-  jaegerTracer.stop();
+  context.stop();
   const cityData = metadata.find(
     (c) => c.city === capitalize(city) && c.country === capitalize(country)
   );

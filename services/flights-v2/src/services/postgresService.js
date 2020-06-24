@@ -3,7 +3,7 @@ import { isValidQueryValue } from "query-validator";
 
 types.setTypeParser(1700, (val) => parseFloat(val));
 
-export async function getAirportFromPostgres(id, jaegerTracer) {
+export async function getAirportFromPostgres(id, context) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -16,15 +16,15 @@ export async function getAirportFromPostgres(id, jaegerTracer) {
   };
 
   try {
-    jaegerTracer.start("postgresClientConnect");
+    context.start("postgresClientConnect");
     client.connect();
-    jaegerTracer.stop();
+    context.stop();
 
     const statement = "SELECT * from airports WHERE " + query.statement;
 
-    jaegerTracer.start("postgresQuery");
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    jaegerTracer.stop();
+    context.stop();
 
     return res.rows.length > 0 ? res.rows[0] : {};
   } catch (e) {
@@ -38,7 +38,7 @@ export async function getAirportsFromPostgres(
   city,
   country,
   code,
-  jaegerTracer
+  context
 ) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
@@ -94,15 +94,15 @@ export async function getAirportsFromPostgres(
   }
 
   try {
-    jaegerTracer.start("postgresClientConnect");
+    context.start("postgresClientConnect");
     client.connect();
-    jaegerTracer.stop();
+    context.stop();
 
     const statement = "SELECT * from airports " + query.statement;
 
-    jaegerTracer.start("postgresQuery");
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    jaegerTracer.stop();
+    context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -111,7 +111,7 @@ export async function getAirportsFromPostgres(
   }
 }
 
-export async function getAirportsListFromPostgres(jaegerTracer) {
+export async function getAirportsListFromPostgres(context) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -119,14 +119,14 @@ export async function getAirportsListFromPostgres(jaegerTracer) {
     database: "beetravels",
   });
   try {
-    jaegerTracer.start("postgresClientConnect");
+    context.start("postgresClientConnect");
     client.connect();
-    jaegerTracer.stop();
+    context.stop();
     const statement =
       "select distinct city, country from airports where city <> ''";
-    jaegerTracer.start("postgresQuery");
+    context.start("postgresQuery");
     const res = await client.query(statement);
-    jaegerTracer.stop();
+    context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -135,7 +135,7 @@ export async function getAirportsListFromPostgres(jaegerTracer) {
   }
 }
 
-export async function getDirectFlightsFromPostgres(from, to, jaegerTracer) {
+export async function getDirectFlightsFromPostgres(from, to, context) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -147,13 +147,13 @@ export async function getDirectFlightsFromPostgres(from, to, jaegerTracer) {
     values: [isValidQueryValue(from), isValidQueryValue(to)],
   };
   try {
-    jaegerTracer.start("postgresClientConnect");
+    context.start("postgresClientConnect");
     client.connect();
-    jaegerTracer.stop();
+    context.stop();
     const statement = "select * from flights where " + query.statement;
-    jaegerTracer.start("postgresQuery");
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    jaegerTracer.stop();
+    context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -162,7 +162,7 @@ export async function getDirectFlightsFromPostgres(from, to, jaegerTracer) {
   }
 }
 
-export async function getOneStopFlightsFromPostgres(from, to, jaegerTracer) {
+export async function getOneStopFlightsFromPostgres(from, to, context) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -175,9 +175,9 @@ export async function getOneStopFlightsFromPostgres(from, to, jaegerTracer) {
   };
 
   try {
-    jaegerTracer.start("postgresClientConnect");
+    context.start("postgresClientConnect");
     client.connect();
-    jaegerTracer.stop();
+    context.stop();
     const statement = `
     SELECT flight1.id AS flight1id, flight2.id AS flight2id, flight1.source_airport_id
     AS source_airport_id, flight1.destination_airport_id AS layover_airport_id
@@ -192,9 +192,9 @@ export async function getOneStopFlightsFromPostgres(from, to, jaegerTracer) {
     flight1.airlines = flight2.airlines AND flight2.flight_time >= ( flight1.flight_time
     + flight1.flight_duration + 60 ) ORDER BY totaltime
     `;
-    jaegerTracer.start("postgresQuery");
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    jaegerTracer.stop();
+    context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -203,7 +203,7 @@ export async function getOneStopFlightsFromPostgres(from, to, jaegerTracer) {
   }
 }
 
-export async function getTwoStopFlightsFromPostgres(from, to, jaegerTracer) {
+export async function getTwoStopFlightsFromPostgres(from, to, context) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -216,9 +216,9 @@ export async function getTwoStopFlightsFromPostgres(from, to, jaegerTracer) {
   };
 
   try {
-    jaegerTracer.start("postgresClientConnect");
+    context.start("postgresClientConnect");
     client.connect();
-    jaegerTracer.stop();
+    context.stop();
     const statement = `
     SELECT   *
     FROM     flights f,
@@ -226,9 +226,9 @@ export async function getTwoStopFlightsFromPostgres(from, to, jaegerTracer) {
     WHERE    f.source_airport_id = $1
     ORDER BY c.totaltime limit 20;
     `;
-    jaegerTracer.start("postgresQuery");
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    jaegerTracer.stop();
+    context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);

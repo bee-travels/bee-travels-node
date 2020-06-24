@@ -8,7 +8,7 @@ const router = Router();
  * @description Liveness check to make sure service is available
  * @response 200 - OK
  */
-router.get("/live", (_, res) => res.status(200).json({ status: "ok" }));
+router.get("/live", (req, res) => res.status(200).json({ status: "ok" }));
 
 /**
  * GET /ready

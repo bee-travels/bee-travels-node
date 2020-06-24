@@ -8,7 +8,7 @@ const router = Router();
  * @description Liveness check to make sure service is available
  * @response 200 - OK
  */
-router.get("/live", (_, res) => res.status(200).json({ status: "ok" }));
+router.get("/live", (req, res) => res.status(200).json({ status: "ok" }));
 
 /**
  * GET /ready
@@ -16,7 +16,7 @@ router.get("/live", (_, res) => res.status(200).json({ status: "ok" }));
  * @response 200 - OK
  * @response 503 - Service Unavailable
  */
-router.get("/ready", async (_, res, next) => {
+router.get("/ready", async (req, res, next) => {
   const isHealthy = await readinessCheck();
   if (isHealthy) {
     res.status(200).json({ status: "ok" });

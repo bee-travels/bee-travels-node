@@ -17,7 +17,7 @@ export function buildDestinationPostgresQuery(country, city) {
   return query;
 }
 
-export async function getDestinationDataFromPostgres(query, jaegerTracer) {
+export async function getDestinationDataFromPostgres(query, context) {
   const client = new Client({
     host: process.env.DESTINATION_PG_HOST,
     user: process.env.DESTINATION_PG_USER,
@@ -26,16 +26,16 @@ export async function getDestinationDataFromPostgres(query, jaegerTracer) {
   });
 
   try {
-    jaegerTracer.start("postgresClientConnect");
+    context.start("postgresClientConnect");
     client.connect();
-    jaegerTracer.stop();
+    context.stop();
 
     const select = query.values.length === 2 ? "*" : "country, city";
     const statement =
       "SELECT " + select + " FROM destination" + query.statement;
-    jaegerTracer.start("postgresQuery");
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    jaegerTracer.stop();
+    context.stop();
     return query.values.length === 2 ? res.rows[0] : res.rows;
   } catch (err) {
     console.log(err.stack);

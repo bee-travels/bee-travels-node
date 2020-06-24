@@ -17,11 +17,11 @@ async function parseMetadata(file) {
   return metadata;
 }
 
-export async function getCars(country, city, filters, jaegerTracer) {
+export async function getCars(country, city, filters, context) {
   const { company, car, type, style, minCost, maxCost } = filters;
-  jaegerTracer.start("parseMetadata");
+  context.start("parseMetadata");
   const data = await parseMetadata(CARS_PATH);
-  jaegerTracer.stop();
+  context.stop();
 
   const carsData = data.filter((h) => {
     if (h.city !== capitalize(city) || h.country !== capitalize(country)) {
@@ -41,10 +41,10 @@ export async function getCars(country, city, filters, jaegerTracer) {
   return carsData;
 }
 
-export async function getFilterList(filterType, jaegerTracer) {
-  jaegerTracer.start("parseMetadata");
+export async function getFilterList(filterType, context) {
+  context.start("parseMetadata");
   const data = await parseMetadata(CARS_PATH);
-  jaegerTracer.stop();
+  context.stop();
   const listOfFilterOptions = data.map((item) => {
     const valueForFilter = item[filterType];
     if (valueForFilter !== undefined) {

@@ -7,7 +7,7 @@ import {
   getOneStopFlights,
   getTwoStopFlights,
 } from "../services/dataHandler";
-import Jaeger from "./jaeger";
+import Jaeger from "../jaeger";
 import CircuitBreaker from "opossum";
 
 const router = Router();
@@ -28,11 +28,11 @@ const opossumOptions = {
  * @response 400 - Error
  */
 router.get("/airports", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("airports", req, res);
+  const context = new Jaeger("airports", req, res);
   const { country, city, code } = req.query;
   try {
     const breaker = new CircuitBreaker(getAirports, opossumOptions);
-    const data = await breaker.fire(city, country, code, jaegerTracer);
+    const data = await breaker.fire(city, country, code, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -46,10 +46,10 @@ router.get("/airports", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/airports/all", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("allAirports", req, res);
+  const context = new Jaeger("allAirports", req, res);
   try {
     const breaker = new CircuitBreaker(getAirportsList, opossumOptions);
-    const data = await breaker.fire(jaegerTracer);
+    const data = await breaker.fire(context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -64,11 +64,11 @@ router.get("/airports/all", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/airports/:id", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("airport", req, res);
+  const context = new Jaeger("airport", req, res);
   const { id } = req.params;
   try {
     const breaker = new CircuitBreaker(getAirport, opossumOptions);
-    const data = await breaker.fire(id, jaegerTracer);
+    const data = await breaker.fire(id, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -84,11 +84,11 @@ router.get("/airports/:id", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/direct/:from/:to", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("direct", req, res);
+  const context = new Jaeger("direct", req, res);
   const { from, to } = req.params;
   try {
     const breaker = new CircuitBreaker(getDirectFlights, opossumOptions);
-    const data = await breaker.fire(from, to, jaegerTracer);
+    const data = await breaker.fire(from, to, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -104,11 +104,11 @@ router.get("/direct/:from/:to", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/onestop/:from/:to", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("onestop", req, res);
+  const context = new Jaeger("onestop", req, res);
   const { from, to } = req.params;
   try {
     const breaker = new CircuitBreaker(getOneStopFlights, opossumOptions);
-    const data = await breaker.fire(from, to, jaegerTracer);
+    const data = await breaker.fire(from, to, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -124,11 +124,11 @@ router.get("/onestop/:from/:to", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/twostop/:from/:to", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("twostop", req, res);
+  const context = new Jaeger("twostop", req, res);
   const { from, to } = req.params;
   try {
     const breaker = new CircuitBreaker(getTwoStopFlights, opossumOptions);
-    const data = await breaker.fire(from, to, jaegerTracer);
+    const data = await breaker.fire(from, to, context);
     res.json(data);
   } catch (e) {
     next(e);

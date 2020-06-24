@@ -28,7 +28,7 @@ const capitalize = (text) =>
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(" ");
 
-export async function getCars(country, city, filters, jaegerTracer) {
+export async function getCars(country, city, filters, context) {
   let data;
   let query;
   switch (process.env.CAR_DATABASE) {
@@ -38,9 +38,9 @@ export async function getCars(country, city, filters, jaegerTracer) {
         capitalize(city),
         filters
       );
-      jaegerTracer.start("getCarDataFromMongo");
-      data = await getCarDataFromMongo(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getCarDataFromMongo");
+      data = await getCarDataFromMongo(query, context);
+      context.stop();
       break;
     case "postgres":
       query = buildCarPostgresQuery(
@@ -48,9 +48,9 @@ export async function getCars(country, city, filters, jaegerTracer) {
         capitalize(city),
         filters
       );
-      jaegerTracer.start("getCarDataFromPostgres");
-      data = await getCarDataFromPostgres(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getCarDataFromPostgres");
+      data = await getCarDataFromPostgres(query, context);
+      context.stop();
       break;
     case "cloudant":
     case "couchdb":
@@ -59,9 +59,9 @@ export async function getCars(country, city, filters, jaegerTracer) {
         capitalize(city),
         filters
       );
-      jaegerTracer.start("getCarDataFromCloudant");
-      data = await getCarDataFromCloudant(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getCarDataFromCloudant");
+      data = await getCarDataFromCloudant(query, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
@@ -69,27 +69,27 @@ export async function getCars(country, city, filters, jaegerTracer) {
   return data;
 }
 
-export async function getFilterList(filterType, jaegerTracer) {
+export async function getFilterList(filterType, context) {
   if (filterTypes.includes(filterType) === false) {
     throw new TagNotFoundError(filterType);
   }
   let data;
   switch (process.env.CAR_DATABASE) {
     case "mongodb":
-      jaegerTracer.start("getCarInfoFromMongo");
-      data = await getCarInfoFromMongo(filterType, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getCarInfoFromMongo");
+      data = await getCarInfoFromMongo(filterType, context);
+      context.stop();
       break;
     case "postgres":
-      jaegerTracer.start("getCarInfoFromPostgres");
-      data = await getCarInfoFromPostgres(filterType, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getCarInfoFromPostgres");
+      data = await getCarInfoFromPostgres(filterType, context);
+      context.stop();
       break;
     case "cloudant":
     case "couchdb":
-      jaegerTracer.start("getCarInfoFromCloudant");
-      data = await getCarInfoFromCloudant(filterType, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getCarInfoFromCloudant");
+      data = await getCarInfoFromCloudant(filterType, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.CAR_DATABASE);

@@ -29,8 +29,8 @@ export function buildHotelMongoQuery(country, city, filters) {
   return query;
 }
 
-export async function getHotelDataFromMongo(query, jaegerTracer) {
-  jaegerTracer.start("mongoClientConnect");
+export async function getHotelDataFromMongo(query, context) {
+  context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.HOTEL_MONGO_CONNECTION_URL,
     {
@@ -40,7 +40,7 @@ export async function getHotelDataFromMongo(query, jaegerTracer) {
   ).catch((err) => {
     console.log(err);
   });
-  jaegerTracer.stop();
+  context.stop();
 
   if (!client) {
     return;
@@ -49,7 +49,7 @@ export async function getHotelDataFromMongo(query, jaegerTracer) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("hotels");
-    jaegerTracer.start("mongoQuery");
+    context.start("mongoQuery");
     let res = await collection.find(query);
     let hotels = [];
     let hotel;
@@ -60,7 +60,7 @@ export async function getHotelDataFromMongo(query, jaegerTracer) {
       hotels.push(hotel);
       hasNextHotel = await res.hasNext();
     }
-    jaegerTracer.stop();
+    context.stop();
     return hotels;
   } catch (err) {
     console.log(err);
@@ -69,8 +69,8 @@ export async function getHotelDataFromMongo(query, jaegerTracer) {
   }
 }
 
-export async function getHotelInfoFromMongo(filterType, jaegerTracer) {
-  jaegerTracer.start("mongoClientConnect");
+export async function getHotelInfoFromMongo(filterType, context) {
+  context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.HOTEL_MONGO_CONNECTION_URL,
     {
@@ -80,7 +80,7 @@ export async function getHotelInfoFromMongo(filterType, jaegerTracer) {
   ).catch((err) => {
     console.log(err);
   });
-  jaegerTracer.stop();
+  context.stop();
 
   if (!client) {
     return;
@@ -89,9 +89,9 @@ export async function getHotelInfoFromMongo(filterType, jaegerTracer) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("hotel_info");
-    jaegerTracer.start("mongoQuery");
+    context.start("mongoQuery");
     const result = await collection.distinct(filterType);
-    jaegerTracer.stop();
+    context.stop();
     return result;
   } catch (err) {
     console.log(err);

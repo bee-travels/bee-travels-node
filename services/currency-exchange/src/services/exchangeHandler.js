@@ -4,7 +4,7 @@ import CurrencyNotFoundError from "./../errors/CurrencyNotFoundError";
 const EXCHANGE_ENDPOINT = "https://api.exchangeratesapi.io";
 
 export async function convert(
-  jaegerTracer,
+  context,
   _from,
   _to = "EUR",
   timeIndicator = "latest"
@@ -16,9 +16,9 @@ export async function convert(
 
   let rate;
   try {
-    jaegerTracer.start("exchangeRatesApiCall");
+    context.start("exchangeRatesApiCall");
     const { data } = await axios.get(currencyUrl);
-    jaegerTracer.stop();
+    context.stop();
     rate = data.rates[to];
   } catch (e) {
     if (!(e.response && e.response.data && e.response.data.error)) {
@@ -36,12 +36,12 @@ export async function convert(
   return rate;
 }
 
-export async function getExchangeRates(jaegerTracer, timeIndicator = "latest") {
+export async function getExchangeRates(context, timeIndicator = "latest") {
   const currencyUrl = `${EXCHANGE_ENDPOINT}/${timeIndicator}`;
   try {
-    jaegerTracer.start("exchangeRatesApiCall");
+    context.start("exchangeRatesApiCall");
     const { data } = await axios.get(currencyUrl);
-    jaegerTracer.stop();
+    context.stop();
     return data;
   } catch (e) {
     if (!(e.response && e.response.data && e.response.data.error)) {

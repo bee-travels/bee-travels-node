@@ -17,11 +17,11 @@ async function parseMetadata(file) {
   return metadata;
 }
 
-export async function getHotels(country, city, filters, jaegerTracer) {
+export async function getHotels(country, city, filters, context) {
   const { superchain, hotel, type, minCost, maxCost } = filters;
-  jaegerTracer.start("parseMetadata");
+  context.start("parseMetadata");
   const metadata = await parseMetadata(HOTELS_PATH);
-  jaegerTracer.stop();
+  context.stop();
 
   const hotelsData = metadata.filter((h) => {
     if (h.city !== capitalize(city) || h.country !== capitalize(country)) {
@@ -40,10 +40,10 @@ export async function getHotels(country, city, filters, jaegerTracer) {
   return hotelsData;
 }
 
-export async function getFilterList(filterType, jaegerTracer) {
-  jaegerTracer.start("parseMetadata");
+export async function getFilterList(filterType, context) {
+  context.start("parseMetadata");
   const metadata = await parseMetadata(HOTEL_INFO_PATH);
-  jaegerTracer.stop();
+  context.stop();
   const listOfFilterOptions = metadata.map((item) => item[filterType]);
 
   return [...new Set(listOfFilterOptions)];

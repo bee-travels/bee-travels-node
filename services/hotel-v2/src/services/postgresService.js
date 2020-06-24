@@ -65,7 +65,7 @@ export function buildHotelPostgresQuery(country, city, filters) {
   return query;
 }
 
-export async function getHotelDataFromPostgres(query, jaegerTracer) {
+export async function getHotelDataFromPostgres(query, context) {
   const client = new Client({
     host: process.env.HOTEL_PG_HOST,
     user: process.env.HOTEL_PG_USER,
@@ -74,16 +74,16 @@ export async function getHotelDataFromPostgres(query, jaegerTracer) {
   });
 
   try {
-    jaegerTracer.start("postgresClientConnect");
+    context.start("postgresClientConnect");
     client.connect();
-    jaegerTracer.stop();
+    context.stop();
 
     const statement =
       "SELECT hotels.id, hotels.hotel_id, hotels.city, hotels.country, hotels.cost, hotels.images, hotel_info.superchain, hotel_info.type, hotel_info.name FROM hotels INNER JOIN hotel_info ON hotels.hotel_id = hotel_info.id WHERE " +
       query.statement;
-    jaegerTracer.start("postgresQuery");
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    jaegerTracer.stop();
+    context.stop();
     return res.rows;
   } catch (err) {
     console.log(err.stack);
@@ -92,7 +92,7 @@ export async function getHotelDataFromPostgres(query, jaegerTracer) {
   }
 }
 
-export async function getHotelInfoFromPostgres(filterType, jaegerTracer) {
+export async function getHotelInfoFromPostgres(filterType, context) {
   const client = new Client({
     host: process.env.HOTEL_PG_HOST,
     user: process.env.HOTEL_PG_USER,
@@ -101,11 +101,11 @@ export async function getHotelInfoFromPostgres(filterType, jaegerTracer) {
   });
 
   try {
-    jaegerTracer.start("postgresClientConnect");
+    context.start("postgresClientConnect");
     client.connect();
-    jaegerTracer.stop();
+    context.stop();
 
-    jaegerTracer.start("postgresQuery");
+    context.start("postgresQuery");
     const res = await client.query(
       "SELECT DISTINCT " + filterType + " FROM hotel_info"
     );
@@ -118,7 +118,7 @@ export async function getHotelInfoFromPostgres(filterType, jaegerTracer) {
         }
       });
     }
-    jaegerTracer.stop();
+    context.stop();
     return result;
   } catch (err) {
     console.log(err.stack);

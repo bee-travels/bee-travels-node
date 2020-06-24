@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { sendEmail } from "../services/dataHandler";
 import EmailError from "../errors/EmailError";
-import Jaeger from "./jaeger";
+import Jaeger from "../jaeger";
 import CircuitBreaker from "opossum";
 
 const router = Router();
@@ -23,7 +23,7 @@ const opossumOptions = {
  * @bodyRequired
  */
 router.post("/", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("emails", req, res);
+  const context = new Jaeger("emails", req, res);
   try {
     let email = req.body.email;
     let body = req.body.body;
@@ -35,7 +35,7 @@ router.post("/", async (req, res, next) => {
       from,
       subject,
       body,
-      jaegerTracer
+      context
     );
 
     return res.json(response);

@@ -28,7 +28,7 @@ const capitalize = (text) =>
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(" ");
 
-export async function getHotels(country, city, filters, jaegerTracer) {
+export async function getHotels(country, city, filters, context) {
   let data;
   let query;
   switch (process.env.HOTEL_DATABASE) {
@@ -38,9 +38,9 @@ export async function getHotels(country, city, filters, jaegerTracer) {
         capitalize(city),
         filters
       );
-      jaegerTracer.start("getHotelDataFromMongo");
-      data = await getHotelDataFromMongo(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getHotelDataFromMongo");
+      data = await getHotelDataFromMongo(query, context);
+      context.stop();
       break;
     case "postgres":
       query = buildHotelPostgresQuery(
@@ -48,9 +48,9 @@ export async function getHotels(country, city, filters, jaegerTracer) {
         capitalize(city),
         filters
       );
-      jaegerTracer.start("getHotelDataFromPostgres");
-      data = await getHotelDataFromPostgres(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getHotelDataFromPostgres");
+      data = await getHotelDataFromPostgres(query, context);
+      context.stop();
       break;
     case "cloudant":
     case "couchdb":
@@ -59,9 +59,9 @@ export async function getHotels(country, city, filters, jaegerTracer) {
         capitalize(city),
         filters
       );
-      jaegerTracer.start("getHotelDataFromCloudant");
-      data = await getHotelDataFromCloudant(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getHotelDataFromCloudant");
+      data = await getHotelDataFromCloudant(query, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.HOTEL_DATABASE);
@@ -69,27 +69,27 @@ export async function getHotels(country, city, filters, jaegerTracer) {
   return data;
 }
 
-export async function getFilterList(filterType, jaegerTracer) {
+export async function getFilterList(filterType, context) {
   if (filterTypes.includes(filterType) === false) {
     throw new TagNotFoundError(filterType);
   }
   let data;
   switch (process.env.HOTEL_DATABASE) {
     case "mongodb":
-      jaegerTracer.start("getHotelInfoFromMongo");
-      data = await getHotelInfoFromMongo(filterType, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getHotelInfoFromMongo");
+      data = await getHotelInfoFromMongo(filterType, context);
+      context.stop();
       break;
     case "postgres":
-      jaegerTracer.start("getHotelInfoFromPostgres");
-      data = await getHotelInfoFromPostgres(filterType, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getHotelInfoFromPostgres");
+      data = await getHotelInfoFromPostgres(filterType, context);
+      context.stop();
       break;
     case "cloudant":
     case "couchdb":
-      jaegerTracer.start("getHotelInfoFromCloudant");
-      data = await getHotelInfoFromCloudant(filterType, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getHotelInfoFromCloudant");
+      data = await getHotelInfoFromCloudant(filterType, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.HOTEL_DATABASE);

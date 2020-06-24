@@ -20,18 +20,18 @@ const capitalize = (text) => {
 
 const upper = (text) => (text ? text.toUpperCase() : text);
 
-export async function getAirports(city, country, code, jaegerTracer) {
+export async function getAirports(city, country, code, context) {
   let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      jaegerTracer.start("getAirportsFromPostgres");
+      context.start("getAirportsFromPostgres");
       data = await getAirportsFromPostgres(
         capitalize(city),
         capitalize(country),
         upper(code),
-        jaegerTracer
+        context
       );
-      jaegerTracer.stop();
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
@@ -39,13 +39,13 @@ export async function getAirports(city, country, code, jaegerTracer) {
   return data;
 }
 
-export async function getAirportsList(jaegerTracer) {
+export async function getAirportsList(context) {
   let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      jaegerTracer.start("getAirportsListFromPostgres");
-      data = await getAirportsListFromPostgres(jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getAirportsListFromPostgres");
+      data = await getAirportsListFromPostgres(context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
@@ -53,13 +53,13 @@ export async function getAirportsList(jaegerTracer) {
   return data;
 }
 
-export async function getAirport(id, jaegerTracer) {
+export async function getAirport(id, context) {
   let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      jaegerTracer.start("getAirportFromPostgres");
-      data = await getAirportFromPostgres(id, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getAirportFromPostgres");
+      data = await getAirportFromPostgres(id, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
@@ -67,13 +67,13 @@ export async function getAirport(id, jaegerTracer) {
   return data;
 }
 
-export async function getDirectFlights(from, to, jaegerTracer) {
+export async function getDirectFlights(from, to, context) {
   let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      jaegerTracer.start("getDirectFlightsFromPostgres");
-      data = await getDirectFlightsFromPostgres(from, to, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getDirectFlightsFromPostgres");
+      data = await getDirectFlightsFromPostgres(from, to, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
@@ -81,13 +81,13 @@ export async function getDirectFlights(from, to, jaegerTracer) {
   return data;
 }
 
-export async function getOneStopFlights(from, to, jaegerTracer) {
+export async function getOneStopFlights(from, to, context) {
   let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      jaegerTracer.start("getOneStopFlightsFromPostgres");
-      data = await getOneStopFlightsFromPostgres(from, to, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getOneStopFlightsFromPostgres");
+      data = await getOneStopFlightsFromPostgres(from, to, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
@@ -95,13 +95,13 @@ export async function getOneStopFlights(from, to, jaegerTracer) {
   return data;
 }
 
-export async function getTwoStopFlights(from, to, jaegerTracer) {
+export async function getTwoStopFlights(from, to, context) {
   let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      jaegerTracer.start("getTwoStopFlightsFromPostgres");
-      data = await getTwoStopFlightsFromPostgres(from, to, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getTwoStopFlightsFromPostgres");
+      data = await getTwoStopFlightsFromPostgres(from, to, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);

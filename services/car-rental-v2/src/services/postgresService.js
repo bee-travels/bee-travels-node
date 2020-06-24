@@ -80,7 +80,7 @@ export function buildCarPostgresQuery(country, city, filters) {
   return query;
 }
 
-export async function getCarDataFromPostgres(query, jaegerTracer) {
+export async function getCarDataFromPostgres(query, context) {
   const client = new Client({
     host: process.env.CAR_PG_HOST,
     user: process.env.CAR_PG_USER,
@@ -89,16 +89,16 @@ export async function getCarDataFromPostgres(query, jaegerTracer) {
   });
 
   try {
-    jaegerTracer.start("postgresClientConnect");
+    context.start("postgresClientConnect");
     client.connect();
-    jaegerTracer.stop();
+    context.stop();
 
     const statement =
       "SELECT cars.id, cars.car_id, cars.city, cars.country, cars.rental_company, cars.cost, car_info.name, car_info.body_type, car_info.style, car_info.image FROM cars INNER JOIN car_info ON cars.car_id = car_info.id WHERE " +
       query.statement;
-    jaegerTracer.start("postgresQuery");
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    jaegerTracer.stop();
+    context.stop();
     return res.rows;
   } catch (err) {
     console.log(err.stack);
@@ -107,7 +107,7 @@ export async function getCarDataFromPostgres(query, jaegerTracer) {
   }
 }
 
-export async function getCarInfoFromPostgres(filterType, jaegerTracer) {
+export async function getCarInfoFromPostgres(filterType, context) {
   const client = new Client({
     host: process.env.CAR_PG_HOST,
     user: process.env.CAR_PG_USER,
@@ -116,12 +116,12 @@ export async function getCarInfoFromPostgres(filterType, jaegerTracer) {
   });
 
   try {
-    jaegerTracer.start("postgresClientConnect");
+    context.start("postgresClientConnect");
     client.connect();
-    jaegerTracer.stop();
+    context.stop();
 
     const table = filterType === "rental_company" ? "cars" : "car_info";
-    jaegerTracer.start("postgresQuery");
+    context.start("postgresQuery");
     const res = await client.query(
       "SELECT DISTINCT " + filterType + " FROM " + table
     );
@@ -134,7 +134,7 @@ export async function getCarInfoFromPostgres(filterType, jaegerTracer) {
         }
       });
     }
-    jaegerTracer.stop();
+    context.stop();
     return result;
   } catch (err) {
     console.log(err.stack);

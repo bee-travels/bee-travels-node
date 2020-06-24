@@ -32,8 +32,8 @@ export function buildCarMongoQuery(country, city, filters) {
   return query;
 }
 
-export async function getCarDataFromMongo(query, jaegerTracer) {
-  jaegerTracer.start("mongoClientConnect");
+export async function getCarDataFromMongo(query, context) {
+  context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.CAR_MONGO_CONNECTION_URL,
     {
@@ -43,7 +43,7 @@ export async function getCarDataFromMongo(query, jaegerTracer) {
   ).catch((err) => {
     console.log(err);
   });
-  jaegerTracer.stop();
+  context.stop();
 
   if (!client) {
     return;
@@ -52,7 +52,7 @@ export async function getCarDataFromMongo(query, jaegerTracer) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("cars");
-    jaegerTracer.start("mongoQuery");
+    context.start("mongoQuery");
     let res = await collection.find(query);
     let cars = [];
     let car;
@@ -63,7 +63,7 @@ export async function getCarDataFromMongo(query, jaegerTracer) {
       cars.push(car);
       hasNextCar = await res.hasNext();
     }
-    jaegerTracer.stop();
+    context.stop();
     return cars;
   } catch (err) {
     console.log(err);
@@ -72,8 +72,8 @@ export async function getCarDataFromMongo(query, jaegerTracer) {
   }
 }
 
-export async function getCarInfoFromMongo(filterType, jaegerTracer) {
-  jaegerTracer.start("mongoClientConnect");
+export async function getCarInfoFromMongo(filterType, context) {
+  context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.CAR_MONGO_CONNECTION_URL,
     {
@@ -83,7 +83,7 @@ export async function getCarInfoFromMongo(filterType, jaegerTracer) {
   ).catch((err) => {
     console.log(err);
   });
-  jaegerTracer.stop();
+  context.stop();
 
   if (!client) {
     return;
@@ -94,9 +94,9 @@ export async function getCarInfoFromMongo(filterType, jaegerTracer) {
     let collection = db.collection(
       filterType === "rental_company" ? "cars" : "car_info"
     );
-    jaegerTracer.start("mongoQuery");
+    context.start("mongoQuery");
     const result = await collection.distinct(filterType);
-    jaegerTracer.stop();
+    context.stop();
     return result;
   } catch (err) {
     console.log(err);

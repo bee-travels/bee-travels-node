@@ -11,8 +11,8 @@ export function buildDestinationMongoQuery(country, city) {
   return query;
 }
 
-export async function getDestinationDataFromMongo(query, jaegerTracer) {
-  jaegerTracer.start("mongoClientConnect");
+export async function getDestinationDataFromMongo(query, context) {
+  context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.DESTINATION_MONGO_CONNECTION_URL,
     {
@@ -22,7 +22,7 @@ export async function getDestinationDataFromMongo(query, jaegerTracer) {
   ).catch((err) => {
     console.log(err);
   });
-  jaegerTracer.stop();
+  context.stop();
 
   if (!client) {
     return;
@@ -31,7 +31,7 @@ export async function getDestinationDataFromMongo(query, jaegerTracer) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("destination");
-    jaegerTracer.start("mongoQuery");
+    context.start("mongoQuery");
     let res = await collection.find(query);
     let destinations = [];
     let destination;
@@ -50,7 +50,7 @@ export async function getDestinationDataFromMongo(query, jaegerTracer) {
       destinations.push(destination);
       hasNextDestination = await res.hasNext();
     }
-    jaegerTracer.stop();
+    context.stop();
     if (query.city !== undefined) {
       return destination;
     }

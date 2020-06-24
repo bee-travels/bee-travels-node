@@ -11,15 +11,15 @@ export function buildDestinationCloudantQuery(country, city) {
   return query;
 }
 
-export async function getDestinationDataFromCloudant(query, jaegerTracer) {
-  jaegerTracer.start("cloudantClientConnect");
+export async function getDestinationDataFromCloudant(query, context) {
+  context.start("cloudantClientConnect");
   const cloudant = Cloudant(
     process.env.DESTINATION_COUCH_CLOUDANT_CONNECTION_URL
   );
-  jaegerTracer.stop();
+  context.stop();
   const db = cloudant.db.use("destination");
 
-  jaegerTracer.start("cloudantQuery");
+  context.start("cloudantQuery");
   let res = await db.find({
     selector: query,
     fields: query.city === undefined ? ["country", "city"] : [],
@@ -29,7 +29,7 @@ export async function getDestinationDataFromCloudant(query, jaegerTracer) {
     delete res.docs[destination]["_id"];
     delete res.docs[destination]["_rev"];
   }
-  jaegerTracer.stop();
+  context.stop();
   return query.city === undefined ? res.docs : res.docs[0];
 }
 

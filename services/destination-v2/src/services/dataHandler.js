@@ -22,30 +22,30 @@ const capitalize = (text) =>
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(" ");
 
-export async function getCities(jaegerTracer) {
+export async function getCities(context) {
   let data;
   switch (process.env.DESTINATION_DATABASE) {
     case "mongodb":
-      jaegerTracer.start("getDestinationDataFromMongo");
-      data = await getDestinationDataFromMongo({}, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getDestinationDataFromMongo");
+      data = await getDestinationDataFromMongo({}, context);
+      context.stop();
       break;
     case "postgres":
-      jaegerTracer.start("getDestinationDataFromPostgres");
+      context.start("getDestinationDataFromPostgres");
       data = await getDestinationDataFromPostgres(
         {
           statement: "",
           values: [],
         },
-        jaegerTracer
+        context
       );
-      jaegerTracer.stop();
+      context.stop();
       break;
     case "cloudant":
     case "couchdb":
-      jaegerTracer.start("getDestinationDataFromCloudant");
-      data = await getDestinationDataFromCloudant({}, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getDestinationDataFromCloudant");
+      data = await getDestinationDataFromCloudant({}, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.DESTINATION_DATABASE);
@@ -53,28 +53,28 @@ export async function getCities(jaegerTracer) {
   return data;
 }
 
-export async function getCitiesForCountry(country, jaegerTracer) {
+export async function getCitiesForCountry(country, context) {
   let data;
   let query;
   switch (process.env.DESTINATION_DATABASE) {
     case "mongodb":
       query = buildDestinationMongoQuery(capitalize(country), null);
-      jaegerTracer.start("getDestinationDataFromMongo");
-      data = await getDestinationDataFromMongo(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getDestinationDataFromMongo");
+      data = await getDestinationDataFromMongo(query, context);
+      context.stop();
       break;
     case "postgres":
       query = buildDestinationPostgresQuery(capitalize(country), null);
-      jaegerTracer.start("getDestinationDataFromPostgres");
-      data = await getDestinationDataFromPostgres(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getDestinationDataFromPostgres");
+      data = await getDestinationDataFromPostgres(query, context);
+      context.stop();
       break;
     case "cloudant":
     case "couchdb":
       query = buildDestinationCloudantQuery(capitalize(country), null);
-      jaegerTracer.start("getDestinationDataFromCloudant");
-      data = await getDestinationDataFromCloudant(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getDestinationDataFromCloudant");
+      data = await getDestinationDataFromCloudant(query, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.DESTINATION_DATABASE);
@@ -82,24 +82,24 @@ export async function getCitiesForCountry(country, jaegerTracer) {
   return data;
 }
 
-export async function getCity(country, city, jaegerTracer) {
+export async function getCity(country, city, context) {
   let data;
   let query;
   switch (process.env.DESTINATION_DATABASE) {
     case "mongodb":
       query = buildDestinationMongoQuery(capitalize(country), capitalize(city));
-      jaegerTracer.start("getDestinationDataFromMongo");
-      data = await getDestinationDataFromMongo(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getDestinationDataFromMongo");
+      data = await getDestinationDataFromMongo(query, context);
+      context.stop();
       break;
     case "postgres":
       query = buildDestinationPostgresQuery(
         capitalize(country),
         capitalize(city)
       );
-      jaegerTracer.start("getDestinationDataFromPostgres");
-      data = await getDestinationDataFromPostgres(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getDestinationDataFromPostgres");
+      data = await getDestinationDataFromPostgres(query, context);
+      context.stop();
       break;
     case "cloudant":
     case "couchdb":
@@ -107,9 +107,9 @@ export async function getCity(country, city, jaegerTracer) {
         capitalize(country),
         capitalize(city)
       );
-      jaegerTracer.start("getDestinationDataFromCloudant");
-      data = await getDestinationDataFromCloudant(query, jaegerTracer);
-      jaegerTracer.stop();
+      context.start("getDestinationDataFromCloudant");
+      data = await getDestinationDataFromCloudant(query, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.DESTINATION_DATABASE);

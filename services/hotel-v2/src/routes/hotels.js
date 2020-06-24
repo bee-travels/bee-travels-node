@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getHotels, getFilterList } from "../services/dataHandler";
 import TagNotFoundError from "../errors/TagNotFoundError";
-import Jaeger from "./jaeger";
+import Jaeger from "../jaeger";
 import CircuitBreaker from "opossum";
 import { IllegalDatabaseQueryError } from "query-validator";
 
@@ -25,11 +25,11 @@ const stringToArray = (s) => s && s.split(",");
  * @response 500 - Internal server error
  */
 router.get("/info/:tag", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("info", req, res);
+  const context = new Jaeger("info", req, res);
   const { tag } = req.params;
   try {
     const breaker = new CircuitBreaker(getFilterList, opossumOptions);
-    const data = await breaker.fire(tag, jaegerTracer);
+    const data = await breaker.fire(tag, context);
     res.json(data);
   } catch (e) {
     if (e instanceof TagNotFoundError) {
@@ -55,7 +55,7 @@ router.get("/info/:tag", async (req, res, next) => {
  * @response 500 - Internal server error
  */
 router.get("/:country/:city", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("city", req, res);
+  const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
   const { superchain, hotel, type, mincost, maxcost } = req.query;
 
@@ -71,7 +71,7 @@ router.get("/:country/:city", async (req, res, next) => {
         minCost: parseInt(mincost, 10) || undefined,
         maxCost: parseInt(maxcost, 10) || undefined,
       },
-      jaegerTracer
+      context
     );
     res.json(data);
   } catch (e) {

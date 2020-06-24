@@ -4,7 +4,7 @@ import {
   getCity,
   getCitiesForCountry,
 } from "../services/dataHandler";
-import Jaeger from "./jaeger";
+import Jaeger from "../jaeger";
 import CircuitBreaker from "opossum";
 
 const router = Router();
@@ -27,11 +27,11 @@ const opossumOptions = {
  */
 // TODO: 400s for bad country/city see hotel/cars
 router.get("/:country/:city", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("city", req, res);
+  const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
   try {
     const breaker = new CircuitBreaker(getCity, opossumOptions);
-    const data = await breaker.fire(country, city, jaegerTracer);
+    const data = await breaker.fire(country, city, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -49,11 +49,11 @@ router.get("/:country/:city", async (req, res, next) => {
  */
 // TODO: 400 for bad country
 router.get("/:country", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("country", req, res);
+  const context = new Jaeger("country", req, res);
   const { country } = req.params;
   try {
     const breaker = new CircuitBreaker(getCitiesForCountry, opossumOptions);
-    const data = await breaker.fire(country, jaegerTracer);
+    const data = await breaker.fire(country, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -69,10 +69,10 @@ router.get("/:country", async (req, res, next) => {
  * @response 500 - Internal Server Error
  */
 router.get("/", async (req, res, next) => {
-  const jaegerTracer = new Jaeger("cities", req, res);
+  const context = new Jaeger("cities", req, res);
   try {
     const breaker = new CircuitBreaker(getCities, opossumOptions);
-    const data = await breaker.fire(jaegerTracer);
+    const data = await breaker.fire(context);
     res.json(data);
   } catch (e) {
     next(e);
