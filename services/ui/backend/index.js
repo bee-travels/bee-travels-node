@@ -3,8 +3,7 @@ const path = require("path");
 const streamableAxios = require("./streamableAxios");
 
 const express = require("express");
-const docCollector = require("./doc-collector");
-const infoCollector = require("./info-collector");
+const axios = require("axios");
 
 const app = express();
 
@@ -24,12 +23,19 @@ const proxies = [
     path: "/api/v1/cars*",
   },
   {
+    service: process.env.FLIGHTS_URL || "http://localhost:9103",
+    path: "/api/v1/flights*",
+  },
+  {
     service: process.env.DESTINATION_URL || "http://localhost:9001",
     path: "/api/v1/destinations*",
   },
 ];
 
 const proxyRequest = async (req, res, url) => {
+  console.log("PROXY REQUEST ", url);
+  // const data = await axios({ url: url });
+  // console.log(data);
   req
     .pipe(streamableAxios({ url: url }))
     .on("error", (e) => {
@@ -50,9 +56,9 @@ proxies.forEach(({ service, path }) => {
   });
 });
 
-app.use(infoCollector(proxies));
+// app.use(infoCollector(proxies));
 
-app.use(docCollector(proxies));
+// app.use(docCollector(proxies));
 
 if (process.env.NODE_ENV === "production") {
   console.log("production build");

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import DestinationFragment from "./DestinationFragment/DestinationFragment";
 import HotelFragment from "./HotelFragment/HotelFragment";
 import CarFragment from "./CarFragment/CarFragment";
-
+import FlightFragment from "./FlightFragment/FlightFragment";
 import TabHolder from "./TabHolder";
 
 const SplitPaneLayout = ({ children, panelWidth, breakpoint }) => {
@@ -90,7 +90,6 @@ const Content = ({ location }) => {
         `/api/v1/destinations/${country}/${city}`
       );
       const destination = await destinationResponse.json();
-      console.log("DESTINATION : ", destination);
       setLatitude(destination.latitude);
       setLongitude(destination.longitude);
       setDescription(destination.description);
@@ -117,6 +116,7 @@ const Content = ({ location }) => {
       <TabHolder location={location}>
         <HotelFragment city={city} country={country} search={location.search} />
         <CarFragment city={city} country={country} search={location.search} />
+        <FlightFragment city={city} country={country} search={location.search} />
       </TabHolder>
     </SplitPaneLayout>
   );

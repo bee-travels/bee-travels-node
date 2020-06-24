@@ -9,7 +9,7 @@
     "lint": "eslint \"services/**/*.js\"",
     "pretty": "prettier \"services/**/*.js\" --write",
     "kp": "process=$(lsof -i :\"$@\" -t); [ -z \"$process\" ] || echo killing port \"$@\"; echo $process | xargs kill",
-    "kill-ports": "yarn kp 9000 && yarn kp 9001 && yarn kp 9101 && yarn kp 9201 && yarn kp 3000",
+    "kill-ports": "yarn kp 9000 && yarn kp 9001 && yarn kp 9101 && yarn kp 9102 && yarn kp 9103 && yarn kp 9201 && yarn kp 3000",
     "test": "nyc --require esm --cache false mocha \"services/!(ui)/**/src/**/?(*.)test.js\"",
     "start": "BEE_TRAVELS_ARGS=\"$@\" make start"
   },

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  getFilterList,
   getAirport,
   getAirports,
   getAirportsList,
@@ -8,7 +9,29 @@ import {
   getTwoStopFlights,
 } from "../services/dataHandler";
 
+import TagNotFoundError from '../errors/TagNotFoundError';
+
 const router = Router();
+
+/**
+ * GET /api/v1/flights/info/{filter}
+ * @description Get info about flights
+ * @pathParam filter info to look up
+ * @response 200 - OK
+ * @response 400 - Error
+ */
+router.get("/info/:filter", async (req, res, next) => {
+  const { filter } = req.params;
+  try {
+    const data = await getFilterList(filter);
+    res.json(data);
+  } catch (e) {
+    if (e instanceof TagNotFoundError) {
+      return res.status(400).json({ error: e.message });
+    }
+    next(e);
+  }
+})
 
 /**
  * GET /api/v1/flights/airports
@@ -70,6 +93,7 @@ router.get("/airports/:id", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/direct/:from/:to", async (req, res, next) => {
+  console.log("REQUEST CAME HERE");
   const { from, to } = req.params;
   try {
     const data = await getDirectFlights(from, to);

@@ -3,6 +3,31 @@ import { isValidQueryValue } from "query-validator";
 
 types.setTypeParser(1700, (val) => parseFloat(val));
 
+export async function getFlightInfoFromPostgres(filter) {
+  const client = new Client({
+    host: process.env.FLIGHTS_PG_HOST,
+    user: process.env.FLIGHTS_PG_USER,
+    password: process.env.FLIGHTS_PG_PASSWORD,
+    database: "beetravels",
+  });
+
+
+  try {
+    client.connect();
+
+    const statement = "SELECT DISTINCT " + filter +  " from flights";
+
+    const res = await client.query(statement);
+    let result = res.rows.map((row) => row.airlines);
+    console.log(result);
+    return result;
+  } catch (e) {
+    console.log(e);
+  } finally {
+    client.end();
+  }
+}
+
 export async function getAirportFromPostgres(id) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
@@ -49,17 +74,17 @@ export async function getAirportsFromPostgres(city, country, code) {
     };
   } else if (city && country) {
     query = {
-      statement: "WHERE country=$1, city=$2",
+      statement: "WHERE country=$1 AND city=$2",
       values: [isValidQueryValue(country), isValidQueryValue(city)],
     };
   } else if (city && code) {
     query = {
-      statement: "WHERE city=$1, iata_code=$2",
+      statement: "WHERE city=$1 AND iata_code=$2",
       values: [isValidQueryValue(city), isValidQueryValue(code)],
     };
   } else if (country && code) {
     query = {
-      statement: "WHERE country=$1, iata_code=$2",
+      statement: "WHERE country=$1 AND iata_code=$2",
       values: [isValidQueryValue(country), isValidQueryValue(code)],
     };
   } else if (city) {

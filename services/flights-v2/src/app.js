@@ -7,7 +7,6 @@ import swaggerUi from "swagger-ui-express";
 import flightsRouter from "./routes/flights";
 
 const app = express();
-
 // Setup Pino.
 app.use(
   logger({

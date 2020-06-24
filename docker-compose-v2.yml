@@ -112,7 +112,6 @@ services:
       - "9001:9001"
     depends_on:
       - base
-      - destination-data-gen
     environment:
       - DESTINATION_DATABASE=${DESTINATION_DATABASE}
       - DESTINATION_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
@@ -127,7 +126,6 @@ services:
       - "9101:9101"
     depends_on:
       - base
-      - hotel-data-gen
     environment:
       - HOTEL_DATABASE=${HOTEL_DATABASE}
       - HOTEL_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
@@ -157,7 +155,6 @@ services:
       - "9103:9103"
     depends_on:
       - base
-      - flights-data-gen
     environment:
       - FLIGHTS_DATABASE=${FLIGHTS_DATABASE}
       - FLIGHTS_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
@@ -197,6 +194,7 @@ services:
       - HOTEL_URL=http://hotel:9101
       - CAR_URL=http://car-rental:9102
       - CURRENCY_EXCHANGE_URL=http://currency-exchange:9201
+      - FLIGHTS_URL=http://flights:9103
 
 
 

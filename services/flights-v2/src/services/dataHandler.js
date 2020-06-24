@@ -1,5 +1,6 @@
 import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
 import {
+  getFlightInfoFromPostgres,
   getAirportFromPostgres,
   getAirportsFromPostgres,
   getAirportsListFromPostgres,
@@ -7,6 +8,9 @@ import {
   getOneStopFlightsFromPostgres,
   getTwoStopFlightsFromPostgres,
 } from "./postgresService";
+import TagNotFoundError from "../errors/TagNotFoundError";
+
+const filterTypes = ["airlines", "type"];
 
 const capitalize = (text) => {
   if (!text) return text;
@@ -18,6 +22,21 @@ const capitalize = (text) => {
 };
 
 const upper = (text) => (text ? text.toUpperCase() : text);
+
+export async function getFilterList(filter) {
+  if (!filterTypes.includes(filter)) {
+    throw new TagNotFoundError(filter);
+  }
+  if (filter === "type") {
+    return ["non-stop", "one-stop", "two-stop"]
+  }
+  switch (process.env.FLIGHTS_DATABASE) {
+    case "postgres":
+      return await getFlightInfoFromPostgres(filter);
+    default:
+      throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
+  }
+}
 
 export async function getAirports(city, country, code) {
   switch (process.env.FLIGHTS_DATABASE) {

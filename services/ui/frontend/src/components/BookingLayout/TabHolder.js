@@ -5,8 +5,8 @@ import styles from "./TabHolder.module.css";
 import globalHistory from "globalHistory";
 
 const TabHolder = ({ children, onClick, location }) => {
-  const tabs = ["Hotels", "Cars"];
-  const tabsPath = ["hotels", "cars"];
+  const tabs = ["Hotels", "Cars", "Flights"];
+  const tabsPath = ["hotels", "cars", "flights"];
   const [_0, _1, _2, _3, theTab] = location.pathname.split("/");
 
   let active;
