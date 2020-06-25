@@ -31,6 +31,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:services/car-rental-v2"
       },
       {
+        "name": "checkout-v2",
+        "reference": "workspace:services/checkout-v2"
+      },
+      {
         "name": "currency-exchange",
         "reference": "workspace:services/currency-exchange"
       },
@@ -81,6 +85,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["bee-travels", ["workspace:."]],
       ["car-rental-v1", ["workspace:services/car-rental-v1"]],
       ["car-rental-v2", ["workspace:services/car-rental-v2"]],
+      ["checkout-v2", ["workspace:services/checkout-v2"]],
       ["currency-exchange", ["workspace:services/currency-exchange"]],
       ["destination-v1", ["workspace:services/destination-v1"]],
       ["destination-v2", ["workspace:services/destination-v2"]],
@@ -5415,6 +5420,37 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["checkout-v2", [
+        ["workspace:services/checkout-v2", {
+          "packageLocation": "./services/checkout-v2/",
+          "packageDependencies": [
+            ["checkout-v2", "workspace:services/checkout-v2"],
+            ["axios", "npm:0.19.2"],
+            ["chai", "npm:4.2.0"],
+            ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
+            ["chai-http", "npm:4.3.0"],
+            ["crypto", "npm:1.0.1"],
+            ["esm", "npm:3.2.25"],
+            ["express", "npm:4.17.1"],
+            ["jaeger-client", "npm:3.18.0"],
+            ["mocha", "npm:7.1.2"],
+            ["nodemon", "npm:2.0.3"],
+            ["nyc", "npm:15.0.1"],
+            ["openapi-comment-parser", "npm:0.3.4"],
+            ["opentracing", "npm:0.14.4"],
+            ["opossum", "npm:5.0.0"],
+            ["pg", "npm:8.2.1"],
+            ["pino-http", "npm:5.1.0"],
+            ["pino-pretty", "npm:4.0.0"],
+            ["prom-client", "npm:12.0.0"],
+            ["query-validator", "workspace:packages/query-validator"],
+            ["response-time", "npm:2.3.2"],
+            ["sinon", "npm:9.0.2"],
+            ["swagger-ui-express", "virtual:d992403004b0c052dfc2397d5db4d5e062a0a8366ef0eac3792f00e9d828d69b6f542753e219d2212507e1c3227be382e77048dcde7db28028d5d14715bd8fc7#npm:4.1.4"]
+          ],
+          "linkType": "SOFT",
+        }]
+      ]],
       ["chokidar", [
         ["npm:2.1.8", {
           "packageLocation": "./.yarn/cache/chokidar-npm-2.1.8-32fdcd020e-2.zip/node_modules/chokidar/",
@@ -6210,6 +6246,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["path-key", "npm:3.1.1"],
             ["shebang-command", "npm:2.0.0"],
             ["which", "npm:2.0.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["crypto", [
+        ["npm:1.0.1", {
+          "packageLocation": "./.yarn/cache/crypto-npm-1.0.1-7cb8e3dca6-2.zip/node_modules/crypto/",
+          "packageDependencies": [
+            ["crypto", "npm:1.0.1"]
           ],
           "linkType": "HARD",
         }]
@@ -14509,6 +14554,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["semver", "npm:4.3.2"]
           ],
           "linkType": "HARD",
+        }],
+        ["npm:8.2.1", {
+          "packageLocation": "./.yarn/cache/pg-npm-8.2.1-8b3360f30c-2.zip/node_modules/pg/",
+          "packageDependencies": [
+            ["pg", "npm:8.2.1"],
+            ["buffer-writer", "npm:2.0.0"],
+            ["packet-reader", "npm:1.0.0"],
+            ["pg-connection-string", "npm:2.2.3"],
+            ["pg-pool", "virtual:8b3360f30c632c0ef50debc5e97566d70e5d2b7eee32df5b8d27015b9151e1a9ce730ec2da9d05f30d9b772bac6697d4aead0c573cd84ea152805b6ee502c923#npm:3.2.1"],
+            ["pg-protocol", "npm:1.2.4"],
+            ["pg-types", "npm:2.2.0"],
+            ["pgpass", "npm:1.0.2"],
+            ["semver", "npm:4.3.2"]
+          ],
+          "linkType": "HARD",
         }]
       ]],
       ["pg-connection-string", [
@@ -14516,6 +14576,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/pg-connection-string-npm-0.1.3-04645365bd-2.zip/node_modules/pg-connection-string/",
           "packageDependencies": [
             ["pg-connection-string", "npm:0.1.3"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:2.2.3", {
+          "packageLocation": "./.yarn/cache/pg-connection-string-npm-2.2.3-a08c27be0e-2.zip/node_modules/pg-connection-string/",
+          "packageDependencies": [
+            ["pg-connection-string", "npm:2.2.3"]
           ],
           "linkType": "HARD",
         }]
@@ -14530,6 +14597,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["pg-pool", [
+        ["virtual:8b3360f30c632c0ef50debc5e97566d70e5d2b7eee32df5b8d27015b9151e1a9ce730ec2da9d05f30d9b772bac6697d4aead0c573cd84ea152805b6ee502c923#npm:3.2.1", {
+          "packageLocation": "./.yarn/$$virtual/pg-pool-virtual-3f3af9f542/0/cache/pg-pool-npm-3.2.1-962c0084b5-2.zip/node_modules/pg-pool/",
+          "packageDependencies": [
+            ["pg-pool", "virtual:8b3360f30c632c0ef50debc5e97566d70e5d2b7eee32df5b8d27015b9151e1a9ce730ec2da9d05f30d9b772bac6697d4aead0c573cd84ea152805b6ee502c923#npm:3.2.1"],
+            ["pg", "npm:8.2.1"]
+          ],
+          "packagePeers": [
+            "pg"
+          ],
+          "linkType": "HARD",
+        }],
         ["virtual:a4ca4af1dd7e8ea11a1d7bdda05b3c0096e4e5145dd80a76143de07665e8db8a356cfe251b62a519abbacc5e543686d47ed8ecb01b3a9f835f076b65c8b9bcdd#npm:3.1.1", {
           "packageLocation": "./.yarn/$$virtual/pg-pool-virtual-35deabd63f/0/cache/pg-pool-npm-3.1.1-5b07c0358e-2.zip/node_modules/pg-pool/",
           "packageDependencies": [
@@ -14547,6 +14625,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/pg-protocol-npm-1.2.2-a7de68ac48-2.zip/node_modules/pg-protocol/",
           "packageDependencies": [
             ["pg-protocol", "npm:1.2.2"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:1.2.4", {
+          "packageLocation": "./.yarn/cache/pg-protocol-npm-1.2.4-0974ec4e6a-2.zip/node_modules/pg-protocol/",
+          "packageDependencies": [
+            ["pg-protocol", "npm:1.2.4"]
           ],
           "linkType": "HARD",
         }]

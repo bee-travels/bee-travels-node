@@ -1,17 +1,9 @@
 components:
   schemas:
-    Charge:
+    Cart:
       type: object
       properties:
-        invoice:
-          type: string
-          example: "invoice_73BC3"
-        statement_descriptor:
-          type: string
-          minLength: 1
-          maxLength: 22
-          example: "BeeTravels.com/r/73BC3"
-        amount:
+        total_amount:
           type: number
           format: decimal
           example: 499.99
@@ -22,12 +14,39 @@ components:
         status:
           type: string
           example: unprocessed
+        cart_items:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/CartItem'
         billing_details :
           type: object
           $ref: '#/components/schemas/BillingDetails'
         payment_method_details:
           type: object
           $ref: '#/components/schemas/Card'
+    CartItem:
+      type: object
+      properties:
+        cart_item_type:
+          type: string
+          example: Car|Hotel|Flight
+        cart_item_uuid:
+          type: string
+        cart_item_cost:
+          type: number
+          format: decimal
+          example: 30.99
+        currency:
+          type: string
+          description: "Three-letter ISO currency code, in lowercase. Must be a supported currency."
+          example: "USD"
+        start_date:
+          type: string
+          example: 05/21/2020
+        end_date:
+          type: string
+          example: 06/22/2020
 
     BillingDetails  :
       type: object
@@ -40,7 +59,7 @@ components:
             example: "+1 (415) 777 8888"
         email:
             type: string
-            example: null
+            example: "mary@poppins.net"
         address :
           type: object
           $ref: '#/components/schemas/Address'
@@ -50,19 +69,19 @@ components:
       properties:
         line1:
           type: string
-          example: 42 Arnold Lane
+          example: 42 Avienda de Princapessa
         line2:
           type: string
           example: "#747"
         city:
           type: string
-          example: Madrid
+          example: Málaga
         postal_code:
           type: string
           example: 76NE
         state:
           type: string
-          example: null
+          example: Andalusia
         country:
           type: string
           example: Spain
