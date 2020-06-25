@@ -1,7 +1,7 @@
 import path from "path";
 import { promises as fs } from "fs";
 
-const DESTINATIONS_PATH = path.join(__dirname, "../../data/destinations.json");
+const DESTINATIONS_PATH = path.join(__dirname, "./../../data/destinations.json");
 
 const capitalize = (text) =>
   text
@@ -22,21 +22,31 @@ async function parseMetadata(file, allData) {
   }));
 }
 
-export async function getCities() {
+export async function getCities(context) {
+  context.start("parseMetadata");
   const metadata = await parseMetadata(DESTINATIONS_PATH, false);
+  context.stop();
   return metadata;
 }
 
-export async function getCitiesForCountry(country) {
+export async function getCitiesForCountry(country, context) {
+  context.start("parseMetadata");
   const metadata = await parseMetadata(DESTINATIONS_PATH, false);
+  context.stop();
   const citiesData = metadata.filter((c) => c.country === capitalize(country));
   return citiesData;
 }
 
-export async function getCity(country, city) {
+export async function getCity(country, city, context) {
+  context.start("parseMetadata");
   const metadata = await parseMetadata(DESTINATIONS_PATH, true);
+  context.stop();
   const cityData = metadata.find(
     (c) => c.city === capitalize(city) && c.country === capitalize(country)
   );
   return cityData;
+}
+
+export async function readinessCheck() {
+  return true;
 }

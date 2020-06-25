@@ -6,6 +6,7 @@ import {
   getDirectFlightsFromPostgres,
   getOneStopFlightsFromPostgres,
   getTwoStopFlightsFromPostgres,
+  postgresReadinessCheck,
 } from "./postgresService";
 
 const capitalize = (text) => {
@@ -19,60 +20,100 @@ const capitalize = (text) => {
 
 const upper = (text) => (text ? text.toUpperCase() : text);
 
-export async function getAirports(city, country, code) {
+export async function getAirports(city, country, code, context) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getAirportsFromPostgres(
+      context.start("getAirportsFromPostgres");
+      data = await getAirportsFromPostgres(
         capitalize(city),
         capitalize(country),
-        upper(code)
+        upper(code),
+        context
       );
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getAirportsList() {
+export async function getAirportsList(context) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getAirportsListFromPostgres();
+      context.start("getAirportsListFromPostgres");
+      data = await getAirportsListFromPostgres(context);
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getAirport(id) {
+export async function getAirport(id, context) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getAirportFromPostgres(id);
+      context.start("getAirportFromPostgres");
+      data = await getAirportFromPostgres(id, context);
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getDirectFlights(from, to) {
+export async function getDirectFlights(from, to, context) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getDirectFlightsFromPostgres(from, to);
+      context.start("getDirectFlightsFromPostgres");
+      data = await getDirectFlightsFromPostgres(from, to, context);
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getOneStopFlights(from, to) {
+export async function getOneStopFlights(from, to, context) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getOneStopFlightsFromPostgres(from, to);
+      context.start("getOneStopFlightsFromPostgres");
+      data = await getOneStopFlightsFromPostgres(from, to, context);
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getTwoStopFlights(from, to) {
+export async function getTwoStopFlights(from, to, context) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getTwoStopFlightsFromPostgres(from, to);
+      context.start("getTwoStopFlightsFromPostgres");
+      data = await getTwoStopFlightsFromPostgres(from, to, context);
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
+  }
+  return data;
+}
+
+export async function readinessCheck() {
+  switch (process.env.FLIGHTS_DATABASE) {
+    case "postgres":
+      return await postgresReadinessCheck();
+    default:
+      return false;
   }
 }

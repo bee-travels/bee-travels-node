@@ -2,16 +2,19 @@ import {
   getCarDataFromMongo,
   getCarInfoFromMongo,
   buildCarMongoQuery,
+  mongoReadinessCheck,
 } from "./mongoService";
 import {
   getCarDataFromPostgres,
   getCarInfoFromPostgres,
   buildCarPostgresQuery,
+  postgresReadinessCheck,
 } from "./postgresService";
 import {
   getCarDataFromCloudant,
   getCarInfoFromCloudant,
   buildCarCloudantQuery,
+  cloudantReadinessCheck,
 } from "./cloudantService";
 import TagNotFoundError from "./../errors/TagNotFoundError";
 import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
@@ -25,7 +28,8 @@ const capitalize = (text) =>
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(" ");
 
-export async function getCars(country, city, filters) {
+export async function getCars(country, city, filters, context) {
+  let data;
   let query;
   switch (process.env.CAR_DATABASE) {
     case "mongodb":
@@ -34,14 +38,20 @@ export async function getCars(country, city, filters) {
         capitalize(city),
         filters
       );
-      return await getCarDataFromMongo(query);
+      context.start("getCarDataFromMongo");
+      data = await getCarDataFromMongo(query, context);
+      context.stop();
+      break;
     case "postgres":
       query = buildCarPostgresQuery(
         capitalize(country),
         capitalize(city),
         filters
       );
-      return await getCarDataFromPostgres(query);
+      context.start("getCarDataFromPostgres");
+      data = await getCarDataFromPostgres(query, context);
+      context.stop();
+      break;
     case "cloudant":
     case "couchdb":
       query = buildCarCloudantQuery(
@@ -49,25 +59,54 @@ export async function getCars(country, city, filters) {
         capitalize(city),
         filters
       );
-      return await getCarDataFromCloudant(query);
+      context.start("getCarDataFromCloudant");
+      data = await getCarDataFromCloudant(query, context);
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
   }
+  return data;
 }
 
-export async function getFilterList(filterType) {
+export async function getFilterList(filterType, context) {
   if (filterTypes.includes(filterType) === false) {
     throw new TagNotFoundError(filterType);
   }
+  let data;
   switch (process.env.CAR_DATABASE) {
     case "mongodb":
-      return await getCarInfoFromMongo(filterType);
+      context.start("getCarInfoFromMongo");
+      data = await getCarInfoFromMongo(filterType, context);
+      context.stop();
+      break;
     case "postgres":
-      return await getCarInfoFromPostgres(filterType);
+      context.start("getCarInfoFromPostgres");
+      data = await getCarInfoFromPostgres(filterType, context);
+      context.stop();
+      break;
     case "cloudant":
     case "couchdb":
-      return await getCarInfoFromCloudant(filterType);
+      context.start("getCarInfoFromCloudant");
+      data = await getCarInfoFromCloudant(filterType, context);
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
+  }
+  return data;
+}
+
+export async function readinessCheck() {
+  switch (process.env.CAR_DATABASE) {
+    case "mongodb":
+      return await mongoReadinessCheck();
+    case "postgres":
+      return await postgresReadinessCheck();
+    case "cloudant":
+    case "couchdb":
+      return await cloudantReadinessCheck();
+    default:
+      return false;
   }
 }

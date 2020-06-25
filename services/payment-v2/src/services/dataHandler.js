@@ -1,7 +1,7 @@
 import CreditCardExpiredError from "./../errors/CreditCardExpiredError";
 import crypto from "crypto";
 
-async function processCreditcardPayment(chargeObject) {
+export async function processCreditcardPayment(chargeObject) {
   //validation
   let exp_month = chargeObject.payment_method_details.exp_month;
   let exp_year = chargeObject.payment_method_details.exp_year;
@@ -22,7 +22,7 @@ async function processCreditcardPayment(chargeObject) {
   return { status: "succeeded", confirmation_id: confirmation_id };
 }
 
-async function getExampleChargeData(exp_month, exp_year) {
+export async function getExampleChargeData(exp_month, exp_year) {
   return {
     invoice: "invoice_73BC3",
     statement_descriptor: "BeeTravels.com/r/73BC3",
@@ -51,4 +51,6 @@ async function getExampleChargeData(exp_month, exp_year) {
   };
 }
 
-export { processCreditcardPayment, getExampleChargeData };
+export async function readinessCheck() {
+  return true;
+}

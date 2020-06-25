@@ -5,9 +5,12 @@ import logger from "pino-http";
 import pinoPretty from "pino-pretty";
 import openapi from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
+import client from "prom-client";
 import axios from "axios";
 
 import currencyRouter from "./routes/currency";
+import prometheus from "./prometheus";
+import health from "./health";
 import services from "./external-services";
 
 const app = express();
@@ -22,6 +25,15 @@ app.use(
     prettifier: pinoPretty,
   })
 );
+
+// Prometheus metrics collected for all service api endpoints
+app.use("/api", prometheus);
+app.get("/metrics", (_, res) => {
+  res.set("Content-Type", client.register.contentType);
+  res.end(client.register.metrics());
+});
+
+app.use(health);
 
 // Body parsing.
 app.use(express.json());

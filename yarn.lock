@@ -2975,6 +2975,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ansi-color@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "ansi-color@npm:0.2.1"
+  checksum: 2/475cc714845474b87714530de92f37a825e3d4565c438f15538fea0085481f96fe7d245962a26b3415ff6b81020843e15b693092dd7beec1eb76f3ec1c50d4ef
+  languageName: node
+  linkType: hard
+
 "ansi-colors@npm:3.2.3":
   version: 3.2.3
   resolution: "ansi-colors@npm:3.2.3"
@@ -3758,6 +3765,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bintrees@npm:1.0.1":
+  version: 1.0.1
+  resolution: "bintrees@npm:1.0.1"
+  checksum: 2/e78592a05f6fb0635ef23a7763e8d7a0a1f060efeb0523308484cfc2e36f2bbe0517f397b6a1dfd4fc09e83c874990dafd5fef451b1c43b51763ec9d3aa1f272
+  languageName: node
+  linkType: hard
+
 "bl@npm:^2.2.0":
   version: 2.2.0
   resolution: "bl@npm:2.2.0"
@@ -4065,6 +4079,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bufrw@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "bufrw@npm:1.3.0"
+  dependencies:
+    ansi-color: ^0.2.1
+    error: ^7.0.0
+    hexer: ^1.5.0
+    xtend: ^4.0.0
+  checksum: 2/ce6d56987da0e677ca562a299143560cb3a9d38c5f1b2eacf5d9fe2fb1ad8a45480c68a2897641f8b65b52f418c177b3b3b5b641e296a5541270e133b8b32789
+  languageName: node
+  linkType: hard
+
 "builtin-status-codes@npm:^3.0.0":
   version: 3.0.0
   resolution: "builtin-status-codes@npm:3.0.0"
@@ -4301,12 +4327,17 @@ __metadata:
     chai-http: ^4.3.0
     esm: ^3.2.25
     express: ^4.17.1
+    jaeger-client: ^3.18.0
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
     openapi-comment-parser: ^0.3.4
+    opentracing: ^0.14.4
+    opossum: ^5.0.0
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    prom-client: ^12.0.0
+    response-time: ^2.3.2
     sinon: ^9.0.2
     swagger-ui-express: ^4.1.1
   languageName: unknown
@@ -4323,15 +4354,20 @@ __metadata:
     chai-things: ^0.2.0
     esm: ^3.2.25
     express: ^4.17.1
+    jaeger-client: ^3.18.0
     mocha: ^7.1.2
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
     openapi-comment-parser: ^0.3.4
+    opentracing: ^0.14.4
+    opossum: ^5.0.0
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    prom-client: ^12.0.0
     query-validator: "workspace:*"
+    response-time: ^2.3.2
     sinon: ^9.0.2
     swagger-ui-express: ^4.1.1
   languageName: unknown
@@ -5551,12 +5587,17 @@ __metadata:
     csv-parse: ^4.9.0
     esm: ^3.2.25
     express: ^4.17.1
+    jaeger-client: ^3.18.0
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
     openapi-comment-parser: ^0.3.4
+    opentracing: ^0.14.4
+    opossum: ^5.0.0
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    prom-client: ^12.0.0
+    response-time: ^2.3.2
     sinon: ^9.0.2
     swagger-ui-express: ^4.1.1
   languageName: unknown
@@ -5831,7 +5872,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"depd@npm:~1.1.2":
+"depd@npm:~1.1.0, depd@npm:~1.1.2":
   version: 1.1.2
   resolution: "depd@npm:1.1.2"
   checksum: 2/f45566ff7019a346852f095768a380778ed544de24e103b479fd5d3e61982d670efbb5234c09d0588d7fdb09c26c48283d7150e4be5e6ce5d3d37cd268d75c4d
@@ -5858,12 +5899,17 @@ __metadata:
     chai-json-schema: ^1.5.1
     esm: ^3.2.25
     express: ^4.17.1
+    jaeger-client: ^3.18.0
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
     openapi-comment-parser: ^0.3.4
+    opentracing: ^0.14.4
+    opossum: ^5.0.0
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    prom-client: ^12.0.0
+    response-time: ^2.3.2
     sinon: ^9.0.2
     swagger-ui-express: ^4.1.1
   languageName: unknown
@@ -5880,15 +5926,20 @@ __metadata:
     chai-json-schema: ^1.5.1
     esm: ^3.2.25
     express: ^4.17.1
+    jaeger-client: ^3.18.0
     mocha: ^7.1.2
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
     openapi-comment-parser: ^0.3.4
+    opentracing: ^0.14.4
+    opossum: ^5.0.0
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    prom-client: ^12.0.0
     query-validator: "workspace:*"
+    response-time: ^2.3.2
     sinon: ^9.0.2
     swagger-ui-express: ^4.1.1
   languageName: unknown
@@ -6245,13 +6296,18 @@ __metadata:
     chai-http: ^4.3.0
     esm: ^3.2.25
     express: ^4.17.1
+    jaeger-client: ^3.18.0
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
     openapi-comment-parser: ^0.3.4
+    opentracing: ^0.14.4
+    opossum: ^5.0.0
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     prettier: ^2.0.5
+    prom-client: ^12.0.0
+    response-time: ^2.3.2
     sinon: ^9.0.2
     swagger-ui-express: ^4.1.1
   languageName: unknown
@@ -6350,6 +6406,16 @@ __metadata:
   dependencies:
     is-arrayish: ^0.2.1
   checksum: 2/6c6c9187429ae867d145bc64c682c7c137b1f8373a406dc3b605c0d92f15b85bfcea02b461dc55ae11b10d013377e1eaf3d469d2861b2f94703c743620a9c08c
+  languageName: node
+  linkType: hard
+
+"error@npm:7.0.2, error@npm:^7.0.0":
+  version: 7.0.2
+  resolution: "error@npm:7.0.2"
+  dependencies:
+    string-template: ~0.2.1
+    xtend: ~4.0.0
+  checksum: 2/d5636bbfe2d46adca7d349f85c2b9cf28c5549c7277bfd5a4c54c2feb775c70a9860e56437a791e0f59d2bd1f3636db6d0ef80ac5402ab1f14ead2c3e3306918
   languageName: node
   linkType: hard
 
@@ -7359,15 +7425,20 @@ __metadata:
     chai-http: ^4.3.0
     esm: ^3.2.25
     express: ^4.17.1
+    jaeger-client: ^3.18.0
     mocha: ^7.1.2
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
     openapi-comment-parser: ^0.3.4
+    opentracing: ^0.14.4
+    opossum: ^5.0.0
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    prom-client: ^12.0.0
     query-validator: "workspace:*"
+    response-time: ^2.3.2
     sinon: ^9.0.2
     swagger-ui-express: ^4.1.1
   languageName: unknown
@@ -8145,6 +8216,20 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"hexer@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "hexer@npm:1.5.0"
+  dependencies:
+    ansi-color: ^0.2.1
+    minimist: ^1.1.0
+    process: ^0.10.0
+    xtend: ^4.0.0
+  bin:
+    hexer: ./cli.js
+  checksum: 2/54c1d11184ff5715791c67e71e4577294f0239261a3b79f4fb1d01dfc3c9529422de4f4160bc70c350dfedb1bff13ae3ed4c760b445a5d42081fe6ce73328764
+  languageName: node
+  linkType: hard
+
 "history@npm:^4.10.1, history@npm:^4.9.0":
   version: 4.10.1
   resolution: "history@npm:4.10.1"
@@ -8195,12 +8280,17 @@ fsevents@^1.2.7:
     chai-http: ^4.3.0
     esm: ^3.2.25
     express: ^4.17.1
+    jaeger-client: ^3.18.0
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
     openapi-comment-parser: ^0.3.4
+    opentracing: ^0.14.4
+    opossum: ^5.0.0
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    prom-client: ^12.0.0
+    response-time: ^2.3.2
     sinon: ^9.0.2
     swagger-ui-express: ^4.1.1
   languageName: unknown
@@ -8217,15 +8307,20 @@ fsevents@^1.2.7:
     chai-http: ^4.3.0
     esm: ^3.2.25
     express: ^4.17.1
+    jaeger-client: ^3.18.0
     mocha: ^7.1.2
     mongodb: ^3.5.7
     nodemon: ^2.0.3
     nyc: ^15.0.1
     openapi-comment-parser: ^0.3.4
+    opentracing: ^0.14.4
+    opossum: ^5.0.0
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    prom-client: ^12.0.0
     query-validator: "workspace:*"
+    response-time: ^2.3.2
     sinon: ^9.0.2
     swagger-ui-express: ^4.1.1
   languageName: unknown
@@ -9411,6 +9506,19 @@ fsevents@^1.2.7:
     html-escaper: ^2.0.0
     istanbul-lib-report: ^3.0.0
   checksum: 2/d4ed416e13fe0fc709566439086660ddab58dce9d6a655053c5315715aac8225bc7e9fcae553c2c3d8cc66cd4b59498a50b92d543a4820c5be0e5ee30178cdf0
+  languageName: node
+  linkType: hard
+
+"jaeger-client@npm:^3.18.0":
+  version: 3.18.0
+  resolution: "jaeger-client@npm:3.18.0"
+  dependencies:
+    node-int64: ^0.4.0
+    opentracing: ^0.14.4
+    thriftrw: ^3.5.0
+    uuid: ^3.2.1
+    xorshift: ^0.2.0
+  checksum: 2/af77561591bd8a5ce9488136e5bc447b3ebaec3909628d691b3688fc44fcd6e612d07cf35f9487e560e8b60e54298d5b388716cca9568cad1fe727c615d7da24
   languageName: node
   linkType: hard
 
@@ -10617,6 +10725,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"long@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "long@npm:2.4.0"
+  checksum: 2/32ca8d5a622c9c1e8e46826155bda4ca0699c84000b2755b25fef9cd75b7e0a90909bd02071026645d6434d0fc91b7157fd09ea7727fd45cd62c62ccdceef62a
+  languageName: node
+  linkType: hard
+
 "loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.2.0, loose-envify@npm:^1.3.1, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
@@ -11030,7 +11145,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.1.1, minimist@npm:^1.2.0, minimist@npm:^1.2.5":
+"minimist@npm:^1.1.0, minimist@npm:^1.1.1, minimist@npm:^1.2.0, minimist@npm:^1.2.5":
   version: 1.2.5
   resolution: "minimist@npm:1.2.5"
   checksum: 2/b77b8590147a4e217ff34266236bc39de23b52e6e33054076991ff674c7397a1380a7bde11111916f16f003a94aaa7e4f3d92595a32189644ff607fabc65a5b6
@@ -11923,7 +12038,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"on-headers@npm:~1.0.2":
+"on-headers@npm:~1.0.1, on-headers@npm:~1.0.2":
   version: 1.0.2
   resolution: "on-headers@npm:1.0.2"
   checksum: 2/51e75c80755169e765aa76238722e5ad1623f62b13bbc23544ade20cdbb6950cf0e6aa91de35d02ec956f47dc072ee460d8eef82354e4abf8fa692885cb3f2d8
@@ -11983,12 +12098,26 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"opentracing@npm:^0.14.4":
+  version: 0.14.4
+  resolution: "opentracing@npm:0.14.4"
+  checksum: 2/7bc40e2c93319e37115a13124afad144896c01a6954d72e1875e62d3778bf5d705abf302ffd634a0a4470eef5c35c88a613dbdaee98f581f2762a134164e3d42
+  languageName: node
+  linkType: hard
+
 "opn@npm:^5.5.0":
   version: 5.5.0
   resolution: "opn@npm:5.5.0"
   dependencies:
     is-wsl: ^1.1.0
   checksum: 2/0ea3b6550fbbc530a57f958baf5d44253a435d67ad88b4af1df8b3a98693f7c70b71d72f29b09a02d15e94654ec3875aae8cf4fccbf8e4e326671a02f66058d3
+  languageName: node
+  linkType: hard
+
+"opossum@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "opossum@npm:5.0.0"
+  checksum: 2/03b1d5e418a6afdbfdef4e6e93d2512eb49718cd17b6b110d6a4dbc4ebf48315f5be83a3ab70aa4f89d4700af5feffa02cb484c0c38fc61146cff6709903e3ee
   languageName: node
   linkType: hard
 
@@ -12485,12 +12614,17 @@ fsevents@^1.2.7:
     chai-http: ^4.3.0
     esm: ^3.2.25
     express: ^4.17.1
+    jaeger-client: ^3.18.0
     mocha: ^7.1.2
     nodemon: ^2.0.3
     nyc: ^15.0.1
     openapi-comment-parser: ^0.3.4
+    opentracing: ^0.14.4
+    opossum: ^5.0.0
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
+    prom-client: ^12.0.0
+    response-time: ^2.3.2
     sinon: ^9.0.2
     swagger-ui-express: ^4.1.1
   languageName: unknown
@@ -13738,6 +13872,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"process@npm:^0.10.0":
+  version: 0.10.1
+  resolution: "process@npm:0.10.1"
+  checksum: 2/cab3977e44dfec057c0cf6ce97754879236fbb29dfa96f513e8d38019190fbd062f5bcf9d22ae959cad2e589311d2362709c329210f6d007d96c2d3ef390846d
+  languageName: node
+  linkType: hard
+
 "process@npm:^0.11.10":
   version: 0.11.10
   resolution: "process@npm:0.11.10"
@@ -13749,6 +13890,15 @@ fsevents@^1.2.7:
   version: 2.0.3
   resolution: "progress@npm:2.0.3"
   checksum: 2/c46ef5a1de4d527dfd32fe56a7df0c1c8b420a4c02617196813bf7f10ac7c2a929afc265d44fdd68f5c439a7e7cb3d70d569716c82d6b4148ec72089860a1312
+  languageName: node
+  linkType: hard
+
+"prom-client@npm:^12.0.0":
+  version: 12.0.0
+  resolution: "prom-client@npm:12.0.0"
+  dependencies:
+    tdigest: ^0.1.1
+  checksum: 2/d2a973c86da9637ddbe5c2e2e3d7ca5970291d07458881183c3a801708333eae9d1179f0036f08aa0dffebd8a04ee1a291e3aa4385005f8511c4abc11f5d8e06
   languageName: node
   linkType: hard
 
@@ -14886,6 +15036,16 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
+"response-time@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "response-time@npm:2.3.2"
+  dependencies:
+    depd: ~1.1.0
+    on-headers: ~1.0.1
+  checksum: 2/dad4624ef77ca37898f1e23535eaea34575c38bd7f94ae0e2f216c399c3b1ac026f4ce87f8e63f82370080542af5938710f797ea3fda97a0caadc6a923727fdd
+  languageName: node
+  linkType: hard
+
 "responselike@npm:^1.0.2":
   version: 1.0.2
   resolution: "responselike@npm:1.0.2"
@@ -15988,6 +16148,13 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
+"string-template@npm:~0.2.1":
+  version: 0.2.1
+  resolution: "string-template@npm:0.2.1"
+  checksum: 2/c64ac6e7f744d8e37961c987c70038ae4e3ab3c6c9b3822709c1350397f7f0be1e84685924afb44468484823b4e1a8b5d8d4ff925cb0a01b13d8b73e50670513
+  languageName: node
+  linkType: hard
+
 "string-width@npm:^1.0.1":
   version: 1.0.2
   resolution: "string-width@npm:1.0.2"
@@ -16377,6 +16544,15 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
+"tdigest@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "tdigest@npm:0.1.1"
+  dependencies:
+    bintrees: 1.0.1
+  checksum: 2/467e2ecd00437339ba55dc41bb89a2ce84f6a0fd36fea49d872e72a12eba56490e00fa7f9f140333c0d3ff2bce83ab315d3b7edfb6ea794cc251458bd1ede520
+  languageName: node
+  linkType: hard
+
 "term-size@npm:^2.1.0":
   version: 2.2.0
   resolution: "term-size@npm:2.2.0"
@@ -16462,6 +16638,19 @@ resolve@1.1.7:
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
   checksum: 2/373904ce70524ba11ec7e1905c44fb92671132d5e0b0aba2fb48057161f8bf9cbf7f6178f0adf31810150cf44fb52c7b912dc722bff3fddf9688378596dbeb56
+  languageName: node
+  linkType: hard
+
+"thriftrw@npm:^3.5.0":
+  version: 3.12.0
+  resolution: "thriftrw@npm:3.12.0"
+  dependencies:
+    bufrw: ^1.3.0
+    error: 7.0.2
+    long: ^2.4.0
+  bin:
+    thrift2json: ./thrift2json.js
+  checksum: 2/e33fc6731b338719e96805d6dbe7bd9d2b127cc297ea7a76159dc6e2cbf89f9619413a1522c5cf0885adbd3f4cec6268a87555b1b6754e5dd022c1d985996d44
   languageName: node
   linkType: hard
 
@@ -17111,7 +17300,7 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"uuid@npm:^3.0.1, uuid@npm:^3.3.2, uuid@npm:^3.3.3":
+"uuid@npm:^3.0.1, uuid@npm:^3.2.1, uuid@npm:^3.3.2, uuid@npm:^3.3.3":
   version: 3.4.0
   resolution: "uuid@npm:3.4.0"
   bin:
@@ -17854,6 +18043,13 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
+"xorshift@npm:^0.2.0":
+  version: 0.2.1
+  resolution: "xorshift@npm:0.2.1"
+  checksum: 2/e0bbc485559f3b8c734f52d06d8c9ebb49368567348d65159affaa14e202b0e57a54b97a539aa37b81e81593978de3c08450f94877cc4cfa1e529b37a92f3542
+  languageName: node
+  linkType: hard
+
 "xregexp@npm:^4.3.0":
   version: 4.3.0
   resolution: "xregexp@npm:4.3.0"
@@ -17863,7 +18059,7 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"xtend@npm:^4.0.0, xtend@npm:~4.0.1":
+"xtend@npm:^4.0.0, xtend@npm:~4.0.0, xtend@npm:~4.0.1":
   version: 4.0.2
   resolution: "xtend@npm:4.0.2"
   checksum: 2/37ee522a3e9fb9b143a400c30b21dc122aa8c9c9411c6afae1005a4617dc20a21765c114d544e37a6bb60c2733dd8ee0a44ed9e80d884ac78cccd30b5e0ab0da

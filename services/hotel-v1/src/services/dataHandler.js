@@ -1,8 +1,8 @@
 import path from "path";
 import { promises as fs } from "fs";
 
-const HOTELS_PATH = path.join(__dirname, "../../data/hotel-data.json");
-const HOTEL_INFO_PATH = path.join(__dirname, "../../data/hotel-info.json");
+const HOTELS_PATH = path.join(__dirname, "./../../data/hotel-data.json");
+const HOTEL_INFO_PATH = path.join(__dirname, "./../../data/hotel-info.json");
 
 const capitalize = (text) =>
   text
@@ -17,9 +17,11 @@ async function parseMetadata(file) {
   return metadata;
 }
 
-export async function getHotels(country, city, filters) {
+export async function getHotels(country, city, filters, context) {
   const { superchain, hotel, type, minCost, maxCost } = filters;
+  context.start("parseMetadata");
   const metadata = await parseMetadata(HOTELS_PATH);
+  context.stop();
 
   const hotelsData = metadata.filter((h) => {
     if (h.city !== capitalize(city) || h.country !== capitalize(country)) {
@@ -38,8 +40,15 @@ export async function getHotels(country, city, filters) {
   return hotelsData;
 }
 
-export async function getFilterList(filterType) {
+export async function getFilterList(filterType, context) {
+  context.start("parseMetadata");
   const metadata = await parseMetadata(HOTEL_INFO_PATH);
+  context.stop();
   const listOfFilterOptions = metadata.map((item) => item[filterType]);
+
   return [...new Set(listOfFilterOptions)];
+}
+
+export async function readinessCheck() {
+  return true;
 }

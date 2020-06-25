@@ -6,6 +6,27 @@ services:
     image: bee-travels/node-base:v1
     build: .
 
+  jaeger:
+    image: jaegertracing/all-in-one:1.7
+    ports:
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "16686:16686"
+
+  prometheus:
+    image: prom/prometheus
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+
+  grafana:
+    image: grafana/grafana
+    restart: always
+    ports:
+      - 3000:3000
+
   mongo-express:
     image: mongo-express
     restart: always
@@ -20,7 +41,7 @@ services:
     ports:
       - "27017:27017"
     image: mongo
-    environment: 
+    environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
     restart: always
@@ -41,17 +62,17 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=admin
-  
+
   destination-data-gen:
-    depends_on: 
+    depends_on:
       - couch
       - postgres
       - mongo
     image: beetravels/data-gen-destination:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
     restart: on-failure
-    environment: 
+    environment:
       - PG_USER=postgres
-      - PG_HOST=postgres 
+      - PG_HOST=postgres
       - PG_PASSWORD=admin
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
@@ -59,15 +80,15 @@ services:
       - DATABASE=${DESTINATION_DATABASE}
 
   hotel-data-gen:
-    depends_on: 
+    depends_on:
       - couch
       - postgres
       - mongo
     image: beetravels/data-gen-hotel:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
     restart: on-failure
-    environment: 
+    environment:
       - PG_USER=postgres
-      - PG_HOST=postgres 
+      - PG_HOST=postgres
       - PG_PASSWORD=admin
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
@@ -75,15 +96,15 @@ services:
       - DATABASE=${HOTEL_DATABASE}
 
   cars-data-gen:
-    depends_on: 
+    depends_on:
       - couch
       - postgres
       - mongo
     image: beetravels/data-gen-carrental:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
     restart: on-failure
-    environment: 
+    environment:
       - PG_USER=postgres
-      - PG_HOST=postgres 
+      - PG_HOST=postgres
       - PG_PASSWORD=admin
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
@@ -91,15 +112,15 @@ services:
       - DATABASE=${CAR_DATABASE}
 
   flights-data-gen:
-    depends_on: 
+    depends_on:
       - couch
       - postgres
       - mongo
     image: beetravels/data-gen-airports:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
     restart: on-failure
-    environment: 
+    environment:
       - PG_USER=postgres
-      - PG_HOST=postgres 
+      - PG_HOST=postgres
       - PG_PASSWORD=admin
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
@@ -150,7 +171,7 @@ services:
       - CAR_PG_HOST=postgres
       - CAR_PG_USER=postgres
       - CAR_PG_PASSWORD=admin
-  
+
   flights:
     build: services/flights-v2
     ports:
@@ -172,14 +193,21 @@ services:
       - "9201:9201"
     depends_on:
       - base
-  
+
   email-service:
     build: services/email-v2
-    ports: 
+    ports:
       - "9301:9301"
-    depends_on: 
+    depends_on:
       - base
-  
+
+  payment:
+    build: services/payment-v2
+    ports:
+      - "9403:9403"
+    depends_on:
+      - base
+
   ui:
     build: services/ui
     ports:
@@ -197,6 +225,3 @@ services:
       - HOTEL_URL=http://hotel:9101
       - CAR_URL=http://car-rental:9102
       - CURRENCY_EXCHANGE_URL=http://currency-exchange:9201
-
-
-
