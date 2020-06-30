@@ -23,13 +23,25 @@ const fragmentEndpoint = "/api/v1/flights";
 
 const DEFAULT_MAX = 700;
 
-const ListItem = ({ airlines, name, duration }) => {
+const ListItem = ({ airlines, cost, time, duration }) => {
+  const minuteToHour = (min) => {
+    const hour = Math.floor(min / 60);
+    const minute = min % 60;
+    return `${hour}:${minute}`;
+  }
+
+  const minuteToDuration = (min) => {
+    const hour = Math.floor(min / 60);
+    const minute = Math.floor(min % 60);
+    return `${hour} Hour and ${minute} Minute`;
+  }
   return (
     <div className={styles.listItem}>
       <div className={styles.listItemContent}>
-        <div className={styles.listItemTitle}>{name}</div>
-        <div className={styles.listItemSub}>{airlines}</div>
-        <div className={styles.listItemCost}>{duration}</div>
+        <div className={styles.listItemTitle}>{airlines}</div>
+        <div className={styles.listItemTitle}>{minuteToHour(time)}</div>
+        <div className={styles.listItemCost}>{cost}</div>
+        <div className={styles.listItemSub}>{minuteToDuration(duration)}</div>
       </div>
     </div>
   );
@@ -138,7 +150,6 @@ const Filters = ({
           render={(item) => `${item.city}, ${item.country}`}
           label="Source"
           list={sourcesList}
-          selected={selectedSource}
           onSelected={handleSourceChange}
         />
       </div>
@@ -147,7 +158,6 @@ const Filters = ({
           render={(item) => `${item.name}, ${item.iata_code}`}
           label="Source Airport"
           list={sourceAirportList}
-          selected={selectedSourceAirport}
           onSelected={handleSourceAirportChange}
         />
       </div>
@@ -157,7 +167,6 @@ const Filters = ({
           render={(item) => `${item.name}, ${item.iata_code}`}
           label="Destination Airport"
           list={destinationAirportList}
-          selected={selectedDestinationAirport}
           onSelected={handleDestinationAirportChange}
         />
       </div>
@@ -463,7 +472,7 @@ const BookingFragment = ({ city, country, search }) => {
         onMinMaxSelectionChange={handleMinMaxSelectionChange}
         onCurrencyChange={handleCurrencyChange}
       />
-      {flights.map(({ airlines, cost, flight_duration }) => {
+      {flights.map(({ airlines, cost, flight_duration, flight_time }) => {
         const priceString = priceConversion(cost, {
           from: exchangeRates.USD,
           to: exchangeRates[selectedCurrency],
@@ -473,7 +482,8 @@ const BookingFragment = ({ city, country, search }) => {
         });
         return (
           <ListItem
-            name={airlines}
+            airlines={airlines}
+            time={flight_time}
             cost={priceString}
             duration={flight_duration}
           />

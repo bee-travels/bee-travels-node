@@ -85,7 +85,7 @@ export function CustomSelectObject({ list, selected, onSelected, label, render }
           input={<CustomInput />}
           IconComponent={ArrowDropDown}
         >
-          <option value="" disabled>{label}</option>
+          <option value="">{label}</option>
           {list.map((l) => {
             return <option value={JSON.stringify(l)}>{render(l)}</option>
           })}
