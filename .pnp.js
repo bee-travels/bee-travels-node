@@ -5429,7 +5429,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chai", "npm:4.2.0"],
             ["chai-as-promised", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.1.1"],
             ["chai-http", "npm:4.3.0"],
-            ["crypto", "npm:1.0.1"],
             ["esm", "npm:3.2.25"],
             ["express", "npm:4.17.1"],
             ["jaeger-client", "npm:3.18.0"],
@@ -6246,15 +6245,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["path-key", "npm:3.1.1"],
             ["shebang-command", "npm:2.0.0"],
             ["which", "npm:2.0.2"]
-          ],
-          "linkType": "HARD",
-        }]
-      ]],
-      ["crypto", [
-        ["npm:1.0.1", {
-          "packageLocation": "./.yarn/cache/crypto-npm-1.0.1-7cb8e3dca6-2.zip/node_modules/crypto/",
-          "packageDependencies": [
-            ["crypto", "npm:1.0.1"]
           ],
           "linkType": "HARD",
         }]

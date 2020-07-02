@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "crypto": "^1.0.1",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "jaeger-client": "^3.18.0",

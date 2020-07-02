@@ -3,8 +3,8 @@ import crypto from "crypto";
 
 export async function processCreditcardPayment(chargeObject) {
   //validation
-  let exp_month = chargeObject.payment_method_details.exp_month;
-  let exp_year = chargeObject.payment_method_details.exp_year;
+  let expMonth = chargeObject.cardDetails.expMonth;
+  let expYear = chargeObject.cardDetails.expYear;
 
   let currentTime = new Date();
   // returns the month (from 0 to 11)
@@ -12,14 +12,14 @@ export async function processCreditcardPayment(chargeObject) {
   // returns the year (four digits)
   let currentYear = currentTime.getFullYear();
 
-  if (exp_year < currentYear) {
+  if (expYear < currentYear) {
     throw new CreditCardExpiredError("Card expired");
   }
-  if (exp_year === currentYear && exp_month < currentMonth) {
+  if (expYear === currentYear && expMonth < currentMonth) {
     throw new CreditCardExpiredError("Card expired this year");
   }
-  const confirmation_id = crypto.randomBytes(16).toString("hex");
-  return { status: "succeeded", confirmation_id: confirmation_id };
+  const confirmationId = crypto.randomBytes(16).toString("hex");
+  return { confirmationId: confirmationId };
 }
 
 export async function getExampleChargeData(exp_month, exp_year) {

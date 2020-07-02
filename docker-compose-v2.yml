@@ -208,6 +208,23 @@ services:
     depends_on:
       - base
 
+  checkout:
+    build: services/checkout-v2
+    ports:
+      - "9402:9402"
+    depends_on:
+      - base
+      - postgres
+      - payment
+      - email-service
+    environment:
+      - CHECKOUT_DATABASE=postgres
+      - CHECKOUT_PG_HOST=postgres
+      - CHECKOUT_PG_USER=postgres
+      - CHECKOUT_PG_PASSWORD=admin
+      - PAYMENT_URL=http://payment:9403
+      - EMAIL_URL=http://email-service:9301
+
   ui:
     build: services/ui
     ports:

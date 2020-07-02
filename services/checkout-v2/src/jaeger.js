@@ -3,7 +3,7 @@ import * as opentracing from "opentracing";
 
 export const startJaeger = (name, req, res) => {
   const tracer = jaeger.initTracer({
-    serviceName: checkout-v2,
+    serviceName: "checkout-v2",
     sampler: { type: "ratelimiting", param: 5 },
   });
   const span = tracer.startSpan(name);

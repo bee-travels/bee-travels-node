@@ -4514,7 +4514,6 @@ __metadata:
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
-    crypto: ^1.0.1
     esm: ^3.2.25
     express: ^4.17.1
     jaeger-client: ^3.18.0
@@ -5291,13 +5290,6 @@ __metadata:
   version: 2.0.0
   resolution: "crypto-random-string@npm:2.0.0"
   checksum: 2/7bc19f6cafe3194a434198c9414941cc36d874e1f85b6fcba573b5623f77a440c0a10a94c0d0da26d7d23d85b6fe07354e589ef1a0fe2d7b32e0bab9e70ca4c1
-  languageName: node
-  linkType: hard
-
-"crypto@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "crypto@npm:1.0.1"
-  checksum: 2/e3ecafe330b730e4e7482096b895e1cdab78c189cfe66408de27f4bc1390500346bb02dad2959046a1ac53131c0691e045d03294fa321ce632b1f450d02bd616
   languageName: node
   linkType: hard
 

@@ -1,88 +1,68 @@
 import CheckoutProcessingError from "./../errors/CheckoutProcessingError";
-import crypto from "crypto";
+import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
 
 import {
-  buildCheckoutSavePostgresStatement,
-  checkoutSavePostgres,
+  buildCheckoutPostgresQuery,
+  setCheckoutDataToPostgres,
 } from "./postgresService";
 
-import processPayment from "./serviceHandler";
+import processPayment from "./paymentService";
 import sendMail from "./emailService";
 
-import { buildCheckoutSaveDb2Statement, checkoutSaveDb2 } from "./db2Service";
-export async function getData() {
-  return "success";
-}
 export async function processCheckout(context, checkoutObject) {
-  context.start("getData");
-  context.stop();
-  //validation
-  const cart_items = checkoutObject.cart_items;
-  if (cart_items.length === 0) {
-    throw new CheckoutProcessingError("Cart contains zero items");
-  }
+  isValid(checkoutObject.cartItems);
 
-  //setup for processing payment
-  //create an invoice id
-  const invoice_id = crypto.randomBytes(16).toString("hex");
-  //this is what typically shows up on cc statements
-  const statement_descriptor = `need help: https://BeeTravels.info/r/${invoice_id}`;
   try {
-    var postProcessPaymentResult = await processPayment(
-      invoice_id,
-      statement_descriptor,
-      checkoutObject
+    context.start("processPayment");
+    const confirmationId = await processPayment(
+      checkoutObject.totalAmount,
+      checkoutObject.billingDetails,
+      checkoutObject.paymentMethodDetails
     );
-  } catch (payex) {
-    console.error(payex);
-    return payex.message;
-  }
-  console.log(">>>>");
-  console.log(postProcessPaymentResult);
+    context.stop();
 
-  // return {
-  //   "status": "succeeded",
-  //   "confirmation_id": "23ea1233a8fcde349ad5671e647e1c06"
-  // }
+    await savePurchaseToDatabase(context, confirmationId, checkoutObject);
 
-  if (postProcessPaymentResult.status == "succeeded") {
-    let sentMail = await sendMail(invoice_id, checkoutObject);
+    if (checkoutObject.billingDetails.email) {
+      context.start("sendMail");
+      let sentMail = await sendMail(confirmationId, checkoutObject);
+      context.stop();
 
-    console.log(sentMail);
-    if (sentMail[0].statusCode == 202) {
-      //persist to db
-      postProcessPaymentResult.mailId = 202; //sentMail[0].headers["x-message-id"];
+      if (sentMail[0].statusCode !== 202) {
+        console.log("Error sending confirmation email");
+      }
     }
 
-    return postProcessPaymentResult;
-  } else {
-    throw new CheckoutProcessingError(postProcessPaymentResult.message);
+    return { confirmationId: confirmationId };
+  } catch (e) {
+    throw new CheckoutProcessingError(e.message);
   }
+}
 
-  //persist to db
-
-  /*
+async function savePurchaseToDatabase(context, confirmationId, checkoutObject) {
   let query;
   switch (process.env.CHECKOUT_DATABASE) {
-
     case "postgres":
-      query = buildCheckoutSavePostgresStatement(
-        checkoutObject
-      );
-      return await checkoutSavePostgres(query);
-    case "db2":
-      query = buildCheckoutSaveDb2Statement(
-        checkoutObject
-      );
-      return await checkoutSaveDb2(query);
+      query = buildCheckoutPostgresQuery(confirmationId, checkoutObject);
+      context.start("setCheckoutDataToPostgres");
+      await setCheckoutDataToPostgres(query, context);
+      context.stop();
+      break;
+    default:
+      break;
+  }
+}
+
+function isValid(cartItems) {
+  switch (process.env.CHECKOUT_DATABASE) {
+    case "postgres":
+      if (cartItems === undefined || cartItems.length === 0) {
+        throw new CheckoutProcessingError("Cart contains zero items");
+      }
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.CHECKOUT_DATABASE);
   }
-
-  //payment fails
-  //pass back error to user to correct Checkout error(s)
-
-*/
 }
 
 export function readinessCheck() {

@@ -3,7 +3,7 @@ components:
     Cart:
       type: object
       properties:
-        total_amount:
+        totalAmount:
           type: number
           format: decimal
           example: 499.99
@@ -14,26 +14,28 @@ components:
         status:
           type: string
           example: unprocessed
-        cart_items:
+        cartItems:
           type: array
           items:
             type: object
             $ref: '#/components/schemas/CartItem'
-        billing_details :
+        billingDetails :
           type: object
           $ref: '#/components/schemas/BillingDetails'
-        payment_method_details:
+        paymentMethodDetails:
           type: object
-          $ref: '#/components/schemas/Card'
+          $ref: '#/components/schemas/PaymentMethodDetails'
     CartItem:
       type: object
       properties:
-        cart_item_type:
+        type:
           type: string
           example: Car|Hotel|Flight
-        cart_item_uuid:
+        uuid:
           type: string
-        cart_item_cost:
+        description:
+          type: string
+        cost:
           type: number
           format: decimal
           example: 30.99
@@ -41,26 +43,29 @@ components:
           type: string
           description: "Three-letter ISO currency code, in lowercase. Must be a supported currency."
           example: "USD"
-        start_date:
+        startDate:
           type: string
-          example: 05/21/2020
-        end_date:
+          example: 05 21 2020
+        endDate:
           type: string
-          example: 06/22/2020
+          example: 06 22 2020
 
-    BillingDetails  :
+    BillingDetails:
       type: object
       properties:
-        name:
+        firstName:
           type: string
-          example: John Doe
+          example: John
+        lastName:
+          type: string
+          example: Doe
         phone:
             type: string
             example: "+1 (415) 777 8888"
         email:
             type: string
             example: "mary@poppins.net"
-        address :
+        address:
           type: object
           $ref: '#/components/schemas/Address'
 
@@ -76,7 +81,7 @@ components:
         city:
           type: string
           example: Málaga
-        postal_code:
+        postalCode:
           type: string
           example: 76NE
         state:
@@ -86,19 +91,22 @@ components:
           type: string
           example: Spain
 
-    Card:
+    PaymentMethodDetails:
       type: object
       properties:
-        creditcard_number:
+        type:
+          type: string
+          example: Card|Paypal
+        creditcardNumber:
           type: string
           example: "4242 4242 4242 4242"
-        exp_month:
+        expMonth:
           type: integer
           format: int32
           minimum: 1
           maximum: 12
           example: 2
-        exp_year:
+        expYear:
           type: integer
           format: int32
           example: 2023
