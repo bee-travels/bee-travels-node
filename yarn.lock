@@ -4523,7 +4523,7 @@ __metadata:
     openapi-comment-parser: ^0.3.4
     opentracing: ^0.14.4
     opossum: ^5.0.0
-    pg: ^8.2.1
+    pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     prom-client: ^12.0.0
@@ -12697,13 +12697,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"pg-connection-string@npm:^2.2.3":
-  version: 2.2.3
-  resolution: "pg-connection-string@npm:2.2.3"
-  checksum: 2/d60ff02f4fe9963ba39b60fde9e6925181851cedced0d1618c7e4cd304f44e4ed3f83371c952e15aa94af08e31e248975f4bfb412431854d21cb8be618b06d6e
-  languageName: node
-  linkType: hard
-
 "pg-int8@npm:1.0.1":
   version: 1.0.1
   resolution: "pg-int8@npm:1.0.1"
@@ -12720,26 +12713,10 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"pg-pool@npm:^3.2.1":
-  version: 3.2.1
-  resolution: "pg-pool@npm:3.2.1"
-  peerDependencies:
-    pg: ">=8.0"
-  checksum: 2/626e876971c7ef6d4f2b9e7cf858bda3ec30fd18761cc31e576d62451b7ad08ba5ea04916b49c13366a1fe11e652cabb01027e9504b68fe11b0113b8207d564e
-  languageName: node
-  linkType: hard
-
 "pg-protocol@npm:^1.2.2":
   version: 1.2.2
   resolution: "pg-protocol@npm:1.2.2"
   checksum: 2/1d74a5836c5981a6e6c2c75df38df8273720586099acdc839e83e93cb8cb24079ddb02b45072128692973cdf1df7976f82acd62f206ce3014a18e4b33fc5ec4d
-  languageName: node
-  linkType: hard
-
-"pg-protocol@npm:^1.2.4":
-  version: 1.2.4
-  resolution: "pg-protocol@npm:1.2.4"
-  checksum: 2/3cdb37af386873a85f548fa93b2b8ca6c12ce0deb9f6444e3fc1b6f779c73190ac0a67ca7dbee17da914e36e23830c70cc20e5ca708d29bcbb0f87e2160d9dbe
   languageName: node
   linkType: hard
 
@@ -12769,22 +12746,6 @@ fsevents@^1.2.7:
     pgpass: 1.x
     semver: 4.3.2
   checksum: 2/efec531ff8d25434da50ed233926fc040fc88dbb4ac210f5b30fb79edd0e6b44590371d58604b5d8d7581c80c244dff38aa85da01c7e81fe75668a9ae3308e74
-  languageName: node
-  linkType: hard
-
-"pg@npm:8.2.1, pg@npm:^8.2.1":
-  version: 8.2.1
-  resolution: "pg@npm:8.2.1"
-  dependencies:
-    buffer-writer: 2.0.0
-    packet-reader: 1.0.0
-    pg-connection-string: ^2.2.3
-    pg-pool: ^3.2.1
-    pg-protocol: ^1.2.4
-    pg-types: ^2.1.0
-    pgpass: 1.x
-    semver: 4.3.2
-  checksum: 2/f3ae953989304c95b168e68c820461f30f2dd5247500ce234509ba481b746112cd0241d95f58fe60e3cb6bc68b252d3c4dd349ddd9570c452b2d37cc1a0dc74f
   languageName: node
   linkType: hard
 
