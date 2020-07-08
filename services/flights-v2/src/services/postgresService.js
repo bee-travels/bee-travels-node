@@ -3,6 +3,7 @@ import { isValidQueryValue } from "query-validator";
 
 types.setTypeParser(1700, (val) => parseFloat(val));
 
+<<<<<<< HEAD
 export async function getFlightInfoFromPostgres(filter) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
@@ -29,6 +30,9 @@ export async function getFlightInfoFromPostgres(filter) {
 }
 
 export async function getAirportFromPostgres(id) {
+=======
+export async function getAirportFromPostgres(id, context) {
+>>>>>>> 6ff64248b9beb685f8df0528761cdf70b197e1d6
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -41,11 +45,15 @@ export async function getAirportFromPostgres(id) {
   };
 
   try {
+    context.start("postgresClientConnect");
     client.connect();
+    context.stop();
 
     const statement = "SELECT * from airports WHERE " + query.statement;
 
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
+    context.stop();
 
     return res.rows.length > 0 ? res.rows[0] : {};
   } catch (e) {
@@ -55,7 +63,12 @@ export async function getAirportFromPostgres(id) {
   }
 }
 
-export async function getAirportsFromPostgres(city, country, code) {
+export async function getAirportsFromPostgres(
+  city,
+  country,
+  code,
+  context
+) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -110,11 +123,15 @@ export async function getAirportsFromPostgres(city, country, code) {
   }
 
   try {
+    context.start("postgresClientConnect");
     client.connect();
+    context.stop();
 
     const statement = "SELECT * from airports " + query.statement;
 
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
+    context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -123,7 +140,7 @@ export async function getAirportsFromPostgres(city, country, code) {
   }
 }
 
-export async function getAirportsListFromPostgres() {
+export async function getAirportsListFromPostgres(context) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -131,10 +148,14 @@ export async function getAirportsListFromPostgres() {
     database: "beetravels",
   });
   try {
+    context.start("postgresClientConnect");
     client.connect();
+    context.stop();
     const statement =
       "select distinct city, country from airports where city <> ''";
+    context.start("postgresQuery");
     const res = await client.query(statement);
+    context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -143,7 +164,7 @@ export async function getAirportsListFromPostgres() {
   }
 }
 
-export async function getDirectFlightsFromPostgres(from, to) {
+export async function getDirectFlightsFromPostgres(from, to, context) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -155,7 +176,9 @@ export async function getDirectFlightsFromPostgres(from, to) {
     values: [isValidQueryValue(from), isValidQueryValue(to)],
   };
   try {
+    context.start("postgresClientConnect");
     client.connect();
+<<<<<<< HEAD
     const statement = `
     select id       as flight_one_id,
     source_airport_id,
@@ -166,7 +189,13 @@ export async function getDirectFlightsFromPostgres(from, to) {
     airlines
 from flights
 where ` + query.statement;
+=======
+    context.stop();
+    const statement = "select * from flights where " + query.statement;
+    context.start("postgresQuery");
+>>>>>>> 6ff64248b9beb685f8df0528761cdf70b197e1d6
     const res = await client.query(statement, query.values);
+    context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -175,7 +204,7 @@ where ` + query.statement;
   }
 }
 
-export async function getOneStopFlightsFromPostgres(from, to) {
+export async function getOneStopFlightsFromPostgres(from, to, context) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -188,7 +217,9 @@ export async function getOneStopFlightsFromPostgres(from, to) {
   };
 
   try {
+    context.start("postgresClientConnect");
     client.connect();
+    context.stop();
     const statement = `
     select flight1.id                                                                             as flight_one_id,
     flight2.id                                                                                    as flight_two_id,
@@ -210,7 +241,9 @@ where flight1.airlines = flight2.airlines
 and flight2.flight_time >= (flight1.flight_time + flight1.flight_duration + 60)
 order by time limit 20;
     `;
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
+    context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -219,7 +252,7 @@ order by time limit 20;
   }
 }
 
-export async function getTwoStopFlightsFromPostgres(from, to) {
+export async function getTwoStopFlightsFromPostgres(from, to, context) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -232,7 +265,9 @@ export async function getTwoStopFlightsFromPostgres(from, to) {
   };
 
   try {
+    context.start("postgresClientConnect");
     client.connect();
+    context.stop();
     const statement = `
     select f.id                  as flight_one_id,
     c.flight2id                  as flight_two_id,
@@ -256,11 +291,30 @@ where f.source_airport_id = $1
 order by c.totalTime
 limit 20;
     `;
+    context.start("postgresQuery");
     const res = await client.query(statement, query.values);
+    context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
   } finally {
     client.end();
   }
+}
+
+export async function postgresReadinessCheck() {
+  const client = new Client({
+    host: process.env.FLIGHTS_PG_HOST,
+    user: process.env.FLIGHTS_PG_USER,
+    password: process.env.FLIGHTS_PG_PASSWORD,
+  });
+
+  try {
+    await client.connect();
+  } catch (err) {
+    return false;
+  } finally {
+    client.end();
+  }
+  return true;
 }

@@ -2,16 +2,19 @@ import {
   getHotelDataFromMongo,
   getHotelInfoFromMongo,
   buildHotelMongoQuery,
+  mongoReadinessCheck,
 } from "./mongoService";
 import {
   getHotelDataFromPostgres,
   getHotelInfoFromPostgres,
   buildHotelPostgresQuery,
+  postgresReadinessCheck,
 } from "./postgresService";
 import {
   getHotelDataFromCloudant,
   getHotelInfoFromCloudant,
   buildHotelCloudantQuery,
+  cloudantReadinessCheck,
 } from "./cloudantService";
 import {
   TagNotFoundError,
@@ -28,7 +31,7 @@ const capitalize = (text) =>
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(" ");
 
-export async function getHotels(country, city, filters) {
+export async function getHotels(country, city, filters, context) {
   let data;
   let query;
 
@@ -43,7 +46,9 @@ export async function getHotels(country, city, filters) {
         capitalize(city),
         filters
       );
-      data = await getHotelDataFromMongo(query);
+      context.start("getHotelDataFromMongo");
+      data = await getHotelDataFromMongo(query, context);
+      context.stop();
       break;
     case "postgres":
       query = buildHotelPostgresQuery(
@@ -51,7 +56,9 @@ export async function getHotels(country, city, filters) {
         capitalize(city),
         filters
       );
-      data = await getHotelDataFromPostgres(query);
+      context.start("getHotelDataFromPostgres");
+      data = await getHotelDataFromPostgres(query, context);
+      context.stop();
       break;
     case "cloudant":
     case "couchdb":
@@ -60,7 +67,9 @@ export async function getHotels(country, city, filters) {
         capitalize(city),
         filters
       );
-      data = await getHotelDataFromCloudant(query);
+      context.start("getHotelDataFromCloudant");
+      data = await getHotelDataFromCloudant(query, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.HOTEL_DATABASE);
@@ -69,20 +78,45 @@ export async function getHotels(country, city, filters) {
   return updateCost(data, filters.dateFrom);
 }
 
-export async function getFilterList(filterType) {
+export async function getFilterList(filterType, context) {
   if (filterTypes.includes(filterType) === false) {
     throw new TagNotFoundError(filterType);
   }
+  let data;
   switch (process.env.HOTEL_DATABASE) {
     case "mongodb":
-      return await getHotelInfoFromMongo(filterType);
+      context.start("getHotelInfoFromMongo");
+      data = await getHotelInfoFromMongo(filterType, context);
+      context.stop();
+      break;
     case "postgres":
-      return await getHotelInfoFromPostgres(filterType);
+      context.start("getHotelInfoFromPostgres");
+      data = await getHotelInfoFromPostgres(filterType, context);
+      context.stop();
+      break;
     case "cloudant":
     case "couchdb":
-      return await getHotelInfoFromCloudant(filterType);
+      context.start("getHotelInfoFromCloudant");
+      data = await getHotelInfoFromCloudant(filterType, context);
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.HOTEL_DATABASE);
+  }
+  return data;
+}
+
+export async function readinessCheck() {
+  switch (process.env.HOTEL_DATABASE) {
+    case "mongodb":
+      return await mongoReadinessCheck();
+    case "postgres":
+      return await postgresReadinessCheck();
+    case "cloudant":
+    case "couchdb":
+      return await cloudantReadinessCheck();
+    default:
+      return false;
   }
 }
 

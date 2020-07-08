@@ -3,8 +3,11 @@ import logger from "pino-http";
 import pinoPretty from "pino-pretty";
 import openapi from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
+import client from "prom-client";
 
 import flightsRouter from "./routes/flights";
+import prometheus from "./prometheus";
+import health from "./health";
 
 const app = express();
 // Setup Pino.
@@ -17,6 +20,15 @@ app.use(
     prettifier: pinoPretty,
   })
 );
+
+// Prometheus metrics collected for all service api endpoints
+app.use("/api", prometheus);
+app.get("/metrics", (_, res) => {
+  res.set("Content-Type", client.register.contentType);
+  res.end(client.register.metrics());
+});
+
+app.use(health);
 
 // Body parsing.
 app.use(express.json());

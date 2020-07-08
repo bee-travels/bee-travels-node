@@ -2,7 +2,7 @@ import path from "path";
 import { promises as fs } from "fs";
 import TagNotFoundError from "./../errors/TagNotFoundError";
 
-const CARS_PATH = path.join(__dirname, "../../data/cars.json");
+const CARS_PATH = path.join(__dirname, "./../../data/cars.json");
 
 const capitalize = (text) =>
   text
@@ -17,9 +17,11 @@ async function parseMetadata(file) {
   return metadata;
 }
 
-export async function getCars(country, city, filters) {
+export async function getCars(country, city, filters, context) {
   const { company, car, type, style, minCost, maxCost } = filters;
+  context.start("parseMetadata");
   const data = await parseMetadata(CARS_PATH);
+  context.stop();
 
   const carsData = data.filter((h) => {
     if (h.city !== capitalize(city) || h.country !== capitalize(country)) {
@@ -39,8 +41,10 @@ export async function getCars(country, city, filters) {
   return carsData;
 }
 
-export async function getFilterList(filterType) {
+export async function getFilterList(filterType, context) {
+  context.start("parseMetadata");
   const data = await parseMetadata(CARS_PATH);
+  context.stop();
   const listOfFilterOptions = data.map((item) => {
     const valueForFilter = item[filterType];
     if (valueForFilter !== undefined) {
@@ -49,4 +53,8 @@ export async function getFilterList(filterType) {
     throw new TagNotFoundError(filterType);
   });
   return [...new Set(listOfFilterOptions)];
+}
+
+export async function readinessCheck() {
+  return true;
 }

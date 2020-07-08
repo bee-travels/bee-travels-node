@@ -6,6 +6,7 @@ import {
   getDirectFlightsFromPostgres,
   getOneStopFlightsFromPostgres,
   getTwoStopFlightsFromPostgres,
+  postgresReadinessCheck,
 } from "./postgresService";
 import {
   TagNotFoundError,
@@ -44,32 +45,47 @@ export async function getFilterList(filter) {
 export async function getAirports(city, country, code) {
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getAirportsFromPostgres(
+      context.start("getAirportsFromPostgres");
+      data = await getAirportsFromPostgres(
         capitalize(city),
         capitalize(country),
-        upper(code)
+        upper(code),
+        context
       );
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getAirportsList() {
+export async function getAirportsList(context) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getAirportsListFromPostgres();
+      context.start("getAirportsListFromPostgres");
+      data = await getAirportsListFromPostgres(context);
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
-export async function getAirport(id) {
+export async function getAirport(id, context) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getAirportFromPostgres(id);
+      context.start("getAirportFromPostgres");
+      data = await getAirportFromPostgres(id, context);
+      context.stop();
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return data;
 }
 
 export async function getDirectFlights(from, to, filters) {

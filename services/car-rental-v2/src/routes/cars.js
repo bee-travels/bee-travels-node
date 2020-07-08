@@ -1,9 +1,17 @@
 import { Router } from "express";
-import { getCars, getFilterList } from "../services/dataHandler";
-import TagNotFoundError from "../errors/TagNotFoundError";
+import { getCars, getFilterList } from "./../services/dataHandler";
+import TagNotFoundError from "./../errors/TagNotFoundError";
+import Jaeger from "./../jaeger";
+import CircuitBreaker from "opossum";
 import { IllegalDatabaseQueryError } from "query-validator";
 
 const router = Router();
+
+const opossumOptions = {
+  timeout: 15000, // If our function takes longer than 15 seconds, trigger a failure
+  errorThresholdPercentage: 50, // When 50% of requests fail, trip the circuit
+  resetTimeout: 30000, // After 30 seconds, try again.
+};
 
 const stringToArray = (s) => s && s.split(",");
 
@@ -17,9 +25,11 @@ const stringToArray = (s) => s && s.split(",");
  * @response 500 - Internal server error
  */
 router.get("/info/:tag", async (req, res, next) => {
+  const context = new Jaeger("info", req, res);
   const { tag } = req.params;
   try {
-    const data = await getFilterList(tag);
+    const breaker = new CircuitBreaker(getFilterList, opossumOptions);
+    const data = await breaker.fire(tag, context);
     res.json(data);
   } catch (e) {
     if (e instanceof TagNotFoundError) {
@@ -48,20 +58,27 @@ router.get("/info/:tag", async (req, res, next) => {
  * @response 500 - Internal server error
  */
 router.get("/:country/:city", async (req, res, next) => {
+  const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
   const { company, car, type, style, mincost, maxcost, dateFrom, dateTo } = req.query;
 
   try {
-    const data = await getCars(country, city, {
-      company: stringToArray(company),
-      car: stringToArray(car),
-      type: stringToArray(type),
-      style: stringToArray(style),
-      minCost: parseInt(mincost, 10) || undefined,
-      maxCost: parseInt(maxcost, 10) || undefined,
-      dateFrom: parseDate(dateFrom) || undefined,
-      dateTo: parseDate(dateTo) || undefined,
-    });
+    const breaker = new CircuitBreaker(getCars, opossumOptions);
+    const data = await breaker.fire(
+      country,
+      city,
+      {
+        company: stringToArray(company),
+        car: stringToArray(car),
+        type: stringToArray(type),
+        style: stringToArray(style),
+        minCost: parseInt(mincost, 10) || undefined,
+        maxCost: parseInt(maxcost, 10) || undefined,
+        dateFrom: parseDate(dateFrom) || undefined,
+        dateTo: parseDate(dateTo) || undefined,
+      },
+      context
+    );
     res.json(data);
   } catch (e) {
     if (e instanceof IllegalDatabaseQueryError) {

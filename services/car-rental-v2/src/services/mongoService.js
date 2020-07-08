@@ -1,5 +1,5 @@
 import { isValidQueryValue } from "query-validator";
-const MongoClient = require("mongodb").MongoClient;
+import { MongoClient } from "mongodb";
 
 export function buildCarMongoQuery(country, city, filters) {
   const { company, car, type, style, minCost, maxCost } = filters;
@@ -32,7 +32,8 @@ export function buildCarMongoQuery(country, city, filters) {
   return query;
 }
 
-export async function getCarDataFromMongo(query) {
+export async function getCarDataFromMongo(query, context) {
+  context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.CAR_MONGO_CONNECTION_URL,
     {
@@ -42,6 +43,7 @@ export async function getCarDataFromMongo(query) {
   ).catch((err) => {
     console.log(err);
   });
+  context.stop();
 
   if (!client) {
     return;
@@ -50,6 +52,7 @@ export async function getCarDataFromMongo(query) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("cars");
+    context.start("mongoQuery");
     let res = await collection.find(query);
     let cars = [];
     let car;
@@ -60,6 +63,7 @@ export async function getCarDataFromMongo(query) {
       cars.push(car);
       hasNextCar = await res.hasNext();
     }
+    context.stop();
     return cars;
   } catch (err) {
     console.log(err);
@@ -68,7 +72,8 @@ export async function getCarDataFromMongo(query) {
   }
 }
 
-export async function getCarInfoFromMongo(filterType) {
+export async function getCarInfoFromMongo(filterType, context) {
+  context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.CAR_MONGO_CONNECTION_URL,
     {
@@ -78,6 +83,7 @@ export async function getCarInfoFromMongo(filterType) {
   ).catch((err) => {
     console.log(err);
   });
+  context.stop();
 
   if (!client) {
     return;
@@ -88,10 +94,31 @@ export async function getCarInfoFromMongo(filterType) {
     let collection = db.collection(
       filterType === "rental_company" ? "cars" : "car_info"
     );
-    return await collection.distinct(filterType);
+    context.start("mongoQuery");
+    const result = await collection.distinct(filterType);
+    context.stop();
+    return result;
   } catch (err) {
     console.log(err);
   } finally {
     client.close();
   }
+}
+
+export async function mongoReadinessCheck() {
+  const client = await MongoClient.connect(
+    process.env.CAR_MONGO_CONNECTION_URL,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  ).catch((err) => {
+    return false;
+  });
+
+  if (!client) {
+    return false;
+  }
+
+  return true;
 }

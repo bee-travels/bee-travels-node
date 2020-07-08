@@ -3,7 +3,12 @@ import CurrencyNotFoundError from "./../errors/CurrencyNotFoundError";
 
 const EXCHANGE_ENDPOINT = "https://api.exchangeratesapi.io";
 
-export async function convert(_from, _to = "EUR", timeIndicator = "latest") {
+export async function convert(
+  context,
+  _from,
+  _to = "EUR",
+  timeIndicator = "latest"
+) {
   const from = _from.toUpperCase();
   const to = _to.toUpperCase();
 
@@ -11,7 +16,9 @@ export async function convert(_from, _to = "EUR", timeIndicator = "latest") {
 
   let rate;
   try {
+    context.start("exchangeRatesApiCall");
     const { data } = await axios.get(currencyUrl);
+    context.stop();
     rate = data.rates[to];
   } catch (e) {
     if (!(e.response && e.response.data && e.response.data.error)) {
@@ -29,15 +36,30 @@ export async function convert(_from, _to = "EUR", timeIndicator = "latest") {
   return rate;
 }
 
-export async function getExchangeRates(timeIndicator = "latest") {
+export async function getExchangeRates(context, timeIndicator = "latest") {
   const currencyUrl = `${EXCHANGE_ENDPOINT}/${timeIndicator}`;
   try {
+    context.start("exchangeRatesApiCall");
     const { data } = await axios.get(currencyUrl);
+    context.stop();
     return data;
   } catch (e) {
     if (!(e.response && e.response.data && e.response.data.error)) {
       throw e;
     }
     throw new Error(e.response.data.error);
+  }
+}
+
+export async function readinessCheck() {
+  let data;
+  try {
+    data = await getExchangeRates();
+    if (data) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    return false;
   }
 }

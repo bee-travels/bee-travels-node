@@ -3,9 +3,17 @@ import {
   getCities,
   getCity,
   getCitiesForCountry,
-} from "../services/dataHandler";
+} from "./../services/dataHandler";
+import Jaeger from "./../jaeger";
+import CircuitBreaker from "opossum";
 
 const router = Router();
+
+const opossumOptions = {
+  timeout: 15000, // If our function takes longer than 15 seconds, trigger a failure
+  errorThresholdPercentage: 50, // When 50% of requests fail, trip the circuit
+  resetTimeout: 30000, // After 30 seconds, try again.
+};
 
 /**
  * GET /api/v1/destinations/{country}/{city}
@@ -19,9 +27,11 @@ const router = Router();
  */
 // TODO: 400s for bad country/city see hotel/cars
 router.get("/:country/:city", async (req, res, next) => {
+  const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
   try {
-    const data = await getCity(country, city);
+    const breaker = new CircuitBreaker(getCity, opossumOptions);
+    const data = await breaker.fire(country, city, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -39,9 +49,11 @@ router.get("/:country/:city", async (req, res, next) => {
  */
 // TODO: 400 for bad country
 router.get("/:country", async (req, res, next) => {
+  const context = new Jaeger("country", req, res);
   const { country } = req.params;
   try {
-    const data = await getCitiesForCountry(country);
+    const breaker = new CircuitBreaker(getCitiesForCountry, opossumOptions);
+    const data = await breaker.fire(country, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -56,9 +68,11 @@ router.get("/:country", async (req, res, next) => {
  * @response 200 - OK
  * @response 500 - Internal Server Error
  */
-router.get("/", async (_, res, next) => {
+router.get("/", async (req, res, next) => {
+  const context = new Jaeger("cities", req, res);
   try {
-    const data = await getCities();
+    const breaker = new CircuitBreaker(getCities, opossumOptions);
+    const data = await breaker.fire(context);
     res.json(data);
   } catch (e) {
     next(e);
