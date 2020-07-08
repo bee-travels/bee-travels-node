@@ -92,10 +92,10 @@ function dateMultiplier(dateFrom, dateTo) {
   let numDays = (dateFrom - dateNow) / (1000 * 3600 * 24); // convert time difference to days
   if (numDays < 0) {
     throw new IllegalDateError(dateFrom);
-  } else if (numDays < 3) {
-    return 3;
+  } else if (numDays < 2) {
+    return 2.25;
   } else if (numDays < 7) {
-    return 2;
+    return 1.75;
   } else if (numDays < 14) {
     return 1.5;
   } else if (numDays < 21) {
