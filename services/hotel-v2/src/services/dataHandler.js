@@ -13,7 +13,11 @@ import {
   getHotelInfoFromCloudant,
   buildHotelCloudantQuery,
 } from "./cloudantService";
-import {TagNotFoundError, DatabaseNotFoundError, IllegalDateError} from "./../errors";
+import {
+  TagNotFoundError,
+  DatabaseNotFoundError,
+  IllegalDateError,
+} from "./../errors";
 
 const filterTypes = ["superchain", "name", "type"];
 
@@ -29,7 +33,7 @@ export async function getHotels(country, city, filters) {
   let query;
 
   if (filters.dateTo - filters.dateFrom < 0) {
-    throw new IllegalDateError("from date can not be greater than to date")
+    throw new IllegalDateError("from date can not be greater than to date");
   }
 
   switch (process.env.HOTEL_DATABASE) {
@@ -85,7 +89,7 @@ export async function getFilterList(filterType) {
 function updateCost(data, date) {
   const multiplier = dateMultiplier(date);
 
-  let res = data.map(d => {
+  let res = data.map((d) => {
     d["cost"] = d["cost"] * multiplier;
     return d;
   });

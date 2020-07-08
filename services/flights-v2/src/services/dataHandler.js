@@ -1,4 +1,3 @@
-import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
 import {
   getFlightInfoFromPostgres,
   getAirportFromPostgres,
@@ -8,7 +7,11 @@ import {
   getOneStopFlightsFromPostgres,
   getTwoStopFlightsFromPostgres,
 } from "./postgresService";
-import TagNotFoundError from "../errors/TagNotFoundError";
+import {
+  TagNotFoundError,
+  DatabaseNotFoundError,
+  IllegalDateError,
+} from "../errors";
 
 const filterTypes = ["airlines", "type"];
 
@@ -28,7 +31,7 @@ export async function getFilterList(filter) {
     throw new TagNotFoundError(filter);
   }
   if (filter === "type") {
-    return ["non-stop", "one-stop", "two-stop"]
+    return ["non-stop", "one-stop", "two-stop"];
   }
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
@@ -69,29 +72,38 @@ export async function getAirport(id) {
   }
 }
 
-export async function getDirectFlights(from, to) {
+export async function getDirectFlights(from, to, filters) {
+  let flights;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getDirectFlightsFromPostgres(from, to);
+      flights = await getDirectFlightsFromPostgres(from, to);
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return flights;
 }
 
-export async function getOneStopFlights(from, to) {
+export async function getOneStopFlights(from, to, filters) {
+  let flights;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getOneStopFlightsFromPostgres(from, to);
+      flights = await getOneStopFlightsFromPostgres(from, to);
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return flights;
 }
 
-export async function getTwoStopFlights(from, to) {
+export async function getTwoStopFlights(from, to, filters) {
+  let flights;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      return await getTwoStopFlightsFromPostgres(from, to);
+      flights = await getTwoStopFlightsFromPostgres(from, to);
+      break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
+  return flights;
 }

@@ -9,7 +9,7 @@ import {
   getTwoStopFlights,
 } from "../services/dataHandler";
 
-import TagNotFoundError from '../errors/TagNotFoundError';
+import {TagNotFoundError} from "../errors";
 
 const router = Router();
 
@@ -31,7 +31,7 @@ router.get("/info/:filter", async (req, res, next) => {
     }
     next(e);
   }
-})
+});
 
 /**
  * GET /api/v1/flights/airports
@@ -89,14 +89,19 @@ router.get("/airports/:id", async (req, res, next) => {
  * @description Get all direct flight to destination
  * @pathParam from source airport id
  * @pathParam to destination airport id
+ * @queryParam {string} dateFrom - Date From
+ * @queryParam {string} dateTo - Date To
  * @response 200 - OK
  * @response 400 - Error
  */
 router.get("/direct/:from/:to", async (req, res, next) => {
-  console.log("REQUEST CAME HERE");
   const { from, to } = req.params;
+  const { dateFrom, dateTo } = req.query;
   try {
-    const data = await getDirectFlights(from, to);
+    const data = await getDirectFlights(from, to, {
+      dateFrom: parseDate(dateFrom) || undefined,
+      dateTo: parseDate(dateTo) || undefined,
+    });
     res.json(data);
   } catch (e) {
     next(e);
@@ -108,13 +113,19 @@ router.get("/direct/:from/:to", async (req, res, next) => {
  * @description Get all one stop flight to destination
  * @pathParam from source airport id
  * @pathParam to destination airport id
+ * @queryParam {string} dateFrom - Date From
+ * @queryParam {string} dateTo - Date To
  * @response 200 - OK
  * @response 400 - Error
  */
 router.get("/onestop/:from/:to", async (req, res, next) => {
   const { from, to } = req.params;
+  const { dateFrom, dateTo } = req.query;
   try {
-    const data = await getOneStopFlights(from, to);
+    const data = await getOneStopFlights(from, to, {
+      dateFrom: parseDate(dateFrom) || undefined,
+      dateTo: parseDate(dateTo) || undefined,
+    });
     res.json(data);
   } catch (e) {
     next(e);
@@ -125,14 +136,20 @@ router.get("/onestop/:from/:to", async (req, res, next) => {
  * GET /api/v1/flights/twostop/{from}/{to}
  * @description Get all two stop flight to destination
  * @pathParam from source airport id
- * @pathParam to destination airport id
+ * @pathParam to destination airport id0
+ * @queryParam {string} dateFrom - Date From
+ * @queryParam {string} dateTo - Date To
  * @response 200 - OK
  * @response 400 - Error
  */
 router.get("/twostop/:from/:to", async (req, res, next) => {
   const { from, to } = req.params;
+  const { dateFrom, dateTo } = req.query;
   try {
-    const data = await getTwoStopFlights(from, to);
+    const data = await getTwoStopFlights(from, to, {
+      dateFrom: parseDate(dateFrom) || undefined,
+      dateTo: parseDate(dateTo) || undefined,
+    });
     res.json(data);
   } catch (e) {
     next(e);
