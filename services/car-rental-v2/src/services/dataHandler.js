@@ -27,6 +27,10 @@ const capitalize = (text) =>
 export async function getCars(country, city, filters) {
   let query;
   let cars;
+
+  if (filters.dateTo - filters.dateFrom < 0) {
+    throw new IllegalDateError("from date can not be greater than to date");
+  }
   
   switch (process.env.CAR_DATABASE) {
     case "mongodb":

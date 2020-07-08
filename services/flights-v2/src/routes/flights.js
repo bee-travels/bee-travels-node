@@ -156,4 +156,9 @@ router.get("/twostop/:from/:to", async (req, res, next) => {
   }
 });
 
+function parseDate(date) {
+  return Date.parse(date);
+}
+
+
 export default router;
