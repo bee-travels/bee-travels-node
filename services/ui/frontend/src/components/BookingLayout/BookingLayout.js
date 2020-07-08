@@ -83,6 +83,8 @@ const Content = ({ location }) => {
   const [longitude, setLongitude] = useState(0);
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
+  const [dateFrom, setDateFrom] = React.useState("");
+  const [dateTo, setDateTo] = React.useState("");
 
   useEffect(() => {
     const loadDestination = async () => {
@@ -113,10 +115,10 @@ const Content = ({ location }) => {
         description={description}
         images={images}
       />
-      <TabHolder location={location}>
-        <HotelFragment city={city} country={country} search={location.search} />
-        <CarFragment city={city} country={country} search={location.search} />
-        <FlightFragment city={city} country={country} search={location.search} />
+      <TabHolder location={location} dateTo={dateTo} dateFrom={dateFrom} setDateTo={setDateTo} setDateFrom={setDateFrom}>
+        <HotelFragment city={city} country={country} search={location.search} dateFrom={dateFrom} dateTo={dateTo}/>
+        <CarFragment city={city} country={country} search={location.search} dateFrom={dateFrom} dateTo={dateTo}/>
+        <FlightFragment city={city} country={country} search={location.search} dateFrom={dateFrom} dateTo={dateTo}/>
       </TabHolder>
     </SplitPaneLayout>
   );

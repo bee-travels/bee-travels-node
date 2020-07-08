@@ -68,7 +68,7 @@ services:
       - couch
       - postgres
       - mongo
-    image: beetravels/data-gen-destination:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
+    image: beetravels/data-gen-destination:ed7e5b36a9aa2905b923e2841e58cdcee01ebc54
     restart: on-failure
     environment:
       - PG_USER=postgres
@@ -84,7 +84,7 @@ services:
       - couch
       - postgres
       - mongo
-    image: beetravels/data-gen-hotel:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
+    image: beetravels/data-gen-hotel:ed7e5b36a9aa2905b923e2841e58cdcee01ebc54
     restart: on-failure
     environment:
       - PG_USER=postgres
@@ -100,7 +100,7 @@ services:
       - couch
       - postgres
       - mongo
-    image: beetravels/data-gen-carrental:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
+    image: beetravels/data-gen-carrental:ed7e5b36a9aa2905b923e2841e58cdcee01ebc54
     restart: on-failure
     environment:
       - PG_USER=postgres
@@ -116,7 +116,7 @@ services:
       - couch
       - postgres
       - mongo
-    image: beetravels/data-gen-airports:03f717cd222cc6e0bd0327f24595b9d8e8bdc2f0
+    image: beetravels/data-gen-airports:ed7e5b36a9aa2905b923e2841e58cdcee01ebc54
     restart: on-failure
     environment:
       - PG_USER=postgres

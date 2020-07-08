@@ -202,7 +202,7 @@ const arrayify = (maybeArray) => {
   return [_maybeArray];
 };
 
-const BookingFragment = ({ city, country, search }) => {
+const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
   const queryObject = useMemo(() => queryString.parse(search), [search]);
   const selectedSuperchains = useMemo(
     () => arrayify(queryObject[RENTAL_COMPANY]),
@@ -279,6 +279,8 @@ const BookingFragment = ({ city, country, search }) => {
           selectedCarStyle.length > 0 ? selectedCarStyle.join(",") : undefined,
         mincost: minHotelPrice,
         maxcost: maxHotelPrice,
+        dateFrom: dateFrom,
+        dateTo: dateTo,
       });
 
       const hotelResponse = await fetch(
@@ -301,6 +303,8 @@ const BookingFragment = ({ city, country, search }) => {
     selectedHotels,
     selectedSuperchains,
     selectedTypes,
+    dateFrom, 
+    dateTo,
   ]);
 
   // Load list of superchains.

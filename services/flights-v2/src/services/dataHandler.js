@@ -43,6 +43,7 @@ export async function getFilterList(filter) {
 }
 
 export async function getAirports(city, country, code) {
+  let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
       context.start("getAirportsFromPostgres");

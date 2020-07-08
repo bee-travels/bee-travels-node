@@ -266,7 +266,7 @@ const kebabCase = (val) => {
   return val.toLowerCase().split(" ").join("-");
 };
 
-const BookingFragment = ({ city, country, search }) => {
+const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
   const queryObject = useMemo(() => queryString.parse(search), [search]);
   const selectedAirlines = useMemo(() => arrayify(queryObject[AIRLINES]), [
     queryObject,
@@ -296,7 +296,6 @@ const BookingFragment = ({ city, country, search }) => {
   const [airlinesList, setAirlinesList] = useState([]);
   const [sourceAirportList, setSourceAirportList] = useState([]);
   const [destinationAirportList, setDestinationAirportList] = useState([]);
-  const [flights, setFlights] = useState([]);
   const [nonStopFlights, setNonStopFlights] = useState([]);
   const [oneStopFlights, setOneStopFlights] = useState([]);
   const [twoStopFlights, setTwoStopFlights] = useState([]);
@@ -346,7 +345,7 @@ const BookingFragment = ({ city, country, search }) => {
         return [];
       }
       const flightsResponse = await fetch(
-        `${fragmentEndpoint}/direct/${sourceAirport.id}/${destinationAirport.id}`
+        `${fragmentEndpoint}/direct/${sourceAirport.id}/${destinationAirport.id}?dateFrom=${dateFrom}&dateTo=${dateTo}`
       );
       const flightsList = await flightsResponse.json();
       console.log("DIRECT FLIGHTS LIST CALLED");
@@ -355,7 +354,7 @@ const BookingFragment = ({ city, country, search }) => {
       setNonStopFlights(flightsList);
     };
     loadFlights();
-  }, [destinationAirport, sourceAirport]);
+  }, [dateFrom, dateTo, destinationAirport, sourceAirport]);
 
   useEffect(() => {
     const loadFlights = async () => {
@@ -363,7 +362,7 @@ const BookingFragment = ({ city, country, search }) => {
         return [];
       }
       const flightsResponse = await fetch(
-        `${fragmentEndpoint}/onestop/${sourceAirport.id}/${destinationAirport.id}`
+        `${fragmentEndpoint}/onestop/${sourceAirport.id}/${destinationAirport.id}?dateFrom=${dateFrom}&dateTo=${dateTo}`
       );
       const flightsList = await flightsResponse.json();
       console.log("ONESTOP FLIGHTS LIST CALLED");
@@ -371,7 +370,7 @@ const BookingFragment = ({ city, country, search }) => {
       setOneStopFlights(flightsList);
     };
     loadFlights();
-  }, [destinationAirport, sourceAirport]);
+  }, [dateFrom, dateTo, destinationAirport, sourceAirport]);
 
   useEffect(() => {
     const loadFlights = async () => {
@@ -379,7 +378,7 @@ const BookingFragment = ({ city, country, search }) => {
         return [];
       }
       const flightsResponse = await fetch(
-        `${fragmentEndpoint}/twostop/${sourceAirport.id}/${destinationAirport.id}`
+        `${fragmentEndpoint}/twostop/${sourceAirport.id}/${destinationAirport.id}?dateFrom=${dateFrom}&dateTo=${dateTo}`
       );
       const flightsList = await flightsResponse.json();
       console.log("TWOSTOP FLIGHTS LIST CALLED");
@@ -387,7 +386,7 @@ const BookingFragment = ({ city, country, search }) => {
       setTwoStopFlights(flightsList);
     };
     loadFlights();
-  }, [destinationAirport, sourceAirport]);
+  }, [dateFrom, dateTo, destinationAirport, sourceAirport]);
 
   // Load list of superchains.
   useEffect(() => {
