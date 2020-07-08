@@ -23,28 +23,64 @@ const fragmentEndpoint = "/api/v1/flights";
 
 const DEFAULT_MAX = 700;
 
-const ListItem = ({ airlines, cost, time, duration }) => {
+const ListItem = ({flight, cost}) => {
   const minuteToHour = (min) => {
-    const hour = Math.floor(min / 60);
-    const minute = min % 60;
+    const _hour = Math.floor(min / 60);
+    const _minute = Math.floor(min % 60);
+    const hour = ("0" + _hour).slice(-2);
+    const minute = ("0" + _minute).slice(-2);
     return `${hour}:${minute}`;
   }
 
   const minuteToDuration = (min) => {
-    const hour = Math.floor(min / 60);
-    const minute = Math.floor(min % 60);
+    const _hour = Math.floor(min / 60);
+    const _minute = Math.floor(min % 60);
+    const hour = ("0" + _hour).slice(-2);
+    const minute = ("0" + _minute).slice(-2);
     return `${hour} Hour and ${minute} Minute`;
   }
-  return (
-    <div className={styles.listItem}>
-      <div className={styles.listItemContent}>
-        <div className={styles.listItemTitle}>{airlines}</div>
-        <div className={styles.listItemTitle}>{minuteToHour(time)}</div>
-        <div className={styles.listItemCost}>{cost}</div>
-        <div className={styles.listItemSub}>{minuteToDuration(duration)}</div>
+
+  if(!flight.flight_three_time && !flight.flight_two_time) {
+    // not a one or two stop flight
+    // has to be direct flight
+    return (
+      <div className={styles.listItem}>
+        <div className={styles.listItemContent}>
+          <div className={styles.listItemSub}>Nonstop</div>
+          <div className={styles.listItemTitle}>{flight.airlines}</div>
+          <div className={styles.listItemCost}>{cost}</div>
+          <div className={styles.listItemSub}>{minuteToDuration(flight.time)}</div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+  else if(!flight.flight_three_time) {
+    // not a two stop flight
+    // has to be a one stop flight
+    return (
+      <div className={styles.listItem}>
+        <div className={styles.listItemContent}>
+          <div className={styles.listItemSub}>1 Stop</div>
+          <div className={styles.listItemTitle}>{flight.airlines}</div>
+          <div className={styles.listItemCost}>{cost}</div>
+          <div className={styles.listItemSub}>{minuteToDuration(flight.time)}</div>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <div className={styles.listItem}>
+        <div className={styles.listItemContent}>
+          <div className={styles.listItemSub}>2 Stop</div>
+          <div className={styles.listItemTitle}>{flight.airlines}</div>
+          <div className={styles.listItemCost}>{cost}</div>
+          <div className={styles.listItemSub}>{minuteToDuration(flight.time)}</div>
+        </div>
+      </div>
+    )
+  }
+
+
 };
 
 const Filters = ({
@@ -261,6 +297,9 @@ const BookingFragment = ({ city, country, search }) => {
   const [sourceAirportList, setSourceAirportList] = useState([]);
   const [destinationAirportList, setDestinationAirportList] = useState([]);
   const [flights, setFlights] = useState([]);
+  const [nonStopFlights, setNonStopFlights] = useState([]);
+  const [oneStopFlights, setOneStopFlights] = useState([]);
+  const [twoStopFlights, setTwoStopFlights] = useState([]);
   const [typeList, setTypeList] = useState([]);
   const [sourceList, setSourceList] = useState([]);
   const [source, setSource] = useState(null);
@@ -310,9 +349,10 @@ const BookingFragment = ({ city, country, search }) => {
         `${fragmentEndpoint}/direct/${sourceAirport.id}/${destinationAirport.id}`
       );
       const flightsList = await flightsResponse.json();
-      console.log("FLIGHTS LIST CALLED");
+      console.log("DIRECT FLIGHTS LIST CALLED");
       console.log(flightsList);
-      setFlights([...flights, ...flightsList]);
+
+      setNonStopFlights(flightsList);
     };
     loadFlights();
   }, [destinationAirport, sourceAirport]);
@@ -326,9 +366,9 @@ const BookingFragment = ({ city, country, search }) => {
         `${fragmentEndpoint}/onestop/${sourceAirport.id}/${destinationAirport.id}`
       );
       const flightsList = await flightsResponse.json();
-      console.log("FLIGHTS LIST CALLED");
+      console.log("ONESTOP FLIGHTS LIST CALLED");
       console.log(flightsList);
-      setFlights([...flights, ...flightsList]);
+      setOneStopFlights(flightsList);
     };
     loadFlights();
   }, [destinationAirport, sourceAirport]);
@@ -342,9 +382,9 @@ const BookingFragment = ({ city, country, search }) => {
         `${fragmentEndpoint}/twostop/${sourceAirport.id}/${destinationAirport.id}`
       );
       const flightsList = await flightsResponse.json();
-      console.log("FLIGHTS LIST CALLED");
+      console.log("TWOSTOP FLIGHTS LIST CALLED");
       console.log(flightsList);
-      setFlights([...flights, ...flightsList]);
+      setTwoStopFlights(flightsList);
     };
     loadFlights();
   }, [destinationAirport, sourceAirport]);
@@ -390,6 +430,7 @@ const BookingFragment = ({ city, country, search }) => {
     const loadSources = async () => {
       const sourceResponse = await fetch(`${fragmentEndpoint}/airports/all`);
       const source = await sourceResponse.json();
+      source.sort((a,b) => a.city === b.city ? a.country > b.country ? 1 : -1 : a.city > b.city ? 1 : -1); 
       setSourceList(source);
     };
 
@@ -504,8 +545,8 @@ const BookingFragment = ({ city, country, search }) => {
         onMinMaxSelectionChange={handleMinMaxSelectionChange}
         onCurrencyChange={handleCurrencyChange}
       />
-      {flights.map(({ airlines, cost, flight_duration, flight_time }) => {
-        const priceString = priceConversion(cost, {
+      {[...oneStopFlights, ...twoStopFlights, ...nonStopFlights].sort((a, b) => a.time > b.time ? 1 : -1).map((flight) => {
+        const priceString = priceConversion(flight.cost, {
           from: exchangeRates.USD,
           to: exchangeRates[selectedCurrency],
         }).toLocaleString(undefined, {
@@ -514,10 +555,8 @@ const BookingFragment = ({ city, country, search }) => {
         });
         return (
           <ListItem
-            airlines={airlines}
-            time={flight_time}
+            flight={flight}
             cost={priceString}
-            duration={flight_duration}
           />
         );
       })}

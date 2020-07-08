@@ -246,7 +246,8 @@ export async function getTwoStopFlightsFromPostgres(from, to) {
     c.totalCost                  as cost,
     c.flight1time                as flight_one_time,
     c.flight2time                as fligh_two_time,
-    c.flight3time                as flight_three_time
+    c.flight3time                as flight_three_time,
+    f.airlines
 from flights f,
   lateral flight_two_stop(f.source_airport_id, f.destination_airport_id,
                           $2, f.flight_time, f.flight_duration, f.cost,
