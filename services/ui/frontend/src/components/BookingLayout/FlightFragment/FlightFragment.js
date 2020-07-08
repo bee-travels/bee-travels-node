@@ -312,7 +312,39 @@ const BookingFragment = ({ city, country, search }) => {
       const flightsList = await flightsResponse.json();
       console.log("FLIGHTS LIST CALLED");
       console.log(flightsList);
-      setFlights(flightsList);
+      setFlights([...flights, ...flightsList]);
+    };
+    loadFlights();
+  }, [destinationAirport, sourceAirport]);
+
+  useEffect(() => {
+    const loadFlights = async () => {
+      if (sourceAirport === null || destinationAirport === null) {
+        return [];
+      }
+      const flightsResponse = await fetch(
+        `${fragmentEndpoint}/onestop/${sourceAirport.id}/${destinationAirport.id}`
+      );
+      const flightsList = await flightsResponse.json();
+      console.log("FLIGHTS LIST CALLED");
+      console.log(flightsList);
+      setFlights([...flights, ...flightsList]);
+    };
+    loadFlights();
+  }, [destinationAirport, sourceAirport]);
+
+  useEffect(() => {
+    const loadFlights = async () => {
+      if (sourceAirport === null || destinationAirport === null) {
+        return [];
+      }
+      const flightsResponse = await fetch(
+        `${fragmentEndpoint}/twostop/${sourceAirport.id}/${destinationAirport.id}`
+      );
+      const flightsList = await flightsResponse.json();
+      console.log("FLIGHTS LIST CALLED");
+      console.log(flightsList);
+      setFlights([...flights, ...flightsList]);
     };
     loadFlights();
   }, [destinationAirport, sourceAirport]);
