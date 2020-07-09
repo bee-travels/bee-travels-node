@@ -16,7 +16,7 @@ import {TagNotFoundError, IllegalDateError} from "../errors";
 const router = Router();
 
 const opossumOptions = {
-  timeout: 15000, // If our function takes longer than 15 seconds, trigger a failure
+  timeout: 30000, // If our function takes longer than 15 seconds, trigger a failure
   errorThresholdPercentage: 50, // When 50% of requests fail, trip the circuit
   resetTimeout: 30000, // After 30 seconds, try again.
 };
