@@ -5,6 +5,7 @@ import DoubleSlider from "./DoubleSlider";
 import MultiSelect from "./MultiSelect";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import {useSelector} from 'react-redux';
 import Select from "./Select";
 
 import globalHistory from "globalHistory";
@@ -18,6 +19,7 @@ import {
   CAR_STYLE,
   RENTAL_COMPANY,
 } from "components/common/query-constants";
+import { useActions } from "redux/actions";
 
 const fragmentEndpoint = "/api/v1/cars";
 
@@ -35,7 +37,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListItem = ({ superchain, name, cost, image }) => {
+const parseDate = (date) => Date.parse(date);
+const dateValid = (from, to) => {
+  if (from === "" || to === "") {
+    return false;
+  }
+
+  const _from = parseDate(from);
+  const _to = parseDate(to);
+
+  if (_from > _to) {
+    return false;
+  }
+
+  return true;
+};
+
+const ListItem = ({ id, superchain, name, cost, image }) => {
+  const {addToCart} = useActions();
+  const cars = useSelector(state => state.cars);
+  const numberInCart = cars.filter(carId => carId === id).length;
+  const handleAddToCart = () => {
+    addToCart(id);
+  }
   return (
     <div className={styles.listItem}>
       <div
@@ -50,6 +74,9 @@ const ListItem = ({ superchain, name, cost, image }) => {
         <div className={styles.listItemSub}>{superchain}</div>
         <div className={styles.listItemCost}>{cost}</div>
       </div>
+      <button style={{marginLeft: 'auto'}} onClick={handleAddToCart}>Add to Cart</button>
+      {numberInCart > 0 && <button>Remove </button>} 
+      {numberInCart}
     </div>
   );
 };
@@ -338,23 +365,6 @@ const BookingFragment = ({ city, country, search }) => {
     ]
   );
 
-  const parseDate = (date) => (Date.parse(date));
-  const dateValid = (from, to) => {
-    if(from === "" || to === "") {
-      return false;
-    } 
-
-    const _from = parseDate(from);
-    const _to = parseDate(to);
-
-    if (_from > _to) {
-      return false;
-    }
-
-    return true;
-
-  }
-
   // Load list of cars.
   useEffect(() => {
     const loadCars = async () => {
@@ -398,7 +408,6 @@ const BookingFragment = ({ city, country, search }) => {
     selectedTypes,
     dateFrom, 
     dateTo,
-    dateValid,
   ]);
 
   // Load list of superchains.
@@ -537,7 +546,7 @@ const BookingFragment = ({ city, country, search }) => {
         onMinMaxSelectionChange={handleMinMaxSelectionChange}
         onCurrencyChange={handleCurrencyChange}
       />
-      {cars.map(({ rental_company, name, cost, image }, i) => {
+      {cars.map(({ id, rental_company, name, cost, image }) => {
         const priceString = priceConversion(cost, {
           from: exchangeRates.USD,
           to: exchangeRates[selectedCurrency],
@@ -547,7 +556,8 @@ const BookingFragment = ({ city, country, search }) => {
         });
         return (
           <ListItem
-            key={i}
+            key={id}
+            id={id}
             superchain={rental_company}
             name={name}
             cost={priceString}

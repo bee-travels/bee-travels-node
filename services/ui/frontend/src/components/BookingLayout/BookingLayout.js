@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import {useSelector} from 'react-redux';
 
 import DestinationFragment from "./DestinationFragment/DestinationFragment";
 import HotelFragment from "./HotelFragment/HotelFragment";
@@ -83,8 +84,7 @@ const Content = ({ location }) => {
   const [longitude, setLongitude] = useState(0);
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
-  const [dateFrom, setDateFrom] = React.useState("");
-  const [dateTo, setDateTo] = React.useState("");
+  const carsItems = useSelector(state => state.cars)
 
   useEffect(() => {
     const loadDestination = async () => {
@@ -105,6 +105,11 @@ const Content = ({ location }) => {
     }
   }, [city, country]);
 
+  const handleFabClick = () => {
+    const _ids = localStorage.getItem('cart') || "[]";    
+    alert(_ids);
+  }
+
   return (
     <SplitPaneLayout panelWidth="464px" breakpoint="1250px">
       <DestinationFragment
@@ -115,11 +120,34 @@ const Content = ({ location }) => {
         description={description}
         images={images}
       />
-      <TabHolder location={location} dateTo={dateTo} dateFrom={dateFrom} setDateTo={setDateTo} setDateFrom={setDateFrom}>
-        <HotelFragment city={city} country={country} search={location.search} dateFrom={dateFrom} dateTo={dateTo}/>
-        <CarFragment city={city} country={country} search={location.search} dateFrom={dateFrom} dateTo={dateTo}/>
-        <FlightFragment city={city} country={country} search={location.search} dateFrom={dateFrom} dateTo={dateTo}/>
-      </TabHolder>
+      <div>
+        <TabHolder location={location}>
+          <HotelFragment
+            city={city}
+            country={country}
+            search={location.search}
+          />
+          <CarFragment city={city} country={country} search={location.search} />
+          <FlightFragment
+            city={city}
+            country={country}
+            search={location.search}
+          />
+        </TabHolder>
+        <button
+          style={{
+            position: "fixed",
+            right: "20px",
+            bottom: "20px",
+            width: "100px",
+            height: "100px",
+            borderRadius: "50%",
+          }}
+          onClick={handleFabClick}
+        >
+          Cart {carsItems.length}
+        </button>
+      </div>
     </SplitPaneLayout>
   );
 };

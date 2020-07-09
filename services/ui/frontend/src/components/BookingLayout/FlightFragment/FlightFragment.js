@@ -37,6 +37,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const parseDate = (date) => Date.parse(date);
+const dateValid = (from, to) => {
+  if (from === "" || to === "") {
+    return false;
+  }
+
+  const _from = parseDate(from);
+  const _to = parseDate(to);
+
+  if (_from > _to) {
+    return false;
+  }
+
+  return true;
+};
+
 const ListItem = ({ flight, cost }) => {
   const minuteToHour = (min) => {
     const _hour = Math.floor(min / 60);
@@ -106,17 +122,17 @@ const MetaData = ({
   toDate,
   onToDateChanged,
   count,
-  onCountChanged
+  onCountChanged,
 }) => {
   const classes = useStyles();
 
   const handleFromDateChanged = (e) => {
     onFromDateChanged(e.target.value);
-  }
+  };
 
   const handleToDateChanged = (e) => {
     onToDateChanged(e.target.value);
-  }
+  };
 
   const handleCountChange = (e) => {
     onCountChanged(e.target.value);
@@ -147,10 +163,10 @@ const MetaData = ({
         }}
       />
       <div className={styles.filterWide}>
-        <Select 
+        <Select
           onSelected={handleCountChange}
           value={count}
-          list={["Tickets",1,2,3,4,5,6,7,8]}
+          list={["Tickets", 1, 2, 3, 4, 5, 6, 7, 8]}
         />
       </div>
     </div>
@@ -405,23 +421,6 @@ const BookingFragment = ({ city, country, search }) => {
     ]
   );
 
-  const parseDate = (date) => (Date.parse(date));
-  const dateValid = (from, to) => {
-    if(from === "" || to === "") {
-      return false;
-    } 
-
-    const _from = parseDate(from);
-    const _to = parseDate(to);
-
-    if (_from > _to) {
-      return false;
-    }
-
-    return true;
-
-  }
-
   useEffect(() => {
     const loadDestinationAirports = async () => {
       const airportsResponse = await fetch(
@@ -435,7 +434,11 @@ const BookingFragment = ({ city, country, search }) => {
 
   useEffect(() => {
     const loadFlights = async () => {
-      if (sourceAirport === null || destinationAirport === null || !dateValid(dateFrom, dateTo)) {
+      if (
+        sourceAirport === null ||
+        destinationAirport === null ||
+        !dateValid(dateFrom, dateTo)
+      ) {
         return [];
       }
       const flightsResponse = await fetch(
@@ -448,11 +451,15 @@ const BookingFragment = ({ city, country, search }) => {
       setNonStopFlights(flightsList);
     };
     loadFlights();
-  }, [dateFrom, dateTo, destinationAirport, sourceAirport, dateValid]);
+  }, [dateFrom, dateTo, destinationAirport, sourceAirport]);
 
   useEffect(() => {
     const loadFlights = async () => {
-      if (sourceAirport === null || destinationAirport === null || !dateValid(dateFrom, dateTo)) {
+      if (
+        sourceAirport === null ||
+        destinationAirport === null ||
+        !dateValid(dateFrom, dateTo)
+      ) {
         return [];
       }
       const flightsResponse = await fetch(
@@ -464,11 +471,15 @@ const BookingFragment = ({ city, country, search }) => {
       setOneStopFlights(flightsList);
     };
     loadFlights();
-  }, [dateFrom, dateTo, destinationAirport, sourceAirport, dateValid]);
+  }, [dateFrom, dateTo, destinationAirport, sourceAirport]);
 
   useEffect(() => {
     const loadFlights = async () => {
-      if (sourceAirport === null || destinationAirport === null || !dateValid(dateFrom, dateTo)) {
+      if (
+        sourceAirport === null ||
+        destinationAirport === null ||
+        !dateValid(dateFrom, dateTo)
+      ) {
         return [];
       }
       const flightsResponse = await fetch(
@@ -480,7 +491,7 @@ const BookingFragment = ({ city, country, search }) => {
       setTwoStopFlights(flightsList);
     };
     loadFlights();
-  }, [dateFrom, dateTo, destinationAirport, sourceAirport, dateValid]);
+  }, [dateFrom, dateTo, destinationAirport, sourceAirport]);
 
   // Load list of superchains.
   useEffect(() => {
@@ -621,7 +632,7 @@ const BookingFragment = ({ city, country, search }) => {
 
   return (
     <>
-      <MetaData 
+      <MetaData
         fromDate={dateFrom}
         onFromDateChanged={setDateFrom}
         toDate={dateTo}

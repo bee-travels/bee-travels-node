@@ -32,6 +32,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const parseDate = (date) => Date.parse(date);
+const dateValid = (from, to) => {
+  if (from === "" || to === "") {
+    return false;
+  }
+
+  const _from = parseDate(from);
+  const _to = parseDate(to);
+
+  if (_from > _to) {
+    return false;
+  }
+
+  return true;
+};
+
 const ListItem = ({ superchain, name, cost, images }) => {
   return (
     <div className={styles.listItem}>
@@ -317,22 +333,6 @@ const BookingFragment = ({ country, city, search }) => {
     ]
   );
 
-  const parseDate = (date) => (Date.parse(date));
-  const dateValid = (from, to) => {
-    if(from === "" || to === "") {
-      return false;
-    } 
-
-    const _from = parseDate(from);
-    const _to = parseDate(to);
-
-    if (_from > _to) {
-      return false;
-    }
-
-    return true;
-  }
-
   // Load list of hotels.
   useEffect(() => {
     console.log("load hotel");
@@ -378,7 +378,6 @@ const BookingFragment = ({ country, city, search }) => {
     selectedTypes,
     dateFrom,
     dateTo,
-    dateValid,
   ]);
 
   // Load list of superchains.

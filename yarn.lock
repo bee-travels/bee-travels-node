@@ -8255,7 +8255,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:^3.1.0, hoist-non-react-statics@npm:^3.3.2":
+"hoist-non-react-statics@npm:^3.1.0, hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
@@ -8628,6 +8628,13 @@ fsevents@^1.2.7:
   version: 1.10.0
   resolution: "immer@npm:1.10.0"
   checksum: 2/9cec946ed092e0a9e5c33789e3bdddce2b1831ddb17eaade00be032ea5dcbb157a674e18e3050c84b451023ec9060a6ccc0f92ed54f637733ee410d81d0da8b9
+  languageName: node
+  linkType: hard
+
+"immer@npm:^7.0.5":
+  version: 7.0.5
+  resolution: "immer@npm:7.0.5"
+  checksum: 2/04e23e07250069be3a1cf1f3aa43b52d99db5c264645020b44610d45db16484bf5f3097efe37628535eacfe4553d83c8a053fb802c1cc139b4ddb3b97f9f3d69
   languageName: node
   linkType: hard
 
@@ -14347,10 +14354,33 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-is@npm:^16.6.0, react-is@npm:^16.7.0, react-is@npm:^16.8.0, react-is@npm:^16.8.1, react-is@npm:^16.8.4":
+"react-is@npm:^16.6.0, react-is@npm:^16.7.0, react-is@npm:^16.8.0, react-is@npm:^16.8.1, react-is@npm:^16.8.4, react-is@npm:^16.9.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: 2/11bcf1267a314a522615f626f3ce3727a3a24cdbf61c4d452add3550a7875326669631326cfb1ba3e92b6f72244c32ffecf93ad21c0cad8455d3e169d0e3f060
+  languageName: node
+  linkType: hard
+
+"react-redux@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "react-redux@npm:7.2.0"
+  dependencies:
+    "@babel/runtime": ^7.5.5
+    hoist-non-react-statics: ^3.3.0
+    loose-envify: ^1.4.0
+    prop-types: ^15.7.2
+    react-is: ^16.9.0
+  peerDependencies:
+    react: ^16.8.3
+    react-dom: "*"
+    react-native: "*"
+    redux: ^2.0.0 || ^3.0.0 || ^4.0.0-0
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 2/e4beaa6064a5354f65bdeaf22c90fb8bf3df1ec0bcecf7c568321c6eba0cdf4b432236a828cb53801c5815a83d5090f38738f67ed14fb8cfddd21abe5fba317c
   languageName: node
   linkType: hard
 
@@ -14627,6 +14657,25 @@ fsevents@^1.2.7:
   dependencies:
     esprima: ~1.0.4
   checksum: 2/07e889610301bd76995a1652f9eb7e2ec30e2705fd097e87169bd191a21e82e1709f63c91208b37694affa5717c1e91b24c4b51a5f37d390f0ab85dbbdb97b6e
+  languageName: node
+  linkType: hard
+
+"redux-devtools-extension@npm:^2.13.8":
+  version: 2.13.8
+  resolution: "redux-devtools-extension@npm:2.13.8"
+  peerDependencies:
+    redux: ^3.1.0 || ^4.0.0
+  checksum: 2/4375a0698238f658ca93e35209e488e2c493e1cbb449c52bbd4a6a0d118547bc38e0a0af594801cb3abe7d460508792f095614b54006bb7373e14515cd110a4f
+  languageName: node
+  linkType: hard
+
+"redux@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "redux@npm:4.0.5"
+  dependencies:
+    loose-envify: ^1.4.0
+    symbol-observable: ^1.2.0
+  checksum: 2/112739c2fb83ae2e18335d942a883b3ee14ebada31ff3a7924511a1f38a4278a762f5823491f3eb5083492de601ed76cb2687295c7d5db9a6e098c2542cdc05b
   languageName: node
   linkType: hard
 
@@ -16503,6 +16552,13 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
+"symbol-observable@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "symbol-observable@npm:1.2.0"
+  checksum: 2/268834a1d4cba19d40f367e5c2755f612969c8418e43a3be17408e392802a667f8bb542893440d58a080a8ea8da05ea98e27e472b9f4ff6fbda78a21a1a41c53
+  languageName: node
+  linkType: hard
+
 "symbol-tree@npm:^3.2.2":
   version: 3.2.4
   resolution: "symbol-tree@npm:3.2.4"
@@ -17002,6 +17058,7 @@ resolve@1.1.7:
     eslint-plugin-react: 7.x
     eslint-plugin-react-hooks: 2.x
     history: ^4.10.1
+    immer: ^7.0.5
     mapbox-gl: ^1.7.0
     nouislider: ^14.1.1
     openapi-comment-parser: ^0.3.4
@@ -17011,8 +17068,12 @@ resolve@1.1.7:
     react-autosuggest: ^9.4.3
     react-dom: ^16.13.1
     react-graph-vis: ^1.0.5
+    react-redux: ^7.2.0
     react-router-dom: ^5.1.2
     react-scripts: 3.4.1
+    redux: ^4.0.5
+    redux-devtools-extension: ^2.13.8
+    vis-network: ^7.9.0
   languageName: unknown
   linkType: soft
 
@@ -17397,6 +17458,22 @@ resolve@1.1.7:
     vis-data: ^6.2.1
     vis-util: ^3.0.0 || ^4.0.0
   checksum: 2/a860bc5456f6c89fb7109505db7fa77769059a712b5087201b144fcd20b765e856b2ac76a86e59aa4f9d12f36193684a534e9c6fcd5ac76e85b9c85293db7ce9
+  languageName: node
+  linkType: hard
+
+"vis-network@npm:^7.9.0":
+  version: 7.9.0
+  resolution: "vis-network@npm:7.9.0"
+  peerDependencies:
+    "@egjs/hammerjs": ^2.0.0
+    component-emitter: ^1.3.0
+    keycharm: ^0.2.0 || ^0.3.0
+    moment: ^2.24.0
+    timsort: ^0.3.0
+    uuid: ^3.4.0 || ^7.0.0 || ^8.0.0
+    vis-data: ^6.2.1
+    vis-util: ^3.0.0 || ^4.0.0
+  checksum: 2/0bda5d0d3222841a35f1b69089fe797f855c6dfbf9f5849ec4255722f909ff63c1ee7b6e6fda395a42cc7f384deb6d64e39f88f725c0437462b464623f1d31fb
   languageName: node
   linkType: hard
 
