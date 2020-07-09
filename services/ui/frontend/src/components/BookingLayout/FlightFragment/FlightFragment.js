@@ -100,8 +100,28 @@ const ListItem = ({ flight, cost }) => {
   }
 };
 
-const MetaData = () => {
+const MetaData = ({
+  fromDate,
+  onFromDateChanged,
+  toDate,
+  onToDateChanged,
+  count,
+  onCountChanged
+}) => {
   const classes = useStyles();
+
+  const handleFromDateChanged = (e) => {
+    onFromDateChanged(e.target.value);
+  }
+
+  const handleToDateChanged = (e) => {
+    onToDateChanged(e.target.value);
+  }
+
+  const handleCountChange = (e) => {
+    onCountChanged(e.target.value);
+  };
+
   return (
     <div className={styles.filters}>
       <TextField
@@ -109,6 +129,8 @@ const MetaData = () => {
         label="Date From"
         type="date"
         className={classes.textField}
+        onChange={handleFromDateChanged}
+        value={fromDate}
         InputLabelProps={{
           shrink: true,
         }}
@@ -118,12 +140,16 @@ const MetaData = () => {
         label="Date To"
         type="date"
         className={classes.textField}
+        onChange={handleToDateChanged}
+        value={toDate}
         InputLabelProps={{
           shrink: true,
         }}
       />
       <div className={styles.filterWide}>
         <Select 
+          onSelected={handleCountChange}
+          value={count}
           list={["Tickets",1,2,3,4,5,6,7,8]}
         />
       </div>
@@ -314,7 +340,7 @@ const kebabCase = (val) => {
   return val.toLowerCase().split(" ").join("-");
 };
 
-const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
+const BookingFragment = ({ city, country, search }) => {
   const queryObject = useMemo(() => queryString.parse(search), [search]);
   const selectedAirlines = useMemo(() => arrayify(queryObject[AIRLINES]), [
     queryObject,
@@ -352,6 +378,9 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
   const [source, setSource] = useState(null);
   const [sourceAirport, setSourceAirport] = useState(null);
   const [destinationAirport, setDestinationAirport] = useState(null);
+  const [dateFrom, setDateFrom] = React.useState("");
+  const [dateTo, setDateTo] = React.useState("");
+  const [count, setCount] = React.useState(0);
 
   const updateQuery = useCallback(
     (params) => {
@@ -376,6 +405,23 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
     ]
   );
 
+  const parseDate = (date) => (Date.parse(date));
+  const dateValid = (from, to) => {
+    if(from === "" || to === "") {
+      return false;
+    } 
+
+    const _from = parseDate(from);
+    const _to = parseDate(to);
+
+    if (_from > _to) {
+      return false;
+    }
+
+    return true;
+
+  }
+
   useEffect(() => {
     const loadDestinationAirports = async () => {
       const airportsResponse = await fetch(
@@ -389,7 +435,7 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
 
   useEffect(() => {
     const loadFlights = async () => {
-      if (sourceAirport === null || destinationAirport === null) {
+      if (sourceAirport === null || destinationAirport === null || !dateValid(dateFrom, dateTo)) {
         return [];
       }
       const flightsResponse = await fetch(
@@ -406,7 +452,7 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
 
   useEffect(() => {
     const loadFlights = async () => {
-      if (sourceAirport === null || destinationAirport === null) {
+      if (sourceAirport === null || destinationAirport === null || !dateValid(dateFrom, dateTo)) {
         return [];
       }
       const flightsResponse = await fetch(
@@ -422,7 +468,7 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
 
   useEffect(() => {
     const loadFlights = async () => {
-      if (sourceAirport === null || destinationAirport === null) {
+      if (sourceAirport === null || destinationAirport === null || !dateValid(dateFrom, dateTo)) {
         return [];
       }
       const flightsResponse = await fetch(
@@ -575,7 +621,14 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
 
   return (
     <>
-      <MetaData />
+      <MetaData 
+        fromDate={dateFrom}
+        onFromDateChanged={setDateFrom}
+        toDate={dateTo}
+        onToDateChanged={setDateTo}
+        count={count}
+        onCountChanged={setCount}
+      />
       <Filters
         selectedTypes={selectedTypes}
         selectedAirlines={selectedAirlines}

@@ -28,6 +28,7 @@ const TabHolder = ({
       <div className={styles.tabRow}>
         {tabs.map((tab, i) => (
           <div
+            key={i}
             className={
               tab.toLowerCase() === active ? styles.tabActive : styles.tab
             }
