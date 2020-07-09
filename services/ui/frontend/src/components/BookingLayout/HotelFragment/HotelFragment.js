@@ -4,6 +4,8 @@ import styles from "./HotelFragment.module.css";
 import DoubleSlider from "./DoubleSlider";
 import MultiSelect from "./MultiSelect";
 import Select from "./Select";
+import { TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 import globalHistory from "globalHistory";
 
@@ -17,6 +19,18 @@ import {
 } from "components/common/query-constants";
 
 const DEFAULT_MAX = 700;
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
 
 const ListItem = ({ superchain, name, cost, images }) => {
   return (
@@ -32,6 +46,37 @@ const ListItem = ({ superchain, name, cost, images }) => {
         <div className={styles.listItemTitle}>{name}</div>
         <div className={styles.listItemSub}>{superchain}</div>
         <div className={styles.listItemCost}>{cost}</div>
+      </div>
+    </div>
+  );
+};
+
+const MetaData = () => {
+  const classes = useStyles();
+  return (
+    <div className={styles.filters}>
+      <TextField
+        id="fromDate"
+        label="Date From"
+        type="date"
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      <TextField
+        id="toDate"
+        label="Date To"
+        type="date"
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      <div className={styles.filterNarrow}>
+        <Select 
+          list={["Hotel Rooms",1,2,3,4,5,6,7,8]}
+        />
       </div>
     </div>
   );
@@ -376,6 +421,7 @@ const BookingFragment = ({ country, city, search, dateTo, dateFrom }) => {
 
   return (
     <>
+      <MetaData />
       <Filters
         selectedTypes={selectedTypes}
         selectedHotels={selectedHotels}

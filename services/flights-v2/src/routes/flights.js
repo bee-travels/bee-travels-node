@@ -11,7 +11,7 @@ import {
 import Jaeger from "./../jaeger";
 import CircuitBreaker from "opossum";
 
-import {TagNotFoundError} from "../errors";
+import {TagNotFoundError, IllegalDateError} from "../errors";
 
 const router = Router();
 
@@ -112,11 +112,17 @@ router.get("/direct/:from/:to", async (req, res, next) => {
   const context = new Jaeger("direct", req, res);
   const { from, to } = req.params;
   const { dateFrom, dateTo } = req.query;
+
   try {
+    const _dateFrom = parseDate(dateFrom);
+    const _dateTo = parseDate(dateTo);
+    if (isNaN(_dateFrom) || isNaN(_dateTo)) {
+      throw new IllegalDateError("needs a date");
+    }
     const breaker = new CircuitBreaker(getDirectFlights, opossumOptions);
     const data = await breaker.fire(from, to, {
-      dateFrom: parseDate(dateFrom) || undefined,
-      dateTo: parseDate(dateTo) || undefined,
+      dateFrom: _dateFrom,
+      dateTo: _dateTo,
     }, context);
     res.json(data);
   } catch (e) {
@@ -139,10 +145,15 @@ router.get("/onestop/:from/:to", async (req, res, next) => {
   const { from, to } = req.params;
   const { dateFrom, dateTo } = req.query;
   try {
+    const _dateFrom = parseDate(dateFrom);
+    const _dateTo = parseDate(dateTo);
+    if (isNaN(_dateFrom) || isNaN(_dateTo)) {
+      throw new IllegalDateError("needs a date");
+    }
     const breaker = new CircuitBreaker(getOneStopFlights, opossumOptions);
     const data = await breaker.fire(from, to, {
-      dateFrom: parseDate(dateFrom) || undefined,
-      dateTo: parseDate(dateTo) || undefined,
+      dateFrom: _dateFrom,
+      dateTo: _dateTo,
     }, context);
     res.json(data);
   } catch (e) {
@@ -165,10 +176,15 @@ router.get("/twostop/:from/:to", async (req, res, next) => {
   const { from, to } = req.params;
   const { dateFrom, dateTo } = req.query;
   try {
+    const _dateFrom = parseDate(dateFrom);
+    const _dateTo = parseDate(dateTo);
+    if (isNaN(_dateFrom) || isNaN(_dateTo)) {
+      throw new IllegalDateError("needs a date");
+    }
     const breaker = new CircuitBreaker(getTwoStopFlights, opossumOptions);
     const data = await breaker.fire(from, to, {
-      dateFrom: parseDate(dateFrom) || undefined,
-      dateTo: parseDate(dateTo) || undefined,
+      dateFrom: _dateFrom,
+      dateTo: _dateTo,
     }, context);
     res.json(data);
   } catch (e) {

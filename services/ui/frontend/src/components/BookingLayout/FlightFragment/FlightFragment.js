@@ -3,6 +3,8 @@ import queryString from "query-string";
 import styles from "./FlightFragment.module.css";
 import DoubleSlider from "./DoubleSlider";
 import MultiSelect from "./MultiSelect";
+import { TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import Select, { CustomSelectObject } from "./Select";
 
 import globalHistory from "globalHistory";
@@ -23,14 +25,26 @@ const fragmentEndpoint = "/api/v1/flights";
 
 const DEFAULT_MAX = 700;
 
-const ListItem = ({flight, cost}) => {
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
+
+const ListItem = ({ flight, cost }) => {
   const minuteToHour = (min) => {
     const _hour = Math.floor(min / 60);
     const _minute = Math.floor(min % 60);
     const hour = ("0" + _hour).slice(-2);
     const minute = ("0" + _minute).slice(-2);
     return `${hour}:${minute}`;
-  }
+  };
 
   const minuteToDuration = (min) => {
     const _hour = Math.floor(min / 60);
@@ -38,9 +52,9 @@ const ListItem = ({flight, cost}) => {
     const hour = ("0" + _hour).slice(-2);
     const minute = ("0" + _minute).slice(-2);
     return `${hour} Hour and ${minute} Minute`;
-  }
+  };
 
-  if(!flight.flight_three_time && !flight.flight_two_time) {
+  if (!flight.flight_three_time && !flight.flight_two_time) {
     // not a one or two stop flight
     // has to be direct flight
     return (
@@ -49,12 +63,13 @@ const ListItem = ({flight, cost}) => {
           <div className={styles.listItemSub}>Nonstop</div>
           <div className={styles.listItemTitle}>{flight.airlines}</div>
           <div className={styles.listItemCost}>{cost}</div>
-          <div className={styles.listItemSub}>{minuteToDuration(flight.time)}</div>
+          <div className={styles.listItemSub}>
+            {minuteToDuration(flight.time)}
+          </div>
         </div>
       </div>
     );
-  }
-  else if(!flight.flight_three_time) {
+  } else if (!flight.flight_three_time) {
     // not a two stop flight
     // has to be a one stop flight
     return (
@@ -63,10 +78,12 @@ const ListItem = ({flight, cost}) => {
           <div className={styles.listItemSub}>1 Stop</div>
           <div className={styles.listItemTitle}>{flight.airlines}</div>
           <div className={styles.listItemCost}>{cost}</div>
-          <div className={styles.listItemSub}>{minuteToDuration(flight.time)}</div>
+          <div className={styles.listItemSub}>
+            {minuteToDuration(flight.time)}
+          </div>
         </div>
       </div>
-    )
+    );
   } else {
     return (
       <div className={styles.listItem}>
@@ -74,13 +91,44 @@ const ListItem = ({flight, cost}) => {
           <div className={styles.listItemSub}>2 Stop</div>
           <div className={styles.listItemTitle}>{flight.airlines}</div>
           <div className={styles.listItemCost}>{cost}</div>
-          <div className={styles.listItemSub}>{minuteToDuration(flight.time)}</div>
+          <div className={styles.listItemSub}>
+            {minuteToDuration(flight.time)}
+          </div>
         </div>
       </div>
-    )
+    );
   }
+};
 
-
+const MetaData = () => {
+  const classes = useStyles();
+  return (
+    <div className={styles.filters}>
+      <TextField
+        id="fromDate"
+        label="Date From"
+        type="date"
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      <TextField
+        id="toDate"
+        label="Date To"
+        type="date"
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      <div className={styles.filterWide}>
+        <Select 
+          list={["Tickets",1,2,3,4,5,6,7,8]}
+        />
+      </div>
+    </div>
+  );
 };
 
 const Filters = ({
@@ -120,11 +168,11 @@ const Filters = ({
 
   const handleSourceAirportChange = (e) => {
     onSourceAirportChange(e.target.value);
-  }
+  };
 
   const handleDestinationAirportChange = (e) => {
     onDestinationAirportChange(e.target.value);
-  }
+  };
 
   const handleCurrencyChange = (e) => {
     onCurrencyChange(e.target.value);
@@ -324,7 +372,7 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
       minHotelPrice,
       selectedCurrency,
       selectedTypes,
-      selectedAirlines
+      selectedAirlines,
     ]
   );
 
@@ -429,7 +477,15 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
     const loadSources = async () => {
       const sourceResponse = await fetch(`${fragmentEndpoint}/airports/all`);
       const source = await sourceResponse.json();
-      source.sort((a,b) => a.city === b.city ? a.country > b.country ? 1 : -1 : a.city > b.city ? 1 : -1); 
+      source.sort((a, b) =>
+        a.city === b.city
+          ? a.country > b.country
+            ? 1
+            : -1
+          : a.city > b.city
+          ? 1
+          : -1
+      );
       setSourceList(source);
     };
 
@@ -479,7 +535,6 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
     [updateQuery]
   );
 
-
   const handleAirlinesSelectionChange = useCallback(
     (airlines) => {
       updateQuery({ [AIRLINES]: airlines });
@@ -520,6 +575,7 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
 
   return (
     <>
+      <MetaData />
       <Filters
         selectedTypes={selectedTypes}
         selectedAirlines={selectedAirlines}
@@ -544,21 +600,18 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
         onMinMaxSelectionChange={handleMinMaxSelectionChange}
         onCurrencyChange={handleCurrencyChange}
       />
-      {[...oneStopFlights, ...twoStopFlights, ...nonStopFlights].sort((a, b) => a.time > b.time ? 1 : -1).map((flight) => {
-        const priceString = priceConversion(flight.cost, {
-          from: exchangeRates.USD,
-          to: exchangeRates[selectedCurrency],
-        }).toLocaleString(undefined, {
-          style: "currency",
-          currency: selectedCurrency,
-        });
-        return (
-          <ListItem
-            flight={flight}
-            cost={priceString}
-          />
-        );
-      })}
+      {[...oneStopFlights, ...twoStopFlights, ...nonStopFlights]
+        .sort((a, b) => a.time - b.time)
+        .map((flight) => {
+          const priceString = priceConversion(flight.cost, {
+            from: exchangeRates.USD,
+            to: exchangeRates[selectedCurrency],
+          }).toLocaleString(undefined, {
+            style: "currency",
+            currency: selectedCurrency,
+          });
+          return <ListItem flight={flight} cost={priceString} />;
+        })}
     </>
   );
 };

@@ -42,7 +42,7 @@ export async function getFilterList(filter) {
   }
 }
 
-export async function getAirports(city, country, code) {
+export async function getAirports(city, country, code, context) {
   let data;
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
@@ -89,14 +89,16 @@ export async function getAirport(id, context) {
   return data;
 }
 
-export async function getDirectFlights(from, to, filters) {
+export async function getDirectFlights(from, to, filters, context) {
   let flights;
   if (filters.dateTo - filters.dateFrom < 0) {
     throw new IllegalDateError("from date can not be greater than to date");
   }
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      flights = await getDirectFlightsFromPostgres(from, to);
+      context.start("getDirectFlightsFromPostgres");
+      flights = await getDirectFlightsFromPostgres(from, to, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
@@ -104,41 +106,55 @@ export async function getDirectFlights(from, to, filters) {
   return updateCost(flights, filters.dateFrom);
 }
 
-export async function getOneStopFlights(from, to, filters) {
+export async function getOneStopFlights(from, to, filters, context) {
   let flights;
   if (filters.dateTo - filters.dateFrom < 0) {
     throw new IllegalDateError("from date can not be greater than to date");
   }
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      flights = await getOneStopFlightsFromPostgres(from, to);
+      context.start("getOneStopFlightsFromPostgres");
+      flights = await getOneStopFlightsFromPostgres(from, to, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
-  return updateCost(flights, filters.dateFrom);
+  return updateCost(flights, filters.dateFrom, 0.75);
 }
 
-export async function getTwoStopFlights(from, to, filters) {
+export async function getTwoStopFlights(from, to, filters, context) {
   let flights;
   if (filters.dateTo - filters.dateFrom < 0) {
     throw new IllegalDateError("from date can not be greater than to date");
   }
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
-      flights = await getTwoStopFlightsFromPostgres(from, to);
+      context.start("getTwoStopFlightsFromPostgres");
+      flights = await getTwoStopFlightsFromPostgres(from, to, context);
+      context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
   }
-  return updateCost(flights, filters.dateFrom);
+  return updateCost(flights, filters.dateFrom, 0.5);
 }
 
-function updateCost(data, date) {
+
+export async function readinessCheck() {
+  switch (process.env.FLIGHTS_DATABASE) {
+    case "postgres":
+      return await postgresReadinessCheck();
+    default:
+      return false;
+  }
+}
+
+function updateCost(data, date, scale = 1) {
   const multiplier = dateMultiplier(date);
 
   let res = data.map(d => {
-    d["cost"] = d["cost"] * multiplier;
+    d["cost"] = d["cost"] * multiplier * scale;
     return d;
   });
   return res;

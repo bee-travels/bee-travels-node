@@ -3,6 +3,8 @@ import queryString from "query-string";
 import styles from "./CarFragment.module.css";
 import DoubleSlider from "./DoubleSlider";
 import MultiSelect from "./MultiSelect";
+import { TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import Select from "./Select";
 
 import globalHistory from "globalHistory";
@@ -21,6 +23,18 @@ const fragmentEndpoint = "/api/v1/cars";
 
 const DEFAULT_MAX = 700;
 
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
+
 const ListItem = ({ superchain, name, cost, image }) => {
   return (
     <div className={styles.listItem}>
@@ -35,6 +49,37 @@ const ListItem = ({ superchain, name, cost, image }) => {
         <div className={styles.listItemTitle}>{name}</div>
         <div className={styles.listItemSub}>{superchain}</div>
         <div className={styles.listItemCost}>{cost}</div>
+      </div>
+    </div>
+  );
+};
+
+const MetaData = () => {
+  const classes = useStyles();
+  return (
+    <div className={styles.filters}>
+      <TextField
+        id="fromDate"
+        label="Date From"
+        type="date"
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      <TextField
+        id="toDate"
+        label="Date To"
+        type="date"
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      <div className={styles.filterNarrow}>
+        <Select 
+          list={["Passanger Count",1,2,3,4,5,6,7,8]}
+        />
       </div>
     </div>
   );
@@ -415,6 +460,7 @@ const BookingFragment = ({ city, country, search, dateFrom, dateTo }) => {
 
   return (
     <>
+      <MetaData />
       <Filters
         selectedTypes={selectedTypes}
         selectedStyles={selectedCarStyle}
