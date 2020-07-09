@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import globalHistory from "globalHistory";
 import Graph from "react-graph-vis";
+import {Provider} from "react-redux";
+import {createStore} from "redux";
+import {composeWithDevTools} from "redux-devtools-extension";
+
+import reducer from 'redux/reducer';
+import init from 'redux/init';
 
 import BookingLayout from "components/BookingLayout/BookingLayout";
 import HomeLayout from "components/HomeLayout/HomeLayout";
@@ -136,15 +142,27 @@ function GraphPage() {
   );
 }
 
-const CustomRouter = () => (
-  <Router history={globalHistory}>
-    <Switch>
-      <Route exact path="/" component={HomeLayout} />
-      <Route path="/destinations/:country/:city" component={BookingLayout} />
-      <Route path="/super-secret" component={GraphPage} />
-      <Route component={ErrorLayout} />
-    </Switch>
-  </Router>
-);
+const CustomRouter = () => {
+  const store = createStore(
+    reducer,
+    init(),
+    composeWithDevTools({ name: "bee-travels" })()
+  );
+  return (
+    <Provider store={store}>
+      <Router history={globalHistory}>
+        <Switch>
+          <Route exact path="/" component={HomeLayout} />
+          <Route
+            path="/destinations/:country/:city"
+            component={BookingLayout}
+          />
+          <Route path="/super-secret" component={GraphPage} />
+          <Route component={ErrorLayout} />
+        </Switch>
+      </Router>
+    </Provider>
+  );
+};
 
 export default CustomRouter;

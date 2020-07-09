@@ -7,11 +7,16 @@ const { getCurrency, getCountry } = require("./dataHandler");
 const CurrencyNotFoundError = require("./../errors/CurrencyNotFoundError");
 const CountryNotFoundError = require("./../errors/CountryNotFoundError");
 
+const context = {
+  start: () => {},
+  stop: () => {},
+}
+
 chai.use(chaiAsPromised);
 
 describe("getCountry", () => {
   it("returns metadata given a valid country", async () => {
-    const data = await getCountry("South Africa");
+    const data = await getCountry("South Africa", context);
 
     expect(data).to.deep.equal({
       country: "South Africa",
@@ -21,7 +26,7 @@ describe("getCountry", () => {
   });
 
   it("throws given a fake country", async () => {
-    await expect(getCountry("Westeros")).to.eventually.be.rejectedWith(
+    await expect(getCountry("Westeros", context)).to.eventually.be.rejectedWith(
       CountryNotFoundError
     );
   });
@@ -29,7 +34,7 @@ describe("getCountry", () => {
 
 describe("getCurrency", () => {
   it("returns metadata with one country given a valid code", async () => {
-    const data = await getCurrency("ZAR");
+    const data = await getCurrency("ZAR", context);
     expect(data).to.deep.equal({
       code: "ZAR",
       currency: "South African rand",
@@ -38,7 +43,7 @@ describe("getCurrency", () => {
   });
 
   it("returns metadata with many countries given a valid code", async () => {
-    const data = await getCurrency("USD");
+    const data = await getCurrency("USD", context);
     const expectedCountries = [
       "American Samoa",
       "Bonaire",
@@ -73,7 +78,7 @@ describe("getCurrency", () => {
 
   it("throws given a fake code", async () => {
     const fakeCode = "ABCD";
-    await expect(getCurrency(fakeCode)).to.eventually.be.rejectedWith(
+    await expect(getCurrency(fakeCode, context)).to.eventually.be.rejectedWith(
       CurrencyNotFoundError
     );
   });
