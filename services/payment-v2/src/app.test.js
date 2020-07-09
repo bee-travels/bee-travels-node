@@ -42,7 +42,7 @@ describe("Payment API Endpoint Test Group", () => {
   });
 
   it("should send invalid cc in body and return an `Card expired this year` 400 error to : /api/v1/payment/charge POST", (done) => {
-    var request_body = getExampleChargeData(5, 2020);
+    let request_body = getExampleChargeData(5, 2020);
 
     chai
       .request(host)
@@ -59,7 +59,7 @@ describe("Payment API Endpoint Test Group", () => {
   });
 
   it("should send invalid cc in body and return an `Card expired` 400 error to : /api/v1/payment/charge POST", (done) => {
-    var request_body = getExampleChargeData(2, 1967);
+    let request_body = getExampleChargeData(2, 1967);
 
     chai
       .request(host)

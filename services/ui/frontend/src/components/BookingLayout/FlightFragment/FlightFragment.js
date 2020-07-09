@@ -448,7 +448,7 @@ const BookingFragment = ({ city, country, search }) => {
       setNonStopFlights(flightsList);
     };
     loadFlights();
-  }, [dateFrom, dateTo, destinationAirport, sourceAirport]);
+  }, [dateFrom, dateTo, destinationAirport, sourceAirport, dateValid]);
 
   useEffect(() => {
     const loadFlights = async () => {
@@ -464,7 +464,7 @@ const BookingFragment = ({ city, country, search }) => {
       setOneStopFlights(flightsList);
     };
     loadFlights();
-  }, [dateFrom, dateTo, destinationAirport, sourceAirport]);
+  }, [dateFrom, dateTo, destinationAirport, sourceAirport, dateValid]);
 
   useEffect(() => {
     const loadFlights = async () => {
@@ -480,7 +480,7 @@ const BookingFragment = ({ city, country, search }) => {
       setTwoStopFlights(flightsList);
     };
     loadFlights();
-  }, [dateFrom, dateTo, destinationAirport, sourceAirport]);
+  }, [dateFrom, dateTo, destinationAirport, sourceAirport, dateValid]);
 
   // Load list of superchains.
   useEffect(() => {

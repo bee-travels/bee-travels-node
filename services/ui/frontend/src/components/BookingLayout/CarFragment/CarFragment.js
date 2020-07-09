@@ -398,6 +398,7 @@ const BookingFragment = ({ city, country, search }) => {
     selectedTypes,
     dateFrom, 
     dateTo,
+    dateValid,
   ]);
 
   // Load list of superchains.
