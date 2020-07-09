@@ -116,7 +116,7 @@ services:
       - couch
       - postgres
       - mongo
-    image: beetravels/data-gen-airports:ed7e5b36a9aa2905b923e2841e58cdcee01ebc54curl l
+    image: beetravels/data-gen-airports:ed7e5b36a9aa2905b923e2841e58cdcee01ebc54
     restart: on-failure
     environment:
       - PG_USER=postgres
