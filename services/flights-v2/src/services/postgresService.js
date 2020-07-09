@@ -18,7 +18,6 @@ export async function getFlightInfoFromPostgres(filter) {
 
     const res = await client.query(statement);
     let result = res.rows.map((row) => row.airlines);
-    console.log(result);
     return result;
   } catch (e) {
     console.log(e);

@@ -181,10 +181,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [
         "sinon",
         "npm:9.0.2"
-      ],
-      [
-        "vis-network",
-        "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.6.10"
       ]
     ],
     "locationBlacklistData": [
@@ -215,8 +211,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nyc", "npm:15.0.1"],
             ["openapi-comment-parser", "npm:0.3.4"],
             ["prettier", "npm:2.0.5"],
-            ["sinon", "npm:9.0.2"],
-            ["vis-network", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.6.10"]
+            ["sinon", "npm:9.0.2"]
           ],
           "linkType": "SOFT",
         }]
@@ -4554,8 +4549,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["nyc", "npm:15.0.1"],
             ["openapi-comment-parser", "npm:0.3.4"],
             ["prettier", "npm:2.0.5"],
-            ["sinon", "npm:9.0.2"],
-            ["vis-network", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.6.10"]
+            ["sinon", "npm:9.0.2"]
           ],
           "linkType": "SOFT",
         }]
@@ -19766,31 +19760,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/unplugged/vis-network-virtual-63929efc36/node_modules/vis-network/",
           "packageDependencies": [
             ["vis-network", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:7.9.0"],
-            ["@egjs/hammerjs", null],
-            ["component-emitter", null],
-            ["keycharm", null],
-            ["moment", null],
-            ["timsort", null],
-            ["uuid", null],
-            ["vis-data", null],
-            ["vis-util", null]
-          ],
-          "packagePeers": [
-            "component-emitter",
-            "@egjs/hammerjs",
-            "keycharm",
-            "moment",
-            "timsort",
-            "uuid",
-            "vis-data",
-            "vis-util"
-          ],
-          "linkType": "HARD",
-        }],
-        ["virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.6.10", {
-          "packageLocation": "./.yarn/unplugged/vis-network-virtual-02da243617/node_modules/vis-network/",
-          "packageDependencies": [
-            ["vis-network", "virtual:b3314844362afa8fdfb37ec871ac4e0ed04e799956c7d49f79c8ce8708b080d6ccac670a1afccf0ee9ef0a6cfd59e9c1045c634c248c46462230b1b6379bf206#npm:7.6.10"],
             ["@egjs/hammerjs", null],
             ["component-emitter", null],
             ["keycharm", null],
