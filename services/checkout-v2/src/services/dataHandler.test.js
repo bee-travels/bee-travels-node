@@ -8,16 +8,16 @@ const NotFoundError = require("./../errors/NotFoundError");
 
 chai.use(chaiAsPromised);
 
-describe("getData", () => {
-  it("works", async () => {
-    const data = await getData();
+// describe("getData", () => {
+//   it("works", async () => {
+//     const data = await getData();
 
-    expect(data).to.deep.equal("success");
-  });
+//     expect(data).to.deep.equal("success");
+//   });
 
-  // it("throws", async () => {
-  //   await expect(getData()).to.eventually.be.rejectedWith(
-  //     NotFoundError
-  //   );
-  // });
-});
+// it("throws", async () => {
+//   await expect(getData()).to.eventually.be.rejectedWith(
+//     NotFoundError
+//   );
+// });
+// });

@@ -76,31 +76,31 @@ chai.use(chaiHttp);
 // });
 
 //D.R.Y. smell ./services/dataHandler has same fxn but async await promise mismatch not solved in it()
-function getExampleChargeData(exp_month, exp_year) {
-  return {
-    invoice: "invoice_73BC3",
-    statement_descriptor: "BeeTravels.com/r/73BC3",
-    amount: 499.99,
-    currency: "USD",
-    status: "unprocessed",
-    billing_details: {
-      name: "John Doe",
-      phone: "+1 (415) 777 8888",
-      email: null,
-      address: {
-        line1: "42 Arnold Lane",
-        line2: "#747",
-        city: "Madrid",
-        postal_code: "76NE",
-        state: null,
-        country: "Spain",
-      },
-    },
-    payment_method_details: {
-      creditcard_number: "4242 4242 4242 4242",
-      exp_month: exp_month,
-      exp_year: exp_year,
-      cvc: "0017",
-    },
-  };
-}
+// function getExampleChargeData(exp_month, exp_year) {
+//   return {
+//     invoice: "invoice_73BC3",
+//     statement_descriptor: "BeeTravels.com/r/73BC3",
+//     amount: 499.99,
+//     currency: "USD",
+//     status: "unprocessed",
+//     billing_details: {
+//       name: "John Doe",
+//       phone: "+1 (415) 777 8888",
+//       email: null,
+//       address: {
+//         line1: "42 Arnold Lane",
+//         line2: "#747",
+//         city: "Madrid",
+//         postal_code: "76NE",
+//         state: null,
+//         country: "Spain",
+//       },
+//     },
+//     payment_method_details: {
+//       creditcard_number: "4242 4242 4242 4242",
+//       exp_month: exp_month,
+//       exp_year: exp_year,
+//       cvc: "0017",
+//     },
+//   };
+// }
