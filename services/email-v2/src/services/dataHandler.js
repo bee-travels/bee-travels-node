@@ -7,7 +7,7 @@ export async function sendEmail(to, from, subject, body, context) {
     to: to,
     from: from,
     subject: subject,
-    text: body,
+    html: body,
   };
 
   try {

@@ -218,7 +218,7 @@ services:
       - payment
       - email-service
     environment:
-      - CHECKOUT_DATABASE=postgres
+      - CHECKOUT_DATABASE=${CHECKOUT_DATABASE}
       - CHECKOUT_PG_HOST=postgres
       - CHECKOUT_PG_USER=postgres
       - CHECKOUT_PG_PASSWORD=admin

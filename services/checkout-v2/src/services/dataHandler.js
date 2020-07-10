@@ -4,10 +4,11 @@ import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
 import {
   buildCheckoutPostgresQuery,
   setCheckoutDataToPostgres,
+  postgresReadinessCheck,
 } from "./postgresService";
 
-import processPayment from "./paymentService";
-import sendMail from "./emailService";
+import { processPayment, paymentReadinessCheck } from "./paymentService";
+import { sendMail, emailReadinessCheck } from "./emailService";
 
 export async function processCheckout(context, checkoutObject) {
   isValid(checkoutObject.cartItems);
@@ -65,11 +66,21 @@ function isValid(cartItems) {
   }
 }
 
-export function readinessCheck() {
-  //db2 or postGres
-  //call
-  //email svc
-  //payment svc
+export async function readinessCheck() {
+  try {
+    let postgresIsReady;
+    switch (process.env.CHECKOUT_DATABASE) {
+      case "postgres":
+        postgresIsReady = await postgresReadinessCheck();
+        break;
+      default:
+        postgresIsReady = false;
+    }
+    const paymentIsReady = await paymentReadinessCheck();
+    const emailIsReady = await emailReadinessCheck();
 
-  return true;
+    return postgresIsReady && paymentIsReady && emailIsReady;
+  } catch (e) {
+    return false;
+  }
 }

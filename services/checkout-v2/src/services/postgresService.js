@@ -110,3 +110,20 @@ export async function setCheckoutDataToPostgres(query, context) {
     client.end();
   }
 }
+
+export async function postgresReadinessCheck() {
+  const client = new Client({
+    host: process.env.CHECKOUT_PG_HOST,
+    user: process.env.CHECKOUT_PG_USER,
+    password: process.env.CHECKOUT_PG_PASSWORD,
+  });
+
+  try {
+    await client.connect();
+  } catch (err) {
+    return false;
+  } finally {
+    client.end();
+  }
+  return true;
+}
