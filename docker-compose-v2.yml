@@ -197,6 +197,8 @@ services:
       - "9301:9301"
     depends_on:
       - base
+    environment:
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
 
   payment:
     build: services/payment-v2
