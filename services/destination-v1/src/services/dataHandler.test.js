@@ -6,6 +6,11 @@ chai.use(chaiJsonSchema);
 
 const { getCities, getCity } = require("./dataHandler");
 
+const context = {
+  start: () => {},
+  stop: () => {},
+}
+
 const destinationSchema = {
   title: "destination schema v1",
   type: "object",
@@ -50,14 +55,14 @@ const cityListSchema = {
 
 describe("getCities", () => {
   it("returns all cities", async () => {
-    const data = await getCities();
+    const data = await getCities(context);
     expect(data).to.have.jsonSchema(cityListSchema);
   });
 });
 
 describe("getCity", () => {
   it("returns city given valid country and city name", async () => {
-    const data = await getCity("united-states", "new-york");
+    const data = await getCity("united-states", "new-york", context);
     expect(data).to.have.jsonSchema(destinationSchema);
   });
 });

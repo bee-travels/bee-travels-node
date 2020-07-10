@@ -79,7 +79,7 @@ export async function getHotelDataFromPostgres(query, context) {
     context.stop();
 
     const statement =
-      "SELECT hotels.id, hotels.hotel_id, hotels.city, hotels.country, hotels.cost, hotels.images, hotel_info.superchain, hotel_info.type, hotel_info.name FROM hotels INNER JOIN hotel_info ON hotels.hotel_id = hotel_info.id WHERE " +
+      "SELECT hotels.id, hotels.hotel_id, hotels.city, hotels.country, hotels.cost, hotels.images, hotels.tags, hotel_info.superchain, hotel_info.type, hotel_info.name FROM hotels INNER JOIN hotel_info ON hotels.hotel_id = hotel_info.id WHERE " +
       query.statement;
     context.start("postgresQuery");
     const res = await client.query(statement, query.values);

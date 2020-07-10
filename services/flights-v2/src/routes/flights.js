@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  getFilterList,
   getAirport,
   getAirports,
   getAirportsList,
@@ -10,13 +11,35 @@ import {
 import Jaeger from "./../jaeger";
 import CircuitBreaker from "opossum";
 
+import {TagNotFoundError, IllegalDateError} from "../errors";
+
 const router = Router();
 
 const opossumOptions = {
-  timeout: 15000, // If our function takes longer than 15 seconds, trigger a failure
+  timeout: 30000, // If our function takes longer than 15 seconds, trigger a failure
   errorThresholdPercentage: 50, // When 50% of requests fail, trip the circuit
   resetTimeout: 30000, // After 30 seconds, try again.
 };
+
+/**
+ * GET /api/v1/flights/info/{filter}
+ * @description Get info about flights
+ * @pathParam filter info to look up
+ * @response 200 - OK
+ * @response 400 - Error
+ */
+router.get("/info/:filter", async (req, res, next) => {
+  const { filter } = req.params;
+  try {
+    const data = await getFilterList(filter);
+    res.json(data);
+  } catch (e) {
+    if (e instanceof TagNotFoundError) {
+      return res.status(400).json({ error: e.message });
+    }
+    next(e);
+  }
+});
 
 /**
  * GET /api/v1/flights/airports
@@ -80,15 +103,27 @@ router.get("/airports/:id", async (req, res, next) => {
  * @description Get all direct flight to destination
  * @pathParam from source airport id
  * @pathParam to destination airport id
+ * @queryParam {string} dateFrom - Date From
+ * @queryParam {string} dateTo - Date To
  * @response 200 - OK
  * @response 400 - Error
  */
 router.get("/direct/:from/:to", async (req, res, next) => {
   const context = new Jaeger("direct", req, res);
   const { from, to } = req.params;
+  const { dateFrom, dateTo } = req.query;
+
   try {
+    const _dateFrom = parseDate(dateFrom);
+    const _dateTo = parseDate(dateTo);
+    if (isNaN(_dateFrom) || isNaN(_dateTo)) {
+      throw new IllegalDateError("needs a date");
+    }
     const breaker = new CircuitBreaker(getDirectFlights, opossumOptions);
-    const data = await breaker.fire(from, to, context);
+    const data = await breaker.fire(from, to, {
+      dateFrom: _dateFrom,
+      dateTo: _dateTo,
+    }, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -100,15 +135,26 @@ router.get("/direct/:from/:to", async (req, res, next) => {
  * @description Get all one stop flight to destination
  * @pathParam from source airport id
  * @pathParam to destination airport id
+ * @queryParam {string} dateFrom - Date From
+ * @queryParam {string} dateTo - Date To
  * @response 200 - OK
  * @response 400 - Error
  */
 router.get("/onestop/:from/:to", async (req, res, next) => {
   const context = new Jaeger("onestop", req, res);
   const { from, to } = req.params;
+  const { dateFrom, dateTo } = req.query;
   try {
+    const _dateFrom = parseDate(dateFrom);
+    const _dateTo = parseDate(dateTo);
+    if (isNaN(_dateFrom) || isNaN(_dateTo)) {
+      throw new IllegalDateError("needs a date");
+    }
     const breaker = new CircuitBreaker(getOneStopFlights, opossumOptions);
-    const data = await breaker.fire(from, to, context);
+    const data = await breaker.fire(from, to, {
+      dateFrom: _dateFrom,
+      dateTo: _dateTo,
+    }, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -119,20 +165,36 @@ router.get("/onestop/:from/:to", async (req, res, next) => {
  * GET /api/v1/flights/twostop/{from}/{to}
  * @description Get all two stop flight to destination
  * @pathParam from source airport id
- * @pathParam to destination airport id
+ * @pathParam to destination airport id0
+ * @queryParam {string} dateFrom - Date From
+ * @queryParam {string} dateTo - Date To
  * @response 200 - OK
  * @response 400 - Error
  */
 router.get("/twostop/:from/:to", async (req, res, next) => {
   const context = new Jaeger("twostop", req, res);
   const { from, to } = req.params;
+  const { dateFrom, dateTo } = req.query;
   try {
+    const _dateFrom = parseDate(dateFrom);
+    const _dateTo = parseDate(dateTo);
+    if (isNaN(_dateFrom) || isNaN(_dateTo)) {
+      throw new IllegalDateError("needs a date");
+    }
     const breaker = new CircuitBreaker(getTwoStopFlights, opossumOptions);
-    const data = await breaker.fire(from, to, context);
+    const data = await breaker.fire(from, to, {
+      dateFrom: _dateFrom,
+      dateTo: _dateTo,
+    }, context);
     res.json(data);
   } catch (e) {
     next(e);
   }
 });
+
+function parseDate(date) {
+  return Date.parse(date);
+}
+
 
 export default router;

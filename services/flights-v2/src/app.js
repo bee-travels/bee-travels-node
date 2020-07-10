@@ -10,7 +10,6 @@ import prometheus from "./prometheus";
 import health from "./health";
 
 const app = express();
-
 // Setup Pino.
 app.use(
   logger({

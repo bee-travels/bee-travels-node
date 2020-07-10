@@ -16,8 +16,7 @@ import {
   buildCarCloudantQuery,
   cloudantReadinessCheck,
 } from "./cloudantService";
-import TagNotFoundError from "./../errors/TagNotFoundError";
-import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
+import {TagNotFoundError, DatabaseNotFoundError, IllegalDateError} from "./../errors";
 
 const filterTypes = ["rental_company", "name", "body_type", "style"];
 
@@ -31,6 +30,11 @@ const capitalize = (text) =>
 export async function getCars(country, city, filters, context) {
   let data;
   let query;
+
+  if (filters.dateTo - filters.dateFrom < 0) {
+    throw new IllegalDateError("from date can not be greater than to date");
+  }
+  
   switch (process.env.CAR_DATABASE) {
     case "mongodb":
       query = buildCarMongoQuery(
@@ -66,7 +70,7 @@ export async function getCars(country, city, filters, context) {
     default:
       throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
   }
-  return data;
+  return updateCost(data, filters.dateFrom);
 }
 
 export async function getFilterList(filterType, context) {
@@ -108,5 +112,37 @@ export async function readinessCheck() {
       return await cloudantReadinessCheck();
     default:
       return false;
+  }
+}
+
+function updateCost(data, date) {
+  const multiplier = dateMultiplier(date);
+
+  let res = data.map(d => {
+    d["cost"] = d["cost"] * multiplier;
+    return d;
+  });
+  return res;
+}
+
+function dateMultiplier(dateFrom, dateTo) {
+  let dateNow = new Date();
+  let numDays = (dateFrom - dateNow) / (1000 * 3600 * 24); // convert time difference to days
+  if (numDays < 0) {
+    throw new IllegalDateError(dateFrom);
+  } else if (numDays < 2) {
+    return 2.25;
+  } else if (numDays < 7) {
+    return 1.75;
+  } else if (numDays < 14) {
+    return 1.5;
+  } else if (numDays < 21) {
+    return 1.2;
+  } else if (numDays < 45) {
+    return 1;
+  } else if (numDays < 90) {
+    return 0.8;
+  } else {
+    throw new IllegalDateError(dateFrom);
   }
 }

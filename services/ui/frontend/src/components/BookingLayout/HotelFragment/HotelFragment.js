@@ -4,6 +4,8 @@ import styles from "./HotelFragment.module.css";
 import DoubleSlider from "./DoubleSlider";
 import MultiSelect from "./MultiSelect";
 import Select from "./Select";
+import { TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 import globalHistory from "globalHistory";
 
@@ -17,6 +19,34 @@ import {
 } from "components/common/query-constants";
 
 const DEFAULT_MAX = 700;
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
+
+const parseDate = (date) => Date.parse(date);
+const dateValid = (from, to) => {
+  if (from === "" || to === "") {
+    return false;
+  }
+
+  const _from = parseDate(from);
+  const _to = parseDate(to);
+
+  if (_from > _to) {
+    return false;
+  }
+
+  return true;
+};
 
 const ListItem = ({ superchain, name, cost, images }) => {
   return (
@@ -32,6 +62,63 @@ const ListItem = ({ superchain, name, cost, images }) => {
         <div className={styles.listItemTitle}>{name}</div>
         <div className={styles.listItemSub}>{superchain}</div>
         <div className={styles.listItemCost}>{cost}</div>
+      </div>
+    </div>
+  );
+};
+
+const MetaData = ({
+  fromDate,
+  onFromDateChanged,
+  toDate,
+  onToDateChanged,
+  count,
+  onCountChanged
+}) => {
+  const classes = useStyles();
+
+  const handleFromDateChanged = (e) => {
+    onFromDateChanged(e.target.value);
+  }
+
+  const handleToDateChanged = (e) => {
+    onToDateChanged(e.target.value);
+  }
+
+  const handleCountChange = (e) => {
+    onCountChanged(e.target.value);
+  };
+
+  return (
+    <div className={styles.filters}>
+      <TextField
+        id="fromDate"
+        label="Date From"
+        type="date"
+        value={fromDate}
+        onChange={handleFromDateChanged}
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      <TextField
+        id="toDate"
+        label="Date To"
+        type="date"
+        value={toDate}
+        onChange={handleToDateChanged}
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+      <div className={styles.filterNarrow}>
+        <Select 
+          value={count}
+          onSelected={handleCountChange}
+          list={["Hotel Rooms",1,2,3,4,5,6,7,8]}
+        />
       </div>
     </div>
   );
@@ -217,6 +304,9 @@ const BookingFragment = ({ country, city, search }) => {
   const [typeList, setTypeList] = useState([]);
 
   const [hotels, setHotels] = useState([]);
+  const [dateFrom, setDateFrom] = React.useState("");
+  const [dateTo, setDateTo] = React.useState("");
+  const [count, setCount] = React.useState(0);
 
   const updateQuery = useCallback(
     (params) => {
@@ -246,7 +336,14 @@ const BookingFragment = ({ country, city, search }) => {
   // Load list of hotels.
   useEffect(() => {
     console.log("load hotel");
+
     const loadHotels = async () => {
+      if (!dateValid(dateFrom, dateTo)) {
+        console.log("Date Invalid");
+        return [];
+      }
+
+      console.log("will run query");
       const query = queryString.stringify({
         superchain:
           selectedSuperchains.length > 0
@@ -256,6 +353,8 @@ const BookingFragment = ({ country, city, search }) => {
         type: selectedTypes.length > 0 ? selectedTypes.join(",") : undefined,
         mincost: fixMin(minHotelPrice),
         maxcost: fixMax(maxHotelPrice),
+        dateFrom: dateFrom,
+        dateTo: dateTo,
       });
 
       const hotelResponse = await fetch(
@@ -277,6 +376,8 @@ const BookingFragment = ({ country, city, search }) => {
     selectedHotels,
     selectedSuperchains,
     selectedTypes,
+    dateFrom,
+    dateTo,
   ]);
 
   // Load list of superchains.
@@ -372,6 +473,14 @@ const BookingFragment = ({ country, city, search }) => {
 
   return (
     <>
+      <MetaData 
+        fromDate={dateFrom}
+        onFromDateChanged={setDateFrom}
+        toDate={dateTo}
+        onToDateChanged={setDateTo}
+        count={count}
+        onCountChanged={setCount}
+      />
       <Filters
         selectedTypes={selectedTypes}
         selectedHotels={selectedHotels}

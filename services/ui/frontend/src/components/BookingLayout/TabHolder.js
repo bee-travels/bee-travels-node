@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 
 import styles from "./TabHolder.module.css";
-
 import globalHistory from "globalHistory";
 
-const TabHolder = ({ children, onClick, location }) => {
-  const tabs = ["Hotels", "Cars"];
-  const tabsPath = ["hotels", "cars"];
+const TabHolder = ({
+  children,
+  onClick,
+  location,
+  dateTo,
+  dateFrom,
+  setDateTo,
+  setDateFrom,
+}) => {
+  const tabs = ["Hotels", "Cars", "Flights"];
+  const tabsPath = ["hotels", "cars", "flights"];
   const [_0, _1, _2, _3, theTab] = location.pathname.split("/");
 
   let active;
@@ -21,6 +28,7 @@ const TabHolder = ({ children, onClick, location }) => {
       <div className={styles.tabRow}>
         {tabs.map((tab, i) => (
           <div
+            key={i}
             className={
               tab.toLowerCase() === active ? styles.tabActive : styles.tab
             }

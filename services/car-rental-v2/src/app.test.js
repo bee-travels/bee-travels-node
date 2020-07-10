@@ -12,31 +12,31 @@ chai.use(chaiHttp);
 chai.use(chaiThings);
 chai.use(chaiAsPromised);
 
-describe("GET /api/v1/cars/info/:tag", () => {
-  // TODO: fixme
-  // it("returns list of all rental companies", async () => {
-  //   const res = await chai
-  //     .request(app)
-  //     .get("/api/v1/cars/info/rental_company")
-  //     .send();
-  //   expect(res.body).to.have.members([
-  //     "Rent Pad",
-  //     "Chakra",
-  //     "Carlux",
-  //     "Capsule",
-  //     "Rentio",
-  //   ]);
-  // });
+// describe("GET /api/v1/cars/info/:tag", () => {
+//   // TODO: fixme
+//   // it("returns list of all rental companies", async () => {
+//   //   const res = await chai
+//   //     .request(app)
+//   //     .get("/api/v1/cars/info/rental_company")
+//   //     .send();
+//   //   expect(res.body).to.have.members([
+//   //     "Rent Pad",
+//   //     "Chakra",
+//   //     "Carlux",
+//   //     "Capsule",
+//   //     "Rentio",
+//   //   ]);
+//   // });
 
-  it("throws with a fake tag", async () => {
-    const fakeTag = "fake-tag";
-    const res = await chai
-      .request(app)
-      .get(`/api/v1/cars/info/${fakeTag}`)
-      .send();
-    expect(res.body.error).to.equal(new TagNotFoundError(fakeTag).message);
-  });
-});
+//   it("throws with a fake tag", async () => {
+//     const fakeTag = "fake-tag";
+//     const res = await chai
+//       .request(app)
+//       .get(`/api/v1/cars/info/${fakeTag}`)
+//       .send();
+//     expect(res.body.error).to.equal(new TagNotFoundError(fakeTag).message);
+//   });
+// });
 
 // TODO: fixme
 // describe("GET /api/v1/cars/:country/:city", () => {

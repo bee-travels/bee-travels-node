@@ -6,6 +6,7 @@
     "@material-ui/core": "^4.9.11",
     "clsx": "^1.1.0",
     "history": "^4.10.1",
+    "immer": "^7.0.5",
     "mapbox-gl": "^1.7.0",
     "nouislider": "^14.1.1",
     "openapi-comment-parser": "^0.3.4",
@@ -14,11 +15,15 @@
     "react-autosuggest": "^9.4.3",
     "react-dom": "^16.13.1",
     "react-graph-vis": "^1.0.5",
+    "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "vis-network": "^7.9.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=5000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -3,6 +3,29 @@ import { isValidQueryValue } from "query-validator";
 
 types.setTypeParser(1700, (val) => parseFloat(val));
 
+export async function getFlightInfoFromPostgres(filter) {
+  const client = new Client({
+    host: process.env.FLIGHTS_PG_HOST,
+    user: process.env.FLIGHTS_PG_USER,
+    password: process.env.FLIGHTS_PG_PASSWORD,
+    database: "beetravels",
+  });
+
+  try {
+    client.connect();
+
+    const statement = "SELECT DISTINCT " + filter + " from flights";
+
+    const res = await client.query(statement);
+    let result = res.rows.map((row) => row.airlines);
+    return result;
+  } catch (e) {
+    console.log(e);
+  } finally {
+    client.end();
+  }
+}
+
 export async function getAirportFromPostgres(id, context) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
@@ -34,12 +57,7 @@ export async function getAirportFromPostgres(id, context) {
   }
 }
 
-export async function getAirportsFromPostgres(
-  city,
-  country,
-  code,
-  context
-) {
+export async function getAirportsFromPostgres(city, country, code, context) {
   const client = new Client({
     host: process.env.FLIGHTS_PG_HOST,
     user: process.env.FLIGHTS_PG_USER,
@@ -58,17 +76,17 @@ export async function getAirportsFromPostgres(
     };
   } else if (city && country) {
     query = {
-      statement: "WHERE country=$1, city=$2",
+      statement: "WHERE country=$1 AND city=$2",
       values: [isValidQueryValue(country), isValidQueryValue(city)],
     };
   } else if (city && code) {
     query = {
-      statement: "WHERE city=$1, iata_code=$2",
+      statement: "WHERE city=$1 AND iata_code=$2",
       values: [isValidQueryValue(city), isValidQueryValue(code)],
     };
   } else if (country && code) {
     query = {
-      statement: "WHERE country=$1, iata_code=$2",
+      statement: "WHERE country=$1 AND iata_code=$2",
       values: [isValidQueryValue(country), isValidQueryValue(code)],
     };
   } else if (city) {
@@ -149,8 +167,18 @@ export async function getDirectFlightsFromPostgres(from, to, context) {
   try {
     context.start("postgresClientConnect");
     client.connect();
+    const statement =
+      `
+    select id       as flight_one_id,
+    source_airport_id,
+    destination_airport_id,
+    flight_duration as time,
+    flight_time     as flight_one_time,
+    cost,
+    airlines
+from flights
+where ` + query.statement;
     context.stop();
-    const statement = "select * from flights where " + query.statement;
     context.start("postgresQuery");
     const res = await client.query(statement, query.values);
     context.stop();
@@ -179,18 +207,25 @@ export async function getOneStopFlightsFromPostgres(from, to, context) {
     client.connect();
     context.stop();
     const statement = `
-    SELECT flight1.id AS flight1id, flight2.id AS flight2id, flight1.source_airport_id
-    AS source_airport_id, flight1.destination_airport_id AS layover_airport_id
-    , flight2.destination_airport_id AS destination_airport_id, flight1.flight_duration
-    + flight2.flight_duration AS totalFlightTime, flight1.flight_duration +
-    flight2.flight_time - flight1.flight_time + flight2.flight_duration AS
-    totalTime, flight1.cost + flight2.cost AS totalCost, flight1.flight_time AS
-    flight1time, flight2.flight_time AS flight2time, flight1.airlines AS
-    airlines FROM (SELECT * FROM flights WHERE source_airport_id = $1) flight1 INNER JOIN (SELECT * FROM
-    flights WHERE destination_airport_id = $2)
-    flight2 ON flight1.destination_airport_id = flight2.source_airport_id WHERE
-    flight1.airlines = flight2.airlines AND flight2.flight_time >= ( flight1.flight_time
-    + flight1.flight_duration + 60 ) ORDER BY totaltime
+    select flight1.id                                                                             as flight_one_id,
+    flight2.id                                                                                    as flight_two_id,
+    flight1.source_airport_id                                                                     as source_airport_id,
+    flight1.destination_airport_id                                                                as layover_one_airport_id,
+    flight2.destination_airport_id                                                                as destination_airport_id,
+    flight1.flight_duration + flight2.flight_duration                                             as flight_time,
+    flight1.flight_duration + flight2.flight_time - flight1.flight_time + flight2.flight_duration as time,
+    flight1.cost + flight2.cost                                                                   as cost,
+    flight1.flight_time                                                                           as flight_one_time,
+    flight2.flight_time                                                                           as flight_two_time,
+    flight1.airlines                                                                              as airlines
+from (select * from flights where source_airport_id = $1) flight1
+      inner join (select *
+                  from flights
+                  where destination_airport_id = $2) flight2
+                 on flight1.destination_airport_id = flight2.source_airport_id
+where flight1.airlines = flight2.airlines
+and flight2.flight_time >= (flight1.flight_time + flight1.flight_duration + 60)
+order by time limit 20;
     `;
     context.start("postgresQuery");
     const res = await client.query(statement, query.values);
@@ -220,11 +255,27 @@ export async function getTwoStopFlightsFromPostgres(from, to, context) {
     client.connect();
     context.stop();
     const statement = `
-    SELECT   *
-    FROM     flights f,
-             lateral flight_two_stop(f.source_airport_id, f.destination_airport_id, $2, f.flight_time, f.flight_duration) c
-    WHERE    f.source_airport_id = $1
-    ORDER BY c.totaltime limit 20;
+    select f.id                  as flight_one_id,
+    c.flight2id                  as flight_two_id,
+    c.flight3id                  as flight_three_id,
+    f.source_airport_id          as source_airport_id,
+    c.layover_one_airport_id,
+    c.layover_two_airport_id,
+    c.destination_airport_id_ext as desination_airport_id,
+    c.totalTime                  as time,
+    c.totalFlightTime as flight_time,
+    c.totalCost                  as cost,
+    c.flight1time                as flight_one_time,
+    c.flight2time                as fligh_two_time,
+    c.flight3time                as flight_three_time,
+    f.airlines
+from flights f,
+  lateral flight_two_stop(f.source_airport_id, f.destination_airport_id,
+                          $2, f.flight_time, f.flight_duration, f.cost,
+                          f.airlines) c
+where f.source_airport_id = $1
+order by c.totalTime
+limit 20;
     `;
     context.start("postgresQuery");
     const res = await client.query(statement, query.values);
