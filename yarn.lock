@@ -4338,6 +4338,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "car-rental-v1@workspace:services/car-rental-v1"
   dependencies:
+    axios: ^0.19.2
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
@@ -4350,6 +4351,7 @@ __metadata:
     openapi-comment-parser: ^0.3.4
     opentracing: ^0.14.4
     opossum: ^5.0.0
+    os: ^0.1.1
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     prom-client: ^12.0.0
@@ -4364,6 +4366,7 @@ __metadata:
   resolution: "car-rental-v2@workspace:services/car-rental-v2"
   dependencies:
     "@cloudant/cloudant": ^4.2.4
+    axios: ^0.19.2
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
@@ -4378,6 +4381,7 @@ __metadata:
     openapi-comment-parser: ^0.3.4
     opentracing: ^0.14.4
     opossum: ^5.0.0
+    os: ^0.1.1
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -4542,6 +4546,7 @@ __metadata:
     openapi-comment-parser: ^0.3.4
     opentracing: ^0.14.4
     opossum: ^5.0.0
+    os: ^0.1.1
     path: ^0.12.7
     pg: ^8.0.3
     pino-http: ^5.1.0
@@ -5975,6 +5980,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "destination-v1@workspace:services/destination-v1"
   dependencies:
+    axios: ^0.19.2
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
@@ -5988,6 +5994,7 @@ __metadata:
     openapi-comment-parser: ^0.3.4
     opentracing: ^0.14.4
     opossum: ^5.0.0
+    os: ^0.1.1
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     prom-client: ^12.0.0
@@ -6002,6 +6009,7 @@ __metadata:
   resolution: "destination-v2@workspace:services/destination-v2"
   dependencies:
     "@cloudant/cloudant": ^4.2.4
+    axios: ^0.19.2
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
@@ -6016,6 +6024,7 @@ __metadata:
     openapi-comment-parser: ^0.3.4
     opentracing: ^0.14.4
     opossum: ^5.0.0
+    os: ^0.1.1
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -6382,6 +6391,7 @@ __metadata:
   resolution: "email-v2@workspace:services/email-v2"
   dependencies:
     "@sendgrid/mail": ^7.1.1
+    axios: ^0.19.2
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
@@ -6394,6 +6404,7 @@ __metadata:
     openapi-comment-parser: ^0.3.4
     opentracing: ^0.14.4
     opossum: ^5.0.0
+    os: ^0.1.1
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     prettier: ^2.0.5
@@ -7530,6 +7541,7 @@ __metadata:
   resolution: "flights-v2@workspace:services/flights-v2"
   dependencies:
     "@cloudant/cloudant": ^4.2.4
+    axios: ^0.19.2
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
@@ -7543,6 +7555,7 @@ __metadata:
     openapi-comment-parser: ^0.3.4
     opentracing: ^0.14.4
     opossum: ^5.0.0
+    os: ^0.1.1
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -8392,6 +8405,7 @@ fsevents@^1.2.7:
   version: 0.0.0-use.local
   resolution: "hotel-v1@workspace:services/hotel-v1"
   dependencies:
+    axios: ^0.19.2
     chai: ^4.2.0
     chai-as-promised: ^7.1.1
     chai-http: ^4.3.0
@@ -8404,6 +8418,7 @@ fsevents@^1.2.7:
     openapi-comment-parser: ^0.3.4
     opentracing: ^0.14.4
     opossum: ^5.0.0
+    os: ^0.1.1
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     prom-client: ^12.0.0
@@ -8432,6 +8447,7 @@ fsevents@^1.2.7:
     openapi-comment-parser: ^0.3.4
     opentracing: ^0.14.4
     opossum: ^5.0.0
+    os: ^0.1.1
     pg: ^8.0.3
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
@@ -12376,6 +12392,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"os@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "os@npm:0.1.1"
+  checksum: 2/624f0f7d385b22d00d1f5f020409e6035795eaf8665a3a9e02aa56fc96430b2091136f761eea763302e7f0ebac63b15a2db6fd9570e0bdd938dce375711d751c
+  languageName: node
+  linkType: hard
+
 "osenv@npm:^0.1.4":
   version: 0.1.5
   resolution: "osenv@npm:0.1.5"
@@ -12826,6 +12849,7 @@ fsevents@^1.2.7:
     openapi-comment-parser: ^0.3.4
     opentracing: ^0.14.4
     opossum: ^5.0.0
+    os: ^0.1.1
     pino-http: ^5.1.0
     pino-pretty: ^4.0.0
     prom-client: ^12.0.0

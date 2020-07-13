@@ -47,7 +47,7 @@ app.get("/spec", (_, res) => {
   res.json(spec);
 });
 
-app.get("/info", (_, res) => {
+app.get("/info", (req, res) => {
   const infoPromises = Object.values(services).map((service) => {
     return axios
       .get(`${service}/info`)
@@ -59,8 +59,10 @@ app.get("/info", (_, res) => {
     res.json({
       service: "currency-exchange",
       hostname: os.hostname(),
-      database: process.env.DATABASE,
+      database: null,
       children: infoArray,
+      language: "Node.js",
+      url: process.env.CURRENCY_EXCHANGE_URL || "http://localhost:9201",
     });
   });
 });
