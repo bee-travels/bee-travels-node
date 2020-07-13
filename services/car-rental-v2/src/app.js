@@ -1,13 +1,17 @@
+import os from "os";
+
 import express from "express";
 import logger from "pino-http";
 import pinoPretty from "pino-pretty";
 import openapi from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
 import client from "prom-client";
+import axios from "axios";
 
 import carsRouter from "./routes/cars";
 import prometheus from "./prometheus";
 import health from "./health";
+import services from "./external-services";
 
 const app = express();
 
@@ -39,6 +43,26 @@ app.use(express.urlencoded({ extended: false }));
 // Don't use `/` for swagger, it will catch everything.
 const specs = openapi();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+
+app.get("/info", (req, res) => {
+  const infoPromises = Object.values(services).map((service) => {
+    return axios
+      .get(`${service}/info`)
+      .then((res) => res.data)
+      .catch(() => {});
+  });
+
+  Promise.all(infoPromises).then((infoArray) => {
+    res.json({
+      service: "car-rental-v2",
+      hostname: os.hostname(),
+      database: process.env.CAR_DATABASE,
+      children: infoArray,
+      language: "Node.js",
+      url: process.env.CAR_URL || "http://localhost:9102",
+    });
+  });
+});
 
 // cars api.
 app.use("/api/v1/cars", carsRouter);

@@ -4,7 +4,7 @@ const ILLEGAL_STRING_REGEX = /\$|'|;/;
 
 function illegalString(string) {
   const illegal = true;
-  if (typeof string === "number") {
+  if (!isNaN(Number(string))) {
     return !illegal;
   }
   if (ILLEGAL_STRING_REGEX.test(string)) {

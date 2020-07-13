@@ -1,4 +1,4 @@
-// Removed NEW, PAD
+// Removed MAX, NEW, PAD
 const SQL_RESERVED_WORDS = [
   "ABORT",
   "ABS",
@@ -271,7 +271,6 @@ const SQL_RESERVED_WORDS = [
   "M",
   "MAP",
   "MATCH",
-  "MAX",
   "MAXVALUE",
   "MESSAGE_LENGTH",
   "MESSAGE_OCTET_LENGTH",

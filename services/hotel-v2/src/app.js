@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: false }));
 const specs = openapi();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-app.get("/info", (_, res) => {
+app.get("/info", (req, res) => {
   const infoPromises = Object.values(services).map((service) => {
     return axios
       .get(`${service}/info`)
@@ -56,8 +56,10 @@ app.get("/info", (_, res) => {
     res.json({
       service: "hotel-v2",
       hostname: os.hostname(),
-      database: process.env.DATABASE,
+      database: process.env.HOTEL_DATABASE,
       children: infoArray,
+      language: "Node.js",
+      url: process.env.HOTEL_URL || "http://localhost:9101",
     });
   });
 });

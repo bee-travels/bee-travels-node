@@ -197,6 +197,8 @@ services:
       - "9301:9301"
     depends_on:
       - base
+    environment:
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
 
   payment:
     build: services/payment-v2
@@ -204,6 +206,23 @@ services:
       - "9403:9403"
     depends_on:
       - base
+
+  checkout:
+    build: services/checkout-v2
+    ports:
+      - "9402:9402"
+    depends_on:
+      - base
+      - postgres
+      - payment
+      - email-service
+    environment:
+      - CHECKOUT_DATABASE=${CHECKOUT_DATABASE}
+      - CHECKOUT_PG_HOST=postgres
+      - CHECKOUT_PG_USER=postgres
+      - CHECKOUT_PG_PASSWORD=admin
+      - PAYMENT_URL=http://payment:9403
+      - EMAIL_URL=http://email-service:9301
 
   ui:
     build: services/ui
