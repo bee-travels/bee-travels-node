@@ -6,6 +6,7 @@ const DESTINATIONS_PATH = path.join(
   "./../../data/destinations.json"
 );
 
+// Cities with these words in the city name are lower case
 const lowercaseExceptions = ["es", "de", "au"];
 
 function capitalize(text) {
@@ -18,6 +19,7 @@ function capitalize(text) {
         : s.charAt(0).toUpperCase() + s.substring(1)
     );
 
+  // The city of Port-au-Prince keeps "-" between the words of the city
   return text.includes(lowercaseExceptions[2])
     ? text.join("-")
     : text.join(" ");
