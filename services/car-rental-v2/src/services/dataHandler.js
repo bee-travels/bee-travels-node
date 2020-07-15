@@ -16,16 +16,30 @@ import {
   buildCarCloudantQuery,
   cloudantReadinessCheck,
 } from "./cloudantService";
-import {TagNotFoundError, DatabaseNotFoundError, IllegalDateError} from "./../errors";
+import {
+  TagNotFoundError,
+  DatabaseNotFoundError,
+  IllegalDateError,
+} from "./../errors";
 
 const filterTypes = ["rental_company", "name", "body_type", "style"];
 
-const capitalize = (text) =>
-  text
+const lowercaseExceptions = ["es", "de", "au"];
+
+function capitalize(text) {
+  text = text
     .toLowerCase()
     .split("-")
-    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-    .join(" ");
+    .map((s) =>
+      lowercaseExceptions.includes(s)
+        ? s
+        : s.charAt(0).toUpperCase() + s.substring(1)
+    );
+
+  return text.includes(lowercaseExceptions[2])
+    ? text.join("-")
+    : text.join(" ");
+}
 
 export async function getCars(country, city, filters, context) {
   let data;
@@ -34,7 +48,7 @@ export async function getCars(country, city, filters, context) {
   if (filters.dateTo - filters.dateFrom < 0) {
     throw new IllegalDateError("from date can not be greater than to date");
   }
-  
+
   switch (process.env.CAR_DATABASE) {
     case "mongodb":
       query = buildCarMongoQuery(
@@ -118,7 +132,7 @@ export async function readinessCheck() {
 function updateCost(data, date) {
   const multiplier = dateMultiplier(date);
 
-  let res = data.map(d => {
+  let res = data.map((d) => {
     d["cost"] = d["cost"] * multiplier;
     return d;
   });

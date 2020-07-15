@@ -15,12 +15,22 @@ import {
 } from "./cloudantService";
 import DatabaseNotFoundError from "./../errors/DatabaseNotFoundError";
 
-const capitalize = (text) =>
-  text
+const lowercaseExceptions = ["es", "de", "au"];
+
+function capitalize(text) {
+  text = text
     .toLowerCase()
     .split("-")
-    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-    .join(" ");
+    .map((s) =>
+      lowercaseExceptions.includes(s)
+        ? s
+        : s.charAt(0).toUpperCase() + s.substring(1)
+    );
+
+  return text.includes(lowercaseExceptions[2])
+    ? text.join("-")
+    : text.join(" ");
+}
 
 export async function getCities(context) {
   let data;

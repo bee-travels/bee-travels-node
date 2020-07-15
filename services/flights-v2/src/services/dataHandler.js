@@ -16,14 +16,22 @@ import {
 
 const filterTypes = ["airlines", "type"];
 
-const capitalize = (text) => {
-  if (!text) return text;
-  return text
+const lowercaseExceptions = ["es", "de", "au"];
+
+function capitalize(text) {
+  text = text
     .toLowerCase()
     .split("-")
-    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-    .join(" ");
-};
+    .map((s) =>
+      lowercaseExceptions.includes(s)
+        ? s
+        : s.charAt(0).toUpperCase() + s.substring(1)
+    );
+
+  return text.includes(lowercaseExceptions[2])
+    ? text.join("-")
+    : text.join(" ");
+}
 
 const upper = (text) => (text ? text.toUpperCase() : text);
 
@@ -140,7 +148,6 @@ export async function getTwoStopFlights(from, to, filters, context) {
   return updateCost(flights, filters.dateFrom, 0.5);
 }
 
-
 export async function readinessCheck() {
   switch (process.env.FLIGHTS_DATABASE) {
     case "postgres":
@@ -153,7 +160,7 @@ export async function readinessCheck() {
 function updateCost(data, date, scale = 1) {
   const multiplier = dateMultiplier(date);
 
-  let res = data.map(d => {
+  let res = data.map((d) => {
     d["cost"] = d["cost"] * multiplier * scale;
     return d;
   });
