@@ -1,13 +1,17 @@
+import os from "os";
+
 import express from "express";
 import logger from "pino-http";
 import pinoPretty from "pino-pretty";
 import openapi from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
 import client from "prom-client";
+import axios from "axios";
 
 import hotelsRouter from "./routes/hotels";
 import prometheus from "./prometheus";
 import health from "./health";
+import services from "./external-services";
 
 const app = express();
 
@@ -41,6 +45,26 @@ const spec = openapi();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec));
 app.get("/spec", (_, res) => {
   res.json(spec);
+});
+
+app.get("/info", (req, res) => {
+  const infoPromises = Object.values(services).map((service) => {
+    return axios
+      .get(`${service}/info`)
+      .then((res) => res.data)
+      .catch(() => {});
+  });
+
+  Promise.all(infoPromises).then((infoArray) => {
+    res.json({
+      service: "hotel-v1",
+      hostname: os.hostname(),
+      database: null,
+      children: infoArray,
+      language: "Node.js",
+      url: process.env.HOTEL_URL || "http://localhost:9101",
+    });
+  });
 });
 
 // hotels api.

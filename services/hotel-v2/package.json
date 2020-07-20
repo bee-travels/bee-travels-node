@@ -17,6 +17,7 @@
     "openapi-comment-parser": "^0.3.4",
     "opentracing": "^0.14.4",
     "opossum": "^5.0.0",
+    "os": "^0.1.1",
     "pg": "^8.0.3",
     "pino-http": "^5.1.0",
     "pino-pretty": "^4.0.0",

@@ -4,12 +4,24 @@ import TagNotFoundError from "./../errors/TagNotFoundError";
 
 const CARS_PATH = path.join(__dirname, "./../../data/cars.json");
 
-const capitalize = (text) =>
-  text
+// Cities with these words in the city name are lower case
+const lowercaseExceptions = ["es", "de", "au"];
+
+function capitalize(text) {
+  text = text
     .toLowerCase()
     .split("-")
-    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-    .join(" ");
+    .map((s) =>
+      lowercaseExceptions.includes(s)
+        ? s
+        : s.charAt(0).toUpperCase() + s.substring(1)
+    );
+
+  // The city of Port-au-Prince keeps "-" between the words of the city
+  return text.includes(lowercaseExceptions[2])
+    ? text.join("-")
+    : text.join(" ");
+}
 
 async function parseMetadata(file) {
   const content = await fs.readFile(file);
