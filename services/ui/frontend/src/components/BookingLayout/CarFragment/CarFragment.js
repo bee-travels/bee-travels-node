@@ -5,7 +5,7 @@ import DoubleSlider from "./DoubleSlider";
 import MultiSelect from "./MultiSelect";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {useSelector} from 'react-redux';
+import { useSelector } from "react-redux";
 import Select from "./Select";
 
 import globalHistory from "globalHistory";
@@ -54,12 +54,12 @@ const dateValid = (from, to) => {
 };
 
 const ListItem = ({ id, superchain, name, cost, image }) => {
-  const {addToCart} = useActions();
-  const cars = useSelector(state => state.cars);
-  const numberInCart = cars.filter(carId => carId === id).length;
+  const { addToCart } = useActions();
+  const cars = useSelector((state) => state.cars);
+  const numberInCart = cars.filter((carId) => carId === id).length;
   const handleAddToCart = () => {
     addToCart(id);
-  }
+  };
   return (
     <div className={styles.listItem}>
       <div
@@ -74,8 +74,10 @@ const ListItem = ({ id, superchain, name, cost, image }) => {
         <div className={styles.listItemSub}>{superchain}</div>
         <div className={styles.listItemCost}>{cost}</div>
       </div>
-      <button style={{marginLeft: 'auto'}} onClick={handleAddToCart}>Add to Cart</button>
-      {numberInCart > 0 && <button>Remove </button>} 
+      <button style={{ marginLeft: "auto" }} onClick={handleAddToCart}>
+        Add to Cart
+      </button>
+      {numberInCart > 0 && <button>Remove </button>}
       {numberInCart}
     </div>
   );
@@ -87,17 +89,17 @@ const MetaData = ({
   toDate,
   onToDateChanged,
   count,
-  onCountChanged
+  onCountChanged,
 }) => {
   const classes = useStyles();
 
   const handleFromDateChanged = (e) => {
     onFromDateChanged(e.target.value);
-  }
+  };
 
   const handleToDateChanged = (e) => {
     onToDateChanged(e.target.value);
-  }
+  };
 
   const handleCountChange = (e) => {
     onCountChanged(e.target.value);
@@ -127,10 +129,10 @@ const MetaData = ({
         }}
       />
       <div className={styles.filterNarrow}>
-        <Select 
+        <Select
           onSelected={handleCountChange}
           value={count}
-          list={["Passanger Count",1,2,3]}
+          list={["Passanger Count", 1, 2, 3]}
         />
       </div>
     </div>
@@ -314,10 +316,9 @@ const BookingFragment = ({ city, country, search }) => {
   const selectedTypes = useMemo(() => arrayify(queryObject[TYPE]), [
     queryObject,
   ]);
-  const minCarPrice = useMemo(
-    () => parseInt(queryObject[MIN_PRICE], 10) || 0,
-    [queryObject]
-  );
+  const minCarPrice = useMemo(() => parseInt(queryObject[MIN_PRICE], 10) || 0, [
+    queryObject,
+  ]);
   const maxCarPrice = useMemo(
     () => parseInt(queryObject[MAX_PRICE], 10) || undefined,
     [queryObject]
@@ -406,7 +407,7 @@ const BookingFragment = ({ city, country, search }) => {
     selectedCars,
     selectedSuperchains,
     selectedTypes,
-    dateFrom, 
+    dateFrom,
     dateTo,
   ]);
 
@@ -518,7 +519,7 @@ const BookingFragment = ({ city, country, search }) => {
 
   return (
     <>
-      <MetaData 
+      <MetaData
         fromDate={dateFrom}
         onFromDateChanged={setDateFrom}
         toDate={dateTo}

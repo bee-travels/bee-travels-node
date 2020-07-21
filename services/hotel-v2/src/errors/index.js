@@ -1,9 +1,5 @@
-import DatabaseNotFoundError from './DatabaseNotFoundError';
-import IllegalDateError from './IllegarDateError';
-import TagNotFoundError from './TagNotFoundError';
+import DatabaseNotFoundError from "./DatabaseNotFoundError";
+import IllegalDateError from "./IllegarDateError";
+import TagNotFoundError from "./TagNotFoundError";
 
-export {
-  DatabaseNotFoundError,
-  IllegalDateError,
-  TagNotFoundError,
-}
+export { DatabaseNotFoundError, IllegalDateError, TagNotFoundError };

@@ -56,7 +56,7 @@ app.get("/info", (req, res) => {
     res.json({
       service: "checkout-v2",
       hostname: os.hostname(),
-      database: process.env.CHECKOUT_DATABASE,
+      database: process.env.DATABASE,
       children: infoArray,
       language: "Node.js",
       url: process.env.CHECKOUT_URL || "http://localhost:9402",

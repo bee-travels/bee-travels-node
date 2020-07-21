@@ -59,7 +59,15 @@ router.get("/info/:tag", async (req, res, next) => {
 router.get("/:country/:city", async (req, res, next) => {
   const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
-  const { superchain, hotel, type, mincost, maxcost, dateFrom, dateTo } = req.query;
+  const {
+    superchain,
+    hotel,
+    type,
+    mincost,
+    maxcost,
+    dateFrom,
+    dateTo,
+  } = req.query;
 
   try {
     const breaker = new CircuitBreaker(getHotels, opossumOptions);
@@ -89,6 +97,5 @@ router.get("/:country/:city", async (req, res, next) => {
 function parseDate(date) {
   return Date.parse(date);
 }
-
 
 export default router;

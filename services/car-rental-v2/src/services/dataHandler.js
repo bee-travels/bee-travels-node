@@ -51,7 +51,7 @@ export async function getCars(country, city, filters, context) {
     throw new IllegalDateError("from date can not be greater than to date");
   }
 
-  switch (process.env.CAR_DATABASE) {
+  switch (process.env.DATABASE) {
     case "mongodb":
       query = buildCarMongoQuery(
         capitalize(country),
@@ -94,7 +94,7 @@ export async function getFilterList(filterType, context) {
     throw new TagNotFoundError(filterType);
   }
   let data;
-  switch (process.env.CAR_DATABASE) {
+  switch (process.env.DATABASE) {
     case "mongodb":
       context.start("getCarInfoFromMongo");
       data = await getCarInfoFromMongo(filterType, context);
@@ -118,7 +118,7 @@ export async function getFilterList(filterType, context) {
 }
 
 export async function readinessCheck() {
-  switch (process.env.CAR_DATABASE) {
+  switch (process.env.DATABASE) {
     case "mongodb":
       return await mongoReadinessCheck();
     case "postgres":

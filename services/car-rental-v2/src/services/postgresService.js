@@ -81,12 +81,22 @@ export function buildCarPostgresQuery(country, city, filters) {
 }
 
 export async function getCarDataFromPostgres(query, context) {
-  const client = new Client({
-    host: process.env.CAR_PG_HOST,
-    user: process.env.CAR_PG_USER,
-    password: process.env.CAR_PG_PASSWORD,
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
     database: "beetravels",
-  });
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
 
   try {
     context.start("postgresClientConnect");
@@ -109,9 +119,9 @@ export async function getCarDataFromPostgres(query, context) {
 
 export async function getCarInfoFromPostgres(filterType, context) {
   const client = new Client({
-    host: process.env.CAR_PG_HOST,
-    user: process.env.CAR_PG_USER,
-    password: process.env.CAR_PG_PASSWORD,
+    host: process.env.PG_HOST,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
     database: "beetravels",
   });
 
@@ -144,11 +154,22 @@ export async function getCarInfoFromPostgres(filterType, context) {
 }
 
 export async function postgresReadinessCheck() {
-  const client = new Client({
-    host: process.env.CAR_PG_HOST,
-    user: process.env.CAR_PG_USER,
-    password: process.env.CAR_PG_PASSWORD,
-  });
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
+    database: "beetravels",
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
 
   try {
     await client.connect();

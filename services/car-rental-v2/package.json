@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "fs": "^0.0.1-security",
     "jaeger-client": "^3.18.0",
     "mongodb": "^3.5.7",
     "openapi-comment-parser": "^0.3.4",

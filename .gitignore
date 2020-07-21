@@ -116,3 +116,4 @@ dist
 !.yarn/plugins
 
 .env
+*.pem

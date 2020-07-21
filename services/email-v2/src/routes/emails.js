@@ -30,13 +30,7 @@ router.post("/", async (req, res, next) => {
     let subject = req.body.subject;
     let from = req.body.from;
     const breaker = new CircuitBreaker(sendEmail, opossumOptions);
-    const response = await breaker.fire(
-      email,
-      from,
-      subject,
-      body,
-      context
-    );
+    const response = await breaker.fire(email, from, subject, body, context);
 
     return res.json(response);
   } catch (e) {

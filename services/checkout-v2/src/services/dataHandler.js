@@ -42,7 +42,7 @@ export async function processCheckout(context, checkoutObject) {
 
 async function savePurchaseToDatabase(context, confirmationId, checkoutObject) {
   let query;
-  switch (process.env.CHECKOUT_DATABASE) {
+  switch (process.env.DATABASE) {
     case "postgres":
       query = buildCheckoutPostgresQuery(confirmationId, checkoutObject);
       context.start("setCheckoutDataToPostgres");
@@ -55,21 +55,21 @@ async function savePurchaseToDatabase(context, confirmationId, checkoutObject) {
 }
 
 function isValid(cartItems) {
-  switch (process.env.CHECKOUT_DATABASE) {
+  switch (process.env.DATABASE) {
     case "postgres":
       if (cartItems === undefined || cartItems.length === 0) {
         throw new CheckoutProcessingError("Cart contains zero items");
       }
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.CHECKOUT_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
 }
 
 export async function readinessCheck() {
   try {
     let postgresIsReady;
-    switch (process.env.CHECKOUT_DATABASE) {
+    switch (process.env.DATABASE) {
       case "postgres":
         postgresIsReady = await postgresReadinessCheck();
         break;

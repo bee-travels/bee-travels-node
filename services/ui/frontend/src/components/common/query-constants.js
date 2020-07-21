@@ -10,7 +10,7 @@ export const STOPS = "st";
 export const AIRLINES = "al";
 export const SOURCE = "so";
 export const AIRPORTS = "ap";
-export const SOURCE_AIRPORT ="sa";
+export const SOURCE_AIRPORT = "sa";
 export const DESTINATION_AIRPORT = "da";
 // common
 export const NAME = "n";

@@ -20,16 +20,18 @@ The source of the destination service data is provided from a database. The foll
 
 ## Environment Variables
 
-* `DESTINATION_DATABASE` - ***REQUIRED*** variable for type of database to be used. The following are acceptable values:
+* `DATABASE` - ***REQUIRED*** variable for type of database to be used. The following are acceptable values:
   * `mongodb`
   * `postgres`
   * `cloudant`
   * `couchdb`
-* `DESTINATION_MONGO_CONNECTION_URL` - variable for the `mongodb` database connection URL
-* `DESTINATION_COUCH_CLOUDANT_CONNECTION_URL` - variable for the `couchdb` or `cloudant` database connection URL
-* `DESTINATION_PG_HOST` - variable for the `postgres` database host
-* `DESTINATION_PG_USER` - variable for the `postgres` database user
-* `DESTINATION_PG_PASSWORD` - variable for the `postgres` database password
+* `MONGO_CONNECTION_URL` - variable for the `mongodb` database connection URL
+* `COUCH_CLOUDANT_CONNECTION_URL` - variable for the `couchdb` or `cloudant` database connection URL
+* `PG_HOST` - variable for the `postgres` database host
+* `PG_PORT` - variable for the `postgres` database port
+* `PG_USER` - variable for the `postgres` database user
+* `PG_PASSWORD` - variable for the `postgres` database password
+* `DATABASE_CERT` - variable for the CA certificate used to connect to a database if TLS/SSL is used
 
 ## APIs
 
