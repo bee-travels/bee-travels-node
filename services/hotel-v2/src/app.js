@@ -56,7 +56,7 @@ app.get("/info", (req, res) => {
     res.json({
       service: "hotel-v2",
       hostname: os.hostname(),
-      database: process.env.HOTEL_DATABASE,
+      database: process.env.DATABASE,
       children: infoArray,
       language: "Node.js",
       url: process.env.HOTEL_URL || "http://localhost:9101",

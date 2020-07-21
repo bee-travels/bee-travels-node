@@ -1,3 +1,4 @@
+import fs from "fs";
 import { isValidQueryValue } from "query-validator";
 import { MongoClient } from "mongodb";
 
@@ -12,13 +13,20 @@ export function buildDestinationMongoQuery(country, city) {
 }
 
 export async function getDestinationDataFromMongo(query, context) {
+  let clientSettings = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  };
+
+  if (process.env.DATABASE_CERT) {
+    fs.writeFileSync("./cert.pem", process.env.DATABASE_CERT);
+    clientSettings.tlsCAFile = "./cert.pem";
+  }
+
   context.start("mongoClientConnect");
   const client = await MongoClient.connect(
-    process.env.DESTINATION_MONGO_CONNECTION_URL,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
+    process.env.MONGO_CONNECTION_URL,
+    clientSettings
   ).catch((err) => {
     console.log(err);
   });
@@ -63,12 +71,19 @@ export async function getDestinationDataFromMongo(query, context) {
 }
 
 export async function mongoReadinessCheck() {
+  let clientSettings = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  };
+
+  if (process.env.DATABASE_CERT) {
+    fs.writeFileSync("./cert.pem", process.env.DATABASE_CERT);
+    clientSettings.tlsCAFile = "./cert.pem";
+  }
+
   const client = await MongoClient.connect(
-    process.env.DESTINATION_MONGO_CONNECTION_URL,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
+    process.env.MONGO_CONNECTION_URL,
+    clientSettings
   ).catch((err) => {
     return false;
   });

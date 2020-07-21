@@ -19,16 +19,18 @@ The source of the car rental service data is provided from a database. The follo
 
 ## Environment Variables
 
-* `CAR_DATABASE` - ***REQUIRED*** variable for type of database to be used. The following are acceptable values:
+* `DATABASE` - ***REQUIRED*** variable for type of database to be used. The following are acceptable values:
   * `mongodb`
   * `postgres`
   * `cloudant`
   * `couchdb`
-* `CAR_MONGO_CONNECTION_URL` - variable for the `mongodb` database connection URL
-* `CAR_COUCH_CLOUDANT_CONNECTION_URL` - variable for the `couchdb` or `cloudant` database connection URL
-* `CAR_PG_HOST` - variable for the `postgres` database host
-* `CAR_PG_USER` - variable for the `postgres` database user
-* `CAR_PG_PASSWORD` - variable for the `postgres` database password
+* `MONGO_CONNECTION_URL` - variable for the `mongodb` database connection URL
+* `COUCH_CLOUDANT_CONNECTION_URL` - variable for the `couchdb` or `cloudant` database connection URL
+* `PG_HOST` - variable for the `postgres` database host
+* `PG_PORT` - variable for the `postgres` database port
+* `PG_USER` - variable for the `postgres` database user
+* `PG_PASSWORD` - variable for the `postgres` database password
+* `DATABASE_CERT` - variable for the CA certificate used to connect to a database if TLS/SSL is used
 
 ## APIs
 

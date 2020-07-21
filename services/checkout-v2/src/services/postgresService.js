@@ -87,12 +87,22 @@ export function buildCheckoutPostgresQuery(confirmationId, checkoutObject) {
 }
 
 export async function setCheckoutDataToPostgres(query, context) {
-  const client = new Client({
-    host: process.env.CHECKOUT_PG_HOST,
-    user: process.env.CHECKOUT_PG_USER,
-    password: process.env.CHECKOUT_PG_PASSWORD,
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
     database: "beetravels",
-  });
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
 
   try {
     context.start("postgresClientConnect");
@@ -112,11 +122,22 @@ export async function setCheckoutDataToPostgres(query, context) {
 }
 
 export async function postgresReadinessCheck() {
-  const client = new Client({
-    host: process.env.CHECKOUT_PG_HOST,
-    user: process.env.CHECKOUT_PG_USER,
-    password: process.env.CHECKOUT_PG_PASSWORD,
-  });
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
+    database: "beetravels",
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
 
   try {
     await client.connect();

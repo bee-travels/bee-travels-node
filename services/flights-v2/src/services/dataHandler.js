@@ -44,17 +44,17 @@ export async function getFilterList(filter) {
   if (filter === "type") {
     return ["non-stop", "one-stop", "two-stop"];
   }
-  switch (process.env.FLIGHTS_DATABASE) {
+  switch (process.env.DATABASE) {
     case "postgres":
       return await getFlightInfoFromPostgres(filter);
     default:
-      throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
 }
 
 export async function getAirports(city, country, code, context) {
   let data;
-  switch (process.env.FLIGHTS_DATABASE) {
+  switch (process.env.DATABASE) {
     case "postgres":
       context.start("getAirportsFromPostgres");
       data = await getAirportsFromPostgres(
@@ -66,35 +66,35 @@ export async function getAirports(city, country, code, context) {
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return data;
 }
 
 export async function getAirportsList(context) {
   let data;
-  switch (process.env.FLIGHTS_DATABASE) {
+  switch (process.env.DATABASE) {
     case "postgres":
       context.start("getAirportsListFromPostgres");
       data = await getAirportsListFromPostgres(context);
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return data;
 }
 
 export async function getAirport(id, context) {
   let data;
-  switch (process.env.FLIGHTS_DATABASE) {
+  switch (process.env.DATABASE) {
     case "postgres":
       context.start("getAirportFromPostgres");
       data = await getAirportFromPostgres(id, context);
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return data;
 }
@@ -104,14 +104,14 @@ export async function getDirectFlights(from, to, filters, context) {
   if (filters.dateTo - filters.dateFrom < 0) {
     throw new IllegalDateError("from date can not be greater than to date");
   }
-  switch (process.env.FLIGHTS_DATABASE) {
+  switch (process.env.DATABASE) {
     case "postgres":
       context.start("getDirectFlightsFromPostgres");
       flights = await getDirectFlightsFromPostgres(from, to, context);
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return updateCost(flights, filters.dateFrom);
 }
@@ -121,14 +121,14 @@ export async function getOneStopFlights(from, to, filters, context) {
   if (filters.dateTo - filters.dateFrom < 0) {
     throw new IllegalDateError("from date can not be greater than to date");
   }
-  switch (process.env.FLIGHTS_DATABASE) {
+  switch (process.env.DATABASE) {
     case "postgres":
       context.start("getOneStopFlightsFromPostgres");
       flights = await getOneStopFlightsFromPostgres(from, to, context);
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return updateCost(flights, filters.dateFrom, 0.75);
 }
@@ -138,20 +138,20 @@ export async function getTwoStopFlights(from, to, filters, context) {
   if (filters.dateTo - filters.dateFrom < 0) {
     throw new IllegalDateError("from date can not be greater than to date");
   }
-  switch (process.env.FLIGHTS_DATABASE) {
+  switch (process.env.DATABASE) {
     case "postgres":
       context.start("getTwoStopFlightsFromPostgres");
       flights = await getTwoStopFlightsFromPostgres(from, to, context);
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.FLIGHTS_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return updateCost(flights, filters.dateFrom, 0.5);
 }
 
 export async function readinessCheck() {
-  switch (process.env.FLIGHTS_DATABASE) {
+  switch (process.env.DATABASE) {
     case "postgres":
       return await postgresReadinessCheck();
     default:

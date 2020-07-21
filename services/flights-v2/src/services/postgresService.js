@@ -4,12 +4,22 @@ import { isValidQueryValue } from "query-validator";
 types.setTypeParser(1700, (val) => parseFloat(val));
 
 export async function getFlightInfoFromPostgres(filter) {
-  const client = new Client({
-    host: process.env.FLIGHTS_PG_HOST,
-    user: process.env.FLIGHTS_PG_USER,
-    password: process.env.FLIGHTS_PG_PASSWORD,
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
     database: "beetravels",
-  });
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
 
   try {
     client.connect();
@@ -27,12 +37,23 @@ export async function getFlightInfoFromPostgres(filter) {
 }
 
 export async function getAirportFromPostgres(id, context) {
-  const client = new Client({
-    host: process.env.FLIGHTS_PG_HOST,
-    user: process.env.FLIGHTS_PG_USER,
-    password: process.env.FLIGHTS_PG_PASSWORD,
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
     database: "beetravels",
-  });
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
+
   let query = {
     statement: "id=$1",
     values: [isValidQueryValue(id)],
@@ -58,12 +79,23 @@ export async function getAirportFromPostgres(id, context) {
 }
 
 export async function getAirportsFromPostgres(city, country, code, context) {
-  const client = new Client({
-    host: process.env.FLIGHTS_PG_HOST,
-    user: process.env.FLIGHTS_PG_USER,
-    password: process.env.FLIGHTS_PG_PASSWORD,
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
     database: "beetravels",
-  });
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
+
   let query;
   if (city && country && code) {
     query = {
@@ -130,12 +162,23 @@ export async function getAirportsFromPostgres(city, country, code, context) {
 }
 
 export async function getAirportsListFromPostgres(context) {
-  const client = new Client({
-    host: process.env.FLIGHTS_PG_HOST,
-    user: process.env.FLIGHTS_PG_USER,
-    password: process.env.FLIGHTS_PG_PASSWORD,
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
     database: "beetravels",
-  });
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
+
   try {
     context.start("postgresClientConnect");
     client.connect();
@@ -154,12 +197,23 @@ export async function getAirportsListFromPostgres(context) {
 }
 
 export async function getDirectFlightsFromPostgres(from, to, context) {
-  const client = new Client({
-    host: process.env.FLIGHTS_PG_HOST,
-    user: process.env.FLIGHTS_PG_USER,
-    password: process.env.FLIGHTS_PG_PASSWORD,
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
     database: "beetravels",
-  });
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
+
   let query = {
     statement: "source_airport_id=$1 and destination_airport_id=$2",
     values: [isValidQueryValue(from), isValidQueryValue(to)],
@@ -191,12 +245,22 @@ where ` + query.statement;
 }
 
 export async function getOneStopFlightsFromPostgres(from, to, context) {
-  const client = new Client({
-    host: process.env.FLIGHTS_PG_HOST,
-    user: process.env.FLIGHTS_PG_USER,
-    password: process.env.FLIGHTS_PG_PASSWORD,
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
     database: "beetravels",
-  });
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
 
   let query = {
     values: [isValidQueryValue(from), isValidQueryValue(to)],
@@ -239,12 +303,22 @@ order by time limit 20;
 }
 
 export async function getTwoStopFlightsFromPostgres(from, to, context) {
-  const client = new Client({
-    host: process.env.FLIGHTS_PG_HOST,
-    user: process.env.FLIGHTS_PG_USER,
-    password: process.env.FLIGHTS_PG_PASSWORD,
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
     database: "beetravels",
-  });
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
 
   let query = {
     values: [isValidQueryValue(from), isValidQueryValue(to)],
@@ -289,11 +363,22 @@ limit 20;
 }
 
 export async function postgresReadinessCheck() {
-  const client = new Client({
-    host: process.env.FLIGHTS_PG_HOST,
-    user: process.env.FLIGHTS_PG_USER,
-    password: process.env.FLIGHTS_PG_PASSWORD,
-  });
+  let clientSettings = {
+    host: process.env.PG_HOST,
+    port: process.env.PG_PORT,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
+    database: "beetravels",
+  };
+
+  if (process.env.DATABASE_CERT) {
+    clientSettings.ssl = {
+      rejectUnauthorized: false,
+      ca: process.env.DATABASE_CERT,
+    };
+  }
+
+  const client = new Client(clientSettings);
 
   try {
     await client.connect();
