@@ -3,9 +3,18 @@ export default function init() {
   if(cars) {
     cars = JSON.parse(cars);
   }
+  let hotels = localStorage.getItem('hotels');
+  if(hotels) {
+    hotels = JSON.parse(hotels);
+  }
+
+  let flights = localStorage.getItem('flights');
+  if (flights) {
+    flights = JSON.parse(flights);
+  }
   return {
-    hotels: [],
+    hotels: hotels || [],
     cars: cars || [],
-    flights: [],
+    flights: flights || [],
   }
 }

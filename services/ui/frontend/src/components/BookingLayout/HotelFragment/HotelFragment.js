@@ -3,9 +3,10 @@ import queryString from "query-string";
 import styles from "./HotelFragment.module.css";
 import DoubleSlider from "./DoubleSlider";
 import MultiSelect from "./MultiSelect";
-import Select from "./Select";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
+import Select from "./Select";
 
 import globalHistory from "globalHistory";
 
@@ -17,6 +18,7 @@ import {
   MAX_PRICE,
   CURRENCY,
 } from "components/common/query-constants";
+import { useActions } from "redux/actions";
 
 const DEFAULT_MAX = 700;
 
@@ -48,7 +50,16 @@ const dateValid = (from, to) => {
   return true;
 };
 
-const ListItem = ({ superchain, name, cost, images }) => {
+const ListItem = ({ id, superchain, name, cost, images }) => {
+  const {addHotelsToCart, removeHotelsFromCart} = useActions();
+  const hotels = useSelector(state => state.hotels);
+  const numberInCart = hotels.filter(hotelId => hotelId === id).length;
+  const handleAddToCart = () => {
+    addHotelsToCart(id);
+  }
+  const handleRemoveFromCart = () => {
+    removeHotelsFromCart(id);
+  }
   return (
     <div className={styles.listItem}>
       <div
@@ -63,6 +74,9 @@ const ListItem = ({ superchain, name, cost, images }) => {
         <div className={styles.listItemSub}>{superchain}</div>
         <div className={styles.listItemCost}>{cost}</div>
       </div>
+      <button style={{marginLeft: 'auto'}} onClick={handleAddToCart}>Add to Cart</button>
+      {numberInCart > 0 && <button onClick={handleRemoveFromCart}>Remove </button>} 
+      {numberInCart}
     </div>
   );
 };
@@ -498,7 +512,7 @@ const BookingFragment = ({ country, city, search }) => {
         onMinMaxSelectionChange={handleMinMaxSelectionChange}
         onCurrencyChange={handleCurrencyChange}
       />
-      {hotels.map(({ superchain, name, cost, images }) => {
+      {hotels.map(({ id, superchain, name, cost, images }) => {
         const priceString = priceConversion(cost, {
           from: exchangeRates.USD,
           to: exchangeRates[selectedCurrency],
@@ -508,6 +522,8 @@ const BookingFragment = ({ country, city, search }) => {
         });
         return (
           <ListItem
+            key={id}
+            id={id}
             superchain={superchain}
             name={name}
             cost={priceString}
