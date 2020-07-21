@@ -51,7 +51,7 @@ export async function getHotels(country, city, filters, context) {
     throw new IllegalDateError("from date can not be greater than to date");
   }
 
-  switch (process.env.HOTEL_DATABASE) {
+  switch (process.env.DATABASE) {
     case "mongodb":
       query = buildHotelMongoQuery(
         capitalize(country),
@@ -84,7 +84,7 @@ export async function getHotels(country, city, filters, context) {
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.HOTEL_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
 
   return updateCost(data, filters.dateFrom);
@@ -95,7 +95,7 @@ export async function getFilterList(filterType, context) {
     throw new TagNotFoundError(filterType);
   }
   let data;
-  switch (process.env.HOTEL_DATABASE) {
+  switch (process.env.DATABASE) {
     case "mongodb":
       context.start("getHotelInfoFromMongo");
       data = await getHotelInfoFromMongo(filterType, context);
@@ -113,13 +113,13 @@ export async function getFilterList(filterType, context) {
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.HOTEL_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return data;
 }
 
 export async function readinessCheck() {
-  switch (process.env.HOTEL_DATABASE) {
+  switch (process.env.DATABASE) {
     case "mongodb":
       return await mongoReadinessCheck();
     case "postgres":

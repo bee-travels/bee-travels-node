@@ -31,7 +31,7 @@ export function buildHotelCloudantQuery(country, city, filters) {
 
 export async function getHotelDataFromCloudant(query, context) {
   context.start("cloudantClientConnect");
-  const cloudant = Cloudant(process.env.HOTEL_COUCH_CLOUDANT_CONNECTION_URL);
+  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
   context.stop();
   const db = cloudant.db.use("hotels");
 
@@ -47,7 +47,7 @@ export async function getHotelDataFromCloudant(query, context) {
 
 export async function getHotelInfoFromCloudant(filterType, context) {
   context.start("cloudantClientConnect");
-  const cloudant = Cloudant(process.env.HOTEL_COUCH_CLOUDANT_CONNECTION_URL);
+  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
   context.stop();
   const db = cloudant.db.use("hotel_info");
 
@@ -71,7 +71,7 @@ export async function getHotelInfoFromCloudant(filterType, context) {
 }
 
 export async function cloudantReadinessCheck() {
-  const cloudant = Cloudant(process.env.HOTEL_COUCH_CLOUDANT_CONNECTION_URL);
+  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
   try {
     await cloudant.ping();
   } catch (err) {

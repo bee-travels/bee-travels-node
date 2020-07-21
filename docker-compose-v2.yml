@@ -31,8 +31,8 @@ services:
     image: mongo-express
     restart: always
     environment:
-      - ME_CONFIG_BASICAUTH_USERNAME=admin
-      - ME_CONFIG_BASICAUTH_PASSWORD=admin
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=admin
     ports:
       - 8081:8081
 
@@ -77,7 +77,7 @@ services:
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
       - GENERATE_DATA=false
-      - DATABASE=${DESTINATION_DATABASE}
+      - DATABASE=${DATABASE}
 
   hotel-data-gen:
     depends_on:
@@ -93,7 +93,7 @@ services:
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
       - GENERATE_DATA=false
-      - DATABASE=${HOTEL_DATABASE}
+      - DATABASE=${DATABASE}
 
   cars-data-gen:
     depends_on:
@@ -109,7 +109,7 @@ services:
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
       - GENERATE_DATA=false
-      - DATABASE=${CAR_DATABASE}
+      - DATABASE=${DATABASE}
 
   flights-data-gen:
     depends_on:
@@ -125,7 +125,7 @@ services:
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CONNECTION_URL=http://admin:admin@couch:5984
       - GENERATE_DATA=false
-      - DATABASE=${FLIGHTS_DATABASE}
+      - DATABASE=${DATABASE}
 
   destination:
     build: services/destination-v2
@@ -134,12 +134,13 @@ services:
     depends_on:
       - base
     environment:
-      - DESTINATION_DATABASE=${DESTINATION_DATABASE}
-      - DESTINATION_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
-      - DESTINATION_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
-      - DESTINATION_PG_HOST=postgres
-      - DESTINATION_PG_USER=postgres
-      - DESTINATION_PG_PASSWORD=admin
+      - DATABASE=${DATABASE}
+      - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_USER=postgres
+      - PG_PASSWORD=admin
 
   hotel:
     build: services/hotel-v2
@@ -148,12 +149,13 @@ services:
     depends_on:
       - base
     environment:
-      - HOTEL_DATABASE=${HOTEL_DATABASE}
-      - HOTEL_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
-      - HOTEL_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
-      - HOTEL_PG_HOST=postgres
-      - HOTEL_PG_USER=postgres
-      - HOTEL_PG_PASSWORD=admin
+      - DATABASE=${DATABASE}
+      - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_USER=postgres
+      - PG_PASSWORD=admin
 
   car-rental:
     build: services/car-rental-v2
@@ -163,12 +165,13 @@ services:
       - base
       - cars-data-gen
     environment:
-      - CAR_DATABASE=${CAR_DATABASE}
-      - CAR_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
-      - CAR_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
-      - CAR_PG_HOST=postgres
-      - CAR_PG_USER=postgres
-      - CAR_PG_PASSWORD=admin
+      - DATABASE=${DATABASE}
+      - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_USER=postgres
+      - PG_PASSWORD=admin
 
   flights:
     build: services/flights-v2
@@ -177,12 +180,13 @@ services:
     depends_on:
       - base
     environment:
-      - FLIGHTS_DATABASE=${FLIGHTS_DATABASE}
-      - FLIGHTS_MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
-      - FLIGHTS_COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
-      - FLIGHTS_PG_HOST=postgres
-      - FLIGHTS_PG_USER=postgres
-      - FLIGHTS_PG_PASSWORD=admin
+      - DATABASE=${DATABASE}
+      - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
+      - COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_USER=postgres
+      - PG_PASSWORD=admin
 
   currency-exchange:
     build: services/currency-exchange
@@ -217,10 +221,11 @@ services:
       - payment
       - email-service
     environment:
-      - CHECKOUT_DATABASE=${CHECKOUT_DATABASE}
-      - CHECKOUT_PG_HOST=postgres
-      - CHECKOUT_PG_USER=postgres
-      - CHECKOUT_PG_PASSWORD=admin
+      - DATABASE=${DATABASE}
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_USER=postgres
+      - PG_PASSWORD=admin
       - PAYMENT_URL=http://payment:9403
       - EMAIL_URL=http://email-service:9301
 
@@ -235,7 +240,6 @@ services:
       - car-rental
       - currency-exchange
       - flights
-
     environment:
       - NODE_ENV=production
       - DESTINATION_URL=http://destination:9001
@@ -243,6 +247,3 @@ services:
       - CAR_URL=http://car-rental:9102
       - CURRENCY_EXCHANGE_URL=http://currency-exchange:9201
       - FLIGHTS_URL=http://flights:9103
-
-
-

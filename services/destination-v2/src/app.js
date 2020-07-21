@@ -47,7 +47,7 @@ app.get("/info", (req, res) => {
     res.json({
       service: "destination-v2",
       hostname: os.hostname(),
-      database: process.env.DESTINATION_DATABASE,
+      database: process.env.DATABASE,
       children: infoArray,
       language: "Node.js",
       url: process.env.DESTINATION_URL || "http://localhost:9001",

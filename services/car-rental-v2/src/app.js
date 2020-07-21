@@ -47,7 +47,7 @@ app.get("/info", (req, res) => {
     res.json({
       service: "car-rental-v2",
       hostname: os.hostname(),
-      database: process.env.CAR_DATABASE,
+      database: process.env.DATABASE,
       children: infoArray,
       language: "Node.js",
       url: process.env.CAR_URL || "http://localhost:9102",

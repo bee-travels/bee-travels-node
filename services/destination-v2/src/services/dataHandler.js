@@ -36,7 +36,7 @@ function capitalize(text) {
 
 export async function getCities(context) {
   let data;
-  switch (process.env.DESTINATION_DATABASE) {
+  switch (process.env.DATABASE) {
     case "mongodb":
       context.start("getDestinationDataFromMongo");
       data = await getDestinationDataFromMongo({}, context);
@@ -60,7 +60,7 @@ export async function getCities(context) {
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.DESTINATION_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return data;
 }
@@ -68,7 +68,7 @@ export async function getCities(context) {
 export async function getCitiesForCountry(country, context) {
   let data;
   let query;
-  switch (process.env.DESTINATION_DATABASE) {
+  switch (process.env.DATABASE) {
     case "mongodb":
       query = buildDestinationMongoQuery(capitalize(country), null);
       context.start("getDestinationDataFromMongo");
@@ -89,7 +89,7 @@ export async function getCitiesForCountry(country, context) {
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.DESTINATION_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return data;
 }
@@ -97,7 +97,7 @@ export async function getCitiesForCountry(country, context) {
 export async function getCity(country, city, context) {
   let data;
   let query;
-  switch (process.env.DESTINATION_DATABASE) {
+  switch (process.env.DATABASE) {
     case "mongodb":
       query = buildDestinationMongoQuery(capitalize(country), capitalize(city));
       context.start("getDestinationDataFromMongo");
@@ -124,13 +124,13 @@ export async function getCity(country, city, context) {
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.DESTINATION_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return data;
 }
 
 export async function readinessCheck() {
-  switch (process.env.DESTINATION_DATABASE) {
+  switch (process.env.DATABASE) {
     case "mongodb":
       return await mongoReadinessCheck();
     case "postgres":

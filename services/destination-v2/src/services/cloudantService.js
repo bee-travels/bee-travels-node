@@ -13,9 +13,7 @@ export function buildDestinationCloudantQuery(country, city) {
 
 export async function getDestinationDataFromCloudant(query, context) {
   context.start("cloudantClientConnect");
-  const cloudant = Cloudant(
-    process.env.DESTINATION_COUCH_CLOUDANT_CONNECTION_URL
-  );
+  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
   context.stop();
   const db = cloudant.db.use("destination");
 
@@ -34,9 +32,7 @@ export async function getDestinationDataFromCloudant(query, context) {
 }
 
 export async function cloudantReadinessCheck() {
-  const cloudant = Cloudant(
-    process.env.DESTINATION_COUCH_CLOUDANT_CONNECTION_URL
-  );
+  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
   try {
     await cloudant.ping();
   } catch (err) {

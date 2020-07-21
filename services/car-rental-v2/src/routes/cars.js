@@ -71,7 +71,10 @@ router.get("/:country/:city", async (req, res, next) => {
     dateFrom,
     dateTo,
   } = req.query;
+<<<<<<< HEAD
   req.log.info(`getting car rental data for -> /${country}/${city}`);
+=======
+>>>>>>> 03e4a69a09bdc56ca9676af9355fbf204b48db31
 
   try {
     const breaker = new CircuitBreaker(getCars, opossumOptions);

@@ -34,7 +34,7 @@ export function buildCarCloudantQuery(country, city, filters) {
 
 export async function getCarDataFromCloudant(query, context) {
   context.start("cloudantClientConnect");
-  const cloudant = Cloudant(process.env.CAR_COUCH_CLOUDANT_CONNECTION_URL);
+  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
   context.stop();
   const db = cloudant.db.use("cars");
 
@@ -50,7 +50,7 @@ export async function getCarDataFromCloudant(query, context) {
 
 export async function getCarInfoFromCloudant(filterType, context) {
   context.start("cloudantClientConnect");
-  const cloudant = Cloudant(process.env.CAR_COUCH_CLOUDANT_CONNECTION_URL);
+  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
   context.stop();
   const db = cloudant.db.use(
     filterType === "rental_company" ? "cars" : "car_info"
@@ -76,7 +76,7 @@ export async function getCarInfoFromCloudant(filterType, context) {
 }
 
 export async function cloudantReadinessCheck() {
-  const cloudant = Cloudant(process.env.CAR_COUCH_CLOUDANT_CONNECTION_URL);
+  const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
   try {
     await cloudant.ping();
   } catch (err) {

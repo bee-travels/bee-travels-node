@@ -9,11 +9,13 @@ The checkout service is a microservice designed to handle the payment processing
 
 ## Environment Variables
 
-* `CHECKOUT_DATABASE` - ***REQUIRED*** variable for type of database to be used. The following are acceptable values:
+* `DATABASE` - ***REQUIRED*** variable for type of database to be used. The following are acceptable values:
   * `postgres`
-* `CHECKOUT_PG_HOST` - variable for the `postgres` database host
-* `CHECKOUT_PG_USER` - variable for the `postgres` database user
-* `CHECKOUT_PG_PASSWORD` - variable for the `postgres` database password
+* `PG_HOST` - variable for the `postgres` database host
+* `PG_PORT` - variable for the `postgres` database port
+* `PG_USER` - variable for the `postgres` database user
+* `PG_PASSWORD` - variable for the `postgres` database password
+* `DATABASE_CERT` - variable for the CA certificate used to connect to a database if TLS/SSL is used
 * `PAYMENT_URL` - ***REQUIRED*** URL for payment service
 * `EMAIL_URL` - ***REQUIRED*** URL for email service
 
