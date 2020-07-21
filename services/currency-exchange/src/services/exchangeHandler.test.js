@@ -12,7 +12,7 @@ const CurrencyNotFoundError = require("./../errors/CurrencyNotFoundError");
 const context = {
   start: () => {},
   stop: () => {},
-}
+};
 
 chai.use(chaiAsPromised);
 
@@ -41,9 +41,9 @@ describe("convert", () => {
   it("throws with a fake `to` currency code", async () => {
     const fakeCode = "ABCD";
     sinon.stub(axios, "get").returns(ratesMock);
-    await expect(convert(context, "USD", fakeCode)).to.eventually.be.rejectedWith(
-      CurrencyNotFoundError
-    );
+    await expect(
+      convert(context, "USD", fakeCode)
+    ).to.eventually.be.rejectedWith(CurrencyNotFoundError);
   });
 
   it("throws with a fake `from` currency code", async () => {

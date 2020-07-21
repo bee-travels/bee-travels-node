@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import globalHistory from "globalHistory";
 import Graph from "react-graph-vis";
-import {Provider} from "react-redux";
-import {createStore} from "redux";
-import {composeWithDevTools} from "redux-devtools-extension";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-import reducer from 'redux/reducer';
-import init from 'redux/init';
+import reducer from "redux/reducer";
+import init from "redux/init";
 
 import BookingLayout from "components/BookingLayout/BookingLayout";
 import HomeLayout from "components/HomeLayout/HomeLayout";

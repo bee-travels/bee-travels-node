@@ -3,23 +3,24 @@ import pinoPretty from "pino-pretty";
 
 const pino = logger({
   level: process.env.LOG_LEVEL || "warn",
-  prettyPrint: process.env.NODE_ENV !== "production" || process.env.LOG_LEVEL === "debug",
+  prettyPrint:
+    process.env.NODE_ENV !== "production" || process.env.LOG_LEVEL === "debug",
   // Yarn 2 doesn't like pino importing `pino-pretty` on it's own, so we need to
   // provide it.
   prettifier: pinoPretty,
   customLogLevel: function (res, err) {
     if (res.statusCode >= 400 && res.statusCode < 500) {
-      return 'warn'
+      return "warn";
     } else if (res.statusCode >= 500 || err) {
-      return 'error'
+      return "error";
     }
-    return 'info'
+    return "info";
   },
   customSuccessMessage: function (res) {
     if (res.statusCode === 404) {
-      return 'resource not found'
+      return "resource not found";
     }
-    return 'request completed'
+    return "request completed";
   },
   serializers: {
     req: (req) => ({
@@ -27,6 +28,6 @@ const pino = logger({
       url: req.url,
     }),
   },
-})
+});
 
 export default pino;

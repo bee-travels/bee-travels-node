@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {useSelector} from 'react-redux';
+import { useSelector } from "react-redux";
 
 import DestinationFragment from "./DestinationFragment/DestinationFragment";
 import HotelFragment from "./HotelFragment/HotelFragment";
@@ -84,9 +84,9 @@ const Content = ({ location }) => {
   const [longitude, setLongitude] = useState(0);
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
-  const carsItems = useSelector(state => state.cars)
-  const hotelsItems = useSelector(state => state.hotels);
-  const flightsItems = useSelector(state => state.flights);
+  const carsItems = useSelector((state) => state.cars);
+  const hotelsItems = useSelector((state) => state.hotels);
+  const flightsItems = useSelector((state) => state.flights);
 
   useEffect(() => {
     const loadDestination = async () => {
@@ -108,9 +108,9 @@ const Content = ({ location }) => {
   }, [city, country]);
 
   const handleFabClick = () => {
-    const _ids = localStorage.getItem('cart') || "[]";    
+    const _ids = localStorage.getItem("cart") || "[]";
     alert(_ids);
-  }
+  };
 
   return (
     <SplitPaneLayout panelWidth="464px" breakpoint="1250px">

@@ -51,15 +51,15 @@ const dateValid = (from, to) => {
 };
 
 const ListItem = ({ id, superchain, name, cost, images }) => {
-  const {addHotelsToCart, removeHotelsFromCart} = useActions();
-  const hotels = useSelector(state => state.hotels);
-  const numberInCart = hotels.filter(hotelId => hotelId === id).length;
+  const { addHotelsToCart, removeHotelsFromCart } = useActions();
+  const hotels = useSelector((state) => state.hotels);
+  const numberInCart = hotels.filter((hotelId) => hotelId === id).length;
   const handleAddToCart = () => {
     addHotelsToCart(id);
-  }
+  };
   const handleRemoveFromCart = () => {
     removeHotelsFromCart(id);
-  }
+  };
   return (
     <div className={styles.listItem}>
       <div
@@ -74,8 +74,12 @@ const ListItem = ({ id, superchain, name, cost, images }) => {
         <div className={styles.listItemSub}>{superchain}</div>
         <div className={styles.listItemCost}>{cost}</div>
       </div>
-      <button style={{marginLeft: 'auto'}} onClick={handleAddToCart}>Add to Cart</button>
-      {numberInCart > 0 && <button onClick={handleRemoveFromCart}>Remove </button>} 
+      <button style={{ marginLeft: "auto" }} onClick={handleAddToCart}>
+        Add to Cart
+      </button>
+      {numberInCart > 0 && (
+        <button onClick={handleRemoveFromCart}>Remove </button>
+      )}
       {numberInCart}
     </div>
   );
@@ -87,17 +91,17 @@ const MetaData = ({
   toDate,
   onToDateChanged,
   count,
-  onCountChanged
+  onCountChanged,
 }) => {
   const classes = useStyles();
 
   const handleFromDateChanged = (e) => {
     onFromDateChanged(e.target.value);
-  }
+  };
 
   const handleToDateChanged = (e) => {
     onToDateChanged(e.target.value);
-  }
+  };
 
   const handleCountChange = (e) => {
     onCountChanged(e.target.value);
@@ -128,10 +132,10 @@ const MetaData = ({
         }}
       />
       <div className={styles.filterNarrow}>
-        <Select 
+        <Select
           value={count}
           onSelected={handleCountChange}
-          list={["Hotel Rooms",1,2,3,4,5,6,7,8]}
+          list={["Hotel Rooms", 1, 2, 3, 4, 5, 6, 7, 8]}
         />
       </div>
     </div>
@@ -487,7 +491,7 @@ const BookingFragment = ({ country, city, search }) => {
 
   return (
     <>
-      <MetaData 
+      <MetaData
         fromDate={dateFrom}
         onFromDateChanged={setDateFrom}
         toDate={dateTo}

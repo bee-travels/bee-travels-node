@@ -11,7 +11,7 @@ import {
 import Jaeger from "./../jaeger";
 import CircuitBreaker from "opossum";
 
-import {TagNotFoundError, IllegalDateError} from "../errors";
+import { TagNotFoundError, IllegalDateError } from "../errors";
 
 const router = Router();
 
@@ -120,10 +120,15 @@ router.get("/direct/:from/:to", async (req, res, next) => {
       throw new IllegalDateError("needs a date");
     }
     const breaker = new CircuitBreaker(getDirectFlights, opossumOptions);
-    const data = await breaker.fire(from, to, {
-      dateFrom: _dateFrom,
-      dateTo: _dateTo,
-    }, context);
+    const data = await breaker.fire(
+      from,
+      to,
+      {
+        dateFrom: _dateFrom,
+        dateTo: _dateTo,
+      },
+      context
+    );
     res.json(data);
   } catch (e) {
     next(e);
@@ -151,10 +156,15 @@ router.get("/onestop/:from/:to", async (req, res, next) => {
       throw new IllegalDateError("needs a date");
     }
     const breaker = new CircuitBreaker(getOneStopFlights, opossumOptions);
-    const data = await breaker.fire(from, to, {
-      dateFrom: _dateFrom,
-      dateTo: _dateTo,
-    }, context);
+    const data = await breaker.fire(
+      from,
+      to,
+      {
+        dateFrom: _dateFrom,
+        dateTo: _dateTo,
+      },
+      context
+    );
     res.json(data);
   } catch (e) {
     next(e);
@@ -182,10 +192,15 @@ router.get("/twostop/:from/:to", async (req, res, next) => {
       throw new IllegalDateError("needs a date");
     }
     const breaker = new CircuitBreaker(getTwoStopFlights, opossumOptions);
-    const data = await breaker.fire(from, to, {
-      dateFrom: _dateFrom,
-      dateTo: _dateTo,
-    }, context);
+    const data = await breaker.fire(
+      from,
+      to,
+      {
+        dateFrom: _dateFrom,
+        dateTo: _dateTo,
+      },
+      context
+    );
     res.json(data);
   } catch (e) {
     next(e);
@@ -195,6 +210,5 @@ router.get("/twostop/:from/:to", async (req, res, next) => {
 function parseDate(date) {
   return Date.parse(date);
 }
-
 
 export default router;

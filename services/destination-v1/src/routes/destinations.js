@@ -29,7 +29,7 @@ const opossumOptions = {
 router.get("/:country/:city", async (req, res, next) => {
   const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
-  req.log.info(`getting destination data for -> /${country}/${city}`)
+  req.log.info(`getting destination data for -> /${country}/${city}`);
 
   try {
     const breaker = new CircuitBreaker(getCity, opossumOptions);
@@ -53,7 +53,7 @@ router.get("/:country/:city", async (req, res, next) => {
 router.get("/:country", async (req, res, next) => {
   const context = new Jaeger("country", req, res);
   const { country } = req.params;
-  req.log.info(`getting destination data for -> /${country}`)
+  req.log.info(`getting destination data for -> /${country}`);
 
   try {
     const breaker = new CircuitBreaker(getCitiesForCountry, opossumOptions);
@@ -74,7 +74,7 @@ router.get("/:country", async (req, res, next) => {
  */
 router.get("/", async (req, res, next) => {
   const context = new Jaeger("cities", req, res);
-  req.log.info(`getting destination data for -> /`)
+  req.log.info(`getting destination data for -> /`);
 
   try {
     const breaker = new CircuitBreaker(getCities, opossumOptions);

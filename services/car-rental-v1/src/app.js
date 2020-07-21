@@ -11,7 +11,7 @@ import prometheus from "./prometheus";
 import health from "./health";
 import services from "./external-services";
 
-import logger from './logger';
+import logger from "./logger";
 
 const app = express();
 

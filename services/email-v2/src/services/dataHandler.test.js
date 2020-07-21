@@ -10,7 +10,7 @@ chai.use(chaiAsPromised);
 const context = {
   start: () => {},
   stop: () => {},
-}
+};
 
 describe("sendEmail", () => {
   it("success sending email", async () => {
