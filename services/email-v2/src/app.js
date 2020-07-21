@@ -1,8 +1,6 @@
 import os from "os";
 
 import express from "express";
-import logger from "pino-http";
-import pinoPretty from "pino-pretty";
 import openapi from "openapi-comment-parser";
 import swaggerUi from "swagger-ui-express";
 import client from "prom-client";
