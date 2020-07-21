@@ -12,19 +12,12 @@ import emailsRouter from "./routes/emails";
 import prometheus from "./prometheus";
 import health from "./health";
 import services from "./external-services";
+import logger from "./logger";
 
 const app = express();
 
 // Setup Pino.
-app.use(
-  logger({
-    level: process.env.LOG_LEVEL || "warn",
-    prettyPrint: process.env.NODE_ENV !== "production",
-    // Yarn 2 doesn't like pino importing `pino-pretty` on it's own, so we need to
-    // provide it.
-    prettifier: pinoPretty,
-  })
-);
+app.use(logger);
 
 // Prometheus metrics collected for all service api endpoints
 app.use("/api", prometheus);
