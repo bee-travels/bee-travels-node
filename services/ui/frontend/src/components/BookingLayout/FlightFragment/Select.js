@@ -74,7 +74,13 @@ function ArrowDropDown(props) {
   );
 }
 
-export function CustomSelectObject({ list, selected, onSelected, label, render }) {
+export function CustomSelectObject({
+  list,
+  selected,
+  onSelected,
+  label,
+  render,
+}) {
   const classes = useStyles();
   return (
     <div>
@@ -87,7 +93,7 @@ export function CustomSelectObject({ list, selected, onSelected, label, render }
         >
           <option value="">{label}</option>
           {list.map((l) => {
-            return <option value={JSON.stringify(l)}>{render(l)}</option>
+            return <option value={JSON.stringify(l)}>{render(l)}</option>;
           })}
         </CustomNativeSelect>
       </FormControl>
@@ -106,7 +112,6 @@ export default function CustomizedSelects({ list, selected, onSelected }) {
           input={<CustomInput />}
           IconComponent={ArrowDropDown}
         >
-          
           {list.map((l) => (
             <option value={l}>{l}</option>
           ))}
@@ -115,4 +120,3 @@ export default function CustomizedSelects({ list, selected, onSelected }) {
     </div>
   );
 }
-

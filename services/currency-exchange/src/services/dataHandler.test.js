@@ -10,7 +10,7 @@ const CountryNotFoundError = require("./../errors/CountryNotFoundError");
 const context = {
   start: () => {},
   stop: () => {},
-}
+};
 
 chai.use(chaiAsPromised);
 

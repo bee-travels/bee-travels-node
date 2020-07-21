@@ -9,7 +9,7 @@ const { getCities, getCity } = require("./dataHandler");
 const context = {
   start: () => {},
   stop: () => {},
-}
+};
 
 const destinationSchema = {
   title: "destination schema v1",

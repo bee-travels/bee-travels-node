@@ -73,17 +73,17 @@ const MetaData = ({
   toDate,
   onToDateChanged,
   count,
-  onCountChanged
+  onCountChanged,
 }) => {
   const classes = useStyles();
 
   const handleFromDateChanged = (e) => {
     onFromDateChanged(e.target.value);
-  }
+  };
 
   const handleToDateChanged = (e) => {
     onToDateChanged(e.target.value);
-  }
+  };
 
   const handleCountChange = (e) => {
     onCountChanged(e.target.value);
@@ -114,10 +114,10 @@ const MetaData = ({
         }}
       />
       <div className={styles.filterNarrow}>
-        <Select 
+        <Select
           value={count}
           onSelected={handleCountChange}
-          list={["Hotel Rooms",1,2,3,4,5,6,7,8]}
+          list={["Hotel Rooms", 1, 2, 3, 4, 5, 6, 7, 8]}
         />
       </div>
     </div>
@@ -473,7 +473,7 @@ const BookingFragment = ({ country, city, search }) => {
 
   return (
     <>
-      <MetaData 
+      <MetaData
         fromDate={dateFrom}
         onFromDateChanged={setDateFrom}
         toDate={dateTo}

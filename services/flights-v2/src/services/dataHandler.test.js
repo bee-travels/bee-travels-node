@@ -2,7 +2,6 @@ import { describe, it } from "mocha";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 
-
 chai.use(chaiAsPromised);
 
 // describe("getData", () => {

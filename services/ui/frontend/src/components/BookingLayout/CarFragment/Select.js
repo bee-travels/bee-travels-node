@@ -86,7 +86,9 @@ export default function CustomizedSelects({ list, selected, onSelected }) {
           IconComponent={ArrowDropDown}
         >
           {list.map((l, i) => (
-            <option key={i} value={l}>{l}</option>
+            <option key={i} value={l}>
+              {l}
+            </option>
           ))}
         </CustomNativeSelect>
       </FormControl>

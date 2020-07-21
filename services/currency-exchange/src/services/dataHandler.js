@@ -5,7 +5,10 @@ import CSVParsingError from "./../errors/CSVParsingError";
 import CountryNotFoundError from "./../errors/CountryNotFoundError";
 import CurrencyNotFoundError from "./../errors/CurrencyNotFoundError";
 
-const CSV_PATH = path.join(__dirname, "./../../data/countryCurrencyMetadata.csv");
+const CSV_PATH = path.join(
+  __dirname,
+  "./../../data/countryCurrencyMetadata.csv"
+);
 
 async function parseMetadata(csv) {
   try {
