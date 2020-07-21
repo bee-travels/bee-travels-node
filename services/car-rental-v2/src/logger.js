@@ -3,7 +3,7 @@ import pinoPretty from "pino-pretty";
 
 const pino = logger({
   level: process.env.LOG_LEVEL || "warn",
-  prettyPrint: process.env.NODE_ENV !== "production" || process.env.LOG_LEVEL === "info",
+  prettyPrint: process.env.NODE_ENV !== "production" || process.env.LOG_LEVEL === "debug",
   // Yarn 2 doesn't like pino importing `pino-pretty` on it's own, so we need to
   // provide it.
   prettifier: pinoPretty,
