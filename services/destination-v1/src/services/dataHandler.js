@@ -1,10 +1,14 @@
 import path from "path";
-import { promises as fs } from "fs";
+import fs from 'fs';
+
 
 const DESTINATIONS_PATH = path.join(
   __dirname,
   "./../../data/destinations.json"
 );
+
+let destinationData = null;
+let destinationDataCityAndCountry = null;
 
 // Cities with these words in the city name are lower case
 const lowercaseExceptions = ["es", "de", "au"];
@@ -25,36 +29,48 @@ function capitalize(text) {
     : text.join(" ");
 }
 
-async function parseMetadata(file, allData) {
-  const content = await fs.readFile(file);
+function parseMetadata(file, allData) {
+  const content = fs.readFileSync(file);
   const metadata = JSON.parse(content);
-  if (allData) {
-    return metadata;
-  }
-  return metadata.map((item) => ({
-    country: item.country,
-    city: item.city,
-  }));
+  return metadata;
 }
 
-export async function getCities(context) {
+function getAllDestination() {
+  if(destinationData === null) {
+    destinationData = parseMetadata(DESTINATIONS_PATH);
+  }
+  return destinationData;
+}
+
+function getDestinationCityAndCountry() {
+  if(destinationDataCityAndCountry === null){
+    const metadata = getAllDestination();
+    destinationDataCityAndCountry = metadata.map((item) => ({
+      country: item.country,
+      city: item.city,
+    }));
+  }
+  return destinationDataCityAndCountry;
+}
+
+export function getCities(context) {
   context.start("parseMetadata");
-  const metadata = await parseMetadata(DESTINATIONS_PATH, false);
+  const metadata = getDestinationCityAndCountry();
   context.stop();
   return metadata;
 }
 
-export async function getCitiesForCountry(country, context) {
+export function getCitiesForCountry(country, context) {
   context.start("parseMetadata");
-  const metadata = await parseMetadata(DESTINATIONS_PATH, false);
+  const metadata = getDestinationCityAndCountry();
   context.stop();
   const citiesData = metadata.filter((c) => c.country === capitalize(country));
   return citiesData;
 }
 
-export async function getCity(country, city, context) {
+export function getCity(country, city, context) {
   context.start("parseMetadata");
-  const metadata = await parseMetadata(DESTINATIONS_PATH, true);
+  const metadata = getAllDestination();
   context.stop();
   const cityData = metadata.find(
     (c) => c.city === capitalize(city) && c.country === capitalize(country)
