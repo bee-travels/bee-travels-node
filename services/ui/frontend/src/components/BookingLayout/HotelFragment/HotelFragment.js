@@ -143,42 +143,44 @@ const MetaData = ({
 };
 
 const Filters = ({
-  selectedTypes,
-  selectedHotels,
-  selectedSuperchains,
-  selectedExchangeRate,
-  minHotelPrice,
-  maxHotelPrice,
+  // selectedTypes,
+  // selectedHotels,
+  // selectedSuperchains,
+  // selectedExchangeRate,
+  // minHotelPrice,
+  // maxHotelPrice,
   typeList,
   hotelList,
   superchainList,
   exchangeRates,
-  onSuperchainSelectionChange,
-  onHotelSelectionChange,
-  onTypeSelectionChange,
-  onMinMaxSelectionChange,
-  onCurrencyChange,
+  // onSuperchainSelectionChange,
+  // onHotelSelectionChange,
+  // onTypeSelectionChange,
+  // onMinMaxSelectionChange,
+  // onCurrencyChange,
 }) => {
+  const hotels = useSelector(state => state.hotelFilters)
+
   const handleSuperchainChange = (values) => {
-    onSuperchainSelectionChange(values);
+    // onSuperchainSelectionChange(values);
   };
 
   const handleHotelChange = (values) => {
-    onHotelSelectionChange(values);
+    // onHotelSelectionChange(values);
   };
 
   const handleTypeChange = (values) => {
-    onTypeSelectionChange(values);
+    // onTypeSelectionChange(values);
   };
 
   const handleCurrencyChange = (e) => {
-    onCurrencyChange(e.target.value);
+    // onCurrencyChange(e.target.value);
   };
 
   // We need an intermediate state for while sliding
   const [slideValues, setSlideValues] = useState([
-    minHotelPrice || 0,
-    maxHotelPrice || 700,
+    hotels.minPrice || 0,
+    hotels.maxPrice || 700,
   ]);
 
   // Called while sliding.
@@ -192,29 +194,31 @@ const Filters = ({
     (_, newValue) => {
       const roundedValues = newValue.map((x) => Math.round(x));
       setSlideValues(roundedValues);
-      onMinMaxSelectionChange(roundedValues);
+      // onMinMaxSelectionChange(roundedValues);
     },
-    [onMinMaxSelectionChange]
+    []
   );
+
+  console.log("min 3",exchangeRates[hotels.minPrice])
 
   const scaledMax = Math.round(
     priceConversion(DEFAULT_MAX, {
       from: exchangeRates.USD,
-      to: exchangeRates[selectedExchangeRate],
+      to: exchangeRates[hotels.currency],
     })
   );
 
   const displayMinPrice = Math.round(
     priceConversion(slideValues[0], {
       from: exchangeRates.USD,
-      to: exchangeRates[selectedExchangeRate],
+      to: exchangeRates[hotels.currency],
     })
   );
 
   const displayMaxPrice = Math.round(
     priceConversion(slideValues[1], {
       from: exchangeRates.USD,
-      to: exchangeRates[selectedExchangeRate],
+      to: exchangeRates[hotels.currency],
     })
   );
 
@@ -224,13 +228,15 @@ const Filters = ({
       ? `${scaledMax.toLocaleString(undefined)}+`
       : displayMaxPrice.toLocaleString(undefined);
 
+
+
   return (
     <div className={styles.filters}>
       <div className={styles.filterWide}>
         <MultiSelect
           label="Superchains"
           list={superchainList}
-          selected={selectedSuperchains}
+          selected={hotels.superChains}
           onSelected={handleSuperchainChange}
         />
       </div>
@@ -238,7 +244,7 @@ const Filters = ({
         <MultiSelect
           label="Hotels"
           list={hotelList}
-          selected={selectedHotels}
+          selected={hotels.names}
           onSelected={handleHotelChange}
         />
       </div>
@@ -246,14 +252,14 @@ const Filters = ({
         <MultiSelect
           label="Types"
           list={typeList}
-          selected={selectedTypes}
+          selected={hotels.types}
           onSelected={handleTypeChange}
         />
       </div>
       <div className={styles.filterSuperNarrow}>
         <Select
           list={Object.keys(exchangeRates)}
-          selected={selectedExchangeRate}
+          selected={hotels.currency}
           onSelected={handleCurrencyChange}
         />
       </div>
