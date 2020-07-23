@@ -20,6 +20,7 @@ export async function getDestinationDataFromMongo(query, context) {
 
   if (process.env.DATABASE_CERT) {
     fs.writeFileSync("./cert.pem", process.env.DATABASE_CERT);
+    clientSettings.tls = true;
     clientSettings.tlsCAFile = "./cert.pem";
   }
 
@@ -78,6 +79,7 @@ export async function mongoReadinessCheck() {
 
   if (process.env.DATABASE_CERT) {
     fs.writeFileSync("./cert.pem", process.env.DATABASE_CERT);
+    clientSettings.tls = true;
     clientSettings.tlsCAFile = "./cert.pem";
   }
 
