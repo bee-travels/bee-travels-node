@@ -60,6 +60,22 @@ proxies.forEach(({ service, path }) => {
 
 // app.use(docCollector(proxies));
 
+app.get("/check/hotels", (req, res) => {
+  const url = `${proxies[1].service}/live`;
+  console.log(url);
+  proxyRequest(req, res, url)
+});
+
+app.get("/check/cars", (req, res) => {
+  const url = `${proxies[2].service}/live`;
+  proxyRequest(req, res, url)
+});
+
+app.get("/check/flights", (req, res) => {
+  const url = `${proxies[3].service}/live`;
+  proxyRequest(req, res, url)
+});
+
 if (process.env.NODE_ENV === "production") {
   console.log("production build");
 

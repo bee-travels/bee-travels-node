@@ -1,0 +1,51 @@
+---
+version: '3.3'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=admin
+  
+  destination-data-gen:
+    image: beetravels/data-gen-destination:13de064f6409e9aec5db244a6a9b4e65b7e11623
+    restart: on-failure
+    environment:
+      - PG_USER=postgres
+      - PG_HOST=postgres
+      - PG_PASSWORD=admin
+      - GENERATE_DATA=false
+      - DATABASE=${DATABASE}
+
+  hotel-data-gen:
+    image: beetravels/data-gen-hotel:13de064f6409e9aec5db244a6a9b4e65b7e11623
+    restart: on-failure
+    environment:
+      - PG_USER=postgres
+      - PG_HOST=postgres
+      - PG_PASSWORD=admin
+      - GENERATE_DATA=false
+      - DATABASE=${DATABASE}
+
+  cars-data-gen:
+    image: beetravels/data-gen-carrental:13de064f6409e9aec5db244a6a9b4e65b7e11623
+    restart: on-failure
+    environment:
+      - PG_USER=postgres
+      - PG_HOST=postgres
+      - PG_PASSWORD=admin
+      - GENERATE_DATA=false
+      - DATABASE=${DATABASE}
+
+  flights-data-gen:
+    image: beetravels/data-gen-airports:13de064f6409e9aec5db244a6a9b4e65b7e11623
+    restart: on-failure
+    environment:
+      - PG_USER=postgres
+      - PG_HOST=postgres
+      - PG_PASSWORD=admin
+      - GENERATE_DATA=false
+      - DATABASE=${DATABASE}

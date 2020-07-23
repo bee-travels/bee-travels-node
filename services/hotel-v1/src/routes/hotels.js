@@ -27,6 +27,8 @@ const stringToArray = (s) => s && s.split(",");
 router.get("/info/:tag", async (req, res, next) => {
   const context = new Jaeger("info", req, res);
   const { tag } = req.params;
+  req.log.info(`Getting info for ${tag}`);
+
   try {
     const breaker = new CircuitBreaker(getFilterList, opossumOptions);
     const data = await breaker.fire(tag, context);
@@ -59,6 +61,7 @@ router.get("/:country/:city", async (req, res, next) => {
   const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
   const { superchain, hotel, type, mincost, maxcost } = req.query;
+  req.log.info(`getting hotel data for -> /${country}/${city}`);
 
   try {
     const breaker = new CircuitBreaker(getHotels, opossumOptions);
