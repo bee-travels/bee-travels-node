@@ -77,9 +77,9 @@ export async function readinessCheck() {
         postgresIsReady = false;
     }
     const paymentIsReady = await paymentReadinessCheck();
-    const emailIsReady = await emailReadinessCheck();
+    // const emailIsReady = await emailReadinessCheck();
 
-    return postgresIsReady && paymentIsReady && emailIsReady;
+    return postgresIsReady && paymentIsReady;
   } catch (e) {
     return false;
   }
