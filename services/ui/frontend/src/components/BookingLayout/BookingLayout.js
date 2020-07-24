@@ -85,6 +85,8 @@ const Content = ({ location }) => {
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
   const carsItems = useSelector((state) => state.cars);
+  const hotelsItems = useSelector((state) => state.hotels);
+  const flightsItems = useSelector((state) => state.flights);
 
   useEffect(() => {
     const loadDestination = async () => {
@@ -145,7 +147,7 @@ const Content = ({ location }) => {
           }}
           onClick={handleFabClick}
         >
-          Cart {carsItems.length}
+          Cart {carsItems.length + hotelsItems.length}
         </button>
       </div>
     </SplitPaneLayout>

@@ -24,7 +24,7 @@ export async function processCheckout(context, checkoutObject) {
 
     await savePurchaseToDatabase(context, confirmationId, checkoutObject);
 
-    if (checkoutObject.billingDetails.email) {
+    if (process.env.EMAIL_URL && checkoutObject.billingDetails.email) {
       context.start("sendMail");
       let sentMail = await sendMail(confirmationId, checkoutObject);
       context.stop();
@@ -77,7 +77,7 @@ export async function readinessCheck() {
         postgresIsReady = false;
     }
     const paymentIsReady = await paymentReadinessCheck();
-    const emailIsReady = await emailReadinessCheck();
+    const emailIsReady = process.env.EMAIL_URL ? await emailReadinessCheck() : true;
 
     return postgresIsReady && paymentIsReady && emailIsReady;
   } catch (e) {

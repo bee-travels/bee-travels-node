@@ -54,11 +54,14 @@ const dateValid = (from, to) => {
 };
 
 const ListItem = ({ id, superchain, name, cost, image }) => {
-  const { addToCart } = useActions();
+  const { addCarsToCart, removeCarsFromCart } = useActions();
   const cars = useSelector((state) => state.cars);
   const numberInCart = cars.filter((carId) => carId === id).length;
   const handleAddToCart = () => {
-    addToCart(id);
+    addCarsToCart(id);
+  };
+  const handleRemoveFromCart = () => {
+    removeCarsFromCart(id);
   };
   return (
     <div className={styles.listItem}>
@@ -77,7 +80,9 @@ const ListItem = ({ id, superchain, name, cost, image }) => {
       <button style={{ marginLeft: "auto" }} onClick={handleAddToCart}>
         Add to Cart
       </button>
-      {numberInCart > 0 && <button>Remove </button>}
+      {numberInCart > 0 && (
+        <button onClick={handleRemoveFromCart}>Remove </button>
+      )}
       {numberInCart}
     </div>
   );

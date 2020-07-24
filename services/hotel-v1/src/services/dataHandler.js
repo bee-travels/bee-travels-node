@@ -1,11 +1,15 @@
 import path from "path";
-import { promises as fs } from "fs";
+import fs from 'fs';
 
 const HOTELS_PATH = path.join(__dirname, "./../../data/hotel-data.json");
 const HOTEL_INFO_PATH = path.join(__dirname, "./../../data/hotel-info.json");
 
 // Cities with these words in the city name are lower case
 const lowercaseExceptions = ["es", "de", "au"];
+
+
+let hotelData = null;
+let hotelInfo = null;
 
 function capitalize(text) {
   text = text
@@ -23,23 +27,39 @@ function capitalize(text) {
     : text.join(" ");
 }
 
-async function parseMetadata(file) {
-  const content = await fs.readFile(file);
+function kebabCase(data) {
+  return data;
+}
+
+
+function parseMetadata(file) {
+  const content = fs.readFileSync(file);
   const metadata = JSON.parse(content);
   return metadata;
 }
 
-export async function getHotels(country, city, filters, context) {
-  const { superchain, hotel, type, minCost, maxCost } = filters;
-  context.start("parseMetadata");
-  const metadata = await parseMetadata(HOTELS_PATH);
-  context.stop();
+function getHotelData() {
+  if (hotelData === null) {
+    hotelData = parseMetadata(HOTELS_PATH);
+  }
+  return hotelData;
+}
 
-  const hotelsData = metadata.filter((h) => {
+function getHotelInfo() {
+  if (hotelInfo === null) {
+    hotelInfo = parseMetadata(HOTEL_INFO_PATH);
+  }
+  return hotelInfo;
+}
+
+export function getHotels(country, city, filters, context) {
+  const { superchain, hotel, type, minCost, maxCost } = filters;
+  const metaData = getHotelData();
+  const hotelsData = metaData.filter((h) => {
     if (h.city !== capitalize(city) || h.country !== capitalize(country)) {
       return false;
     }
-
+    
     return (
       (superchain === undefined || superchain.includes(h.superchain)) &&
       (hotel === undefined || hotel.includes(h.name)) &&
@@ -52,11 +72,10 @@ export async function getHotels(country, city, filters, context) {
   return hotelsData;
 }
 
-export async function getFilterList(filterType, context) {
-  context.start("parseMetadata");
-  const metadata = await parseMetadata(HOTEL_INFO_PATH);
-  context.stop();
-  const listOfFilterOptions = metadata.map((item) => item[filterType]);
+export function getFilterList(filterType, context) {
+  const metaData = getHotelInfo();
+
+  const listOfFilterOptions = metaData.map((item) => item[filterType]);
 
   return [...new Set(listOfFilterOptions)];
 }
