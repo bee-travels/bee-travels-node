@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Provider } from "react-redux";
-import { createStore, combineReducers } from "redux";
+import { createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import reducer from "redux/filters/reducer";
-import init from "redux/filters/init";
-import reducer2 from "redux/reducer";
+import init from "redux/init";
+import reducer from "redux/reducer";
 
 import DestinationFragment from "./DestinationFragment/DestinationFragment";
 import HotelFragment from "./HotelFragment/HotelFragment";
@@ -16,12 +15,10 @@ import FlightFragment from "./FlightFragment/FlightFragment";
 import TabHolder from "./TabHolder";
 
 function ProviderWrapper({ location }) {
-
-
   const store = createStore(
-    reducer2,
+    reducer,
     init(location),
-    composeWithDevTools({ name: "bee-travels-filter" })()
+    composeWithDevTools({ name: "bee-travels" })()
   );
 
   return (

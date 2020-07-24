@@ -7229,6 +7229,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-deep-equal@npm:2.0.1":
+  version: 2.0.1
+  resolution: "fast-deep-equal@npm:2.0.1"
+  checksum: 2/ad315b79abe335f25271821447bdbbca5d7a6e5930da498fbb2628d28399e958a679adddbb665f5b2943bfd83d9dd375ac5fb45e9004c9516177008ebb7efc16
+  languageName: node
+  linkType: hard
+
 "fast-deep-equal@npm:^3.1.1":
   version: 3.1.1
   resolution: "fast-deep-equal@npm:3.1.1"
@@ -16786,6 +16793,17 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
+"swr@npm:^0.2.3":
+  version: 0.2.3
+  resolution: "swr@npm:0.2.3"
+  dependencies:
+    fast-deep-equal: 2.0.1
+  peerDependencies:
+    react: ^16.11.0
+  checksum: 2/615a06da029e02849eeb91b28dd9d3dbd7a18ed04c6a7b04f8699f5ec17a7d38ea65c8e88b0cde8b14b0a2e7b5d09f22c63811bc71a07f4b1500ad13d55de9cd
+  languageName: node
+  linkType: hard
+
 "symbol-observable@npm:^1.2.0":
   version: 1.2.0
   resolution: "symbol-observable@npm:1.2.0"
@@ -17327,6 +17345,7 @@ resolve@1.1.7:
     react-scripts: 3.4.1
     redux: ^4.0.5
     redux-devtools-extension: ^2.13.8
+    swr: ^0.2.3
     vis-network: ^7.9.0
   languageName: unknown
   linkType: soft

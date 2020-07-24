@@ -20,6 +20,7 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "swr": "^0.2.3",
     "vis-network": "^7.9.0"
   },
   "scripts": {
