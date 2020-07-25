@@ -48,7 +48,8 @@
 			"editor.defaultFormatter": "esbenp.prettier-vscode",
 		},
 		"[javascript]": {
-			"editor.formatOnSave": true,
+      // TODO: change back
+			"editor.formatOnSave": false,
 			"editor.defaultFormatter": "esbenp.prettier-vscode"
 		},
 		"[typescript]": {

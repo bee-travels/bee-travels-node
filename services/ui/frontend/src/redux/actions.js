@@ -7,36 +7,21 @@ export const types = {
   removeCarsFromCart: "REMOVE_CARS_FROM_CART",
   removeHotelsFromCart: "REMOVE_HOTELS_FROM_CART",
   removeFlightsFromCart: "REMOVE_FLIGHTS_FROM_CART",
+  setFilters: "SET_FILTERS",
+  setMinMaxFilters: "SET_MIN_MAX_FILTERS",
 };
 
 export function useActions() {
   const dispatch = useDispatch();
-  function addCarsToCart(payload) {
-    dispatch({ type: types.addCarsToCart, payload });
-  }
-  function addHotelsToCart(payload) {
-    dispatch({ type: types.addHotelsToCart, payload });
-  }
-  function addFlightsToCart(payload) {
-    dispatch({ type: types.addFlightsToCart, payload });
+
+  let actions = {}
+  for (let [key, val] of Object.entries(types)) {
+    actions[key] = (payload) => {
+      dispatch({ type: val, payload })
+    }
   }
 
-  function removeCarsFromCart(payload) {
-    dispatch({ type: types.removeCarsFromCart, payload });
-  }
-  function removeHotelsFromCart(payload) {
-    dispatch({ type: types.removeHotelsFromCart, payload });
-  }
-  function removeFlightsFromCart(payload) {
-    dispatch({ type: types.removeFlightsFromCart, payload });
-  }
-  // add more dispatches here
   return {
-    addCarsToCart,
-    addHotelsToCart,
-    addFlightsToCart,
-    removeCarsFromCart,
-    removeHotelsFromCart,
-    removeFlightsFromCart,
+    ...actions
   };
 }

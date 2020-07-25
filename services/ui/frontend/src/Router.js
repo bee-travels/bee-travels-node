@@ -2,12 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import globalHistory from "globalHistory";
 import Graph from "react-graph-vis";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 
-import reducer from "redux/reducer";
-import init from "redux/init";
+
 
 import BookingLayout from "components/BookingLayout/BookingLayout";
 import HomeLayout from "components/HomeLayout/HomeLayout";
@@ -45,7 +41,7 @@ function generateGraph(json) {
 
   runThroughNodes(json, nodes, edges, 0);
 
-  let nodesOnLevel = ["IBM Developer is a piece of shit"];
+  let nodesOnLevel = ["max is a piece of sunshine"];
   for (let i = 0; nodesOnLevel.length > 0; i++) {
     nodesOnLevel = nodes.filter((n) => n.level === i);
     nodesOnLevel.forEach((n) => {
@@ -143,13 +139,9 @@ function GraphPage() {
 }
 
 const CustomRouter = () => {
-  const store = createStore(
-    reducer,
-    init(),
-    composeWithDevTools({ name: "bee-travels" })()
-  );
+
+
   return (
-    <Provider store={store}>
       <Router history={globalHistory}>
         <Switch>
           <Route exact path="/" component={HomeLayout} />
@@ -161,7 +153,6 @@ const CustomRouter = () => {
           <Route component={ErrorLayout} />
         </Switch>
       </Router>
-    </Provider>
   );
 };
 
