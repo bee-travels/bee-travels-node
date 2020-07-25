@@ -7,33 +7,35 @@ import Select from "components/common/Select";
 import useExchangeRates from "api/use-exchange-rate";
 import useInfo from "api/use-info";
 
-import styles from "./HotelFragment.module.css";
+import styles from "./CarFragment.module.css";
+
 import priceConversion from "components/common/convert-currency";
-import { DEFAULT_MAX } from "api/use-hotels";
+import { DEFAULT_MAX } from "api/use-cars";
 import { useActions } from "redux/actions";
 
 function Filters() {
   const { setFilters, setMinMaxFilters } = useActions();
-  const hotels = useSelector((state) => state.hotelFilters);
+  const cars = useSelector((state) => state.carFilters);
 
   const { exchangeRates } = useExchangeRates();
-  const { data: superchainList = [] } = useInfo(
-    "/api/v1/hotels/info/superchain"
+  const { data: rentalCompanyList = [] } = useInfo(
+    "/api/v1/cars/info/rental_company"
   );
-  const { data: hotelList = [] } = useInfo("/api/v1/hotels/info/name");
-  const { data: typeList = [] } = useInfo("/api/v1/hotels/info/type");
+  const { data: carsList = [] } = useInfo("/api/v1/cars/info/name");
+  const { data: styleList = [] } = useInfo("/api/v1/cars/info/style");
+  const { data: typeList = [] } = useInfo("/api/v1/cars/info/body_type");
 
-  const handleSuperchainChange = (values) => {
+  const handleRentalCompanyChange = (values) => {
     setFilters({
-      service: "hotelFilters",
-      filter: "superchains",
+      service: "carFilters",
+      filter: "rentalCompanies",
       value: values,
     });
   };
 
-  const handleHotelChange = (values) => {
+  const handleCarChange = (values) => {
     setFilters({
-      service: "hotelFilters",
+      service: "carFilters",
       filter: "names",
       value: values,
     });
@@ -41,15 +43,23 @@ function Filters() {
 
   const handleTypeChange = (values) => {
     setFilters({
-      service: "hotelFilters",
+      service: "carFilters",
       filter: "types",
+      value: values,
+    });
+  };
+
+  const handleStyleChange = (values) => {
+    setFilters({
+      service: "carFilters",
+      filter: "carStyles",
       value: values,
     });
   };
 
   const handleCurrencyChange = (e) => {
     setFilters({
-      service: "hotelFilters",
+      service: "carFilters",
       filter: "currency",
       value: e.target.value,
     });
@@ -57,8 +67,8 @@ function Filters() {
 
   // We need an intermediate state for while sliding
   const [slideValues, setSlideValues] = useState([
-    hotels.minPrice || 0,
-    hotels.maxPrice || 700,
+    cars.minPrice || 0,
+    cars.maxPrice || 700,
   ]);
 
   // Called while sliding.
@@ -73,7 +83,7 @@ function Filters() {
       const roundedValues = newValue.map((x) => Math.round(x));
       setSlideValues(roundedValues);
       setMinMaxFilters({
-        service: "hotelFilters",
+        service: "carFilters",
         value: roundedValues,
       });
     },
@@ -83,21 +93,21 @@ function Filters() {
   const scaledMax = Math.round(
     priceConversion(DEFAULT_MAX, {
       from: exchangeRates.USD,
-      to: exchangeRates[hotels.currency],
+      to: exchangeRates[cars.currency],
     })
   );
 
   const displayMinPrice = Math.round(
     priceConversion(slideValues[0], {
       from: exchangeRates.USD,
-      to: exchangeRates[hotels.currency],
+      to: exchangeRates[cars.currency],
     })
   );
 
   const displayMaxPrice = Math.round(
     priceConversion(slideValues[1], {
       from: exchangeRates.USD,
-      to: exchangeRates[hotels.currency],
+      to: exchangeRates[cars.currency],
     })
   );
 
@@ -111,32 +121,40 @@ function Filters() {
     <div className={styles.filters}>
       <div className={styles.filterWide}>
         <MultiSelect
-          label="Superchains"
-          list={superchainList}
-          selected={hotels.superchains}
-          onSelected={handleSuperchainChange}
+          label="Rental Company"
+          list={rentalCompanyList}
+          selected={cars.rentalCompanies}
+          onSelected={handleRentalCompanyChange}
         />
       </div>
-      <div className={styles.filterWide}>
+      <div className={styles.filterNarrow}>
         <MultiSelect
-          label="Hotels"
-          list={hotelList}
-          selected={hotels.names}
-          onSelected={handleHotelChange}
+          label="Cars"
+          list={carsList}
+          selected={cars.names}
+          onSelected={handleCarChange}
         />
       </div>
       <div className={styles.filterNarrow}>
         <MultiSelect
           label="Types"
           list={typeList}
-          selected={hotels.types}
+          selected={cars.types}
           onSelected={handleTypeChange}
+        />
+      </div>
+      <div className={styles.filterNarrow}>
+        <MultiSelect
+          label="Style"
+          list={styleList}
+          selected={cars.carStyles}
+          onSelected={handleStyleChange}
         />
       </div>
       <div className={styles.filterSuperNarrow}>
         <Select
           list={Object.keys(exchangeRates)}
-          selected={hotels.currency}
+          selected={cars.currency}
           onSelected={handleCurrencyChange}
         />
       </div>

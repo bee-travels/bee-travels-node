@@ -9,7 +9,7 @@ export const DEFAULT_MAX = 700;
 const fixMin = (x) => (x === 0 ? undefined : x);
 const fixMax = (x) => (x === DEFAULT_MAX ? undefined : x);
 
-function useHotels(dateTo, dateFrom) {
+function useHotels() {
   const { country, city } = useParams();
   const hotelFilters = useSelector((state) => state.hotelFilters);
 
@@ -24,11 +24,13 @@ function useHotels(dateTo, dateFrom) {
       hotelFilters.types.length > 0 ? hotelFilters.types.join(",") : undefined,
     mincost: fixMin(hotelFilters.minPrice),
     maxcost: fixMax(hotelFilters.maxPrice),
-    dateFrom: dateFrom,
-    dateTo: dateTo,
+    dateFrom: hotelFilters.dateFrom,
+    dateTo: hotelFilters.dateTo,
   });
 
   const url = `/api/v1/hotels/${country}/${city}?${query}`;
+
+  console.log("USE HOTELS: ", query, url);
 
   const { loading, data, error } = useSWR(url, fetcher);
 
