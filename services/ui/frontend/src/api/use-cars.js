@@ -32,7 +32,10 @@ function useCars() {
 
   const url = `/api/v1/cars/${country}/${city}?${query}`;
 
-  const { loading, data, error } = useSWR(url, fetcher);
+  const { loading, data, error } = useSWR(
+    carFilters.dateFrom && carFilters.dateTo ? url : null,
+    fetcher
+  );
 
   return {
     loading,

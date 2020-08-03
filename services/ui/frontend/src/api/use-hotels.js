@@ -32,7 +32,10 @@ function useHotels() {
 
   console.log("USE HOTELS: ", query, url);
 
-  const { loading, data, error } = useSWR(url, fetcher);
+  const { loading, data, error } = useSWR(
+    hotelFilters.dateFrom && hotelFilters.dateTo ? url : null,
+    fetcher
+  );
 
   return {
     loading,
