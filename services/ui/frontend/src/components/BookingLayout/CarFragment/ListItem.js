@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { useActions } from "redux/actions";
 import { useSelector } from "react-redux";
 

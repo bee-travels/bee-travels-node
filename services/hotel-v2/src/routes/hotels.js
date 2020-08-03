@@ -15,7 +15,6 @@ const opossumOptions = {
 
 const infoBreaker = new CircuitBreaker(getFilterList, opossumOptions);
 
-
 // TODO: fix jaeger and replace context
 const context = {};
 

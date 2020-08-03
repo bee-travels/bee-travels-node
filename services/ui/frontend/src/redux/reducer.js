@@ -13,13 +13,14 @@ const arrayify = (maybeArray) => {
 };
 
 const reducer = produce((draft, action) => {
-
   switch (action.type) {
     case types.setLocation: {
       const q = queryString.parse(action.payload.search);
-    
+
       for (let key of Object.keys(queryToServiceFilterMap)) {
-        const { service, filter, type, default: d } = queryToServiceFilterMap[key];
+        const { service, filter, type, default: d } = queryToServiceFilterMap[
+          key
+        ];
         switch (type) {
           case "array": {
             draft[service][filter] = arrayify(q[key] || d);
@@ -85,25 +86,24 @@ const reducer = produce((draft, action) => {
       let queryObj = {};
       for (let [key, val] of Object.entries(draft.hotelFilters)) {
         const [key2] = Object.entries(queryToServiceFilterMap).find(
-          ([_k, v]) => v.service === 'hotelFilters' && v.filter === key
+          ([_k, v]) => v.service === "hotelFilters" && v.filter === key
         );
         queryObj[key2] = val;
       }
 
       for (let [key, val] of Object.entries(draft.carFilters)) {
         const [key2] = Object.entries(queryToServiceFilterMap).find(
-          ([_k, v]) => v.service === 'carFilters' && v.filter === key
+          ([_k, v]) => v.service === "carFilters" && v.filter === key
         );
         queryObj[key2] = val;
       }
 
       for (let [key, val] of Object.entries(draft.flightFilters)) {
         const [key2] = Object.entries(queryToServiceFilterMap).find(
-          ([_k, v]) => v.service === 'flightFilters' && v.filter === key
+          ([_k, v]) => v.service === "flightFilters" && v.filter === key
         );
         queryObj[key2] = val;
       }
-
 
       const query = queryString.stringify(queryObj);
 

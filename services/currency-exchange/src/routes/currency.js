@@ -19,7 +19,6 @@ const exchangeBreaker = new CircuitBreaker(getExchangeRates, opossumOptions);
 const convertBreaker = new CircuitBreaker(convert, opossumOptions);
 const codeBreaker = new CircuitBreaker(getCurrency, opossumOptions);
 
-
 // TODO: fix jaeger and replace context
 const context = {};
 

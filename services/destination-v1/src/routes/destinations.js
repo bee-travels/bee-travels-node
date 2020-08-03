@@ -19,7 +19,6 @@ const breaker = new CircuitBreaker(getCities, opossumOptions);
 const countryBreaker = new CircuitBreaker(getCitiesForCountry, opossumOptions);
 const cityCountryBreaker = new CircuitBreaker(getCity, opossumOptions);
 
-
 // TODO: fix jaeger and replace context
 const context = {};
 

@@ -1,12 +1,11 @@
 import path from "path";
-import fs from 'fs';
+import fs from "fs";
 
 const HOTELS_PATH = path.join(__dirname, "./../../data/hotel-data.json");
 const HOTEL_INFO_PATH = path.join(__dirname, "./../../data/hotel-info.json");
 
 // Cities with these words in the city name are lower case
 const lowercaseExceptions = ["es", "de", "au"];
-
 
 let hotelData = null;
 let hotelInfo = null;
@@ -30,7 +29,6 @@ function capitalize(text) {
 function kebabCase(data) {
   return data;
 }
-
 
 function parseMetadata(file) {
   const content = fs.readFileSync(file);
@@ -59,7 +57,7 @@ export function getHotels(country, city, filters, context) {
     if (h.city !== capitalize(city) || h.country !== capitalize(country)) {
       return false;
     }
-    
+
     return (
       (superchain === undefined || superchain.includes(h.superchain)) &&
       (hotel === undefined || hotel.includes(h.name)) &&

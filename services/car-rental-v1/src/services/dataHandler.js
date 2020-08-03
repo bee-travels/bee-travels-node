@@ -1,5 +1,5 @@
 import path from "path";
-import fs from 'fs';
+import fs from "fs";
 import TagNotFoundError from "./../errors/TagNotFoundError";
 
 const CARS_PATH = path.join(__dirname, "./../../data/cars.json");

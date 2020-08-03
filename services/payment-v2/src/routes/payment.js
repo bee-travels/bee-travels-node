@@ -12,7 +12,7 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
-const breaker = new CircuitBreaker(processCreditcardPayment,opossumOptions);
+const breaker = new CircuitBreaker(processCreditcardPayment, opossumOptions);
 
 // TODO: fix jaeger and replace context
 const context = {};

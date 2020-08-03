@@ -142,23 +142,17 @@ function GraphPage() {
   );
 }
 
-function ProviderWrapper({children}) {
+function ProviderWrapper({ children }) {
   const store = createStore(
     reducer,
     init(),
     composeWithDevTools({ name: "bee-travels" })()
   );
 
-  return (
-    <Provider store={store}>
-      {children}
-    </Provider>
-  );
+  return <Provider store={store}>{children}</Provider>;
 }
 
 const CustomRouter = () => {
-
-
   return (
     <ProviderWrapper>
       <Router history={globalHistory}>

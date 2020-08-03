@@ -7,4 +7,4 @@ async function fetcher(url) {
   });
 }
 
-export default fetcher
+export default fetcher;

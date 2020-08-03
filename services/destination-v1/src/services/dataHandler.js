@@ -1,6 +1,5 @@
 import path from "path";
-import fs from 'fs';
-
+import fs from "fs";
 
 const DESTINATIONS_PATH = path.join(
   __dirname,
@@ -36,14 +35,14 @@ function parseMetadata(file, allData) {
 }
 
 function getAllDestination() {
-  if(destinationData === null) {
+  if (destinationData === null) {
     destinationData = parseMetadata(DESTINATIONS_PATH);
   }
   return destinationData;
 }
 
 function getDestinationCityAndCountry() {
-  if(destinationDataCityAndCountry === null){
+  if (destinationDataCityAndCountry === null) {
     const metadata = getAllDestination();
     destinationDataCityAndCountry = metadata.map((item) => ({
       country: item.country,

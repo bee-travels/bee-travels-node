@@ -29,7 +29,6 @@ const nonstopBreaker = new CircuitBreaker(getDirectFlights, opossumOptions);
 const onestopBreaker = new CircuitBreaker(getOneStopFlights, opossumOptions);
 const twostopBreaker = new CircuitBreaker(getTwoStopFlights, opossumOptions);
 
-
 // TODO: fix jaeger and replace context
 const context = {};
 

@@ -7,7 +7,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import init from "redux/init";
 import reducer from "redux/reducer";
-import {useActions} from "redux/actions";
+import { useActions } from "redux/actions";
 
 import DestinationFragment from "./DestinationFragment/DestinationFragment";
 import HotelFragment from "./HotelFragment/HotelFragment";
@@ -99,7 +99,7 @@ const SplitPaneLayout = ({ children, panelWidth, breakpoint }) => {
 const Content = () => {
   const location = useLocation();
   const { country, city } = useParams();
-  const { setLocation} = useActions();
+  const { setLocation } = useActions();
 
   const [cityName, setCityName] = useState("");
   const [countryName, setCountryName] = useState("");
@@ -112,8 +112,8 @@ const Content = () => {
   const flightsItems = useSelector((state) => state.flights);
 
   useEffect(() => {
-    setLocation(location)
-  }, [location])
+    setLocation(location);
+  }, [location]);
 
   useEffect(() => {
     const loadDestination = async () => {

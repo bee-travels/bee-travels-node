@@ -113,7 +113,7 @@ export async function getCarById(id, dateFrom, dateTo, context) {
     default:
       throw new DatabaseNotFoundError(process.env.DATABASE);
   }
-  const multiplier = dateMultiplier(date);
+  const multiplier = dateMultiplier(dateFrom);
   data["cost"] = data["cost"] * multiplier;
   return data;
 }

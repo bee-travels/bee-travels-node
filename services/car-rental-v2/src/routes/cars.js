@@ -17,7 +17,6 @@ const infoBreaker = new CircuitBreaker(getFilterList, opossumOptions);
 const idBreaker = new CircuitBreaker(getCarById, opossumOptions);
 const breaker = new CircuitBreaker(getCars, opossumOptions);
 
-
 // TODO: fix jaeger and replace context
 const context = {};
 
@@ -62,10 +61,7 @@ router.get("/info/:tag", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   // const context = new Jaeger("id lookup", req, res);
   const { id } = req.params;
-  const {
-    dateFrom,
-    dateTo
-  } = req.query;
+  const { dateFrom, dateTo } = req.query;
 
   try {
     const data = await idBreaker.fire(id, dateFrom, dateTo, context);
@@ -76,7 +72,7 @@ router.get("/:id", async (req, res, next) => {
     }
     next(e);
   }
-})
+});
 
 /**
  * GET /api/v1/cars/{country}/{city}

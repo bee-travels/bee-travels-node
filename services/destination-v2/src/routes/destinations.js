@@ -16,7 +16,6 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
-
 const breaker = new CircuitBreaker(getCities, opossumOptions);
 const countryBreaker = new CircuitBreaker(getCitiesForCountry, opossumOptions);
 const cityCountryBreaker = new CircuitBreaker(getCity, opossumOptions);

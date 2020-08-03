@@ -19,7 +19,6 @@ const breaker = new CircuitBreaker(getCars, opossumOptions);
 const context = {};
 const stringToArray = (s) => s && s.split(",");
 
-
 /**
  * GET /api/v1/cars/info/{filter}
  * @tag Car Rental

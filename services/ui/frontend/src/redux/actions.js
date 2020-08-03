@@ -9,20 +9,20 @@ export const types = {
   removeFlightsFromCart: "REMOVE_FLIGHTS_FROM_CART",
   setFilters: "SET_FILTERS",
   setMinMaxFilters: "SET_MIN_MAX_FILTERS",
-  setLocation: "SET_LOCATION"
+  setLocation: "SET_LOCATION",
 };
 
 export function useActions() {
   const dispatch = useDispatch();
 
-  let actions = {}
+  let actions = {};
   for (let [key, val] of Object.entries(types)) {
     actions[key] = (payload) => {
-      dispatch({ type: val, payload })
-    }
+      dispatch({ type: val, payload });
+    };
   }
 
   return {
-    ...actions
+    ...actions,
   };
 }
