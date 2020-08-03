@@ -87,3 +87,12 @@
     display: flex;
   }
 }
+
+button:active {
+  vertical-align: top;
+  padding: 8px 13px 6px;
+}
+
+button:hover {
+  background-color: #e5e5e5;
+}

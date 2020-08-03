@@ -2,6 +2,10 @@ import React from "react";
 import { useActions } from "redux/actions";
 import { useSelector } from "react-redux";
 
+import Badge from "@material-ui/core/Badge";
+import AddShoppingCartRoundedIcon from "@material-ui/icons/AddShoppingCartRounded";
+import RemoveShoppingCartRoundedIcon from "@material-ui/icons/RemoveShoppingCartRounded";
+
 import styles from "./CarFragment.module.css";
 
 import priceConversion from "components/common/convert-currency";
@@ -42,13 +46,37 @@ function ListItem({ id, rental_company, name, cost, image }) {
         <div className={styles.listItemSub}>{rental_company}</div>
         <div className={styles.listItemCost}>{priceString}</div>
       </div>
-      <button style={{ marginLeft: "auto" }} onClick={handleAddToCart}>
-        Add to Cart
+      <button
+        style={{
+          outline: "none",
+          borderRadius: "8px",
+          marginLeft: "auto",
+          border: "none",
+          paddingLeft: "24px",
+          paddingRight: "24px",
+        }}
+        onClick={handleAddToCart}
+      >
+        <Badge badgeContent={numberInCart} color="primary">
+          <AddShoppingCartRoundedIcon color="primary" />
+        </Badge>
       </button>
       {numberInCart > 0 && (
-        <button onClick={handleRemoveFromCart}>Remove </button>
+        <button
+          className={styles.buttonstyle}
+          style={{
+            outline: "none",
+            borderRadius: "8px",
+            border: "none",
+            paddingLeft: "24px",
+            paddingRight: "24px",
+            marginLeft: "16px",
+          }}
+          onClick={handleRemoveFromCart}
+        >
+          <RemoveShoppingCartRoundedIcon color="secondary" />
+        </button>
       )}
-      {numberInCart}
     </div>
   );
 }

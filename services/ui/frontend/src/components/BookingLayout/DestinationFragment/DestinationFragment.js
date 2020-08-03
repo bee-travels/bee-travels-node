@@ -15,17 +15,17 @@ const truncateText = (text) => {
   const lastSentenceRegex = /(.*\.)(?: .*)$/;
   let trimmedDescription = text
     .replace(firstSentenceRegex, "")
-    .substring(0, 1250)
+    .substring(0, 450)
     .replace(lastSentenceRegex, "$1")
     .trim();
 
   // If the length is still 150, a sentence wasn't trimmed off the end.
-  if (trimmedDescription.length < 1220 || trimmedDescription.length === 1250) {
+  if (trimmedDescription.length < 420 || trimmedDescription.length === 450) {
     // Ellipsify...
     trimmedDescription =
       text
         .replace(firstSentenceRegex, "")
-        .substring(0, 1240)
+        .substring(0, 440)
         .trim() // remove pre/trailing whitespace
         .split(" ") // split into words
         .slice(0, -1) // remove the last word (removes partial words)

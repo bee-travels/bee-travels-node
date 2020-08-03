@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Provider } from "react-redux";
-import { createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 
-import init from "redux/init";
-import reducer from "redux/reducer";
+import ShoppingCartRoundedIcon from "@material-ui/icons/ShoppingCartRounded";
+import Badge from "@material-ui/core/Badge";
+
 import { useActions } from "redux/actions";
 
 import DestinationFragment from "./DestinationFragment/DestinationFragment";
@@ -140,7 +138,7 @@ const Content = () => {
   };
 
   return (
-    <SplitPaneLayout panelWidth="900px" breakpoint="1250px">
+    <SplitPaneLayout panelWidth="450px" breakpoint="1250px">
       <DestinationFragment
         cityName={cityName}
         countryName={countryName}
@@ -174,7 +172,12 @@ const Content = () => {
           }}
           onClick={handleFabClick}
         >
-          Cart {carsItems.length + hotelsItems.length}
+          <Badge
+            badgeContent={carsItems.length + hotelsItems.length}
+            color="primary"
+          >
+            <ShoppingCartRoundedIcon style={{ fontSize: 40 }} color="primary" />
+          </Badge>
         </button>
       </div>
     </SplitPaneLayout>

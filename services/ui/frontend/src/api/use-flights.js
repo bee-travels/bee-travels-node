@@ -11,28 +11,29 @@ const fixMax = (x) => (x === DEFAULT_MAX ? undefined : x);
 
 function useCars() {
   const { country, city } = useParams();
-  const carFilters = useSelector((state) => state.carFilters);
+  const flightFilters = useSelector((state) => state.flightFilters);
 
   const query = queryString.stringify({
     company:
-      carFilters.rentalCompanies.length > 0
-        ? carFilters.rentalCompanies.join(",")
+      flightFilters.rentalCompanies.length > 0
+        ? flightFilters.rentalCompanies.join(",")
         : undefined,
-    car: carFilters.names.length > 0 ? carFilters.names.join(",") : undefined,
-    type: carFilters.types.length > 0 ? carFilters.types.join(",") : undefined,
-    style:
-      carFilters.carStyles.length > 0
-        ? carFilters.carStyles.join(",")
+    type:
+      flightFilters.types.length > 0
+        ? flightFilters.types.join(",")
         : undefined,
-    mincost: fixMin(carFilters.minPrice),
-    maxcost: fixMax(carFilters.maxPrice),
-    dateFrom: carFilters.dateFrom,
-    dateTo: carFilters.dateTo,
+    mincost: fixMin(flightFilters.minPrice),
+    maxcost: fixMax(flightFilters.maxPrice),
+    dateFrom: flightFilters.dateFrom,
+    dateTo: flightFilters.dateTo,
   });
 
-  const url = `/api/v1/cars/${country}/${city}?${query}`;
+  const url = `/api/v1/flights/${country}/${city}?${query}`;
 
-  const { loading, data, error } = useSWR(url, fetcher);
+  const { loading, data, error } = useSWR(
+    flightFilters.dateFrom && flightFilters.dateTo ? url : null,
+    fetcher
+  );
 
   return {
     loading,
@@ -52,9 +53,12 @@ function useFlightsNonStop() {
     dateTo: flightFilters.dateTo,
   });
 
-  const url = `/api/v1/cars/${country}/${city}?${query}`;
+  const url = `/api/v1/flights/direct/${country}/${city}?${query}`;
 
-  const { loading, data, error } = useSWR(url, fetcher);
+  const { loading, data, error } = useSWR(
+    flightFilters.dateFrom && flightFilters.dateTo ? url : null,
+    fetcher
+  );
 
   return {
     loading,
@@ -74,9 +78,12 @@ function useFlightsOneStop() {
     dateTo: flightFilters.dateTo,
   });
 
-  const url = `/api/v1/cars/${country}/${city}?${query}`;
+  const url = `/api/v1/flights/onestop/${country}/${city}?${query}`;
 
-  const { loading, data, error } = useSWR(url, fetcher);
+  const { loading, data, error } = useSWR(
+    flightFilters.dateFrom && flightFilters.dateTo ? url : null,
+    fetcher
+  );
 
   return {
     loading,
@@ -96,9 +103,12 @@ function useFlightsTwoStop() {
     dateTo: flightFilters.dateTo,
   });
 
-  const url = `/api/v1/cars/${country}/${city}?${query}`;
+  const url = `/api/v1/flights/twostop/${country}/${city}?${query}`;
 
-  const { loading, data, error } = useSWR(url, fetcher);
+  const { loading, data, error } = useSWR(
+    flightFilters.dateFrom && flightFilters.dateTo ? url : null,
+    fetcher
+  );
 
   return {
     loading,
