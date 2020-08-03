@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCars, getFilterList } from "./../services/dataHandler";
+import { getCars, getFilterList, getCarById } from "./../services/dataHandler";
 import TagNotFoundError from "./../errors/TagNotFoundError";
 import Jaeger from "./../jaeger";
 import CircuitBreaker from "opossum";
@@ -41,6 +41,38 @@ router.get("/info/:tag", async (req, res, next) => {
 });
 
 /**
+ * GET /api/v1/cars/{id}
+ * @description Get data for a specific car entry
+ * @pathParam {string} id - id of the car
+ * @queryParam {string} dateFrom - Date From
+ * @queryParam {string} dateTo - Date To
+ * @response 200 - Success
+ * @response 200 - Success
+ * @response 403 - Invalid query
+ * @response 404 - Database not found
+ * @response 500 - Internal server error
+ */
+router.get("/:id", async (req, res, next) => {
+  const context = new Jaeger("id lookup", req, res);
+  const { id } = req.params;
+  const {
+    dateFrom, 
+    dateTo
+  } = req.query;
+
+  try {
+    const breaker = CircuitBreaker(getCarById, opossumOptions);
+    const data = await breaker.fire(id, dateFrom, dateTo, context);
+    res.json(data);
+  } catch (e) {
+    if (e instanceof IllegalDatabaseQueryError) {
+      return res.status(e.status).json({ error: "Invalid query" });
+    }
+    next(e);
+  }
+})
+
+/**
  * GET /api/v1/cars/{country}/{city}
  * @description Gets data associated with a specific city
  * @pathParam {string} country - Country of the rental company using slug casing (ex. united-states)
@@ -71,6 +103,7 @@ router.get("/:country/:city", async (req, res, next) => {
     dateFrom,
     dateTo,
   } = req.query;
+  req.log.info(`getting car rental data for -> /${country}/${city}`);
 
   try {
     const breaker = new CircuitBreaker(getCars, opossumOptions);

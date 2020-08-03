@@ -1,18 +1,21 @@
 import {
   getCarDataFromMongo,
   getCarInfoFromMongo,
+  getCarByIdFromMongo,
   buildCarMongoQuery,
   mongoReadinessCheck,
 } from "./mongoService";
 import {
   getCarDataFromPostgres,
   getCarInfoFromPostgres,
+  getCarByIdFromPostgres,
   buildCarPostgresQuery,
   postgresReadinessCheck,
 } from "./postgresService";
 import {
   getCarDataFromCloudant,
   getCarInfoFromCloudant,
+  getCarByIdFromCouch,
   buildCarCloudantQuery,
   cloudantReadinessCheck,
 } from "./cloudantService";
@@ -84,9 +87,35 @@ export async function getCars(country, city, filters, context) {
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return updateCost(data, filters.dateFrom);
+}
+
+export async function getCarById(id, dateFrom, dateTo, context) {
+  let data;
+  switch (process.env.DATABASE) {
+    case "mongodb":
+      context.start("getCarByIdFromMongo");
+      data = await getCarByIdFromMongo(id, context);
+      context.stop();
+      break;
+    case "postgres":
+      context.start("getCarByIdFromPostgres");
+      data = await getCarByIdFromPostgres(id, context);
+      context.stop();
+      break;
+    case "couchdb":
+      context.start("getCarByIdFromCouch");
+      data = await getCarByIdFromCouch(id, context);
+      context.stop();
+      break;
+    default:
+      throw new DatabaseNotFoundError(process.env.DATABASE);
+  }
+  const multiplier = dateMultiplier(date);
+  data["cost"] = data["cost"] * multiplier;
+  return data;
 }
 
 export async function getFilterList(filterType, context) {
@@ -112,7 +141,7 @@ export async function getFilterList(filterType, context) {
       context.stop();
       break;
     default:
-      throw new DatabaseNotFoundError(process.env.CAR_DATABASE);
+      throw new DatabaseNotFoundError(process.env.DATABASE);
   }
   return data;
 }
