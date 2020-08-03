@@ -45,6 +45,8 @@ const TabHolder = ({
     check();
   }, []);
 
+  console.log(location)
+
   return (
     <div>
       <div className={styles.tabRow}>
@@ -55,7 +57,7 @@ const TabHolder = ({
               tab.toLowerCase() === active ? styles.tabActive : styles.tab
             }
             onClick={() => {
-              globalHistory.push(`/destinations/${_2}/${_3}/${tabsPath[i]}`);
+              globalHistory.push(`/destinations/${_2}/${_3}/${tabsPath[i]}${location.search}`);
             }}
           >
             {tab}

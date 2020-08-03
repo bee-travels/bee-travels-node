@@ -9,6 +9,7 @@ export const types = {
   removeFlightsFromCart: "REMOVE_FLIGHTS_FROM_CART",
   setFilters: "SET_FILTERS",
   setMinMaxFilters: "SET_MIN_MAX_FILTERS",
+  setLocation: "SET_LOCATION"
 };
 
 export function useActions() {

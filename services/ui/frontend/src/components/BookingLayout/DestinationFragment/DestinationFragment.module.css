@@ -65,12 +65,12 @@
 
 .image {
   width: 100%;
-  height: 143px;
+  height: 200px;
   object-fit: cover;
 }
 
 .map {
-  height: 261px;
+  height: 450px;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -141,7 +141,7 @@
     margin: 0 24px 24px 24px;
     grid-gap: 2px;
     position: absolute;
-    bottom: 261px;
+    bottom: 450px;
     left: 0;
     right: 0;
   }

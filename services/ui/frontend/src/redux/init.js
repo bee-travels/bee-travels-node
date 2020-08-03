@@ -154,8 +154,8 @@ const arrayify = (maybeArray) => {
   return [_maybeArray];
 };
 
-export default function init({ search }) {
-  const q = queryString.parse(search);
+export default function init() {
+  // const q = queryString.parse(search);
 
   let cars = localStorage.getItem("cars");
   if (cars) {
@@ -180,24 +180,24 @@ export default function init({ search }) {
     flightFilters: {},
   };
 
-  for (let key of Object.keys(queryToServiceFilterMap)) {
-    const { service, filter, type, default: d } = queryToServiceFilterMap[key];
-    switch (type) {
-      case "array": {
-        state[service][filter] = arrayify(q[key] || d);
-        break;
-      }
-      case "number": {
-        state[service][filter] = parseInt(q[key] || d, 10);
-        break;
-      }
-      // NOTE: date might be needed as a case
-      default: {
-        state[service][filter] = q[key] || d;
-        break;
-      }
-    }
-  }
+  // for (let key of Object.keys(queryToServiceFilterMap)) {
+  //   const { service, filter, type, default: d } = queryToServiceFilterMap[key];
+  //   switch (type) {
+  //     case "array": {
+  //       state[service][filter] = arrayify(q[key] || d);
+  //       break;
+  //     }
+  //     case "number": {
+  //       state[service][filter] = parseInt(q[key] || d, 10);
+  //       break;
+  //     }
+  //     // NOTE: date might be needed as a case
+  //     default: {
+  //       state[service][filter] = q[key] || d;
+  //       break;
+  //     }
+  //   }
+  // }
 
   // for (let [key, val] of Object.entries(q)) {
   //   const { service, filter, type } = queryToServiceFilterMap[key];

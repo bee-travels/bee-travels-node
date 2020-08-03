@@ -3,7 +3,11 @@ import { Router, Route, Switch } from "react-router-dom";
 import globalHistory from "globalHistory";
 import Graph from "react-graph-vis";
 
-
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import init from "redux/init";
+import reducer from "redux/reducer";
 
 import BookingLayout from "components/BookingLayout/BookingLayout";
 import HomeLayout from "components/HomeLayout/HomeLayout";
@@ -138,10 +142,25 @@ function GraphPage() {
   );
 }
 
+function ProviderWrapper({children}) {
+  const store = createStore(
+    reducer,
+    init(),
+    composeWithDevTools({ name: "bee-travels" })()
+  );
+
+  return (
+    <Provider store={store}>
+      {children}
+    </Provider>
+  );
+}
+
 const CustomRouter = () => {
 
 
   return (
+    <ProviderWrapper>
       <Router history={globalHistory}>
         <Switch>
           <Route exact path="/" component={HomeLayout} />
@@ -153,6 +172,7 @@ const CustomRouter = () => {
           <Route component={ErrorLayout} />
         </Switch>
       </Router>
+    </ProviderWrapper>
   );
 };
 

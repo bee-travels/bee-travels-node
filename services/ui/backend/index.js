@@ -2,6 +2,9 @@ const path = require("path");
 
 const streamableAxios = require("./streamableAxios");
 
+const infoCollector = require("./info-collector");
+const docCollector = require("./doc-collector");
+
 const express = require("express");
 const axios = require("axios");
 
@@ -56,9 +59,9 @@ proxies.forEach(({ service, path }) => {
   });
 });
 
-// app.use(infoCollector(proxies));
+app.use(infoCollector(proxies));
 
-// app.use(docCollector(proxies));
+app.use(docCollector(proxies));
 
 app.get("/check/hotels", (req, res) => {
   const url = `${proxies[1].service}/live`;
