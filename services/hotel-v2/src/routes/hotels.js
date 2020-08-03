@@ -13,6 +13,12 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
+const infoBreaker = new CircuitBreaker(getFilterList, opossumOptions);
+
+
+// TODO: fix jaeger and replace context
+const context = {};
+
 const stringToArray = (s) => s && s.split(",");
 
 /**
@@ -25,11 +31,10 @@ const stringToArray = (s) => s && s.split(",");
  * @response 500 - Internal server error
  */
 router.get("/info/:tag", async (req, res, next) => {
-  const context = new Jaeger("info", req, res);
+  // const context = new Jaeger("info", req, res);
   const { tag } = req.params;
   try {
-    const breaker = new CircuitBreaker(getFilterList, opossumOptions);
-    const data = await breaker.fire(tag, context);
+    const data = await infoBreaker.fire(tag, context);
     res.json(data);
   } catch (e) {
     if (e instanceof TagNotFoundError) {
@@ -57,7 +62,7 @@ router.get("/info/:tag", async (req, res, next) => {
  * @response 500 - Internal server error
  */
 router.get("/:country/:city", async (req, res, next) => {
-  const context = new Jaeger("city", req, res);
+  // const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
   const {
     superchain,

@@ -16,9 +16,9 @@ export async function convert(
 
   let rate;
   try {
-    context.start("exchangeRatesApiCall");
+    // context.start("exchangeRatesApiCall");
     const { data } = await axios.get(currencyUrl);
-    context.stop();
+    // context.stop();
     rate = data.rates[to];
   } catch (e) {
     if (!(e.response && e.response.data && e.response.data.error)) {
@@ -39,9 +39,9 @@ export async function convert(
 export async function getExchangeRates(context, timeIndicator = "latest") {
   const currencyUrl = `${EXCHANGE_ENDPOINT}/${timeIndicator}`;
   try {
-    context.start("exchangeRatesApiCall");
+    // context.start("exchangeRatesApiCall");
     const { data } = await axios.get(currencyUrl);
-    context.stop();
+    // context.stop();
     return data;
   } catch (e) {
     if (!(e.response && e.response.data && e.response.data.error)) {

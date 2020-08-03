@@ -21,6 +21,18 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
+const filterBreaker = new CircuitBreaker(getFilterList, opossumOptions);
+const airportsBreaker = new CircuitBreaker(getAirports, opossumOptions);
+const airportListBreaker = new CircuitBreaker(getAirportsList, opossumOptions);
+const airportIdBreaker = new CircuitBreaker(getAirport, opossumOptions);
+const nonstopBreaker = new CircuitBreaker(getDirectFlights, opossumOptions);
+const onestopBreaker = new CircuitBreaker(getOneStopFlights, opossumOptions);
+const twostopBreaker = new CircuitBreaker(getTwoStopFlights, opossumOptions);
+
+
+// TODO: fix jaeger and replace context
+const context = {};
+
 /**
  * GET /api/v1/flights/info/{filter}
  * @description Get info about flights
@@ -31,7 +43,7 @@ const opossumOptions = {
 router.get("/info/:filter", async (req, res, next) => {
   const { filter } = req.params;
   try {
-    const data = await getFilterList(filter);
+    const data = await filterBreaker.fire(filter);
     res.json(data);
   } catch (e) {
     if (e instanceof TagNotFoundError) {
@@ -51,11 +63,10 @@ router.get("/info/:filter", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/airports", async (req, res, next) => {
-  const context = new Jaeger("airports", req, res);
+  // const context = new Jaeger("airports", req, res);
   const { country, city, code } = req.query;
   try {
-    const breaker = new CircuitBreaker(getAirports, opossumOptions);
-    const data = await breaker.fire(city, country, code, context);
+    const data = await airportsBreaker.fire(city, country, code, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -69,10 +80,9 @@ router.get("/airports", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/airports/all", async (req, res, next) => {
-  const context = new Jaeger("allAirports", req, res);
+  // const context = new Jaeger("allAirports", req, res);
   try {
-    const breaker = new CircuitBreaker(getAirportsList, opossumOptions);
-    const data = await breaker.fire(context);
+    const data = await airportListBreaker.fire(context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -87,11 +97,10 @@ router.get("/airports/all", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/airports/:id", async (req, res, next) => {
-  const context = new Jaeger("airport", req, res);
+  // const context = new Jaeger("airport", req, res);
   const { id } = req.params;
   try {
-    const breaker = new CircuitBreaker(getAirport, opossumOptions);
-    const data = await breaker.fire(id, context);
+    const data = await airportIdBreaker.fire(id, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -109,7 +118,7 @@ router.get("/airports/:id", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/direct/:from/:to", async (req, res, next) => {
-  const context = new Jaeger("direct", req, res);
+  // const context = new Jaeger("direct", req, res);
   const { from, to } = req.params;
   const { dateFrom, dateTo } = req.query;
 
@@ -119,8 +128,7 @@ router.get("/direct/:from/:to", async (req, res, next) => {
     if (isNaN(_dateFrom) || isNaN(_dateTo)) {
       throw new IllegalDateError("needs a date");
     }
-    const breaker = new CircuitBreaker(getDirectFlights, opossumOptions);
-    const data = await breaker.fire(
+    const data = await nonstopBreaker.fire(
       from,
       to,
       {
@@ -146,7 +154,7 @@ router.get("/direct/:from/:to", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/onestop/:from/:to", async (req, res, next) => {
-  const context = new Jaeger("onestop", req, res);
+  // const context = new Jaeger("onestop", req, res);
   const { from, to } = req.params;
   const { dateFrom, dateTo } = req.query;
   try {
@@ -155,8 +163,7 @@ router.get("/onestop/:from/:to", async (req, res, next) => {
     if (isNaN(_dateFrom) || isNaN(_dateTo)) {
       throw new IllegalDateError("needs a date");
     }
-    const breaker = new CircuitBreaker(getOneStopFlights, opossumOptions);
-    const data = await breaker.fire(
+    const data = await onestopBreaker.fire(
       from,
       to,
       {
@@ -182,7 +189,7 @@ router.get("/onestop/:from/:to", async (req, res, next) => {
  * @response 400 - Error
  */
 router.get("/twostop/:from/:to", async (req, res, next) => {
-  const context = new Jaeger("twostop", req, res);
+  // const context = new Jaeger("twostop", req, res);
   const { from, to } = req.params;
   const { dateFrom, dateTo } = req.query;
   try {
@@ -191,8 +198,7 @@ router.get("/twostop/:from/:to", async (req, res, next) => {
     if (isNaN(_dateFrom) || isNaN(_dateTo)) {
       throw new IllegalDateError("needs a date");
     }
-    const breaker = new CircuitBreaker(getTwoStopFlights, opossumOptions);
-    const data = await breaker.fire(
+    const data = await twostopBreaker.fire(
       from,
       to,
       {

@@ -7,7 +7,7 @@ const { getCurrency, getCountry } = require("./dataHandler");
 const CurrencyNotFoundError = require("./../errors/CurrencyNotFoundError");
 const CountryNotFoundError = require("./../errors/CountryNotFoundError");
 
-const context = {
+// const context = {
   start: () => {},
   stop: () => {},
 };

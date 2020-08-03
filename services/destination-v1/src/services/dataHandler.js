@@ -54,24 +54,24 @@ function getDestinationCityAndCountry() {
 }
 
 export function getCities(context) {
-  context.start("parseMetadata");
+  // context.start("parseMetadata");
   const metadata = getDestinationCityAndCountry();
-  context.stop();
+  // context.stop();
   return metadata;
 }
 
 export function getCitiesForCountry(country, context) {
-  context.start("parseMetadata");
+  // context.start("parseMetadata");
   const metadata = getDestinationCityAndCountry();
-  context.stop();
+  // context.stop();
   const citiesData = metadata.filter((c) => c.country === capitalize(country));
   return citiesData;
 }
 
 export function getCity(country, city, context) {
-  context.start("parseMetadata");
+  // context.start("parseMetadata");
   const metadata = getAllDestination();
-  context.stop();
+  // context.stop();
   const cityData = metadata.find(
     (c) => c.city === capitalize(city) && c.country === capitalize(country)
   );

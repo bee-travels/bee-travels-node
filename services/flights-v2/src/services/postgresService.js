@@ -60,15 +60,15 @@ export async function getAirportFromPostgres(id, context) {
   };
 
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client.connect();
-    context.stop();
+    // context.stop();
 
     const statement = "SELECT * from airports WHERE " + query.statement;
 
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
 
     return res.rows.length > 0 ? res.rows[0] : {};
   } catch (e) {
@@ -144,15 +144,15 @@ export async function getAirportsFromPostgres(city, country, code, context) {
   }
 
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client.connect();
-    context.stop();
+    // context.stop();
 
     const statement = "SELECT * from airports " + query.statement;
 
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -180,14 +180,14 @@ export async function getAirportsListFromPostgres(context) {
   const client = new Client(clientSettings);
 
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client.connect();
-    context.stop();
+    // context.stop();
     const statement =
       "select distinct city, country from airports where city <> ''";
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -219,7 +219,7 @@ export async function getDirectFlightsFromPostgres(from, to, context) {
     values: [isValidQueryValue(from), isValidQueryValue(to)],
   };
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client.connect();
     const statement =
       `
@@ -232,10 +232,10 @@ export async function getDirectFlightsFromPostgres(from, to, context) {
     airlines
 from flights
 where ` + query.statement;
-    context.stop();
-    context.start("postgresQuery");
+    // context.stop();
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -267,9 +267,9 @@ export async function getOneStopFlightsFromPostgres(from, to, context) {
   };
 
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client.connect();
-    context.stop();
+    // context.stop();
     const statement = `
     select flight1.id                                                                             as flight_one_id,
     flight2.id                                                                                    as flight_two_id,
@@ -291,9 +291,9 @@ where flight1.airlines = flight2.airlines
 and flight2.flight_time >= (flight1.flight_time + flight1.flight_duration + 60)
 order by time limit 20;
     `;
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
@@ -325,9 +325,9 @@ export async function getTwoStopFlightsFromPostgres(from, to, context) {
   };
 
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client.connect();
-    context.stop();
+    // context.stop();
     const statement = `
     select f.id                  as flight_one_id,
     c.flight2id                  as flight_two_id,
@@ -351,9 +351,9 @@ where f.source_airport_id = $1
 order by c.totalTime
 limit 20;
     `;
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);

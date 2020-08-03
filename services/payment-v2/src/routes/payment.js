@@ -12,6 +12,11 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
+const breaker = new CircuitBreaker(processCreditcardPayment,opossumOptions);
+
+// TODO: fix jaeger and replace context
+const context = {};
+
 /**
  * POST /api/v1/payment/charge
  * @summary Payment Service Stub
@@ -24,13 +29,9 @@ const opossumOptions = {
  * @response 500 - Internal server error
  */
 router.post("/charge", async (req, res, next) => {
-  const context = new Jaeger("charge", req, res);
+  // const context = new Jaeger("charge", req, res);
   const data = req.body;
   try {
-    const breaker = new CircuitBreaker(
-      processCreditcardPayment,
-      opossumOptions
-    );
     const postProcCCresult = await breaker.fire(data);
     return res.json(postProcCCresult);
   } catch (e) {

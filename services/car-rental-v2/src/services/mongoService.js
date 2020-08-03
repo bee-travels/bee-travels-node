@@ -45,14 +45,14 @@ export async function getCarDataFromMongo(query, context) {
     clientSettings.tlsCAFile = "./cert.pem";
   }
 
-  context.start("mongoClientConnect");
+  // context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.MONGO_CONNECTION_URL,
     clientSettings
   ).catch((err) => {
     console.log(err);
   });
-  context.stop();
+  // context.stop();
 
   if (!client) {
     return;
@@ -61,7 +61,7 @@ export async function getCarDataFromMongo(query, context) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("cars");
-    context.start("mongoQuery");
+    // context.start("mongoQuery");
     let res = await collection.find(query);
     let cars = [];
     let car;
@@ -72,7 +72,7 @@ export async function getCarDataFromMongo(query, context) {
       cars.push(car);
       hasNextCar = await res.hasNext();
     }
-    context.stop();
+    // context.stop();
     return cars;
   } catch (err) {
     console.log(err);
@@ -93,14 +93,14 @@ export async function getCarInfoFromMongo(filterType, context) {
     clientSettings.tlsCAFile = "./cert.pem";
   }
 
-  context.start("mongoClientConnect");
+  // context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.MONGO_CONNECTION_URL,
     clientSettings
   ).catch((err) => {
     console.log(err);
   });
-  context.stop();
+  // context.stop();
 
   if (!client) {
     return;
@@ -111,9 +111,9 @@ export async function getCarInfoFromMongo(filterType, context) {
     let collection = db.collection(
       filterType === "rental_company" ? "cars" : "car_info"
     );
-    context.start("mongoQuery");
+    // context.start("mongoQuery");
     const result = await collection.distinct(filterType);
-    context.stop();
+    // context.stop();
     return result;
   } catch (err) {
     console.log(err);

@@ -24,14 +24,14 @@ export async function getDestinationDataFromMongo(query, context) {
     clientSettings.tlsCAFile = "./cert.pem";
   }
 
-  context.start("mongoClientConnect");
+  // context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.MONGO_CONNECTION_URL,
     clientSettings
   ).catch((err) => {
     console.log(err);
   });
-  context.stop();
+  // context.stop();
 
   if (!client) {
     return;
@@ -40,7 +40,7 @@ export async function getDestinationDataFromMongo(query, context) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("destination");
-    context.start("mongoQuery");
+    // context.start("mongoQuery");
     let res = await collection.find(query);
     let destinations = [];
     let destination;
@@ -59,7 +59,7 @@ export async function getDestinationDataFromMongo(query, context) {
       destinations.push(destination);
       hasNextDestination = await res.hasNext();
     }
-    context.stop();
+    // context.stop();
     if (query.city !== undefined) {
       return destination;
     }

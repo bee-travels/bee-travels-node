@@ -9,7 +9,7 @@ import chaiAsPromised from "chai-as-promised";
 const { convert, getExchangeRates } = require("./exchangeHandler");
 const CurrencyNotFoundError = require("./../errors/CurrencyNotFoundError");
 
-const context = {
+// const context = {
   start: () => {},
   stop: () => {},
 };

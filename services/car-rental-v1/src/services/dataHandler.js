@@ -40,9 +40,9 @@ function getCarData() {
 
 export function getCars(country, city, filters, context) {
   const { company, car, type, style, minCost, maxCost } = filters;
-  context.start("getCarData");
+  // context.start("getCarData");
   const data = getCarData();
-  context.stop();
+  // context.stop();
 
   const carsData = data.filter((h) => {
     if (h.city !== capitalize(city) || h.country !== capitalize(country)) {
@@ -63,9 +63,9 @@ export function getCars(country, city, filters, context) {
 }
 
 export function getFilterList(filterType, context) {
-  context.start("getCarData");
+  // context.start("getCarData");
   const data = getCarData();
-  context.stop();
+  // context.stop();
   const listOfFilterOptions = data.map((item) => {
     const valueForFilter = item[filterType];
     if (valueForFilter !== undefined) {

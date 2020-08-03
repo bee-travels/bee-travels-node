@@ -61,9 +61,9 @@ export async function getCars(country, city, filters, context) {
         capitalize(city),
         filters
       );
-      context.start("getCarDataFromMongo");
+      // context.start("getCarDataFromMongo");
       data = await getCarDataFromMongo(query, context);
-      context.stop();
+      // context.stop();
       break;
     case "postgres":
       query = buildCarPostgresQuery(
@@ -71,9 +71,9 @@ export async function getCars(country, city, filters, context) {
         capitalize(city),
         filters
       );
-      context.start("getCarDataFromPostgres");
+      // context.start("getCarDataFromPostgres");
       data = await getCarDataFromPostgres(query, context);
-      context.stop();
+      // context.stop();
       break;
     case "cloudant":
     case "couchdb":
@@ -82,9 +82,9 @@ export async function getCars(country, city, filters, context) {
         capitalize(city),
         filters
       );
-      context.start("getCarDataFromCloudant");
+      // context.start("getCarDataFromCloudant");
       data = await getCarDataFromCloudant(query, context);
-      context.stop();
+      // context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.DATABASE);
@@ -96,19 +96,19 @@ export async function getCarById(id, dateFrom, dateTo, context) {
   let data;
   switch (process.env.DATABASE) {
     case "mongodb":
-      context.start("getCarByIdFromMongo");
+      // context.start("getCarByIdFromMongo");
       data = await getCarByIdFromMongo(id, context);
-      context.stop();
+      // context.stop();
       break;
     case "postgres":
-      context.start("getCarByIdFromPostgres");
+      // context.start("getCarByIdFromPostgres");
       data = await getCarByIdFromPostgres(id, context);
-      context.stop();
+      // context.stop();
       break;
     case "couchdb":
-      context.start("getCarByIdFromCouch");
+      // context.start("getCarByIdFromCouch");
       data = await getCarByIdFromCouch(id, context);
-      context.stop();
+      // context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.DATABASE);
@@ -125,20 +125,20 @@ export async function getFilterList(filterType, context) {
   let data;
   switch (process.env.DATABASE) {
     case "mongodb":
-      context.start("getCarInfoFromMongo");
+      // context.start("getCarInfoFromMongo");
       data = await getCarInfoFromMongo(filterType, context);
-      context.stop();
+      // context.stop();
       break;
     case "postgres":
-      context.start("getCarInfoFromPostgres");
+      // context.start("getCarInfoFromPostgres");
       data = await getCarInfoFromPostgres(filterType, context);
-      context.stop();
+      // context.stop();
       break;
     case "cloudant":
     case "couchdb":
-      context.start("getCarInfoFromCloudant");
+      // context.start("getCarInfoFromCloudant");
       data = await getCarInfoFromCloudant(filterType, context);
-      context.stop();
+      // context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.DATABASE);

@@ -33,30 +33,30 @@ export function buildCarCloudantQuery(country, city, filters) {
 }
 
 export async function getCarDataFromCloudant(query, context) {
-  context.start("cloudantClientConnect");
+  // context.start("cloudantClientConnect");
   const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
-  context.stop();
+  // context.stop();
   const db = cloudant.db.use("cars");
 
-  context.start("cloudantQuery");
+  // context.start("cloudantQuery");
   const res = await db.find({ selector: query, limit: 200 });
   for (let car = 0; car < res.docs.length; car++) {
     delete res.docs[car]["_id"];
     delete res.docs[car]["_rev"];
   }
-  context.stop();
+  // context.stop();
   return res.docs;
 }
 
 export async function getCarInfoFromCloudant(filterType, context) {
-  context.start("cloudantClientConnect");
+  // context.start("cloudantClientConnect");
   const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
-  context.stop();
+  // context.stop();
   const db = cloudant.db.use(
     filterType === "rental_company" ? "cars" : "car_info"
   );
 
-  context.start("cloudantQuery");
+  // context.start("cloudantQuery");
   const res = await db.find({
     selector: { _id: { $gt: null } },
     fields: [filterType],
@@ -71,7 +71,7 @@ export async function getCarInfoFromCloudant(filterType, context) {
       }
     });
   }
-  context.stop();
+  // context.stop();
   return result;
 }
 

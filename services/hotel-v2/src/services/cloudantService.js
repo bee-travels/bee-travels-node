@@ -30,28 +30,28 @@ export function buildHotelCloudantQuery(country, city, filters) {
 }
 
 export async function getHotelDataFromCloudant(query, context) {
-  context.start("cloudantClientConnect");
+  // context.start("cloudantClientConnect");
   const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
-  context.stop();
+  // context.stop();
   const db = cloudant.db.use("hotels");
 
-  context.start("cloudantQuery");
+  // context.start("cloudantQuery");
   const res = await db.find({ selector: query, limit: 200 });
   for (let hotel = 0; hotel < res.docs.length; hotel++) {
     delete res.docs[hotel]["_id"];
     delete res.docs[hotel]["_rev"];
   }
-  context.stop();
+  // context.stop();
   return res.docs;
 }
 
 export async function getHotelInfoFromCloudant(filterType, context) {
-  context.start("cloudantClientConnect");
+  // context.start("cloudantClientConnect");
   const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
-  context.stop();
+  // context.stop();
   const db = cloudant.db.use("hotel_info");
 
-  context.start("cloudantQuery");
+  // context.start("cloudantQuery");
   const res = await db.find({
     selector: { _id: { $gt: null } },
     fields: [filterType],
@@ -66,7 +66,7 @@ export async function getHotelInfoFromCloudant(filterType, context) {
       }
     });
   }
-  context.stop();
+  // context.stop();
   return result;
 }
 

@@ -13,6 +13,14 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
+const infoBreaker = new CircuitBreaker(getFilterList, opossumOptions);
+const idBreaker = new CircuitBreaker(getCarById, opossumOptions);
+const breaker = new CircuitBreaker(getCars, opossumOptions);
+
+
+// TODO: fix jaeger and replace context
+const context = {};
+
 const stringToArray = (s) => s && s.split(",");
 
 /**
@@ -25,12 +33,11 @@ const stringToArray = (s) => s && s.split(",");
  * @response 500 - Internal server error
  */
 router.get("/info/:tag", async (req, res, next) => {
-  const context = new Jaeger("info", req, res);
+  // const context = new Jaeger("info", req, res);
   const { tag } = req.params;
   req.log.info(`Getting info for ${tag}`);
   try {
-    const breaker = new CircuitBreaker(getFilterList, opossumOptions);
-    const data = await breaker.fire(tag, context);
+    const data = await infoBreaker.fire(tag, context);
     res.json(data);
   } catch (e) {
     if (e instanceof TagNotFoundError) {
@@ -53,16 +60,15 @@ router.get("/info/:tag", async (req, res, next) => {
  * @response 500 - Internal server error
  */
 router.get("/:id", async (req, res, next) => {
-  const context = new Jaeger("id lookup", req, res);
+  // const context = new Jaeger("id lookup", req, res);
   const { id } = req.params;
   const {
-    dateFrom, 
+    dateFrom,
     dateTo
   } = req.query;
 
   try {
-    const breaker = CircuitBreaker(getCarById, opossumOptions);
-    const data = await breaker.fire(id, dateFrom, dateTo, context);
+    const data = await idBreaker.fire(id, dateFrom, dateTo, context);
     res.json(data);
   } catch (e) {
     if (e instanceof IllegalDatabaseQueryError) {
@@ -91,7 +97,7 @@ router.get("/:id", async (req, res, next) => {
  * @response 500 - Internal server error
  */
 router.get("/:country/:city", async (req, res, next) => {
-  const context = new Jaeger("city", req, res);
+  // const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
   const {
     company,
@@ -106,7 +112,6 @@ router.get("/:country/:city", async (req, res, next) => {
   req.log.info(`getting car rental data for -> /${country}/${city}`);
 
   try {
-    const breaker = new CircuitBreaker(getCars, opossumOptions);
     const data = await breaker.fire(
       country,
       city,

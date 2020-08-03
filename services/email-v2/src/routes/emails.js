@@ -12,6 +12,11 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
+const breaker = new CircuitBreaker(sendEmail, opossumOptions);
+
+// TODO: fix jaeger and replace context
+const context = {};
+
 /**
  * POST /api/v1/emails
  * @description Send an email to a specific address
@@ -23,15 +28,13 @@ const opossumOptions = {
  * @bodyRequired
  */
 router.post("/", async (req, res, next) => {
-  const context = new Jaeger("emails", req, res);
+  // const context = new Jaeger("emails", req, res);
   try {
     let email = req.body.email;
     let body = req.body.body;
     let subject = req.body.subject;
     let from = req.body.from;
-    const breaker = new CircuitBreaker(sendEmail, opossumOptions);
     const response = await breaker.fire(email, from, subject, body, context);
-
     return res.json(response);
   } catch (e) {
     if (e instanceof EmailError) {

@@ -42,14 +42,14 @@ export async function getHotelDataFromMongo(query, context) {
     clientSettings.tlsCAFile = "./cert.pem";
   }
 
-  context.start("mongoClientConnect");
+  // context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.MONGO_CONNECTION_URL,
     clientSettings
   ).catch((err) => {
     console.log(err);
   });
-  context.stop();
+  // context.stop();
 
   if (!client) {
     return;
@@ -58,7 +58,7 @@ export async function getHotelDataFromMongo(query, context) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("hotels");
-    context.start("mongoQuery");
+    // context.start("mongoQuery");
     let res = await collection.find(query);
     let hotels = [];
     let hotel;
@@ -69,7 +69,7 @@ export async function getHotelDataFromMongo(query, context) {
       hotels.push(hotel);
       hasNextHotel = await res.hasNext();
     }
-    context.stop();
+    // context.stop();
     return hotels;
   } catch (err) {
     console.log(err);
@@ -90,14 +90,14 @@ export async function getHotelInfoFromMongo(filterType, context) {
     clientSettings.tlsCAFile = "./cert.pem";
   }
 
-  context.start("mongoClientConnect");
+  // context.start("mongoClientConnect");
   const client = await MongoClient.connect(
     process.env.MONGO_CONNECTION_URL,
     clientSettings
   ).catch((err) => {
     console.log(err);
   });
-  context.stop();
+  // context.stop();
 
   if (!client) {
     return;
@@ -106,9 +106,9 @@ export async function getHotelInfoFromMongo(filterType, context) {
   try {
     const db = client.db("beetravels");
     let collection = db.collection("hotel_info");
-    context.start("mongoQuery");
+    // context.start("mongoQuery");
     const result = await collection.distinct(filterType);
-    context.stop();
+    // context.stop();
     return result;
   } catch (err) {
     console.log(err);

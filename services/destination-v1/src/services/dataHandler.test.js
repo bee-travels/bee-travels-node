@@ -6,7 +6,7 @@ chai.use(chaiJsonSchema);
 
 const { getCities, getCity } = require("./dataHandler");
 
-const context = {
+// const context = {
   start: () => {},
   stop: () => {},
 };

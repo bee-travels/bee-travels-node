@@ -16,6 +16,14 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
+
+const breaker = new CircuitBreaker(getCities, opossumOptions);
+const countryBreaker = new CircuitBreaker(getCitiesForCountry, opossumOptions);
+const cityCountryBreaker = new CircuitBreaker(getCity, opossumOptions);
+
+// TODO: fix jaeger and replace context
+const context = {};
+
 /**
  * GET /api/v1/destinations/{country}/{city}
  * @description Gets data associated with given destination location
@@ -26,11 +34,10 @@ const opossumOptions = {
  * @response 500 - Internal server error
  */
 router.get("/:country/:city", async (req, res, next) => {
-  const context = new Jaeger("city", req, res);
+  // const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
   try {
-    const breaker = new CircuitBreaker(getCity, opossumOptions);
-    const data = await breaker.fire(country, city, context);
+    const data = await cityCountryBreaker.fire(country, city, context);
     res.json(data);
   } catch (e) {
     if (e instanceof IllegalDatabaseQueryError) {
@@ -49,11 +56,10 @@ router.get("/:country/:city", async (req, res, next) => {
  * @response 500 - Internal server error
  */
 router.get("/:country", async (req, res, next) => {
-  const context = new Jaeger("country", req, res);
+  // const context = new Jaeger("country", req, res);
   const { country } = req.params;
   try {
-    const breaker = new CircuitBreaker(getCitiesForCountry, opossumOptions);
-    const data = await breaker.fire(country, context);
+    const data = await countryBreaker.fire(country, context);
     res.json(data);
   } catch (e) {
     if (e instanceof IllegalDatabaseQueryError) {
@@ -71,9 +77,8 @@ router.get("/:country", async (req, res, next) => {
  * @response 500 - Internal server error
  */
 router.get("/", async (req, res, next) => {
-  const context = new Jaeger("cities", req, res);
+  // const context = new Jaeger("cities", req, res);
   try {
-    const breaker = new CircuitBreaker(getCities, opossumOptions);
     const data = await breaker.fire(context);
     res.json(data);
   } catch (e) {

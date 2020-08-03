@@ -7,7 +7,7 @@ import chaiAsPromised from "chai-as-promised";
 
 chai.use(chaiAsPromised);
 
-const context = {
+// const context = {
   start: () => {},
   stop: () => {},
 };
