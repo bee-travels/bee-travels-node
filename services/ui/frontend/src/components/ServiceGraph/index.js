@@ -1,3 +1,3 @@
-import {GraphPage} from "./Graph";
+import { GraphPage } from "./Graph";
 
-export {GraphPage};
+export { GraphPage };

@@ -12,7 +12,7 @@ import BookingLayout from "components/BookingLayout/BookingLayout";
 import HomeLayout from "components/HomeLayout/HomeLayout";
 import ErrorLayout from "components/ErrorLayout/ErrorLayout";
 
-import {GraphPage} from "components/ServiceGraph";
+import { GraphPage } from "components/ServiceGraph";
 
 function ProviderWrapper({ children }) {
   const store = createStore(

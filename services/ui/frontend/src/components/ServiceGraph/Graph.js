@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Graph from "react-graph-vis";
 
 function runThroughNodes(parent, nodes, edges, level) {
@@ -16,7 +16,7 @@ function runThroughNodes(parent, nodes, edges, level) {
         font: {
           multi: "html",
           size: 20,
-        }
+        },
       });
     }
 
