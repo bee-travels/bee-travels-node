@@ -3,11 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./TabHolder.module.css";
 import globalHistory from "globalHistory";
 
-const TabHolder = ({
-  children,
-  onClick,
-  location,
-}) => {
+const TabHolder = ({ children, onClick, location }) => {
   const [tabs, setTabs] = useState([]);
   const [tabsPath, setTabsPath] = useState([]);
   const [_0, _1, _2, _3, theTab] = location.pathname.split("/");
@@ -27,23 +23,25 @@ const TabHolder = ({
 
       let possibleTabs = [];
       let possiblePaths = [];
-      if(hotelResponse.status === 200) {
+      if (hotelResponse.status === 200) {
         possibleTabs.push("Hotels");
         possiblePaths.push("hotels");
       }
-      if(carResponse.status === 200) {
+      if (carResponse.status === 200) {
         possibleTabs.push("Cars");
         possiblePaths.push("cars");
       }
-      if(flightResponse.status === 200) {
+      if (flightResponse.status === 200) {
         possibleTabs.push("Flights");
         possiblePaths.push("flights");
       }
       setTabs(possibleTabs);
       setTabsPath(possiblePaths);
-    }
+    };
     check();
   }, []);
+
+  console.log(location);
 
   return (
     <div>
@@ -55,7 +53,9 @@ const TabHolder = ({
               tab.toLowerCase() === active ? styles.tabActive : styles.tab
             }
             onClick={() => {
-              globalHistory.push(`/destinations/${_2}/${_3}/${tabsPath[i]}`);
+              globalHistory.push(
+                `/destinations/${_2}/${_3}/${tabsPath[i]}${location.search}`
+              );
             }}
           >
             {tab}

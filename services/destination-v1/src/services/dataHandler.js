@@ -1,6 +1,5 @@
 import path from "path";
-import fs from 'fs';
-
+import fs from "fs";
 
 const DESTINATIONS_PATH = path.join(
   __dirname,
@@ -36,14 +35,14 @@ function parseMetadata(file, allData) {
 }
 
 function getAllDestination() {
-  if(destinationData === null) {
+  if (destinationData === null) {
     destinationData = parseMetadata(DESTINATIONS_PATH);
   }
   return destinationData;
 }
 
 function getDestinationCityAndCountry() {
-  if(destinationDataCityAndCountry === null){
+  if (destinationDataCityAndCountry === null) {
     const metadata = getAllDestination();
     destinationDataCityAndCountry = metadata.map((item) => ({
       country: item.country,
@@ -54,24 +53,24 @@ function getDestinationCityAndCountry() {
 }
 
 export function getCities(context) {
-  context.start("parseMetadata");
+  // context.start("parseMetadata");
   const metadata = getDestinationCityAndCountry();
-  context.stop();
+  // context.stop();
   return metadata;
 }
 
 export function getCitiesForCountry(country, context) {
-  context.start("parseMetadata");
+  // context.start("parseMetadata");
   const metadata = getDestinationCityAndCountry();
-  context.stop();
+  // context.stop();
   const citiesData = metadata.filter((c) => c.country === capitalize(country));
   return citiesData;
 }
 
 export function getCity(country, city, context) {
-  context.start("parseMetadata");
+  // context.start("parseMetadata");
   const metadata = getAllDestination();
-  context.stop();
+  // context.stop();
   const cityData = metadata.find(
     (c) => c.city === capitalize(city) && c.country === capitalize(country)
   );

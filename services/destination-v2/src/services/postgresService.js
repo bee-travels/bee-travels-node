@@ -1,7 +1,6 @@
 import { isValidQueryValue } from "query-validator";
 import { types, Pool } from "pg";
 
-
 const poolConfig = {
   host: process.env.PG_HOST,
   port: process.env.PG_PORT,
@@ -40,18 +39,18 @@ export function buildDestinationPostgresQuery(country, city) {
 
 export async function getDestinationDataFromPostgres(query, context) {
   let client = null;
-  
+
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client = await pool.connect();
-    context.stop();
+    // context.stop();
 
     const select = query.values.length === 2 ? "*" : "country, city";
     const statement =
       "SELECT " + select + " FROM destination" + query.statement;
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
     return query.values.length === 2 ? res.rows[0] : res.rows;
   } catch (err) {
     console.log(err.stack);

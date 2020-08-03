@@ -14,20 +14,20 @@ export async function processCheckout(context, checkoutObject) {
   isValid(checkoutObject.cartItems);
 
   try {
-    context.start("processPayment");
+    // context.start("processPayment");
     const confirmationId = await processPayment(
       checkoutObject.totalAmount,
       checkoutObject.billingDetails,
       checkoutObject.paymentMethodDetails
     );
-    context.stop();
+    // context.stop();
 
     await savePurchaseToDatabase(context, confirmationId, checkoutObject);
 
     if (process.env.EMAIL_URL && checkoutObject.billingDetails.email) {
-      context.start("sendMail");
+      // context.start("sendMail");
       let sentMail = await sendMail(confirmationId, checkoutObject);
-      context.stop();
+      // context.stop();
 
       if (sentMail[0].statusCode !== 202) {
         console.log("Error sending confirmation email");
@@ -45,9 +45,9 @@ async function savePurchaseToDatabase(context, confirmationId, checkoutObject) {
   switch (process.env.DATABASE) {
     case "postgres":
       query = buildCheckoutPostgresQuery(confirmationId, checkoutObject);
-      context.start("setCheckoutDataToPostgres");
+      // context.start("setCheckoutDataToPostgres");
       await setCheckoutDataToPostgres(query, context);
-      context.stop();
+      // context.stop();
       break;
     default:
       break;
@@ -77,7 +77,9 @@ export async function readinessCheck() {
         postgresIsReady = false;
     }
     const paymentIsReady = await paymentReadinessCheck();
-    const emailIsReady = process.env.EMAIL_URL ? await emailReadinessCheck() : true;
+    const emailIsReady = process.env.EMAIL_URL
+      ? await emailReadinessCheck()
+      : true;
 
     return postgresIsReady && paymentIsReady && emailIsReady;
   } catch (e) {

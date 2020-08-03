@@ -1,5 +1,5 @@
 import { isValidQueryValue } from "query-validator";
-import { Client, types, Pool } from "pg";
+import { types, Pool } from "pg";
 
 const poolConfig = {
   host: process.env.PG_HOST,
@@ -101,41 +101,30 @@ export function buildCarPostgresQuery(country, city, filters) {
 }
 
 export async function getCarDataFromPostgres(query, context) {
-  // let clientSettings = {
-  //   host: process.env.PG_HOST,
-  //   port: process.env.PG_PORT,
-  //   user: process.env.PG_USER,
-  //   password: process.env.PG_PASSWORD,
-  //   database: "beetravels",
-  // };
-
-  // if (process.env.DATABASE_CERT) {
-  //   clientSettings.ssl = {
-  //     rejectUnauthorized: false,
-  //     ca: process.env.DATABASE_CERT,
-  //   };
-  // }
-
-  // const client = new Client(clientSettings);
   let client = null;
 
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client = await pool.connect();
-    context.stop();
+    // context.stop();
 
     const statement =
       "SELECT cars.id, cars.car_id, cars.city, cars.country, cars.rental_company, cars.cost, car_info.name, car_info.body_type, car_info.style, car_info.image FROM cars INNER JOIN car_info ON cars.car_id = car_info.id WHERE " +
       query.statement;
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (err) {
     console.log(err.stack);
   } finally {
     client.release();
   }
+}
+
+// TODO: implement method for postgres
+export async function getCarByIdFromPostgres(id, context) {
+  return null;
 }
 
 export async function getCarInfoFromPostgres(filterType, context) {
@@ -148,12 +137,12 @@ export async function getCarInfoFromPostgres(filterType, context) {
   let client = null;
 
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client = await pool.connect();
-    context.stop();
+    // context.stop();
 
     const table = filterType === "rental_company" ? "cars" : "car_info";
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(
       "SELECT DISTINCT " + filterType + " FROM " + table
     );
@@ -166,7 +155,7 @@ export async function getCarInfoFromPostgres(filterType, context) {
         }
       });
     }
-    context.stop();
+    // context.stop();
     return result;
   } catch (err) {
     console.log(err.stack);
@@ -176,23 +165,6 @@ export async function getCarInfoFromPostgres(filterType, context) {
 }
 
 export async function postgresReadinessCheck() {
-  // let clientSettings = {
-  //   host: process.env.PG_HOST,
-  //   port: process.env.PG_PORT,
-  //   user: process.env.PG_USER,
-  //   password: process.env.PG_PASSWORD,
-  //   database: "beetravels",
-  // };
-
-  // if (process.env.DATABASE_CERT) {
-  //   clientSettings.ssl = {
-  //     rejectUnauthorized: false,
-  //     ca: process.env.DATABASE_CERT,
-  //   };
-  // }
-
-  // const client = new Client(clientSettings);
-  
   let client = null;
   try {
     client = await pool.connect();

@@ -38,12 +38,12 @@ export async function getCities(context) {
   let data;
   switch (process.env.DATABASE) {
     case "mongodb":
-      context.start("getDestinationDataFromMongo");
+      // context.start("getDestinationDataFromMongo");
       data = await getDestinationDataFromMongo({}, context);
-      context.stop();
+      // context.stop();
       break;
     case "postgres":
-      context.start("getDestinationDataFromPostgres");
+      // context.start("getDestinationDataFromPostgres");
       data = await getDestinationDataFromPostgres(
         {
           statement: "",
@@ -51,13 +51,13 @@ export async function getCities(context) {
         },
         context
       );
-      context.stop();
+      // context.stop();
       break;
     case "cloudant":
     case "couchdb":
-      context.start("getDestinationDataFromCloudant");
+      // context.start("getDestinationDataFromCloudant");
       data = await getDestinationDataFromCloudant({}, context);
-      context.stop();
+      // context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.DATABASE);
@@ -71,22 +71,22 @@ export async function getCitiesForCountry(country, context) {
   switch (process.env.DATABASE) {
     case "mongodb":
       query = buildDestinationMongoQuery(capitalize(country), null);
-      context.start("getDestinationDataFromMongo");
+      // context.start("getDestinationDataFromMongo");
       data = await getDestinationDataFromMongo(query, context);
-      context.stop();
+      // context.stop();
       break;
     case "postgres":
       query = buildDestinationPostgresQuery(capitalize(country), null);
-      context.start("getDestinationDataFromPostgres");
+      // context.start("getDestinationDataFromPostgres");
       data = await getDestinationDataFromPostgres(query, context);
-      context.stop();
+      // context.stop();
       break;
     case "cloudant":
     case "couchdb":
       query = buildDestinationCloudantQuery(capitalize(country), null);
-      context.start("getDestinationDataFromCloudant");
+      // context.start("getDestinationDataFromCloudant");
       data = await getDestinationDataFromCloudant(query, context);
-      context.stop();
+      // context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.DATABASE);
@@ -100,18 +100,18 @@ export async function getCity(country, city, context) {
   switch (process.env.DATABASE) {
     case "mongodb":
       query = buildDestinationMongoQuery(capitalize(country), capitalize(city));
-      context.start("getDestinationDataFromMongo");
+      // context.start("getDestinationDataFromMongo");
       data = await getDestinationDataFromMongo(query, context);
-      context.stop();
+      // context.stop();
       break;
     case "postgres":
       query = buildDestinationPostgresQuery(
         capitalize(country),
         capitalize(city)
       );
-      context.start("getDestinationDataFromPostgres");
+      // context.start("getDestinationDataFromPostgres");
       data = await getDestinationDataFromPostgres(query, context);
-      context.stop();
+      // context.stop();
       break;
     case "cloudant":
     case "couchdb":
@@ -119,9 +119,9 @@ export async function getCity(country, city, context) {
         capitalize(country),
         capitalize(city)
       );
-      context.start("getDestinationDataFromCloudant");
+      // context.start("getDestinationDataFromCloudant");
       data = await getDestinationDataFromCloudant(query, context);
-      context.stop();
+      // context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.DATABASE);

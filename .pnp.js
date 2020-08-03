@@ -8508,6 +8508,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["fast-deep-equal", [
+        ["npm:2.0.1", {
+          "packageLocation": "./.yarn/cache/fast-deep-equal-npm-2.0.1-9c01e08a62-2.zip/node_modules/fast-deep-equal/",
+          "packageDependencies": [
+            ["fast-deep-equal", "npm:2.0.1"]
+          ],
+          "linkType": "HARD",
+        }],
         ["npm:3.1.1", {
           "packageLocation": "./.yarn/cache/fast-deep-equal-npm-3.1.1-cbd83be021-2.zip/node_modules/fast-deep-equal/",
           "packageDependencies": [
@@ -18964,6 +18971,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["swr", [
+        ["virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:0.2.3", {
+          "packageLocation": "./.yarn/$$virtual/swr-virtual-73617db5ef/0/cache/swr-npm-0.2.3-23524edfc6-2.zip/node_modules/swr/",
+          "packageDependencies": [
+            ["swr", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:0.2.3"],
+            ["fast-deep-equal", "npm:2.0.1"],
+            ["react", "npm:16.13.1"]
+          ],
+          "packagePeers": [
+            "react"
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["symbol-observable", [
         ["npm:1.2.0", {
           "packageLocation": "./.yarn/cache/symbol-observable-npm-1.2.0-9e812a0a39-2.zip/node_modules/symbol-observable/",
@@ -19577,6 +19598,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-scripts", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:3.4.1"],
             ["redux", "npm:4.0.5"],
             ["redux-devtools-extension", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:2.13.8"],
+            ["swr", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:0.2.3"],
             ["vis-network", "virtual:0bef771a53daa44c87c59174cdfca1879f7ccb451d760499da8ff4176369f7ecc0ce864572cd4322ad8ad785254575645aeb70d2d792d393da382894edcdf30f#npm:7.9.0"]
           ],
           "linkType": "SOFT",

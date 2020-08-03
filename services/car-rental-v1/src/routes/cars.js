@@ -12,6 +12,11 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
+const infoBreaker = new CircuitBreaker(getFilterList, opossumOptions);
+const breaker = new CircuitBreaker(getCars, opossumOptions);
+
+// TODO: fix jaeger and replace context
+const context = {};
 const stringToArray = (s) => s && s.split(",");
 
 /**
@@ -25,12 +30,11 @@ const stringToArray = (s) => s && s.split(",");
  * @response 500 - Internal Server Error
  */
 router.get("/info/:tag", async (req, res, next) => {
-  const context = new Jaeger("info", req, res);
+  // const context = new Jaeger("info", req, res);
   const { tag } = req.params;
   req.log.info(`Getting info for ${tag}`);
   try {
-    const breaker = new CircuitBreaker(getFilterList, opossumOptions);
-    const data = await breaker.fire(tag, context);
+    const data = await infoBreaker.fire(tag, context);
     res.json(data);
   } catch (e) {
     if (e instanceof TagNotFoundError) {
@@ -58,12 +62,11 @@ router.get("/info/:tag", async (req, res, next) => {
  */
 // TODO: throw 2 400 errors for CountryNotFound and CityNotFound for country X.
 router.get("/:country/:city", async (req, res, next) => {
-  const context = new Jaeger("city", req, res);
+  // const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
   const { company, car, type, style, mincost, maxcost } = req.query;
   req.log.info(`getting car rental data for -> /${country}/${city}`);
   try {
-    const breaker = new CircuitBreaker(getCars, opossumOptions);
     const data = await breaker.fire(
       country,
       city,

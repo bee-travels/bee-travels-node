@@ -1,28 +1,33 @@
-import { Client, types } from "pg";
+import { Pool, types } from "pg";
 import { isValidQueryValue } from "query-validator";
+
+const poolConfig = {
+  host: process.env.PG_HOST,
+  port: process.env.PG_PORT,
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  database: "beetravels",
+  max: 20,
+  idleTimeoutMillis: 5000,
+  connectionTimeoutMillis: 5000,
+};
+
+if (process.env.DATABASE_CERT) {
+  poolConfig.ssl = {
+    rejectUnauthorized: false,
+    ca: process.env.DATABASE_CERT,
+  };
+}
+
+const pool = new Pool(poolConfig);
 
 types.setTypeParser(1700, (val) => parseFloat(val));
 
 export async function getFlightInfoFromPostgres(filter) {
-  let clientSettings = {
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: "beetravels",
-  };
-
-  if (process.env.DATABASE_CERT) {
-    clientSettings.ssl = {
-      rejectUnauthorized: false,
-      ca: process.env.DATABASE_CERT,
-    };
-  }
-
-  const client = new Client(clientSettings);
+  let client = null;
 
   try {
-    client.connect();
+    client = await pool.connect();
 
     const statement = "SELECT DISTINCT " + filter + " from flights";
 
@@ -32,27 +37,12 @@ export async function getFlightInfoFromPostgres(filter) {
   } catch (e) {
     console.log(e);
   } finally {
-    client.end();
+    client.release();
   }
 }
 
 export async function getAirportFromPostgres(id, context) {
-  let clientSettings = {
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: "beetravels",
-  };
-
-  if (process.env.DATABASE_CERT) {
-    clientSettings.ssl = {
-      rejectUnauthorized: false,
-      ca: process.env.DATABASE_CERT,
-    };
-  }
-
-  const client = new Client(clientSettings);
+  let client = null;
 
   let query = {
     statement: "id=$1",
@@ -60,41 +50,26 @@ export async function getAirportFromPostgres(id, context) {
   };
 
   try {
-    context.start("postgresClientConnect");
-    client.connect();
-    context.stop();
+    // context.start("postgresClientConnect");
+    client = await pool.connect();
+    // context.stop();
 
     const statement = "SELECT * from airports WHERE " + query.statement;
 
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
 
     return res.rows.length > 0 ? res.rows[0] : {};
   } catch (e) {
     console.log(e);
   } finally {
-    client.end();
+    client.release();
   }
 }
 
 export async function getAirportsFromPostgres(city, country, code, context) {
-  let clientSettings = {
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: "beetravels",
-  };
-
-  if (process.env.DATABASE_CERT) {
-    clientSettings.ssl = {
-      rejectUnauthorized: false,
-      ca: process.env.DATABASE_CERT,
-    };
-  }
-
-  const client = new Client(clientSettings);
+  let client = null;
 
   let query;
   if (city && country && code) {
@@ -144,83 +119,53 @@ export async function getAirportsFromPostgres(city, country, code, context) {
   }
 
   try {
-    context.start("postgresClientConnect");
-    client.connect();
-    context.stop();
+    // context.start("postgresClientConnect");
+    client = await pool.connect();
+    // context.stop();
 
     const statement = "SELECT * from airports " + query.statement;
 
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
   } finally {
-    client.end();
+    client.release();
   }
 }
 
 export async function getAirportsListFromPostgres(context) {
-  let clientSettings = {
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: "beetravels",
-  };
-
-  if (process.env.DATABASE_CERT) {
-    clientSettings.ssl = {
-      rejectUnauthorized: false,
-      ca: process.env.DATABASE_CERT,
-    };
-  }
-
-  const client = new Client(clientSettings);
+  let client = null;
 
   try {
-    context.start("postgresClientConnect");
-    client.connect();
-    context.stop();
+    // context.start("postgresClientConnect");
+    client = await pool.connect();
+    // context.stop();
     const statement =
       "select distinct city, country from airports where city <> ''";
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
   } finally {
-    client.end();
+    client.release();
   }
 }
 
 export async function getDirectFlightsFromPostgres(from, to, context) {
-  let clientSettings = {
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: "beetravels",
-  };
-
-  if (process.env.DATABASE_CERT) {
-    clientSettings.ssl = {
-      rejectUnauthorized: false,
-      ca: process.env.DATABASE_CERT,
-    };
-  }
-
-  const client = new Client(clientSettings);
+  let client = null;
 
   let query = {
     statement: "source_airport_id=$1 and destination_airport_id=$2",
     values: [isValidQueryValue(from), isValidQueryValue(to)],
   };
   try {
-    context.start("postgresClientConnect");
-    client.connect();
+    // context.start("postgresClientConnect");
+    client = await pool.connect();
     const statement =
       `
     select id       as flight_one_id,
@@ -232,44 +177,29 @@ export async function getDirectFlightsFromPostgres(from, to, context) {
     airlines
 from flights
 where ` + query.statement;
-    context.stop();
-    context.start("postgresQuery");
+    // context.stop();
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
   } finally {
-    client.end();
+    client.release();
   }
 }
 
 export async function getOneStopFlightsFromPostgres(from, to, context) {
-  let clientSettings = {
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: "beetravels",
-  };
-
-  if (process.env.DATABASE_CERT) {
-    clientSettings.ssl = {
-      rejectUnauthorized: false,
-      ca: process.env.DATABASE_CERT,
-    };
-  }
-
-  const client = new Client(clientSettings);
+  let client = null;
 
   let query = {
     values: [isValidQueryValue(from), isValidQueryValue(to)],
   };
 
   try {
-    context.start("postgresClientConnect");
-    client.connect();
-    context.stop();
+    // context.start("postgresClientConnect");
+    client = await pool.connect();
+    // context.stop();
     const statement = `
     select flight1.id                                                                             as flight_one_id,
     flight2.id                                                                                    as flight_two_id,
@@ -291,43 +221,28 @@ where flight1.airlines = flight2.airlines
 and flight2.flight_time >= (flight1.flight_time + flight1.flight_duration + 60)
 order by time limit 20;
     `;
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
   } finally {
-    client.end();
+    client.release();
   }
 }
 
 export async function getTwoStopFlightsFromPostgres(from, to, context) {
-  let clientSettings = {
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: "beetravels",
-  };
-
-  if (process.env.DATABASE_CERT) {
-    clientSettings.ssl = {
-      rejectUnauthorized: false,
-      ca: process.env.DATABASE_CERT,
-    };
-  }
-
-  const client = new Client(clientSettings);
+  let client = null;
 
   let query = {
     values: [isValidQueryValue(from), isValidQueryValue(to)],
   };
 
   try {
-    context.start("postgresClientConnect");
-    client.connect();
-    context.stop();
+    // context.start("postgresClientConnect");
+    client = await pool.connect();
+    // context.stop();
     const statement = `
     select f.id                  as flight_one_id,
     c.flight2id                  as flight_two_id,
@@ -351,41 +266,26 @@ where f.source_airport_id = $1
 order by c.totalTime
 limit 20;
     `;
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (e) {
     console.log(e);
   } finally {
-    client.end();
+    client.release();
   }
 }
 
 export async function postgresReadinessCheck() {
-  let clientSettings = {
-    host: process.env.PG_HOST,
-    port: process.env.PG_PORT,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: "beetravels",
-  };
-
-  if (process.env.DATABASE_CERT) {
-    clientSettings.ssl = {
-      rejectUnauthorized: false,
-      ca: process.env.DATABASE_CERT,
-    };
-  }
-
-  const client = new Client(clientSettings);
+  let client = null;
 
   try {
-    await client.connect();
+    client = await pool.connect();
   } catch (err) {
     return false;
   } finally {
-    client.end();
+    client.release();
   }
   return true;
 }

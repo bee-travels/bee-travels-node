@@ -1,12 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+import init from "redux/init";
+import reducer from "redux/reducer";
+import { useActions } from "redux/actions";
 
 import DestinationFragment from "./DestinationFragment/DestinationFragment";
 import HotelFragment from "./HotelFragment/HotelFragment";
 import CarFragment from "./CarFragment/CarFragment";
 import FlightFragment from "./FlightFragment/FlightFragment";
 import TabHolder from "./TabHolder";
+
+// function ProviderWrapper({ location }) {
+//   const store = createStore(
+//     reducer,
+//     init(location),
+//     composeWithDevTools({ name: "bee-travels" })()
+//   );
+
+//   return (
+//     <Provider store={store}>
+//       <Content location={location} />
+//     </Provider>
+//   );
+// }
 
 const SplitPaneLayout = ({ children, panelWidth, breakpoint }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -75,8 +96,10 @@ const SplitPaneLayout = ({ children, panelWidth, breakpoint }) => {
   );
 };
 
-const Content = ({ location }) => {
+const Content = () => {
+  const location = useLocation();
   const { country, city } = useParams();
+  const { setLocation } = useActions();
 
   const [cityName, setCityName] = useState("");
   const [countryName, setCountryName] = useState("");
@@ -87,6 +110,10 @@ const Content = ({ location }) => {
   const carsItems = useSelector((state) => state.cars);
   const hotelsItems = useSelector((state) => state.hotels);
   const flightsItems = useSelector((state) => state.flights);
+
+  useEffect(() => {
+    setLocation(location);
+  }, [location]);
 
   useEffect(() => {
     const loadDestination = async () => {
@@ -113,7 +140,7 @@ const Content = ({ location }) => {
   };
 
   return (
-    <SplitPaneLayout panelWidth="464px" breakpoint="1250px">
+    <SplitPaneLayout panelWidth="900px" breakpoint="1250px">
       <DestinationFragment
         cityName={cityName}
         countryName={countryName}

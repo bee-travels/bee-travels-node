@@ -110,15 +110,15 @@ export async function setCheckoutDataToPostgres(query, context) {
   let client = null;
 
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client = await pool.connect();
-    context.stop();
-    context.start("postgresTransactionQuery");
+    // context.stop();
+    // context.start("postgresTransactionQuery");
     await client.query(query.transaction.statement, query.transaction.values);
-    context.stop();
-    context.start("postgresCsrtItemsQuery");
+    // context.stop();
+    // context.start("postgresCsrtItemsQuery");
     await client.query(query.cartItems.statement, query.cartItems.values);
-    context.stop();
+    // context.stop();
   } catch (err) {
     console.log(err.stack);
   } finally {
