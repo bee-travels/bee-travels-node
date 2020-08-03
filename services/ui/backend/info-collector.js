@@ -4,6 +4,9 @@ const express = require("express");
 
 const router = express.Router();
 
+// TODO: make a map of all the paths being checkdes
+// if there is a duplicate do not rerun the axios get
+
 function infoCollector(proxies) {
   const infoPromises = proxies.map(({ service }) => {
     // TODO: This needs to run after all the other services are ready.
