@@ -81,6 +81,11 @@ export async function getCarDataFromMongo(query, context) {
   }
 }
 
+// TODO: implement method for mongo
+export async function getCarByIdFromMongo(id, context) {
+  return null;
+}
+
 export async function getCarInfoFromMongo(filterType, context) {
   let clientSettings = {
     useNewUrlParser: true,

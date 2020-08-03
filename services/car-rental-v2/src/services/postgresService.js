@@ -1,5 +1,5 @@
 import { isValidQueryValue } from "query-validator";
-import { Client, types, Pool } from "pg";
+import { types, Pool } from "pg";
 
 const poolConfig = {
   host: process.env.PG_HOST,
@@ -101,22 +101,6 @@ export function buildCarPostgresQuery(country, city, filters) {
 }
 
 export async function getCarDataFromPostgres(query, context) {
-  // let clientSettings = {
-  //   host: process.env.PG_HOST,
-  //   port: process.env.PG_PORT,
-  //   user: process.env.PG_USER,
-  //   password: process.env.PG_PASSWORD,
-  //   database: "beetravels",
-  // };
-
-  // if (process.env.DATABASE_CERT) {
-  //   clientSettings.ssl = {
-  //     rejectUnauthorized: false,
-  //     ca: process.env.DATABASE_CERT,
-  //   };
-  // }
-
-  // const client = new Client(clientSettings);
   let client = null;
 
   try {
@@ -136,6 +120,11 @@ export async function getCarDataFromPostgres(query, context) {
   } finally {
     client.release();
   }
+}
+
+// TODO: implement method for postgres
+export async function getCarByIdFromPostgres(id, context) {
+  return null;
 }
 
 export async function getCarInfoFromPostgres(filterType, context) {
@@ -176,23 +165,6 @@ export async function getCarInfoFromPostgres(filterType, context) {
 }
 
 export async function postgresReadinessCheck() {
-  // let clientSettings = {
-  //   host: process.env.PG_HOST,
-  //   port: process.env.PG_PORT,
-  //   user: process.env.PG_USER,
-  //   password: process.env.PG_PASSWORD,
-  //   database: "beetravels",
-  // };
-
-  // if (process.env.DATABASE_CERT) {
-  //   clientSettings.ssl = {
-  //     rejectUnauthorized: false,
-  //     ca: process.env.DATABASE_CERT,
-  //   };
-  // }
-
-  // const client = new Client(clientSettings);
-
   let client = null;
   try {
     client = await pool.connect();

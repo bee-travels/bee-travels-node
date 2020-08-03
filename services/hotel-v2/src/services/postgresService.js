@@ -1,5 +1,5 @@
 import { isValidQueryValue } from "query-validator";
-import { Client, types, Pool } from "pg";
+import { types, Pool } from "pg";
 
 const poolConfig = {
   host: process.env.PG_HOST,

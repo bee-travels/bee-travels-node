@@ -48,6 +48,11 @@ export async function getCarDataFromCloudant(query, context) {
   return res.docs;
 }
 
+//TODO: implement method for couch
+export async function getCarByIdFromCouch(id, context) {
+  return null;
+}
+
 export async function getCarInfoFromCloudant(filterType, context) {
   // context.start("cloudantClientConnect");
   const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
