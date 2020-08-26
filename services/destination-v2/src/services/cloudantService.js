@@ -12,12 +12,12 @@ export function buildDestinationCloudantQuery(country, city) {
 }
 
 export async function getDestinationDataFromCloudant(query, context) {
-  context.start("cloudantClientConnect");
+  // context.start("cloudantClientConnect");
   const cloudant = Cloudant(process.env.COUCH_CLOUDANT_CONNECTION_URL);
-  context.stop();
+  // context.stop();
   const db = cloudant.db.use("destination");
 
-  context.start("cloudantQuery");
+  // context.start("cloudantQuery");
   let res = await db.find({
     selector: query,
     fields: query.city === undefined ? ["country", "city"] : [],
@@ -27,7 +27,7 @@ export async function getDestinationDataFromCloudant(query, context) {
     delete res.docs[destination]["_id"];
     delete res.docs[destination]["_rev"];
   }
-  context.stop();
+  // context.stop();
   return query.city === undefined ? res.docs : res.docs[0];
 }
 

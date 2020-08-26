@@ -58,9 +58,9 @@ export async function getHotels(country, city, filters, context) {
         capitalize(city),
         filters
       );
-      context.start("getHotelDataFromMongo");
+      // context.start("getHotelDataFromMongo");
       data = await getHotelDataFromMongo(query, context);
-      context.stop();
+      // context.stop();
       break;
     case "postgres":
       query = buildHotelPostgresQuery(
@@ -68,9 +68,9 @@ export async function getHotels(country, city, filters, context) {
         capitalize(city),
         filters
       );
-      context.start("getHotelDataFromPostgres");
+      // context.start("getHotelDataFromPostgres");
       data = await getHotelDataFromPostgres(query, context);
-      context.stop();
+      // context.stop();
       break;
     case "cloudant":
     case "couchdb":
@@ -79,9 +79,9 @@ export async function getHotels(country, city, filters, context) {
         capitalize(city),
         filters
       );
-      context.start("getHotelDataFromCloudant");
+      // context.start("getHotelDataFromCloudant");
       data = await getHotelDataFromCloudant(query, context);
-      context.stop();
+      // context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.DATABASE);
@@ -97,20 +97,20 @@ export async function getFilterList(filterType, context) {
   let data;
   switch (process.env.DATABASE) {
     case "mongodb":
-      context.start("getHotelInfoFromMongo");
+      // context.start("getHotelInfoFromMongo");
       data = await getHotelInfoFromMongo(filterType, context);
-      context.stop();
+      // context.stop();
       break;
     case "postgres":
-      context.start("getHotelInfoFromPostgres");
+      // context.start("getHotelInfoFromPostgres");
       data = await getHotelInfoFromPostgres(filterType, context);
-      context.stop();
+      // context.stop();
       break;
     case "cloudant":
     case "couchdb":
-      context.start("getHotelInfoFromCloudant");
+      // context.start("getHotelInfoFromCloudant");
       data = await getHotelInfoFromCloudant(filterType, context);
-      context.stop();
+      // context.stop();
       break;
     default:
       throw new DatabaseNotFoundError(process.env.DATABASE);

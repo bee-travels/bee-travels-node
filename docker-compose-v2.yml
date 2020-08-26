@@ -149,6 +149,7 @@ services:
     depends_on:
       - base
     environment:
+      - LOG_LEVEL=${LOG_LEVEL}
       - DATABASE=${DATABASE}
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
@@ -165,6 +166,7 @@ services:
       - base
       - cars-data-gen
     environment:
+      - LOG_LEVEL=${LOG_LEVEL}
       - DATABASE=${DATABASE}
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984
@@ -180,6 +182,7 @@ services:
     depends_on:
       - base
     environment:
+      - LOG_LEVEL=${LOG_LEVEL}
       - DATABASE=${DATABASE}
       - MONGO_CONNECTION_URL=mongodb://admin:admin@mongo:27017
       - COUCH_CLOUDANT_CONNECTION_URL=http://admin:admin@couch:5984

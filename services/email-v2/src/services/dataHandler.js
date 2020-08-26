@@ -11,9 +11,9 @@ export async function sendEmail(to, from, subject, body, context) {
   };
 
   try {
-    context.start("startSendgrid");
+    // context.start("startSendgrid");
     const response = await sgMail.send(msg);
-    context.stop();
+    // context.stop();
     return response;
   } catch (e) {
     throw new EmailError("could not send mail");

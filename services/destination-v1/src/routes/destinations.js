@@ -15,6 +15,13 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
+const breaker = new CircuitBreaker(getCities, opossumOptions);
+const countryBreaker = new CircuitBreaker(getCitiesForCountry, opossumOptions);
+const cityCountryBreaker = new CircuitBreaker(getCity, opossumOptions);
+
+// TODO: fix jaeger and replace context
+const context = {};
+
 /**
  * GET /api/v1/destinations/{country}/{city}
  * @tag Destination
@@ -27,13 +34,12 @@ const opossumOptions = {
  */
 // TODO: 400s for bad country/city see hotel/cars
 router.get("/:country/:city", async (req, res, next) => {
-  const context = new Jaeger("city", req, res);
+  // const context = new Jaeger("city", req, res);
   const { country, city } = req.params;
   req.log.info(`getting destination data for -> /${country}/${city}`);
 
   try {
-    const breaker = new CircuitBreaker(getCity, opossumOptions);
-    const data = await breaker.fire(country, city, context);
+    const data = await cityCountryBreaker.fire(country, city, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -51,13 +57,12 @@ router.get("/:country/:city", async (req, res, next) => {
  */
 // TODO: 400 for bad country
 router.get("/:country", async (req, res, next) => {
-  const context = new Jaeger("country", req, res);
+  // const context = new Jaeger("country", req, res);
   const { country } = req.params;
   req.log.info(`getting destination data for -> /${country}`);
 
   try {
-    const breaker = new CircuitBreaker(getCitiesForCountry, opossumOptions);
-    const data = await breaker.fire(country, context);
+    const data = await countryBreaker.fire(country, context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -73,11 +78,10 @@ router.get("/:country", async (req, res, next) => {
  * @response 500 - Internal Server Error
  */
 router.get("/", async (req, res, next) => {
-  const context = new Jaeger("cities", req, res);
+  // const context = new Jaeger("cities", req, res);
   req.log.info(`getting destination data for -> /`);
 
   try {
-    const breaker = new CircuitBreaker(getCities, opossumOptions);
     const data = await breaker.fire(context);
     res.json(data);
   } catch (e) {

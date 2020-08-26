@@ -14,6 +14,14 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
+const breaker = new CircuitBreaker(getCountry, opossumOptions);
+const exchangeBreaker = new CircuitBreaker(getExchangeRates, opossumOptions);
+const convertBreaker = new CircuitBreaker(convert, opossumOptions);
+const codeBreaker = new CircuitBreaker(getCurrency, opossumOptions);
+
+// TODO: fix jaeger and replace context
+const context = {};
+
 /**
  * GET /api/v1/currency/rates
  * @tag Currency
@@ -24,10 +32,9 @@ const opossumOptions = {
  * @responseExample {Jessica} 200.*\/*.Jessica
  */
 router.get("/rates", async (req, res, next) => {
-  const context = new Jaeger("rates", req, res);
+  // const context = new Jaeger("rates", req, res);
   try {
-    const breaker = new CircuitBreaker(getExchangeRates, opossumOptions);
-    const data = await breaker.fire(context);
+    const data = await exchangeBreaker.fire(context);
     res.json(data);
   } catch (e) {
     next(e);
@@ -46,11 +53,10 @@ router.get("/rates", async (req, res, next) => {
  * @response 500 - Internal Server Error
  */
 router.get("/convert/:from/:to", async (req, res, next) => {
-  const context = new Jaeger("convert", req, res);
+  // const context = new Jaeger("convert", req, res);
   const { from, to } = req.params;
   try {
-    const breaker = new CircuitBreaker(convert, opossumOptions);
-    const data = await breaker.fire(context, from, to);
+    const data = await convertBreaker.fire(context, from, to);
     return res.json({ rate: data });
   } catch (e) {
     if (e instanceof CurrencyNotFoundError) {
@@ -71,11 +77,10 @@ router.get("/convert/:from/:to", async (req, res, next) => {
  * @response 500 - Internal Server Error
  */
 router.get("/:code", async (req, res, next) => {
-  const context = new Jaeger("code", req, res);
+  // const context = new Jaeger("code", req, res);
   const { code } = req.params;
   try {
-    const breaker = new CircuitBreaker(getCurrency, opossumOptions);
-    const data = await breaker.fire(code, context);
+    const data = await codeBreaker.fire(code, context);
     return res.json(data);
   } catch (e) {
     if (e instanceof CurrencyNotFoundError) {
@@ -96,13 +101,12 @@ router.get("/:code", async (req, res, next) => {
  * @response 500 - Internal Server Error
  */
 router.get("/", async (req, res, next) => {
-  const context = new Jaeger("country", req, res);
+  // const context = new Jaeger("country", req, res);
   const { country } = req.query;
   if (country === undefined) {
     return next();
   }
   try {
-    const breaker = new CircuitBreaker(getCountry, opossumOptions);
     const data = await breaker.fire(country, context);
     return res.json(data);
   } catch (e) {

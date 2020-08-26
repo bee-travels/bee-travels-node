@@ -1,5 +1,5 @@
 import { isValidQueryValue } from "query-validator";
-import { Client, types, Pool } from "pg";
+import { types, Pool } from "pg";
 
 const poolConfig = {
   host: process.env.PG_HOST,
@@ -89,16 +89,16 @@ export async function getHotelDataFromPostgres(query, context) {
   let client = null;
 
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client = await pool.connect();
-    context.stop();
+    // context.stop();
 
     const statement =
       "SELECT hotels.id, hotels.hotel_id, hotels.city, hotels.country, hotels.cost, hotels.images, hotels.tags, hotel_info.superchain, hotel_info.type, hotel_info.name FROM hotels INNER JOIN hotel_info ON hotels.hotel_id = hotel_info.id WHERE " +
       query.statement;
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(statement, query.values);
-    context.stop();
+    // context.stop();
     return res.rows;
   } catch (err) {
     console.log(err.stack);
@@ -111,11 +111,11 @@ export async function getHotelInfoFromPostgres(filterType, context) {
   let client = null;
 
   try {
-    context.start("postgresClientConnect");
+    // context.start("postgresClientConnect");
     client = await pool.connect();
-    context.stop();
+    // context.stop();
 
-    context.start("postgresQuery");
+    // context.start("postgresQuery");
     const res = await client.query(
       "SELECT DISTINCT " + filterType + " FROM hotel_info"
     );
@@ -128,7 +128,7 @@ export async function getHotelInfoFromPostgres(filterType, context) {
         }
       });
     }
-    context.stop();
+    // context.stop();
     return result;
   } catch (err) {
     console.log(err.stack);

@@ -17,6 +17,7 @@ AxiosStream.prototype.init = function () {
     self.emit("error", new Error("Already started."));
   }
   self.on("pipe", (src) => {
+    delete src.headers["host"];
     self.options = {
       headers: src.headers,
       method: src.method,

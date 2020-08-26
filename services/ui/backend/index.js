@@ -2,6 +2,9 @@ const path = require("path");
 
 const streamableAxios = require("./streamableAxios");
 
+const infoCollector = require("./info-collector");
+const docCollector = require("./doc-collector");
+
 const express = require("express");
 const axios = require("axios");
 
@@ -33,18 +36,18 @@ const proxies = [
 ];
 
 const proxyRequest = async (req, res, url) => {
-  console.log("PROXY REQUEST ", url);
+  console.log("PROXY REQUEST:", url);
   // const data = await axios({ url: url });
   // console.log(data);
   req
     .pipe(streamableAxios({ url: url }))
     .on("error", (e) => {
-      console.error("error in streamable axios : ", e);
+      console.error("ERROR PROXYING REQUEST:", url, e.code);
       res.sendStatus(500);
     })
     .pipe(res)
     .on("error", (e) => {
-      console.error("error in result : ", e);
+      console.error("ERROR PROXYING REQUEST:", url, e.code);
       res.sendStatus(500);
     });
 };
@@ -56,24 +59,24 @@ proxies.forEach(({ service, path }) => {
   });
 });
 
-// app.use(infoCollector(proxies));
+app.use(infoCollector(proxies));
 
-// app.use(docCollector(proxies));
+app.use(docCollector(proxies));
 
 app.get("/check/hotels", (req, res) => {
   const url = `${proxies[1].service}/live`;
   console.log(url);
-  proxyRequest(req, res, url)
+  proxyRequest(req, res, url);
 });
 
 app.get("/check/cars", (req, res) => {
   const url = `${proxies[2].service}/live`;
-  proxyRequest(req, res, url)
+  proxyRequest(req, res, url);
 });
 
 app.get("/check/flights", (req, res) => {
   const url = `${proxies[3].service}/live`;
-  proxyRequest(req, res, url)
+  proxyRequest(req, res, url);
 });
 
 if (process.env.NODE_ENV === "production") {

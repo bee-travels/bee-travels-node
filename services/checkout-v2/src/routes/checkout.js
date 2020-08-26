@@ -12,6 +12,11 @@ const opossumOptions = {
   resetTimeout: 30000, // After 30 seconds, try again.
 };
 
+const breaker = new CircuitBreaker(processCheckout, opossumOptions);
+
+// TODO: fix jaeger and replace context
+const context = {};
+
 /**
  * POST /api/v1/checkout/cart
  * @summary Checkout a Bee Travels cart
@@ -25,10 +30,9 @@ const opossumOptions = {
  * @response 500 - Internal server error
  */
 router.post("/cart", async (req, res, next) => {
-  const context = new Jaeger("checkout", req, res);
+  // const context = new Jaeger("checkout", req, res);
   const cartData = req.body;
   try {
-    const breaker = new CircuitBreaker(processCheckout, opossumOptions);
     const data = await breaker.fire(context, cartData);
     return res.json(data);
   } catch (e) {

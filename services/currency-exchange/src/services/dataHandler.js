@@ -23,9 +23,9 @@ async function parseMetadata(csv) {
 }
 
 export async function getCountry(country, context) {
-  context.start("parseMetadata");
+  // context.start("parseMetadata");
   const metadata = await parseMetadata(CSV_PATH);
-  context.stop();
+  // context.stop();
 
   const countryInfo = metadata.find((r) => {
     if (r.country === undefined) {
@@ -42,9 +42,9 @@ export async function getCountry(country, context) {
 }
 
 export async function getCurrency(code, context) {
-  context.start("parseMetadata");
+  // context.start("parseMetadata");
   const metadata = await parseMetadata(CSV_PATH);
-  context.stop();
+  // context.stop();
 
   // Find all countries that use requested currency.
   const allCurrencyInfo = metadata.filter((r) => {
