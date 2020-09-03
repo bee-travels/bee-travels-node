@@ -13,6 +13,10 @@ function runThroughNodes(parent, nodes, edges, level) {
         label: `${child.service}\n\n${child.hostname}\n${child.language}`,
         title: child.service,
         level: level + 1,
+        widthConstraint: {
+          minimum: 150,
+          maximum: 250,
+        },
         font: {
           multi: "html",
           size: 20,
@@ -33,6 +37,9 @@ function generateGraph(json) {
     label: `<b>${json.service}</b>\n${json.hostname}`,
     title: json.service,
     level: 0,
+    heightConstraint: {
+      minimum: 100,
+    },
     font: {
       multi: "html",
       size: 20,
@@ -93,11 +100,12 @@ export function GraphPage() {
       hierarchical: {
         enabled: true,
         levelSeparation: 300,
+        nodeSpacing: 344,
       },
     },
     physics: {
       hierarchicalRepulsion: {
-        nodeDistance: 300,
+        nodeDistance: 350,
       },
       solver: "hierarchicalRepulsion",
     },
@@ -112,6 +120,11 @@ export function GraphPage() {
       graph={graph}
       options={options}
       style={{ position: "absolute", height: "100%", width: "100%" }}
+      // getNetwork={network => {
+      //   network.setOptions({
+      //     physics: {enabled: false}
+      //   })
+      // }}
     />
   );
 }
