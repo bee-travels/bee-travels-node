@@ -48,7 +48,7 @@ app.get("/info", (req, res) => {
 
   Promise.all(infoPromises).then((infoArray) => {
     res.json({
-      service: "destination-v1",
+      service: process.env.SERVICE || "destination-v1",
       hostname: os.hostname(),
       database: null,
       children: infoArray,

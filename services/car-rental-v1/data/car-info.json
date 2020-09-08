@@ -1,769 +1,769 @@
 [
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/audi_q3.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/audi_q3.jpg", 
     "style": "premium", 
     "id": "5ff59c0a-4340-46aa-96bb-fd7b8e788a94", 
     "body_type": "crossover", 
     "name": "Audi Q3"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/bmw_x1.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/bmw_x1.jpg", 
     "style": "premium", 
     "id": "1c1ba096-d146-4a37-9f73-d1dc46159d5b", 
     "body_type": "crossover", 
     "name": "BMW X1"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/bmw_x6.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/bmw_x6.jpg", 
     "style": "premium", 
     "id": "9ab5574e-d9f1-4891-abcc-82d88d51fcf1", 
     "body_type": "crossover", 
     "name": "BMW X6"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/chevrolet_equinox.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/chevrolet_equinox.jpg", 
     "style": "premium", 
     "id": "257b00a3-7b80-4181-8bcf-3aaa9279d686", 
     "body_type": "crossover", 
     "name": "Chevrolet Equinox"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/dodge_journey.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/dodge_journey.jpg", 
     "style": "premium", 
     "id": "5cfe4de6-7862-4f7b-9af7-ccf139246470", 
     "body_type": "crossover", 
     "name": "Dodge Journey"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/lexus_nx.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/lexus_nx.jpg", 
     "style": "premium", 
     "id": "3d458847-5cf5-473a-a4c3-4668953e19cc", 
     "body_type": "crossover", 
     "name": "Lexus NX"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/acura_rdx.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/acura_rdx.jpg", 
     "style": "basic", 
     "id": "fb962f2f-59e1-49cf-8c3e-d7ca88327b2f", 
     "body_type": "crossover", 
     "name": "Acura RDX"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/chevrolet_trax.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/chevrolet_trax.jpg", 
     "style": "basic", 
     "id": "8b84bea6-ce16-4319-90d8-bdc6a299f7bb", 
     "body_type": "crossover", 
     "name": "Chevrolet Trax"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/chrysler_pacifica.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/chrysler_pacifica.jpg", 
     "style": "basic", 
     "id": "87b6a88f-5dd6-4d35-a1bc-6b0297c3e7b4", 
     "body_type": "crossover", 
     "name": "Chrysler Pacifica"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/ford_ecosport.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/ford_ecosport.jpg", 
     "style": "basic", 
     "id": "b551bfd5-f0f7-4e68-9f6c-b89629cf3333", 
     "body_type": "crossover", 
     "name": "Ford Ecosport"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/ford_edge.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/ford_edge.jpg", 
     "style": "basic", 
     "id": "9761b893-d75c-4dde-b4ff-dbc6e34b05e5", 
     "body_type": "crossover", 
     "name": "Ford Edge"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/hyundai_tucson.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/hyundai_tucson.jpg", 
     "style": "basic", 
     "id": "5b9e3c0b-ef2e-443a-89cb-66328a78f6b7", 
     "body_type": "crossover", 
     "name": "Hyundai Tucson"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/mazda_cx3.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/mazda_cx3.jpg", 
     "style": "basic", 
     "id": "4302c6ef-79ee-47e7-9f5b-c9b1a843b8f3", 
     "body_type": "crossover", 
     "name": "Mazda CX-3"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/nissan_murano.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/nissan_murano.jpg", 
     "style": "basic", 
     "id": "e43ee024-3644-4a2a-b8e1-22435ecda398", 
     "body_type": "crossover", 
     "name": "Nissan Murano"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/subaru_tribeca.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/subaru_tribeca.jpg", 
     "style": "basic", 
     "id": "82b20509-8627-41ab-bf39-e06c31652d73", 
     "body_type": "crossover", 
     "name": "Subaru Tribeca"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/toyota_rav4.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/toyota_rav4.jpg", 
     "style": "basic", 
     "id": "f5ab82c4-3d9a-479b-b449-5e3cc528a361", 
     "body_type": "crossover", 
     "name": "Toyota Rav4"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/volvo_xc60.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/volvo_xc60.jpg", 
     "style": "basic", 
     "id": "86a45c12-9344-42ee-9d85-a9b6e2e801e8", 
     "body_type": "crossover", 
     "name": "Volvo XC60"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/alfa_romeo_4c.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/alfa_romeo_4c.jpg", 
     "style": "luxury", 
     "id": "3c238b67-a61b-4513-a322-1969ff421827", 
     "body_type": "sports", 
     "name": "Alfa Romeo 4C"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/aston_martin_vantage.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/aston_martin_vantage.jpg", 
     "style": "luxury", 
     "id": "914c58bc-86dd-4036-a281-48b4f7b65755", 
     "body_type": "sports", 
     "name": "Aston Martin Vantage"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/audi_tt.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/audi_tt.jpg", 
     "style": "luxury", 
     "id": "1909cf4c-29ca-4c96-97e6-b3f435762828", 
     "body_type": "sports", 
     "name": "Audi TT"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/bentley_continental.png", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/bentley_continental.png", 
     "style": "luxury", 
     "id": "e705dd1f-a485-4421-b9ab-a918badeb6b9", 
     "body_type": "sports", 
     "name": "Bentley Continental GT"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/bmw_z8.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/bmw_z8.jpg", 
     "style": "luxury", 
     "id": "685d7821-3671-43f5-bf83-45a53658756b", 
     "body_type": "sports", 
     "name": "BMW Z8"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/bugatti_chiron.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/bugatti_chiron.jpg", 
     "style": "luxury", 
     "id": "542f1691-20ae-40ba-8527-8d4402147f6e", 
     "body_type": "sports", 
     "name": "Bugatti Chiron"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/dodge_viper.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/dodge_viper.jpg", 
     "style": "luxury", 
     "id": "e1076503-4789-499b-87df-8eac5ab7f9c0", 
     "body_type": "sports", 
     "name": "Dodge Viper"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/ferrari_458.png", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/ferrari_458.png", 
     "style": "luxury", 
     "id": "39489fdf-4435-4710-9826-ad3a43f2addb", 
     "body_type": "sports", 
     "name": "Ferrari 458 Italia"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/honda_nsx.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/honda_nsx.jpg", 
     "style": "luxury", 
     "id": "83ffcce0-e67d-4aa5-992f-a7c5f8fc9f2e", 
     "body_type": "sports", 
     "name": "Honda NSX"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/hyundai_genesis_coupe.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/hyundai_genesis_coupe.jpg", 
     "style": "luxury", 
     "id": "372e8551-58a0-4789-b0e1-16af55085550", 
     "body_type": "sports", 
     "name": "Hyundai Genesis Coupe"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/infinity_emerg_e.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/infinity_emerg_e.jpg", 
     "style": "luxury", 
     "id": "60322e57-9857-4b7a-b623-6e3a91e52db6", 
     "body_type": "sports", 
     "name": "Infiniti Emerg E"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/jaguar_f_type.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/jaguar_f_type.jpg", 
     "style": "luxury", 
     "id": "f3579721-12a6-493f-99c7-c5692237436e", 
     "body_type": "sports", 
     "name": "Jaguar F-Type"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/lamborghini.png", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/lamborghini.png", 
     "style": "luxury", 
     "id": "4848977b-be6b-4c66-bc11-e561f0cd170f", 
     "body_type": "sports", 
     "name": "Lamborghini Murcielago"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/lexus_lfa.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/lexus_lfa.jpg", 
     "style": "luxury", 
     "id": "9b2f9a38-f5e2-4690-93c3-fa4d100a3470", 
     "body_type": "sports", 
     "name": "Lexus LFA"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/pontiac_gto.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/pontiac_gto.jpg", 
     "style": "luxury", 
     "id": "c9eeb8c1-b6fe-4b65-a1eb-99083ddb6472", 
     "body_type": "sports", 
     "name": "Pontiac GTO"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/toyota_86.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/toyota_86.jpg", 
     "style": "luxury", 
     "id": "badb8fd8-5668-48e1-aab4-400f372210dc", 
     "body_type": "sports", 
     "name": "Toyota 86"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/acura_mdx.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/acura_mdx.jpg", 
     "style": "premium", 
     "id": "310509fc-4373-43ec-b985-c23ee73c9c91", 
     "body_type": "suv", 
     "name": "Acura MDX"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/audi_q3.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/audi_q3.jpg", 
     "style": "premium", 
     "id": "f2c5d25d-4e4b-431c-bbdf-1e3d4d4062f5", 
     "body_type": "suv", 
     "name": "Audi Q3 Quattro Sport"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/chevrolet_captiva.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/chevrolet_captiva.jpg", 
     "style": "premium", 
     "id": "87b9b79a-37d3-48e0-84a6-407a795ca0d6", 
     "body_type": "suv", 
     "name": "Chevrolet Captiva"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/dodge_durango.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/dodge_durango.jpg", 
     "style": "premium", 
     "id": "698933e6-cb52-4dbe-b46a-abafdd2e06eb", 
     "body_type": "suv", 
     "name": "Dodge Durango"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/ford_escape.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/ford_escape.jpg", 
     "style": "premium", 
     "id": "ce8277f4-bad6-47e7-ad2c-e3cc2bb96790", 
     "body_type": "suv", 
     "name": "Ford Escape"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/ford_explorer.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/ford_explorer.jpg", 
     "style": "premium", 
     "id": "3acd1268-8593-4a0a-b5ec-e111f384e503", 
     "body_type": "suv", 
     "name": "Ford Explorer"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/honda_hr-v.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/honda_hr-v.jpg", 
     "style": "premium", 
     "id": "5826686d-0746-414d-9495-5cd387d77315", 
     "body_type": "suv", 
     "name": "Honda HR-V"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/honda_pilot.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/honda_pilot.jpg", 
     "style": "premium", 
     "id": "34bd7e9c-4780-4db8-a8e8-9a1760fb86d0", 
     "body_type": "suv", 
     "name": "Honda Pilot"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/jeep_grand_cherokee.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/jeep_grand_cherokee.jpg", 
     "style": "premium", 
     "id": "db988d39-c78f-414f-a4c9-8c49c4b3948d", 
     "body_type": "suv", 
     "name": "Jeep Grand Cherokee"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/kia_sorento.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/kia_sorento.jpg", 
     "style": "premium", 
     "id": "e52bf3f9-9903-499f-8a44-9b66afd25880", 
     "body_type": "suv", 
     "name": "Kia Sorento"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/kia_sportage.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/kia_sportage.jpg", 
     "style": "premium", 
     "id": "fbb9ad71-c8b8-477e-8fcf-6b1b7e94c159", 
     "body_type": "suv", 
     "name": "Kia Sportage"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/lexus_rx.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/lexus_rx.jpg", 
     "style": "premium", 
     "id": "2034d094-cd48-49b9-9eed-785d72a43b95", 
     "body_type": "suv", 
     "name": "Lexus RX"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/mazda_cx5.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/mazda_cx5.jpg", 
     "style": "premium", 
     "id": "c86443ce-f47b-4195-9a2c-21ba690adf9a", 
     "body_type": "suv", 
     "name": "Mazda CX-5"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/mazda_cx9.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/mazda_cx9.jpg", 
     "style": "premium", 
     "id": "32072537-a225-4df0-9aa2-afc0e17c3c43", 
     "body_type": "suv", 
     "name": "Mazda CX-9"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/mitsubishi_pajero.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/mitsubishi_pajero.jpg", 
     "style": "premium", 
     "id": "5eca2867-a0b2-4fa0-8b01-5e700785e57b", 
     "body_type": "suv", 
     "name": "Mitsubishi Pajero"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/nissan_patrol.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/nissan_patrol.jpg", 
     "style": "premium", 
     "id": "bf8670e2-bb0a-44c2-8334-404485975715", 
     "body_type": "suv", 
     "name": "Nissan Patrol"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/nissan_rogue.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/nissan_rogue.jpg", 
     "style": "premium", 
     "id": "270b6748-71c3-4772-8a39-46346a5f6118", 
     "body_type": "suv", 
     "name": "Nissan Rougue"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/subaru_outback.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/subaru_outback.jpg", 
     "style": "premium", 
     "id": "6c720d4c-f04f-4f56-88c8-64feabb5ff63", 
     "body_type": "suv", 
     "name": "Subaru Outback"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/toyota_highlander.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/toyota_highlander.jpg", 
     "style": "premium", 
     "id": "49aa4c39-35fd-474d-98f6-b78a31a5b3fd", 
     "body_type": "suv", 
     "name": "Toyota Highlander"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/chevrolet_suburban.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/chevrolet_suburban.jpg", 
     "style": "luxury", 
     "id": "6896b0bf-8acf-46c2-8d59-2705ad881f40", 
     "body_type": "suv", 
     "name": "Chevrolet Suburban"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/porsche_cayenne.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/porsche_cayenne.jpg", 
     "style": "luxury", 
     "id": "a88b1991-59cb-4189-a540-204f082b3db2", 
     "body_type": "suv", 
     "name": "Porsche Cayenne"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/audi_a3.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/audi_a3.jpg", 
     "style": "premium", 
     "id": "10d90331-0c18-4b15-95b3-7a0b6d2f5566", 
     "body_type": "sedan", 
     "name": "Audi A3"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/audi_a5.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/audi_a5.jpg", 
     "style": "premium", 
     "id": "5159db2d-6df5-4732-84bb-a24123845bad", 
     "body_type": "sedan", 
     "name": "Audi A5"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/bmw_750.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/bmw_750.jpg", 
     "style": "premium", 
     "id": "7f51662a-913b-4504-a809-2f507ee620ef", 
     "body_type": "sedan", 
     "name": "BMW 750"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/bmw_m5.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/bmw_m5.jpg", 
     "style": "premium", 
     "id": "1621f17f-e75e-47bc-b075-27b0854ee7a8", 
     "body_type": "sedan", 
     "name": "BMW M5"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/cadillac_ct5.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/cadillac_ct5.jpg", 
     "style": "premium", 
     "id": "a6896181-be15-4b22-a32c-1a6b38f08f16", 
     "body_type": "sedan", 
     "name": "Cadillac CT5"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/cadillac_ct6.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/cadillac_ct6.jpg", 
     "style": "premium", 
     "id": "ba7ed43f-2268-4a2d-882a-61c748f5891a", 
     "body_type": "sedan", 
     "name": "Cadillac CT6"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/jaguar_xe.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/jaguar_xe.jpg", 
     "style": "premium", 
     "id": "cf2500f0-a99c-4418-8ecf-70b6eef265db", 
     "body_type": "sedan", 
     "name": "Jaguar XE"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/jaguar_xf.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/jaguar_xf.jpg", 
     "style": "premium", 
     "id": "536b9eac-b25d-4fc1-86c2-12554842c22e", 
     "body_type": "sedan", 
     "name": "Jaguar XF"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/lincoln_mkz.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/lincoln_mkz.jpg", 
     "style": "premium", 
     "id": "ec1ac7d8-b4dd-4edb-b59e-7d98bc45dd4e", 
     "body_type": "sedan", 
     "name": "Lincoln MKZ"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/maserati_ghilbi.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/maserati_ghilbi.jpg", 
     "style": "premium", 
     "id": "21cb3548-6e66-4eb1-aa7d-d23ed3428f20", 
     "body_type": "sedan", 
     "name": "Maserati Ghilbi"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/mercedes_benz_e.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/mercedes_benz_e.jpg", 
     "style": "premium", 
     "id": "0037648a-350f-4269-bbaf-de44a0828533", 
     "body_type": "sedan", 
     "name": "Mercedes-Benz E-Class"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/mercedes_benz_s.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/mercedes_benz_s.jpg", 
     "style": "premium", 
     "id": "73e3bb5c-1ed5-44a1-bc2b-fccdb024ca60", 
     "body_type": "sedan", 
     "name": "Mercedes-Benz S-Class"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/acura_rlx.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/acura_rlx.jpg", 
     "style": "basic", 
     "id": "2bd26e6b-b91f-4d87-9361-7d27d76847ca", 
     "body_type": "sedan", 
     "name": "Acura RLX"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/acura_tlx.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/acura_tlx.jpg", 
     "style": "basic", 
     "id": "81a26118-9704-4b7b-8458-a5d5f5c866a3", 
     "body_type": "sedan", 
     "name": "Acura TLX"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/bmw_440.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/bmw_440.jpg", 
     "style": "basic", 
     "id": "18698e1d-fca7-4168-bfa1-0d6fec7e9337", 
     "body_type": "sedan", 
     "name": "BMW 440"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/chevrolet_impala.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/chevrolet_impala.jpg", 
     "style": "basic", 
     "id": "4a4e9c3d-61b3-47c8-9e22-31a4db6b93e9", 
     "body_type": "sedan", 
     "name": "Cehvrolet Impala"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/chevrolet_malibu.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/chevrolet_malibu.jpg", 
     "style": "basic", 
     "id": "35950ecf-6744-4b56-b39b-5b048b65d3e5", 
     "body_type": "sedan", 
     "name": "Chevrolet Malibu"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/ford_fusion.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/ford_fusion.jpg", 
     "style": "basic", 
     "id": "bcfe86ec-f477-435d-aace-19ec6e8d557c", 
     "body_type": "sedan", 
     "name": "Ford Fusion"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/honda_accord.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/honda_accord.jpg", 
     "style": "basic", 
     "id": "ab007a2a-77c5-463d-963c-4bf0c654f657", 
     "body_type": "sedan", 
     "name": "Honda Accord"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/honda_civic.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/honda_civic.jpg", 
     "style": "basic", 
     "id": "b5681e8e-8037-4e99-801e-dd15b9ffee5e", 
     "body_type": "sedan", 
     "name": "Honda Civic"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/honda_insight.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/honda_insight.jpg", 
     "style": "basic", 
     "id": "2e646226-cb1a-422d-af4d-6c640ba00aa7", 
     "body_type": "sedan", 
     "name": "Honda Insight"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/hyundai_elantra.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/hyundai_elantra.jpg", 
     "style": "basic", 
     "id": "e757163e-1cc5-4592-b5e2-c1c1d3b41707", 
     "body_type": "sedan", 
     "name": "Hyundai Elantra"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/kia_optima.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/kia_optima.jpg", 
     "style": "basic", 
     "id": "a4979b05-9629-4662-81e2-c2d61cc206ac", 
     "body_type": "sedan", 
     "name": "Kia Optima"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/mazda_6.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/mazda_6.jpg", 
     "style": "basic", 
     "id": "e4f4e79d-16ee-4c67-97be-07b2dc72c2bd", 
     "body_type": "sedan", 
     "name": "Mazda 6"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/mercedes_benz_c.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/mercedes_benz_c.jpg", 
     "style": "basic", 
     "id": "a2755d09-54c4-42f6-b2cc-9692caa207bd", 
     "body_type": "sedan", 
     "name": "Mercedes-Benz C-Class"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/nissan_altima.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/nissan_altima.jpg", 
     "style": "basic", 
     "id": "58aefbf4-d304-4195-af4b-7f113c275e70", 
     "body_type": "sedan", 
     "name": "Nissan Altima"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/nissan_maxima.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/nissan_maxima.jpg", 
     "style": "basic", 
     "id": "858fc222-1a7c-4bf1-950e-b110bb75db4f", 
     "body_type": "sedan", 
     "name": "Nissan Maxima"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/nissan_versa.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/nissan_versa.jpg", 
     "style": "basic", 
     "id": "dd29828b-b57b-4a2c-8d95-e60faa561190", 
     "body_type": "sedan", 
     "name": "Nissan Versa"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/toyota_avalon.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/toyota_avalon.jpg", 
     "style": "basic", 
     "id": "f74ff4dc-c5d2-4242-8471-d4e39f0a1504", 
     "body_type": "sedan", 
     "name": "Toyota Avalon"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/toyota_camry.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/toyota_camry.jpg", 
     "style": "basic", 
     "id": "8ca086ec-f4dc-445c-a533-49ceb2602ea6", 
     "body_type": "sedan", 
     "name": "Toyota Camry"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/toyota_corolla.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/toyota_corolla.jpg", 
     "style": "basic", 
     "id": "062ea89b-ff21-4831-858a-10db322b2277", 
     "body_type": "sedan", 
     "name": "Toyota Corolla"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/volvo_s60.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/volvo_s60.jpg", 
     "style": "basic", 
     "id": "869bc4a8-d6e2-4fba-a7cf-2addebcfb9e8", 
     "body_type": "sedan", 
     "name": "Volvo S60"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/volvo_s90.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/volvo_s90.jpg", 
     "style": "basic", 
     "id": "590dfd89-1765-474b-98bd-03b8c3a51fe7", 
     "body_type": "sedan", 
     "name": "Volvo S90"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/ferrari_california.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/ferrari_california.jpg", 
     "style": "luxury", 
     "id": "952aa84e-c3ae-4d9e-80c5-8a4f29177bd7", 
     "body_type": "convertible", 
     "name": "Ferrari California"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/maserati_grancabrio.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/maserati_grancabrio.jpg", 
     "style": "luxury", 
     "id": "a64fec60-f631-483c-80ce-1eaf65d7b9b4", 
     "body_type": "convertible", 
     "name": "Maserati GranCabrio Sport"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/mercedes_benz_slk.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/mercedes_benz_slk.jpg", 
     "style": "luxury", 
     "id": "d6c975a5-3d1a-4259-a8db-6508690262a7", 
     "body_type": "convertible", 
     "name": "Mercedes Benz SLK Class"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/mini_cooper.png", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/mini_cooper.png", 
     "style": "luxury", 
     "id": "4d8cd852-b961-485e-9bcf-9ce5b951b529", 
     "body_type": "convertible", 
     "name": "Mini Cooper SD"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/porsche_911.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/porsche_911.jpg", 
     "style": "luxury", 
     "id": "95500638-9741-4786-b46b-90d612867146", 
     "body_type": "convertible", 
     "name": "Porsche 911 Carrera Cabriolet"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/chevrolet_camaro.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/chevrolet_camaro.jpg", 
     "style": "luxury", 
     "id": "3a3c1383-e0cc-4d37-86b8-894c4e191c4e", 
     "body_type": "muscle", 
     "name": "Chevrolet Camaro"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/dodge_charger.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/dodge_charger.jpg", 
     "style": "luxury", 
     "id": "13db9007-58cf-419e-b51b-26981e2eb126", 
     "body_type": "muscle", 
     "name": "Dodge Challenger"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/dodge_super_bee.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/dodge_super_bee.jpg", 
     "style": "luxury", 
     "id": "219032ba-7fb4-4733-aaa6-13953bc0e2c2", 
     "body_type": "muscle", 
     "name": "Dodge Super Bee"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/ford_mustang.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/ford_mustang.jpg", 
     "style": "luxury", 
     "id": "d1b62580-1c44-4c98-bb36-23aba3efa302", 
     "body_type": "muscle", 
     "name": "Ford Mustang"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/ford_torino.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/ford_torino.jpg", 
     "style": "luxury", 
     "id": "63f922f8-09e5-46ee-a6e6-282543d4e71a", 
     "body_type": "muscle", 
     "name": "Ford Torino"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/ford_xb_falcon.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/ford_xb_falcon.jpg", 
     "style": "luxury", 
     "id": "0c09a07a-9a26-4500-a2ff-e6c3b9a02d8d", 
     "body_type": "muscle", 
     "name": "Ford XB Falcon"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/pontiac_firebird.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/pontiac_firebird.jpg", 
     "style": "luxury", 
     "id": "7f588432-f99b-40ac-ad51-09a7801c17b7", 
     "body_type": "muscle", 
     "name": "Pontiac Firebird"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/chevrolet_spark.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/chevrolet_spark.jpg", 
     "style": "basic", 
     "id": "f08bf3f4-52a5-4bd6-8162-7ff6b4c23f46", 
     "body_type": "hatchback", 
     "name": "Chevrolet Spark"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/ford_fiesta.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/ford_fiesta.jpg", 
     "style": "basic", 
     "id": "9faf5b7f-4d6a-451e-8e31-1b8566a4b5e9", 
     "body_type": "hatchback", 
     "name": "Ford Fiesta"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/honda_fit.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/honda_fit.jpg", 
     "style": "basic", 
     "id": "8ee07396-fd53-4178-afc2-b9ad8331da89", 
     "body_type": "hatchback", 
     "name": "Honda Fit"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/hyundai_eon.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/hyundai_eon.jpg", 
     "style": "basic", 
     "id": "afa69678-a858-4e8c-ac12-86759451d52d", 
     "body_type": "hatchback", 
     "name": "Hyundai Eon"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/hyundai_i10.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/hyundai_i10.jpg", 
     "style": "basic", 
     "id": "5473c3b9-5b4d-435b-8592-6bc9860dd052", 
     "body_type": "hatchback", 
     "name": "Hyundai i10"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/kia_picanto.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/kia_picanto.jpg", 
     "style": "basic", 
     "id": "7ca42abf-5988-4d57-8afb-9979adaf9c73", 
     "body_type": "hatchback", 
     "name": "Kia Picanto"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/kia_rio.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/kia_rio.jpg", 
     "style": "basic", 
     "id": "8efc6f47-de8c-4a5e-b705-78077f65c257", 
     "body_type": "hatchback", 
     "name": "Kia Rio"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/mitsubishi_mirage.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/mitsubishi_mirage.jpg", 
     "style": "basic", 
     "id": "124ddc96-a238-4b8e-b7e8-536ff2dd12df", 
     "body_type": "hatchback", 
     "name": "Mitsubishi Mirage"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/nissan_juke.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/nissan_juke.jpg", 
     "style": "basic", 
     "id": "a415aecf-4bcb-4aa3-ad90-6e072f239560", 
     "body_type": "hatchback", 
     "name": "Nissan Juke"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/suzuki_celerio.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/suzuki_celerio.jpg", 
     "style": "basic", 
     "id": "da16cb06-20be-494d-b34f-a1a0585616d3", 
     "body_type": "hatchback", 
     "name": "Suzuki Celerio"
   }, 
   {
-    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-cars/toyota_prius.jpg", 
+    "image": "https://s3.us.cloud-object-storage.appdomain.cloud/bee-travels-assets-car/toyota_prius.jpg", 
     "style": "basic", 
     "id": "10772f73-5de1-4143-aa51-480a23fef3b2", 
     "body_type": "hatchback", 

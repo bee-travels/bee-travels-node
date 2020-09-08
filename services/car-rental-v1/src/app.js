@@ -49,7 +49,7 @@ app.get("/info", (req, res) => {
 
   Promise.all(infoPromises).then((infoArray) => {
     res.json({
-      service: "car-rental-v1",
+      service: process.env.SERVICE || "car-rental-v1",
       hostname: os.hostname(),
       database: null,
       children: infoArray,
