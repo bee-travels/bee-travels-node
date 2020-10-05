@@ -11,6 +11,7 @@ import reducer from "redux/reducer";
 import BookingLayout from "components/BookingLayout/BookingLayout";
 import HomeLayout from "components/HomeLayout/HomeLayout";
 import ErrorLayout from "components/ErrorLayout/ErrorLayout";
+import CheckoutLayout from "components/CheckoutLayout/CheckoutLayout";
 
 import { GraphPage } from "components/ServiceGraph";
 
@@ -35,6 +36,7 @@ const CustomRouter = () => {
             component={BookingLayout}
           />
           <Route path="/service-graph" component={GraphPage} />
+          <Route path="/checkout" component={CheckoutLayout} />
           <Route component={ErrorLayout} />
         </Switch>
       </Router>

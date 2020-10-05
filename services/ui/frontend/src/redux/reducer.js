@@ -55,7 +55,9 @@ const reducer = produce((draft, action) => {
       break;
     }
     case types.removeCarsFromCart: {
-      const index = draft.cars.indexOf(action.payload);
+      const {payload} = action;
+      const compare = (store) => store.id === payload.id && store.dateFrom === payload.dateFrom && store.dateTo === payload.dateTo;
+      const index = draft.cars.findIndex(compare);
       if (index > -1) {
         draft.cars.splice(index, 1);
       }
@@ -63,7 +65,9 @@ const reducer = produce((draft, action) => {
       break;
     }
     case types.removeHotelsFromCart: {
-      const index = draft.hotels.indexOf(action.payload);
+      const {payload} = action;
+      const compare = (store) => store.id === payload.id && store.dateFrom === payload.dateFrom && store.dateTo === payload.dateTo;
+      const index = draft.hotels.findIndex(compare);
       if (index > -1) {
         draft.hotels.splice(index, 1);
       }
