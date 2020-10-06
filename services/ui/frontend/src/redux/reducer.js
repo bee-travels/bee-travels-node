@@ -40,6 +40,7 @@ const reducer = produce((draft, action) => {
       break;
     }
     case types.addCarsToCart: {
+      console.log("REDUCER", action.payload);
       draft.cars.push(action.payload);
       localStorage.setItem("cars", JSON.stringify(draft.cars));
       break;

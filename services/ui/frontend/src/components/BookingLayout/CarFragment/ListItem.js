@@ -13,8 +13,8 @@ import useExchangeRates from "api/use-exchange-rate";
 
 function ListItem({ id, rental_company, name, cost, image }) {
   const currency = useSelector((state) => state.carFilters.currency);
-  const dateFrom = useSelector((state) => state.hotelFilters.dateFrom);
-  const dateTo = useSelector((state) => state.hotelFilters.dateTo);
+  const dateFrom = useSelector((state) => state.carFilters.dateFrom);
+  const dateTo = useSelector((state) => state.carFilters.dateTo);
   const { exchangeRates } = useExchangeRates();
   const { addCarsToCart, removeCarsFromCart } = useActions();
   const cars = useSelector((state) => state.cars);
