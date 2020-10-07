@@ -12,6 +12,7 @@ import HotelFragment from "./HotelFragment/HotelFragment";
 import CarFragment from "./CarFragment/CarFragment";
 import FlightFragment from "./FlightFragment/FlightFragment";
 import TabHolder from "./TabHolder";
+import globalHistory from '../../globalHistory';
 
 // function ProviderWrapper({ location }) {
 //   const store = createStore(
@@ -133,8 +134,7 @@ const Content = () => {
   }, [city, country]);
 
   const handleFabClick = () => {
-    const _ids = localStorage.getItem("cart") || "[]";
-    alert(_ids);
+    globalHistory.push("/checkout");
   };
 
   return (

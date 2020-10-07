@@ -13,15 +13,17 @@ import useExchangeRates from "api/use-exchange-rate";
 
 function ListItem({ id, rental_company, name, cost, image }) {
   const currency = useSelector((state) => state.carFilters.currency);
+  const dateFrom = useSelector((state) => state.carFilters.dateFrom);
+  const dateTo = useSelector((state) => state.carFilters.dateTo);
   const { exchangeRates } = useExchangeRates();
-  const { addHotelsToCart, removeHotelsFromCart } = useActions();
-  const hotels = useSelector((state) => state.hotels);
-  const numberInCart = hotels.filter((hotelId) => hotelId === id).length;
+  const { addCarsToCart, removeCarsFromCart } = useActions();
+  const cars = useSelector((state) => state.cars);
+  const numberInCart = cars.filter((d) => d.id === id).length;
   const handleAddToCart = () => {
-    addHotelsToCart(id);
+    addCarsToCart({id, dateFrom, dateTo});
   };
   const handleRemoveFromCart = () => {
-    removeHotelsFromCart(id);
+    removeCarsFromCart({id, dateFrom, dateTo});
   };
 
   const priceString = priceConversion(cost, {

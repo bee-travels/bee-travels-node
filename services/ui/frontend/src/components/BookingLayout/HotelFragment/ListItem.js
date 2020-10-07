@@ -12,15 +12,19 @@ import useExchangeRates from "api/use-exchange-rate";
 
 function ListItem({ id, superchain, name, cost, images }) {
   const currency = useSelector((state) => state.hotelFilters.currency);
+  const dateFrom = useSelector((state) => state.hotelFilters.dateFrom);
+  const dateTo = useSelector((state) => state.hotelFilters.dateTo);
   const { exchangeRates } = useExchangeRates();
   const { addHotelsToCart, removeHotelsFromCart } = useActions();
   const hotels = useSelector((state) => state.hotels);
-  const numberInCart = hotels.filter((hotelId) => hotelId === id).length;
+  //[{"id":"a33f794d-9631-4f22-bb2e-38bd98ef4b42","dateFrom":"2020-10-07","dateTo":"2020-10-22"},{"id":"a33f794d-9631-4f22-bb2e-38bd98ef4b42","dateFrom":"2020-10-07","dateTo":"2020-10-22"}]
+  // ["", ""]
+  const numberInCart = hotels.filter((d) => d.id === id).length;
   const handleAddToCart = () => {
-    addHotelsToCart(id);
+    addHotelsToCart({id, dateFrom, dateTo});
   };
   const handleRemoveFromCart = () => {
-    removeHotelsFromCart(id);
+    removeHotelsFromCart({id, dateFrom, dateTo});
   };
 
   const priceString = priceConversion(cost, {
