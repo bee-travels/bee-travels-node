@@ -8,7 +8,7 @@ import styles from "./DestinationFragment.module.css";
 const DEFAULT_ZOOM = 7;
 
 mapboxgl.accessToken =
-  "pk.eyJ1IjoibWFwcXVlc3QiLCJhIjoiY2Q2N2RlMmNhY2NiZTRkMzlmZjJmZDk0NWU0ZGJlNTMifQ.mPRiEubbajc6a5y9ISgydg";
+  "pk.eyJ1IjoibWFnaWNtYXgzMiIsImEiOiJja3d6YnN5bmUwdGpqMm9xdnoydmlkMTg3In0.cdUxJYMhzu2y_ea6WkqBRw";
 
 const truncateText = (text) => {
   const firstSentenceRegex = /^(.*?)\. (?=[A-Z])/;

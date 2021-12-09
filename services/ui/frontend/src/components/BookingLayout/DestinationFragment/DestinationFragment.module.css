@@ -72,7 +72,7 @@
 .map {
   height: 300px;
   position: absolute;
-  bottom: 0;
+  bottom: 25px;
   left: 0;
   right: 0;
   visibility: hidden;
